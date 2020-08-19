@@ -1,0 +1,29 @@
+<root>
+    <specVersion>
+        <major>1</major>
+        <minor>0</minor>
+    </specVersion>
+    <device>
+        <deviceType>urn:schemas-upnp-org:device:Basic:1</deviceType>
+        <friendlyName>%DEVNAME%</friendlyName>
+        <manufacturer>Shenzhen AtliView Technology</manufacturer>
+        <manufacturerURL>http://www.atliview.com/</manufacturerURL>
+        <modelDescription>AtliView Camera S3</modelDescription>
+        <modelName>%MODEL_NAME%</modelName>
+        <modelNumber>%MODEL_NUM%</modelNumber>
+        <modelURL>http://www.atliview.com/en/prducts/atliview-s3/</modelURL>
+        <serialNumber>%SN%</serialNumber>
+        <UDN>uuid:%UUID%</UDN>
+        <serviceList>
+            <service>
+                <URLBase>http://%Host%</URLBase>
+                <serviceType>urn:atliview.com:service:camsrvctrl:1</serviceType>
+                <serviceId>urn:atliview.com:serviceId:camsrvctrl</serviceId>
+                <controlURL>/upnp/ctrl</controlURL>
+                <eventSubURL/>
+                <SCPDURL>/upnp/scpd.xml</SCPDURL>
+            </service>
+        </serviceList>
+        <presentationURL>http://%Host%/</presentationURL>
+    </device>
+</root>

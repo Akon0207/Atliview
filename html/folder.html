@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<style type="text/css">
+.mbsc-fr-btn-cont {
+    	display: none;
+}
+body.video-index .setting-head.head-msg{
+    background: #9e9e9e50;
+}
+.folder-pic {
+    width: 100%;
+}
+.pic{
+    text-align: center;
+}
+.folder-slice,.folder-download,.folder-setting,.folder-delete{
+	position: absolute;
+	width: 1.2em;
+	height: 1.2em;
+	top: 50%;
+	right: 10px;
+	color: #666;
+       -webkit-transform: translateY(-50%);
+       -ms-transform: translateY(-50%);
+       -o-transform: translateY(-50%);
+	transform: translateY(-50%);
+	overflow: hidden;
+}
+.folder-slice{
+	right: 90px;
+}
+.folder-download{
+	right: 50px;
+}
+.folder-setting{
+	font-size: 0.6em;
+}
+.settings,.slice{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    color: #666;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #666;
+    font-size: 20px;
+    max-width: none;
+    border-radius: unset;
+    z-index: 6;
+    padding: 0;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    display: none;
+}
+.head-msg p{
+    line-height: 2;
+    font-size: 0.6em;
+    color: #66666682;
+}
+.settings i{
+    width: 20%;
+    display: inline-block;
+}
+.outPutMode ul li:not(:last-child){
+    margin-bottom: 0px;
+}
+.outPutMode ul li{
+    padding-top: 20px;
+    padding-left: 10%;
+    padding-bottom: 10px;
+    border-block-end: 2px solid #f3f3f3;
+    color: #333333;
+}
+.show-count{
+    color: #999999;
+}
+li.on{
+    color:#00cfff;
+}
+.show-count{
+    opacity:0.7;
+    font-size: 0.7em;
+}
+.bottom-line{
+    background: #f0f0f0;
+}
+
+.slider {
+    pointer-events: none;
+    margin: 0px;
+    /*width:200px;*/
+    
+    cursor: pointer;
+    padding-left: 30%;
+    /*height:6px;*/
+    
+    padding-right: 30%;
+    background-color: #bfbfbf;
+    box-sizing: border-box;
+}
+.slider.focusable {
+    border: 1px solid #222;
+}
+.thumb {
+    cursor: pointer;
+    border-color: #00d2ff;
+    border-style: solid;
+    background-color: #00d2ff;
+    border-radius: 50%;
+    /*top:-6px;left:50px;*/
+    
+    position: absolute;
+}
+.track {
+    pointer-events: none;
+    height: 100%;
+    background-color: #4c4c4c;
+}
+.container {
+    position: relative;
+    margin-left: 100px;
+    margin-top: 40px;
+    height: 30px;
+    width: 80%;
+}
+.output {
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50% 50% 0 50%;
+    //background-color: #4ac4ac;
+    text-align: center;
+/*
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+*/
+    position: absolute;
+    /*left:45px*/
+    
+    /*top: -45px;*/
+}
+.output p {
+    pointer-events: none;
+    font-size: 14px;
+    color: #0a1a17;
+    text-align: center;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.choose-pics{
+    margin-left: 100px;
+    width:80%;
+}
+
+.choose-pics .swiper-container .swiper-slide {
+    width:14.28%;
+}
+.choose-order{
+    margin-left: 100px;
+    width:40%;
+}
+.choose-order .swiper-container .swiper-slide {
+    width:50%;
+}
+.choose-style{
+    margin-left: 100px;
+    width:60%;
+}
+.choose-style .swiper-container .swiper-slide {
+    width:33.33%;
+}
+.choose-btn {
+    width: 50%;
+    background: #00d2ff;
+    line-height: 40px;
+    height: 40px;
+    border-radius: 18px;
+    color: #fffdfd;
+    text-align: center;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    margin: 100px auto;
+}
+.setting-current .swiper-container .swiper-slide {
+    font-size: 20px;
+}
+
+.setting-current .swiper-wrapper>div:not(:last-of-type):after {
+    height: 18px;
+    background: rgba(255,255,255);
+}
+input{
+    border-style:none none none none; /*  上 右 下  左 */
+    width:80px;
+    font-size:20px;
+}
+.count{
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,.4);
+    position: relative;
+}
+input::-webkit-input-placeholder {
+  color: #fff;
+  font-size: 20px;
+}
+
+input:-moz-placeholder {
+  color: #fff;
+  font-size: 20px;
+}
+
+input::-moz-placeholder {
+  color: #fff;
+  font-size: 20px;
+}
+
+input:-ms-input-placeholder {
+  color: #fff;
+  font-size: 20px;
+}
+</style>
+</head>
+<body class="video-index">
+	<section class="setting-head">
+		<a href="video.html" class="iconfont goback">&#xe6ea;</a>
+		<p>图片文件夹</p>
+		<a href="javascript:;" class="iconfont folder-slice">&#xe630;</a>
+		<a href="javascript:;" class="iconfont folder-download">&#xe644;</a>
+		<a href="javascript:;" class="iconfont folder-delete">&#xe634;</a>
+	<!--	<div class="video-style" id="firmware"></div> -->
+	</section>
+	<section class="setting-head head-msg">
+		<p lan="foladr-head-msg">总数量0帧，抽样显示0帧</p>
+		<a href="javascript:;" class="iconfont folder-setting">&#xe6e9;</a>
+
+	</section>
+
+	<section class="video-list" id="mediaList">
+		<ul>
+		</ul>
+	</section>
+	<div class="outPutMode slice">
+        <section class="wlan-detail">
+                <a href="javascript:;" class="iconfont cancel">&#xe6ea;</a>
+                <div class="wlan-detail-name bottom-line">渐现</div>
+		<div class="wlan-detail-tit" id="range-msg">取样范围(1~2000)</div>
+<div class="container">
+	<div class="slider">
+        <div class="track"></div>
+    </div>
+    <div class="output o0"><input type="number" id="range-start"></div>
+    <div class="thumb t0"></div>
+
+    <div class="output o1"><input type="number" id="range-end"></div>
+    <div class="thumb t1"></div>
+</div>
+
+                <div class="wlan-detail-tit" >切片数量</div>
+                                <div class="setting-current choose-pics">
+                                        <div class="swiper-container">
+                                                <div class="swiper-wrapper">
+                                                        <div class="swiper-slide">12</div>
+                                                        <div class="swiper-slide">18</div>
+                                                        <div class="swiper-slide on">24</div>
+                                                        <div class="swiper-slide">36</div>
+                                                        <div class="swiper-slide">48</div>
+                                                        <div class="swiper-slide">60</div>
+                                                        <div class="swiper-slide"><input type="number" class="count" placeholder="自定义" onfocus="this.placeholder=''" onblur="this.placeholder='自定义'" min="1"></div>
+                                                </div>
+                                        </div>
+                                </div>  
+                <div class="wlan-detail-tit" >切片顺序</div>
+                                <div class="setting-current choose-order">
+                                        <div class="swiper-container">
+                                                <div class="swiper-wrapper">
+                                                        <div class="swiper-slide on">正向</span></div>
+                                                        <div class="swiper-slide">反向</span></div>
+                                                </div>
+                                        </div>
+                                </div>  
+
+                <div class="wlan-detail-tit" >切片风格</div>
+                                <div class="setting-current choose-style">
+                                        <div class="swiper-container">
+                                                <div class="swiper-wrapper">
+                                                        <div class="swiper-slide on">竖</span></div>
+                                                        <div class="swiper-slide">横</span></div>
+                                                        <div class="swiper-slide">斜</span></div>
+                                                        <div class="swiper-slide">扇形</span></div>
+                                                </div>
+                                        </div>
+                                </div>  
+
+
+                <div class="choose-btn">执  行</div>
+        </section>
+	</div>
+
+	<div class="outPutMode settings">
+		<section class="setting-head">
+		<a href="javascript:;" class="iconfont goback setting-goback">&#xe6ea;</a>
+		<p>照片展示比例</p>
+		
+		</section>
+		<ul>
+			<li v=1><i  lan="aaa">全部</i><i  class="show-count">可展示0帧</i></li>
+			<li v=2><i  lan="aaa">1/2抽样</i><i  class="show-count">可展示0帧</i></li>
+			<li v=5><i  lan="aaa">1/5抽样</i><i  class="show-count">可展示0帧</i></li>
+			<li class="on" v=10><i  lan="aaa">1/10抽样</i><i  class="show-count">可展示0帧</i></li>
+			<li v=25><i  lan="aaa">1/25抽样</i><i  class="show-count">可展示0帧</i></li>
+			<li v=50><i  lan="aaa">1/50抽样</i><i  class="show-count">可展示0帧</i></li>
+			<li v=100><i  lan="aaa">1/100抽样</i><i  class="show-count">可展示0帧</i></li>
+			<li v=200><i  lan="aaa">1/200抽样</i><i  class="show-count">可展示0帧</i></li>
+		</ul>
+	</div>
+
+    <div class="dialog-cover"></div>
+
+    <div class="dialog-poppup" id="deleteFolder" style="display: none;">
+     <div class="dialog-poppup-content">是否要删除文件夹?</div>
+     <div class="dialog-btns flex">
+       <a href="javascript:;" class="downloadCancel" lan="cancel">取消</a>
+       <a href="javascript:;" id="deleteFolderConfirm" lan="OK">确定</a>
+     </div>
+    </div>
+
+    <div class="dialog-poppup" id="downloadPack" style="display: none;">
+
+     <div class="dialog-poppup-content" >是否要下载该文件夹中的图片?</div>
+     <div class="dialog-btns flex">
+       <a href="javascript:;" class="downloadCancel" lan="cancel">取消</a>
+       <a href="javascript:;" id="downloadConfirm" lan="OK">确定</a>
+     </div>
+    </div>
+	<div class="dialog-poppup" id="showMsg" style="display: none;">
+		<div class="dialog-poppup-content"></div>
+		<div class="dialog-btns flex">
+		 <a href="javascript:;" id="showMsgConfirm" lan="OK">确定</a>
+		</div>
+	</div>
+
+	<div class="dialog-poppup" id="downloadError" style="display: none;">
+		<div class="dialog-poppup-content">压缩文件夹失败!</div>
+		<div class="dialog-btns flex">
+		 <a href="javascript:;" id="downloadErrorConfirm" lan="OK">确定</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="packing" style="display: none;">
+		<div class="dialog-poppup-content" id="packSecMsg">开始图片压缩</div>
+		<div class="dialog-btns flex">
+		</div>
+	</div>
+	<div class="dialog-poppup" id="slicing" style="display: none;">
+		<div class="dialog-poppup-content" id="sliceSecMsg">开始切片</div>
+		<div class="dialog-btns flex">
+		</div>
+	</div>
+	<div class="dialog-poppup" id="sliceResult" style="display: none;">
+		<div class="dialog-poppup-content" id="sliceResultMsg">切片失败!</div>
+		<div class="dialog-btns flex">
+		 <a href="javascript:;" id="sliceResultConfirm" lan="OK">确定</a>
+		</div>
+	</div>
+
+
+
+
+<script type="text/javascript" src="js/language.js"></script>
+<script type="text/javascript">
+$(function(){
+	//选择排列方式
+	if(language && language=="en"){
+		$(".iconfont.goback").attr("href","video.html?language=en")
+	}else{
+		$(".iconfont.goback").attr("href","video.html?language=zh")
+	}
+	$(".folder-setting").on('click', function(){
+		$(".outPutMode").show();
+	})
+	$(".setting-goback, .iconfont.cancel").on('click', function(){
+		$(".outPutMode").hide();
+		return false;
+	})
+	$(".outPutMode li").each(function(index){
+		$(this).on("click",function(e){
+			if($(this).attr("v") == folderShowItems) setTimeout(function(){$(".outPutMode").hide()}, 200);
+			else {
+				$(this).addClass("on").siblings().removeClass("on");
+				localControl.putValue("folderShowItems", $(this).attr("v"));
+				location.href = "/folder.html?id="+id+"&c="+$(this).attr("v")+(getAccessToken()?'&access_token='+getAccessToken():'');
+				//location.reload();
+			}
+		})
+	})
+	$(" .swiper-slide").each(function(e){
+		$(this).click(function(){
+			$(this).addClass("on").siblings().removeClass("on");
+		});
+	});
+})
+
+var id = getParameterByName('id');
+//var folderShowItems = parseInt(localControl.getValue("folderShowItems", 10));
+//$("li[v="+folderShowItems+"]").addClass("on").siblings().removeClass("on");
+var url=false;
+var maxItems = 0;
+var showItems = 0;
+var mediaData=[];
+var index = 0;
+var recount = 0;
+var byMonthObj = {},
+	byDateObj = {};
+
+
+
+var packID=null;
+function setMiddle(id, v)
+{
+	$(".dialog-poppup").hide();
+	if(v) $(id+" .dialog-poppup-content").html(v);
+	$(id).css("top",($(window).height() - $(id).outerHeight())/2 + $(document).scrollTop()).show();
+	$(".dialog-cover").css("top",($(window).height() - $(".dialog-cover").outerHeight())/2 + $(document).scrollTop()).show();
+}
+
+
+function deleteFolder()
+{
+	putJSON("/webctl", {"deleteFolder" : id}, function(e){
+		setMiddle("#showMsg", "删除文件夹成功");
+		$("#showMsgConfirm").one("click", function(){location.href = "video.html"});
+		//setTimeout(function(){location.href = "video.html"}, 1000);
+	},function(jqXHR, exception){
+		setMiddle("#showMsg", "删除文件夹失败,HTTP返回:"+jqXHR.status);
+		console.log((jqXHR.status+exception));
+	}, "text");
+}
+$(".folder-delete").on('click', function(){
+	setMiddle("#deleteFolder");
+});
+$("#deleteFolderConfirm").on('click', function(){
+	deleteFolder();
+});
+
+function timeout()
+{
+	setMiddle("#downloadError");
+	//setMiddle(".dialog-cover");
+	//$("#downloadError, .dialog-cover").show();
+	console.log("打包超时");
+}
+function downloadPack()
+{
+	$(".dialog-poppup,.dialog-cover").hide();
+	var link = document.createElement('a');
+	link.setAttribute("download", "");
+	link.href = "/media/"+packID+".tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
+	link.click();
+	setTimeout(function(){postJSON("/tgz", {rm:packID+".tgz"})}, 1000);
+}
+var packSec=0;
+var packMacSec=60;
+var allAmount=0;
+function checkPack()
+{
+	if(packSec > packMacSec) return timeout();
+	getJSON("/tgz", function(e, status){
+		$("#packSecMsg").html("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒"+e.tgz);
+		console.log("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒");
+		packSec++;
+		if(e.tgz != packID ) {
+			setMiddle("#downloadError");
+			//setMiddle(".dialog-cover");
+			//$("#downloadError, .dialog-cover").show();
+			console.log("打包ID错误");
+		}
+		else if(e.status == "done") {
+			console.log("打包成功");
+			downloadPack();
+		}
+		else setTimeout(checkPack, 1000);
+	} , function (XHR, e) {
+		console.log((XHR.status+e));
+		setTimeout(checkPack, 1000);
+	})
+}
+function packImages()
+{
+	postJSON("/tgz", {tgz:packID}, function(e, status){
+		packSec=0;
+		$("#packSecMsg").html("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒");
+		setMiddle("#packing");
+		setTimeout(checkPack, 1000);
+	}, function (jqXHR, exception) {
+		//error("EON not responsive!");
+		setMiddle("#downloadError");
+		console.log((jqXHR.status+exception));
+	}, "text");
+}
+
+$("#downloadErrorConfirm,#sliceResultConfirm,#showMsgConfirm").on("click",function(){
+	$(".dialog-poppup, .dialog-cover").hide();
+});
+/*
+$("#sliceResultConfirm").on("click",function(){
+        location.reload();
+});
+*/
+$(".downloadCancel").on("click",function(){
+	$(".dialog-poppup, .dialog-cover").hide();
+});
+$("#downloadConfirm").on("click",function(){
+	$("#downloadPack, .dialog-cover").hide();
+	packImages();
+});
+
+function askPack(id, amount)
+{
+	packID = id;
+	packMacSec = parseInt(amount);
+	console.log("压缩限制时间:"+packMacSec+"秒");
+	setMiddle("#downloadPack");
+	//setMiddle(".dialog-cover");
+	//$("#downloadPack, .dialog-cover").show();
+}
+
+function checkSlice()
+{
+	if(packSec > packMacSec) {
+		setMiddle("#sliceResult", "切片超时！");
+		return;
+	}
+	getJSON("/timeslice", function(e, status){
+		packSec++;
+		$("#sliceSecMsg").html("开始切片 "+e.progress+"%, 已用时"+packSec+"秒");
+		console.log("开始切片 "+e.progress+"%, 已用时"+packSec+"秒");
+		if(e.folderID != packID ) {
+			setMiddle("#sliceResult", "切片失败！");
+			console.log("切片ID错误 "+e.folderID+" "+packID);
+		}
+		else if(e.status == "done") {
+			console.log("切片成功");
+			setMiddle("#sliceResult", "切片成功!");
+			$("#sliceResultMsg").html("切片成功！<br>"+"<a href='"+e.url+(getAccessToken()?'?access_token='+getAccessToken():'')+"' target='_blank'>打开"+id+"</a>");
+		}
+		else setTimeout(checkSlice, 1000);
+	} , function (XHR, e) {
+		console.log((XHR.status+e));
+		setTimeout(checkSlice, 1000);
+	})
+
+}
+function timeslice(id, range, frame, seq, style)
+{
+	packID = id;
+	postJSON("/timeslice", {"folderID":id, "style":style, "frame":frame, "range":range,"seq":seq}, function(e, status){
+		packSec=0;
+		setMiddle("#slicing", "开始切片 0%, 已用时"+packSec+"秒");
+		setTimeout(checkSlice, 1000);
+	}, function (jqXHR, exception) {
+		//error("EON not responsive!");
+		//setMiddle("#downloadError");
+		console.log((jqXHR.status+exception));
+	}, "text");
+
+}
+
+$(".folder-download").on("click", function(){
+	if(id)
+		askPack(id, maxItems);
+});
+$(".folder-slice").on("click", function(){
+	$(".slice").show();
+});
+$(".choose-btn").on("click", function(){
+	if(!id) return;
+	var range = $("#range-start").val() +"-"+ $("#range-end").val();
+	var seq = $(".choose-order .on").index();
+	var style = $(".choose-style .on").index();
+	var frame = $(".choose-pics .on").text();
+	if(isNaN(parseInt(frame))){
+		frame = $(".count").val();
+		if(isNaN(parseInt(frame))) frame = 24;
+	}
+	timeslice(id, range, frame, seq, style);
+})
+  var mediaList = $('#mediaList');
+
+  mediaList.empty();
+  mediaList.append("<ul></ul>");
+
+/*
+$("#mediaList ul").on("load", ".folder-pic", function(){
+	console.log("load ok !");
+});
+*/
+function setItems(data)
+{
+	var index=0;
+	while(index < data.length){
+		console.log("check:"+data[index].id );
+		var folder = data[index];
+		if(data[index].id == id && data[index].type=="folder"){
+			var i = 0;
+			while(folder['timeslices'] && i < folder['timeslices'].length){
+				//itemStr = '<li onClick="location.href=' + "'video_detail.html?id=" + mediaInfo.id + (getAccessToken()?'&access_token='+getAccessToken():'')+"'" + '"><div class="pic" style="background-image: url(' + "'/media/"+ folder.id +"/"+folder['timeslices'][i]+ (getAccessToken()?'?access_token='+getAccessToken():'')+');"></div>';
+				//itemStr = '<li><div class="pic" style="background-image: url(' + "'/media/"+ folder.id +"/"+folder['timeslices'][i]+ (getAccessToken()?'?access_token='+getAccessToken():'')+');"></div>';
+				var src = "/media/"+ folder.id +"/"+folder['timeslices'][i]+ (getAccessToken()?'?access_token='+getAccessToken():'');
+				itemStr = '<li><div class="pic"><img class="folder-pic" src="'+src+'"/></div>';
+				itemStr += '<div class="txt"><div class="time">'+ folder['timeslices'][i] +'</div></div>';
+                		itemStr += '</li>';
+                		$('#mediaList ul').append(itemStr);
+				i++;
+			}
+			//url = folder.url;
+			// var url = "/media/TLS6c289e000_200119143202/TLS_000000001.jpg"
+			//var tail = url.substring(url.lastIndexOf("_") + 1, url.length); // TLS_000000001.jpg
+			//var pre = url.substring(0, url.lastIndexOf("_") + 1);  // /media/TLS6c289e000_200119143202/
+			//tail = tail.substring(0, tail.lastIndexOf(".")); // TLS_000000001
+			var pre = "/media/"+id+"/";
+			maxItems = folder.timelapse_end_index;
+			folderShowItems=getParameterByName('c'); //手动设置过显示比例
+			console.log("getParameterByName c:"+folderShowItems);
+			if(!folderShowItems){ //默认比例
+				if(maxItems <= 20) folderShowItems = 1;
+				else if(maxItems <= 50) folderShowItems = 2;
+				else if(maxItems <= 150) folderShowItems = 5;
+				else if(maxItems <= 350) folderShowItems = 10;
+				else if(maxItems <= 1000) folderShowItems = 25;
+				else if(maxItems <=10000) folderShowItems = 100;
+				//else if(maxItems <=20000) folderShowItems = 200;
+				else folderShowItems = 200;
+			}
+			console.log("getParameterByName c:"+folderShowItems);
+			$(".settings li[v="+folderShowItems+"]").addClass("on").siblings().removeClass("on");
+			for (i = 0; i < maxItems; i++) {
+				//console.log("check page:"+ i );
+				if((i % folderShowItems) != 0 )continue;
+				showItems++;
+				var fileName = "TLS_" + ( "0000000000000000" + (i+1) ).substr(-9)+ ".jpg";
+				var src = pre+fileName+(getAccessToken()?'?access_token='+getAccessToken():'');
+				//itemStr = '<li onClick="location.href=' + "'video_detail.html?id=" +src+ "'"+'"><div class="pic" style="background-image: url('+src+');"></div>';
+				//itemStr = '<li><div class="pic" style="background-image: url('+src+');"></div>';
+				itemStr = '<li><div class="pic"><img class="folder-pic" src="'+src+'"/></div>';
+				itemStr += '<div class="txt"><div class="time">'+fileName+'</div></div>';
+				itemStr += '</li>';
+				$('#mediaList ul').append(itemStr);
+                        }
+			$(".folder-pic").on("error", function(){
+				console.log("load error !");
+				$(this).attr("src", "/images/notfound.png");
+			});
+			$(".folder-pic").on("load", function(){
+				console.log("naturalHeight:"+this.naturalHeight+" naturalWidth:"+this.naturalWidth);
+				if(this.naturalHeight/this.naturalWidth > 0.5625){ //过高的图片需要按比例显示
+					$(this).css("width", this.naturalWidth/(this.naturalHeight/0.5625)*100+"%");
+				}
+			});
+
+			$("p[lan='foladr-head-msg']").text("总数量"+maxItems+"帧，抽样显示"+showItems+"帧");
+			$("li[v]").each(function(){
+				var v = parseInt(($(this).attr("v")));
+				$(this).children(".show-count").text("可展示"+Math.ceil(maxItems/v)+"帧");
+			})
+			break;
+		}
+		index++;
+	}
+}
+
+
+getJSON('/media2/', function(data) {
+	console.log(data);
+	mediaData=data;
+	console.log("set start");
+	setItems(data);
+	console.log("set end");
+	setInputsRy();
+}, function(err, status) {
+	setInputsRy();
+	console.log(err.status+status);
+});
+
+function setInputsRy(){
+if(!maxItems || maxItems<1) maxItems = 80000;
+$("#range-msg").text("取样范围(1~"+maxItems+")");
+var inputsRy = {
+    sliderWidth: 400,
+    minRange: 1,
+    maxRange: maxItems,
+    outputWidth: 30, // output width
+    thumbWidth: 30, // thumb width
+    thumbBorderWidth: 4,
+    trackHeight: 4,
+    theValue: [1, maxItems] // theValue[0] < theValue[1]
+};
+var isDragging0 = false;
+var isDragging1 = false;
+
+// styles
+var slider = document.querySelector(".slider");
+var thumbs = document.querySelectorAll(".thumb");
+var outputs = document.querySelectorAll(".output");
+var track = document.querySelector(".track");
+var range = inputsRy.maxRange - inputsRy.minRange;
+var rangeK = inputsRy.sliderWidth / range;
+var container = document.querySelector(".container");
+var thumbRealWidth = inputsRy.thumbWidth + 2 * inputsRy.thumbBorderWidth;
+
+updateValue();
+$("#range-start, #range-end, .count").on("focusin", function(){
+	$(this).css("width", "80px");
+	$(this).select();
+});
+$("#range-start, #range-end").on("focusout", function(){
+	if($(this).val()=="") $(this).val("1");
+	inputsRy.theValue[0]=parseInt($("#range-start").val());
+	inputsRy.theValue[1]=parseInt($("#range-end").val());
+	updateValue();
+});
+
+$(".count").on("focusout", function(){
+	if($(this).val()<=0) $(this).val(24);
+	if($(this).val().length==0) $(this).val(24);
+	$(this).css("width", $(this).val().length*12+15+"px");
+});
+
+$("#range-start, #range-end, .count").on("keyup", function(event){
+	//$(this).css("width", $(this).val().length*12+15+"px");
+	if(event.keyCode==13){
+		$(this).blur();
+	}
+});
+function updateValue()
+{
+inputsRy.sliderWidth = document.body.clientWidth * 0.8;
+range = inputsRy.maxRange - inputsRy.minRange;
+rangeK = inputsRy.sliderWidth / range;
+container = document.querySelector(".container");
+thumbRealWidth = inputsRy.thumbWidth + 2 * inputsRy.thumbBorderWidth;
+
+if(inputsRy.theValue[1]>inputsRy.maxRange) inputsRy.theValue[1]=inputsRy.maxRange;
+if(inputsRy.theValue[0]>inputsRy.theValue[1]-12) inputsRy.theValue[0]=inputsRy.theValue[1]-12;
+if(inputsRy.theValue[0]<inputsRy.minRange) inputsRy.theValue[0]=inputsRy.minRange;
+
+slider.style.height = inputsRy.trackHeight + "px";
+slider.style.width = inputsRy.sliderWidth + "px";
+slider.style.paddingLeft = (inputsRy.theValue[0] - inputsRy.minRange) * rangeK + "px";
+var v = inputsRy.sliderWidth - inputsRy.theValue[1] * rangeK;
+slider.style.paddingRight = ((v<0)?0:v) + "px";
+//console.log("inputsRy.sliderWidth:"+inputsRy.sliderWidth+" inputsRy.theValue[1]:"+inputsRy.theValue[1]+" rangeK:"+rangeK);
+//slider.style.paddingRight = inputsRy.sliderWidth - inputsRy.theValue[1] * rangeK + "px";
+
+track.style.width = inputsRy.theValue[1] * rangeK - inputsRy.theValue[0] * rangeK + "px";
+
+for (var i = 0; i < thumbs.length; i++) {
+    thumbs[i].style.width = thumbs[i].style.height = inputsRy.thumbWidth + "px";
+    //console.log(inputsRy.thumbWidth + "px");
+    thumbs[i].style.borderWidth = inputsRy.thumbBorderWidth + "px";
+    thumbs[i].style.top = -(inputsRy.thumbWidth / 2 + inputsRy.thumbBorderWidth - inputsRy.trackHeight / 2) + "px";
+    thumbs[i].style.left = (inputsRy.theValue[i] - inputsRy.minRange) * rangeK - (thumbRealWidth / 2) + "px";
+
+}
+for (var i = 0; i < outputs.length; i++) {
+    outputs[i].style.width = outputs[i].style.height = outputs[i].style.lineHeight = outputs[i].style.left = inputsRy.outputWidth + "px";
+    outputs[i].style.width = 3*inputsRy.outputWidth + "px";
+    outputs[i].style.top = -(Math.sqrt(2 * inputsRy.outputWidth * inputsRy.outputWidth) + inputsRy.thumbWidth / 2 - inputsRy.trackHeight / 2) + "px";
+    outputs[i].style.left = (inputsRy.theValue[i] - inputsRy.minRange) * rangeK - 1.5*inputsRy.outputWidth  + "px";
+    //outputs[i].innerHTML = "<p>" + inputsRy.theValue[i] + "</p>";
+}
+	$("#range-start").val(inputsRy.theValue[0])
+	$("#range-start").css("width", $("#range-start").val().length*12+15+"px");
+	//console.log(inputsRy.theValue[0]+" "+$("#range-start").val().length+" "+$("#range-start").css("width"));
+	$("#range-end").val(inputsRy.theValue[1]);
+	$("#range-end").css("width", $("#range-end").val().length*12+15+"px");
+	
+	$("#range-msg").text("取样范围("+inputsRy.theValue[0]+"~"+inputsRy.theValue[1]+")");
+}
+
+//events
+
+thumbs[0].addEventListener("mousedown", function(evt) {
+    isDragging0 = true;
+}, false);
+thumbs[1].addEventListener("mousedown", function(evt) {
+    isDragging1 = true;
+}, false);
+document.body.addEventListener("mouseup", function(evt) {
+    oMousePos(evt);
+    isDragging0 = false;
+    isDragging1 = false;
+}, false);
+container.addEventListener("mouseout", function(evt) {
+    //isDragging0 = false;
+    //isDragging1 = false;
+}, false);
+
+document.body.addEventListener("mousemove", function(evt) {
+	if(!isDragging0 && !isDragging1) return;
+	//console.log("mousemove X:"+evt.clientX+" Y:"+evt.clientX);
+       // var mousePos = oMousePos(this, evt);
+	oMousePos(evt);
+}, false);
+function oMousePos(evt){
+    var ClientRect = container.getBoundingClientRect();
+    mousePos= { //objeto
+        x: Math.round(evt.clientX - ClientRect.left),
+        y: Math.round(evt.clientY - ClientRect.top)
+    }
+	console.log("mousePos X:"+mousePos.x+" Y:"+mousePos.y);
+    if(mousePos.x<0) mousePos.x=0; //最左边
+    if(mousePos.x>slider.style.widtd) mousePos.x=slider.style.width;//最右边
+    var theValue0 = (isDragging0) ? Math.round(mousePos.x / rangeK) + inputsRy.minRange : inputsRy.theValue[0];
+    var theValue1 = (isDragging1) ? Math.round(mousePos.x / rangeK) + inputsRy.minRange : inputsRy.theValue[1];
+    if(theValue1 > inputsRy.maxRange) theValue1 = inputsRy.maxRange;
+   console.log("theValue:"+theValue0+" "+theValue1);
+
+    if (isDragging0) {
+
+        if (theValue0 < (theValue1 - (thumbRealWidth / 2)) &&
+            theValue0 >= inputsRy.minRange) {
+            inputsRy.theValue[0] = theValue0;
+            updateValue();
+        }
+    } else if (isDragging1) {
+	
+        if (theValue1 > (theValue0 + (thumbRealWidth / 2)) &&
+            theValue1 <= inputsRy.maxRange) {
+            inputsRy.theValue[1] = theValue1;
+            updateValue();
+        }
+    }
+
+}
+
+function setValue(theValue0, theValue1)
+{
+	if(theVale0 < inputsRy.minRange) theVale0=inputsRy.minRange;
+	if(theVale0 > theValue1 - 12 ) theVale0=inputsRy.minRang;
+	if(theVale0 < inputsRy.minRange) theVale0=inputsRy.minRange;
+}
+// helpers
+/*
+function oMousePos(elmt, evt) {
+    var ClientRect = elmt.getBoundingClientRect();
+    return { //objeto
+        x: Math.round(evt.clientX - ClientRect.left),
+        y: Math.round(evt.clientY - ClientRect.top)
+    }
+}
+*/
+}
+</script>
+</body>
+</html>
+
+
+
+

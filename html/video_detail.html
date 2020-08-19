@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body class="flex flex-middle flex-center">
+	<section class="main flex flex-middle flex-center" id="video-detail-main">
+		<a href="video.html" class="video-goback" lan="back">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		<a id="download-link" download class="video-download iconfont">&#xe644;</a>
+		<a id="share-link" class="video-share iconfont">&#xe636;</a>
+		<a href="javascript:showConfirm();" class="video-delete iconfont">&#xe634;</a>
+		<div class="video-play-btn iconfont" style="display: none;" onclick="play();">&#xe647;</div>
+		</div>
+	</section>
+	<div class="dialog-poppup format-steps" id="deleteMedia">
+		<div class="format-step1">
+			<div class="dialog-poppup-main">
+				<p class="warning" lan="msdel">确认删除？</p>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="cancel" lan="cancel">取消</a>
+				<a href="javascript:;" id="confirm" lan="del">删除</a>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+if(language && language=="en"){
+	$(".iconfont.goback").attr("href","video.html?language=en")
+}else{
+	$(".iconfont.goback").attr("href","video.html?language=zh")
+}
+var media;
+var id = getParameterByName('id');
+$("#download-link").on("click", function(e){
+	if(window.atliviewControl) {
+		window.atliviewControl.downloadVideo(media.url);
+	}else if(window.webkit && window.webkit.messageHandlers){
+		window.webkit.messageHandlers.downloadVideo.postMessage(media.url);
+	}
+})
+$("#share-link").on("click", function(e){
+	if(window.atliviewControl) {
+		window.atliviewControl.shareVideo(media.url);
+	}else if(window.webkit && window.webkit.messageHandlers){
+		window.webkit.messageHandlers.shareVideo.postMessage(media.url);
+	}
+})
+$("body").on("click","#cancel",function(){
+	$(".dialog-cover,.dialog-poppup").hide();
+});
+$("body").on("click","#confirm",function(){
+	$(".dialog-cover,.dialog-poppup").hide();
+	deleteMedia();
+});
+function showConfirm()
+{
+	$(".dialog-cover,#deleteMedia").show();
+}
+function deleteMedia()
+{
+	putJSON("/webctl", {"deleteMedia" : id}, function(e){
+		location.href = "video.html";
+		//window.history.back(-1);
+	},function(jqXHR, exception){
+		console.log((jqXHR.status+exception));
+		alert("删除失败！("+jqXHR.status+exception+")");
+		//window.history.back(-1);
+	}, "text");
+}
+
+getJSON('/media/' + id, function(e){
+	media=e;
+
+	if(getAccessToken()) {
+		media.cover=media.cover+"?access_token="+getAccessToken();
+		media.url=media.url+"?access_token="+getAccessToken();
+	}
+	
+	if(media.type==='video'){$(".video-play-btn").show();}
+	$('#video-detail-main').css("background-image","url(" + (media.type==='video'?media.cover:media.url) +")");
+	if(!window.atliviewControl && !(window.webkit && window.webkit.messageHandlers)){
+		$('#download-link').attr("href", media.url + "&action=download");
+		//$('#share-link').attr("href", media.url + "?action=share");
+	}
+}, function(err, status) {
+	console.log("get media info error");
+});
+
+function play(){
+	playPage=1;
+	location.href="/media/" + id + ".mp4" + (getAccessToken()?'?access_token='+getAccessToken():'');
+}
+</script>
+</body>
+</html>

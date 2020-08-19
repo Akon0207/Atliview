@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head> 
+<body class="setting-index">
+	<section class="setting-head">
+		<!-- <a href="javascript:;" class="iconfont goback" onclick="javascript:window.history.back(-1);">&#xe6ea;</a> -->
+		<a href="index.html" class="iconfont goback">&#xe6ea;</a>
+		<p lan="st">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+	</section>
+	<section class="setting-list">
+		<div class="setting-item title" lan="general">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="setting-item">
+			<a href="setting_wlan.html" class="flex flex-middle">
+				<div class="setting-item-name fx1 wifi">WLAN</div>
+				<div class="setting-item-info" id="wlanSSID"></div>
+			</a>
+		</div>
+		<div class="setting-item">
+	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 grid" lan="grid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <input type="checkbox"  class="switch-box" id="grid"></input>
+	        </a>
+	    </div>
+		<div class="setting-item">
+	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 autoDormant" lan="powerSav">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <!-- <input type="checkbox" class="switch-box" id="autoDormant"></input> -->
+	            <div class="setting-item-info" id="autoDormant"></div>
+	        </a>
+		</div>
+		<div class="setting-item" style="display: none;">
+			<a href="setting_ap.html" class="flex flex-middle">
+				<div class="setting-item-name fx1 hotspot" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<div class="setting-item-info" id="apSSID"></div>
+			</a>
+		</div>
+		<div class="setting-item">
+			<a href="setting_memory.html" class="flex flex-middle">
+				<div class="setting-item-name fx1 memory" lan="stoCard">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<div class="setting-item-info" id="available"><span class="red"></span><!-- / --><span><span></div>
+			</a>
+		</div>
+		<div class="setting-item">
+			<a href="setting_about.html" class="flex flex-middle ab on">
+				<div class="setting-item-name fx1 about" lan="about">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- <div class="redpoint"></div> --></div>
+				<div class="setting-item-info version" id="version"></div>
+				
+			</a>
+		</div>
+	</section>
+	<div class="upgrade-txt" lan="supTip"><a href="javascript:;" >发现固件版本<span class="newversion"></span>,点击升级</a></div>
+	<section class="setting-list" id="timelapseMode">
+		<div class="lowmemory-txt" style="display: none;" lan="lmtTxt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<!-- <div class="shooting-txt" style="display: none;" lan="shtTxt">正在拍摄中，部分功能被禁止操作</div> -->
+		
+		<div class="setting-item title" lan="timelapse">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="setting-item">
+	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 outPut" lan="outPut">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <div class="setting-item-info" id="outPut">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	        </a>
+		</div>
+		
+		
+		<div class="setting-item">
+	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 mark" lan="timeWat">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <input type="checkbox"  class="switch-box" id="mark"></input>
+	        </a>
+	    </div>
+	    
+		 <div class="setting-item">
+	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 logoMark" lan="logoMark">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <input type="checkbox"  class="switch-box" id="logoMark"></input>
+	        </a>
+	    </div>
+		<div class="setting-item">
+			<a href="setting_cron.html" class="flex flex-middle">
+				<div class="setting-item-name fx1 cron" lan="shtSch">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<div class="setting-item-info" id="cronEnable"></div>
+			</a>
+		</div>
+	</section>
+	<section class="setting-list" id="videoMode">
+		<div class="setting-item title" lan="video">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="setting-item">
+	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 cutOff" lan="cutOff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <!-- <input type="checkbox" class="switch-box" id="autoDormant"></input> -->
+	            <div class="setting-item-info" id="cutOff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	        </a>
+		</div>
+		
+		
+		<div class="setting-item">
+	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 audio" lan="audio">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <input type="checkbox"  class="switch-box" id="audio"></input>
+	        </a>
+	    </div>
+	    
+		<!--  <div class="setting-item">行车记录仪暂不开放
+	        <a href="javascript:;" class="flex flex-middle">
+	            <div class="setting-item-name fx1 tripREC" lan="tripREC">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <input type="checkbox"  class="switch-box" id="tripREC"></input>
+	        </a>
+	    </div>
+		<div class="setting-item">
+			<a href="javascript:;" class="flex flex-middle">
+				<div class="setting-item-name fx1 continueREC" lan="continueREC">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<div class="setting-item-info" id="continueREC"></div>
+			</a>
+		</div> -->
+	</section>
+	
+	<div class="dialog-cover"></div>
+	<div class="dormantMode">
+		<ul>
+			<li class="on">
+				<i id="default" lan="common">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+				<p lan="defPrompt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			</li>
+			<li>
+				<i id="mandatory" lan="mandatory">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+				<p lan="manPrompt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			</li>
+			<li>
+				<i id="off" lan="off">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+				<p lan="offPrompt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			</li>
+		</ul>
+		<div class="dorText" ><a href="javascript:;" lan="dorText"></a></div>
+	</div>
+	<div class="outPutMode">
+		<ul>
+			<li class="on">
+				<i  lan="videoMode">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+			</li>
+			<li>
+				<i  lan="pictureMode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+			</li>
+			<!-- <li>
+				<i  lan="mp4JpgTime">输出mp4+jpg+timeslice</i>
+			</li> -->
+		</ul>
+<!-- 		<div class="outPutDiscript" lan="outPutDiscript">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div> -->
+	</div>
+
+	<div class="dialog-poppup" id="outPutPro">
+		<div class="dialog-poppup-main" lan="outPutProCon">
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="outPutProNo" lan="cancel"></a>
+			<a href="javascript:;" id="outPutProYes" lan="sure"></a>
+		</div>
+	</div>
+	<div class="cutOffMode">
+		<ul>
+			<li class="on">
+				<i  lan="minute5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+			</li>
+			<li>
+				<i  lan="minute10">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="continueMode">
+		<ul>
+			<li class="on">
+				<i  lan="minute0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+			</li>
+			<li>
+				<i  lan="minute5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+			</li>
+			<li>
+				<i  lan="minute10">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="shoot-prompt" lan="shoot-prompt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	<div class="mode-prompt" lan="mode-prompt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	<div class="dialog-poppup" id="imgCtlPro">
+		<div class="dialog-poppup-tit" lan="alert">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="dialog-poppup-main" lan="imgCtlPro">
+			
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="imgCtlProConfirm" lan="OK">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="upWarning">
+		<div class="dialog-poppup-tit" lan="alert">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="dialog-poppup-main">
+			<p class="warning"></p>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="warConfirm" lan="OK">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+	</div>
+	<!-- <div class="upgrade-txt" lan="supTip"><a href="update.html?uploadFlag=1" >发现固件版本<span class="newversion"></span>,点击升级</a></div> -->
+	
+	<script type="text/javascript" src="js/language.js"></script>
+<script type="text/javascript">
+$(function(){
+	localControl.focus("disabled");
+	var shootState = null;
+	var dormantArray = new Array();
+	var dormantIndexArray = new Array(2,0,1);
+	var dormantValueArray = new Array(1,2,0);
+	var timeObj = {0:0,5:1,10:2}
+	var shootStatus = null;
+	var sessionType = null;
+	if(language && language=="en"){
+		$("#wlanSSID").parents("a").attr("href","setting_wlan.html?language=en");
+		$("#cronEnable").parents("a").attr("href","setting_cron.html?language=en");
+		$("#available").parents("a").attr("href","setting_memory.html?language=en");
+		$("#version").parents("a").attr("href","setting_about.html?language=en");
+		$(".iconfont.goback").attr("href","index.html?language=en");
+		dormantArray = ["On (Common)","On (Mandatory)","Off"];
+		$("#output").css("font-size","0.5em");
+	}else{
+		$("#wlanSSID").parents("a").attr("href","setting_wlan.html?language=zh");
+		$("#cronEnable").parents("a").attr("href","setting_cron.html?language=zh");
+		$("#available").parents("a").attr("href","setting_memory.html?language=zh");
+		$("#version").parents("a").attr("href","setting_about.html?language=zh");
+		$(".iconfont.goback").attr("href","index.html?language=zh");
+		dormantArray = ["开启(常规)","开启(强制)","关闭"];
+		$("#output").css("font-size","0.65em");
+	}
+	// 监控返回键，强制返回主页
+	if(app_type){
+		window.history.pushState({}, ""); 
+		window.addEventListener("popstate", function(e) {
+			window.location = "index.html?language="+language;
+		}, false);
+	}
+	
+
+	function updateErr(msg){
+		$("#upWarning p").text(msg);
+		$("#upWarning,.dialog-cover").show();
+	}
+	getJSON("/status",function(data,status){
+		shootStatus = data.recordinfo.status;
+		sessionType = data.sessionType;
+		if(data.sessionType=="timelapse"){
+			$("#videoMode .title,#videoMode .setting-item-name,#videoMode .setting-item-info").css("color","#a7a7a7");
+			// $("#videoMode .setting-item-name,#videoMode .setting-item-info,#videoMode input").addClass("shooting-now");
+			$("#videoMode a").addClass("shooting-now");
+			$("#videoMode").on("click",function(e){
+				if(language=="en"){
+					$(".mode-prompt").html("Current Shooting Mode: Time-lapse<br>Unable to change this setting");
+				}else{
+					$(".mode-prompt").html("当前模式为: 延时摄影<br>无法变更此设置");
+				}
+				
+				$(".mode-prompt").show();
+				setTimeout(function(){
+					$(".mode-prompt").hide();
+				},2000);
+			})
+		}
+		if(data.sessionType=="image"){
+			$("#videoMode .title,#videoMode .setting-item-name,#videoMode .setting-item-info").css("color","#a7a7a7");
+			$("#timelapseMode .title,#timelapseMode .setting-item-name,#timelapseMode .setting-item-info").css("color","#a7a7a7");
+			// $("#videoMode .setting-item-name,#videoMode .setting-item-info,#timelapseMode .setting-item-name,#timelapseMode .setting-item-info,#videoMode input,#timelapseMode input").addClass("shooting-now");
+			$("#videoMode a,#timelapseMode a").addClass("shooting-now");
+			$("#videoMode,#timelapseMode").on("click",function(e){
+				if(language=="en"){
+					$(".mode-prompt").html("Current Shooting Mode: Photo<br>Unable to change this setting");
+				}else{
+					$(".mode-prompt").html("当前模式为: 拍照<br>无法变更此设置");
+				}
+				$(".mode-prompt").show();
+				setTimeout(function(){
+					$(".mode-prompt").hide();
+				},2000);
+			})
+		}
+		if(data.sessionType=="video"){
+			$("#timelapseMode .title,#timelapseMode .setting-item-name,#timelapseMode .setting-item-info").css("color","#a7a7a7");
+			// $("#timelapseMode .setting-item-name,#timelapseMode .setting-item-info,#timelapseMode input").addClass("shooting-now");
+			$("#timelapseMode a").addClass("shooting-now");
+			$("#timelapseMode").on("click",function(e){
+				if(language=="en"){
+					$(".mode-prompt").html("Current Shooting Mode: Video<br>Unable to change this setting");
+				}else{
+					$(".mode-prompt").html("当前模式为: 录像<br>无法变更此设置");
+				}
+				$(".mode-prompt").show();
+				setTimeout(function(){
+					$(".mode-prompt").hide();
+				},2000);
+			})
+		}
+	})
+	getJSON("/REC",function(data,status){
+		/*行车记录仪 1是开启，0是关闭*/
+		if(data.tripREC==1) $("#tripREC").prop('checked',true);
+		else $("#tripREC").prop('checked',false);
+		/*静音 1是关闭静音，0是开启静音*/
+		if(data.audio==1) $("#audio").prop('checked',false);
+		else $("#audio").prop('checked',true);
+		/*视频分段*/
+		$(".cutOffMode li").eq(timeObj[data.cutOff]-1).addClass("on").siblings().removeClass("on");
+		$("#cutOff").text($(".cutOffMode li").eq(timeObj[data.cutOff]-1).find("i").text());
+		/*熄火后继续录制*/
+		$(".continueMode li").eq(timeObj[data.continueREC]).addClass("on").siblings().removeClass("on");
+		$("#continueREC").text($(".continueMode li").eq(timeObj[data.continueREC]).find("i").text());
+	}, function (jqXHR, exception) {
+        	console.log((jqXHR.status+exception));
+	});
+	getJSON("/setting", function(e, status){
+		//alert(e.wlan.wlanSSID);
+		/*wlan*/
+		/*
+		if(e.wlan && e.wlan.wlanSSID) $("#wlanSSID").text(e.wlan.wlanSSID);
+		else if(e.wlan && e.wlan.wlanEnable==1) $("#wlanSSID").text("已开启");
+		else if(e.wlan && e.wlan.wlanEnable==0) $("#wlanSSID").text("已关闭");*/
+		if(e.wlan){
+			if(e.wlan.wlanSSID=="0"){
+				if(language && language=="en"){
+					$("#wlanSSID").text("Not Connected");
+				}else{
+					$("#wlanSSID").text("未连接");
+				}
+				
+			}else{
+				$("#wlanSSID").text(e.wlan.wlanSSID);
+			}
+		}
+
+		/*热点*/
+		// if(e.ap && e.ap.apEnable!=1) $("#apSSID").text("已关闭");
+		if(e.ap && e.ap.apEnable!=1) $("#apSSID").text("");
+		else if(e.ap && e.ap.apSSID) $("#apSSID").text(e.ap.apSSID);
+		// else if(e.ap) $("#apSSID").text("已开启");
+		else if(e.ap) $("#apSSID").text("");
+		/*定时任务*/
+		// if(e.cronEnable==1) $("#cronEnable").text("已开启");
+		// else $("#cronEnable").text("已关闭");
+		if(e.cronEnable==1) {
+			if(language && language=="en"){$("#cronEnable").text("Running");}else{$("#cronEnable").text("运行中");}
+		}else $("#cronEnable").text("");
+		/*储存空间*/
+		if(e.storage) {
+			var v=e.storage.available;
+			/*
+			if(e.storage.total == 0){
+				if(language && language=="en"){
+					$("#available").text("Micro SD card not detected").addClass("red");
+				}else{
+					$("#available").text("未检测到存储卡").addClass("red");
+				}
+				
+			}else{
+				if(v<100000) $("#available span").eq(0).addClass("red");
+				else $("#available span").eq(0).removeClass("red");
+				v=renderSize(v*1024);
+				if(language && language=="en"){
+					$("#available span").eq(0).text("Left: "+v);
+				}else{
+					$("#available span").eq(0).text("剩余: "+v);
+				}
+				v=e.storage.total;
+				v=renderSize(v*1024);
+				// $("#available span").eq(1).text("总共："+v);
+			}*/
+			if(e.storage.sdcard == "UNPLUG"){
+				if(language && language=="en"){
+					$("#available").text("Not Detected").addClass("red");
+				}else{
+					$("#available").text("未检测到存储卡").addClass("red");
+				}
+			}else if(e.storage.sdcard == "NOT_FAT"){
+				if(language && language=="en"){
+					$("#available").text("Not Readable").addClass("red");
+				}else{
+					$("#available").text("不支持此存储卡格式").addClass("red");
+				}
+			}else{
+				if(v<100000) $("#available span").eq(0).addClass("red");
+				else $("#available span").eq(0).removeClass("red");
+				v=renderSize(v*1024);
+				if(language && language=="en"){
+					$("#available span").eq(0).text(v+" Available");
+				}else{
+					$("#available span").eq(0).text("剩余: "+v);
+				}
+				v=e.storage.total;
+				v=renderSize(v*1024);
+			}
+		}
+		/*画质*/
+		/*
+		if(("jpeg_quality" in e) && (e.jpeg_quality==1)) $("#jpeg_quality").prop('checked',true);
+		else $("#jpg-quality").prop('checked',false);
+		*/
+		/*自动休眠*/
+		/*
+		if(("autoDormant" in e) && (e.autoDormant==1)) {
+			$("#autoDormant").prop("checked",true);
+			console.log("the checkbox now is " + $("#autoDormant").prop("checked"));
+		}else {
+			$("#autoDormant").prop("checked",false);
+		}*/
+		if("autoDormant" in e){
+			// $("input[name=dormantMode]").each(function(index){
+			// 	if(e.autoDormant == index){
+			// 		$("#autoDormant").text(dormantArray[index]);
+			// 		$(this).prop("checked",true);
+			// 	}
+			// })
+			$(".dormantMode li").eq(dormantIndexArray[e.autoDormant]).addClass("on").siblings().removeClass("on");
+			$("#autoDormant").text(dormantArray[dormantIndexArray[e.autoDormant]]);
+		}
+		/*网格线*/
+		if("grid" in e){
+			if(e.grid == 0){
+				$("#grid").prop("checked",false);
+			}else{
+				$("#grid").prop("checked",true);
+			}
+		}
+		/*时间水印*/
+		if(e.timeMarkEnable==1) $("#mark").prop('checked',true);
+		else $("#mark").prop('checked',false);
+		
+		/*红外设置*/
+		// if(e.infrared==1) $(".infrared-box").prop("checked",true);
+		// else $(".infrared-box").prop("checked",false);
+		//旋转180°
+
+/*		
+		if("imgRotate" in e){
+			if(e.imgRotate=="180"){
+				$("#rotate180").prop('checked',true);
+			}
+		}else{$("#rotate180").prop('checked',false);}
+*/
+		if("timelapse_output" in e){
+			var outPutText = $(".outPutMode li").eq(e.timelapse_output).find("i").text();
+			$(".outPutMode li").eq(e.timelapse_output).addClass("on").siblings().removeClass("on");
+			$("#outPut").text(outPutText);
+		}
+		/*logo水印*/
+		if("logoMarkEnable" in e){
+			if(e.logoMarkEnable == 1){
+				$("#logoMark").prop("checked",true);
+			}else{$("#logoMark").prop("checked",false);}
+		}
+		/*版本号*/
+		if(e.sysinfo && e.sysinfo.firmware) {
+			var v = e.sysinfo.firmware;
+			$(".version").text(v);
+			getJSON("/status", function(data, status) {
+				shootState = data.recordinfo.status;
+				/*if(shootState != "idle"){
+					$("#rotate180").addClass("shooting-now");
+				}else{$("#rotate180").removeClass("shooting-now");}*/
+				var lastestfirmware = localControl.getValue("LatestFirmware", v);
+				console.log(v +'||'+ lastestfirmware);
+				// if(isNewVersion(v,lastestfirmware) && shootState == "idle"){
+				if(isNewVersion(v,lastestfirmware)){
+					$(".newversion").text(lastestfirmware);
+					$(".upgrade-txt").show();
+					$(".upgrade-txt").on("click",function(){
+						if(language && language=="en"){
+							if(data.sdcard == "UNPLUG"){updateErr("Unable to upgrade due to Micro SD card not detected!");return false;}
+							else if(data.available < 1024*50){updateErr("Unable to upgrade due to not enough storage space (50MB free space minimum)");return false;}
+							else if(data.battery.status == "no_battery"){updateErr("Unable to upgrade due to battery not installed!");return false;}
+							else if(data.recordinfo.status!="idle"){ updateErr("Unable to upgrade due to shooting in progress and/or an active shooting schedule!");return false;}
+							else if(data.battery.status=="discharging" && e.battery.capacity<20){updateErr("Unable to upgrade due to low battery!");return false;}
+							else{
+								window.location.href = "update.html?uploadFlag=1";
+							}
+
+							
+
+
+						}else{
+							if(data.sdcard == "UNPLUG"){updateErr("未检测到存储卡,无法升级");return false;}
+							else if(data.available < 1024*50){updateErr("存储空间不足，无法升级");return false;}
+							else if(data.battery.status == "no_battery"){updateErr("未安装电池，无法升级");return false;}
+							else if(data.recordinfo.status!="idle"){updateErr("有拍摄任务或定时任务，无法升级");return false;}
+							else if(data.battery.status=="discharging" && e.battery.capacity<20){updateErr("电量过低，无法升级");return false;}
+							else{
+								window.location.href = "update.html?uploadFlag=1";
+							}
+
+
+						}
+
+						
+					})
+
+				}
+
+			});
+		}
+
+		// if(("canUpgrade" in e)) {
+		// 	$(".ab").not(".up").removeClass("on");
+		// 	$(".ab.up").addClass("on");
+		// }else{
+		// 	$(".ab").not(".up").addClass("on");
+		// 	$(".ab.up").removeClass("on");
+		// }
+		
+	}, function (jqXHR, exception) {
+        	console.log((jqXHR.status+exception));
+	});
+	/*红外设置*/
+	/*
+	$("#infrared").on("click", function(){
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		postJSON("/control", {"infrared":v});
+	});
+	*/
+	/*画质设置*/
+	/*
+	$("#jpeg_quality").on("click", function(){
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		postJSON("/setting", {"jpeg_quality":v});
+	});
+	*/
+	/*自动休眠*/
+	/*
+	$("#autoDormant").on("click", function(){
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		postJSON("/setting", {"autoDormant":v});
+	});*/
+	/*输出*/
+	$("#outPut").on("click",function(){
+		if(shootStatus=="cronRunning" || shootStatus=="recording"){
+			$(".shoot-prompt").show();
+			setTimeout(function(){
+				$(".shoot-prompt").hide();
+			},2000);
+			return false;
+		}
+		$(".outPutMode,.dialog-cover").show();
+		$(".dialog-cover").addClass("tp");
+	});
+	$(".outPutMode li").each(function(index){
+		$(this).on("click",function(){
+			if(index==0){
+				$(this).addClass("on").siblings().removeClass("on");
+				$("#outPut").text($(this).find("i").text());
+				$(".outPutMode,.dialog-cover").hide();
+				postJSON("/setting",{timelapse_output:index});
+			}else{
+				$(".outPutMode").hide();
+				$("#outPutPro").show();
+			}
+			
+		})
+	})
+	$("#outPutProYes").on("click",function(){
+		$(".outPutMode li").eq(1).addClass("on").siblings().removeClass("on");
+		$("#outPut").text($(".outPutMode li").eq(1).find("i").text());
+		$("#outPutPro,.dialog-cover").hide();
+		postJSON("/setting",{timelapse_output:1});
+	});
+	$("#outPutProNo").on("click",function(){
+		$("#outPutPro,.dialog-cover").hide();
+	})
+	/*自动休眠*/
+	$("#autoDormant").on("click",function(){
+		// e.stopPropagation();
+		$(".dormantMode,.dialog-cover").show();
+		$(".dialog-cover").addClass("tp");
+	});
+	$(".dormantMode li").each(function(index){
+		$(this).on("click",function(e){
+			// e.stopPropagation();
+			// $("#autoDormant").text(dormantArray[index]);
+			// $(this).children().eq(0).children().siblings("input").prop("checked",true);
+			// console.log("click dormantMode:"+dormantArray[index]);
+			// postJSON("/setting", {"autoDormant":index});//
+			// $(".dormantMode,.dialog-cover").hide();
+			$(this).addClass("on").siblings().removeClass("on");
+			$("#autoDormant").text(dormantArray[index]);
+			postJSON("/setting",{"autoDormant":dormantValueArray[index]});//0为关闭，1 为默认，2为强制(2,0,1);
+			$(".dormantMode,.dialog-cover").hide();
+			$(".dialog-cover").removeClass("tp");
+		})
+	});
+	/*视频分段*/
+	var timeArray = new Array(0,5,10);
+	$("#cutOff").on("click",function(){
+		$(".cutOffMode,.dialog-cover").show();
+	});
+	$(".cutOffMode li").each(function(index){
+		$(this).on("click",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			$(".cutOffMode,.dialog-cover").hide();
+			$("#cutOff").text($(this).find("i").text());
+			postJSON("/REC",{cutOff:timeArray[index+1]});
+		})
+	});
+	/*熄火后继续录制*/
+	$("#continueREC").on("click",function(){
+		$(".continueMode,.dialog-cover").show();
+	})
+	$(".continueMode li").each(function(index){
+		$(this).on("click",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			$(".continueMode,.dialog-cover").hide();
+			$("#continueREC").text($(this).find("i").text());
+			postJSON("REC",{continueREC:timeArray[index]});
+		})
+	})
+	/*静音*/
+	$("#audio").on("click", function(){
+		var v=1;
+		if($(this).prop("checked")) v=0;
+		postJSON("/REC", {audio:v});
+	});
+	/*行车记录仪*/
+	$("#tripREC").on("click", function(){
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		postJSON("/REC", {tripREC:v});
+	});
+	$("body").on("click", ".dialog-cover", function(e){
+		e.stopPropagation();
+		$(".dormantMode,.dialog-cover,.outPutMode,.cutOffMode,.continueMode,#outPutPro").hide();
+		$(".dialog-cover").removeClass("tp");
+		console.log("this is ..............dialog-cover click");
+	});
+
+	/*网格线*/
+	$("#grid").on("click",function(){
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		postJSON("/setting",{grid:v});
+	})
+
+	//旋转180°
+	$("#rotate180").on("click", function(){
+		if(shootState != "idle" && shootState != "waiting"){
+			$(".dialog-cover,#imgCtlPro").show();
+			setTimeout(function(){
+				$(".dialog-cover,#imgCtlPro").hide();
+			},3000)
+
+			return false;
+		}
+		postJSON("/imgCtl", {imgRotate:"180"},function(e,status){
+			console.log("rotate 180 success");
+		},function(){
+			console.log("rotate 180 failed");
+		},"text");
+	});
+	$("#imgCtlProConfirm").on("click",function(){
+		$(".dialog-cover,#imgCtlPro").hide();
+	})
+
+	/*摄像头非空闲状态禁止操作红外设置*/
+	/*logo水印*/
+	$("#logoMark").on("click",function(){
+		if(shootStatus=="cronRunning" || shootStatus=="recording"){
+			$(".shoot-prompt").show();
+			setTimeout(function(){
+				$(".shoot-prompt").hide();
+			},2000);
+			return false;
+		}
+		var v = 0;
+		if($(this).prop("checked"))v=1;
+		postJSON("/setting",{logoMarkEnable:v})
+	})
+	/*时间水印*/
+	$("#mark").on("click", function(){
+		if(shootStatus=="cronRunning" || shootStatus=="recording"){
+			$(".shoot-prompt").show();
+			setTimeout(function(){
+				$(".shoot-prompt").hide();
+			},2000);
+			return false;
+		}
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		postJSON("/setting", {"timeMarkEnable":v});
+	});
+	$("#warConfirm").on("click",function(){
+		$("#upWarning,.dialog-cover").hide();
+	});
+	//跳转到自动休眠说明书
+	$(".dorText a").on("click",function(){
+		localControl.startPage("nodisplay_whatispowersaving");
+	})
+})
+</script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,506 @@
+<!DOCTYPE HTML>
+<html>
+<meta charset="UTF-8">
+<title>
+
+</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css?1" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.actual.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+
+<head>
+<style>
+.box {
+width: 100%;
+height: 50px;
+background: #1C192C;
+background-color: rgba(28,25,44,0.7);
+border-radius: 10px;
+display:none;
+<!--圆角-->box-shadow: 1px 1px 2px 2px #232;
+<!--阴影-->border: 1px solid #ff0000;
+position: absolute;
+pointer-events: auto;
+}
+
+.play {
+<!--用css画三角形-->width: 0px;
+height: 0px;
+float: left;
+margin-top: 10px;
+width: 10px;
+width: 0;
+height: 0;
+border-top: 10px solid transparent;
+border-left: 16px solid #666666;
+border-bottom: 10px solid transparent;
+}
+
+.pauseV {
+<!--用css画两条竖线-->width: 6px;
+height: 18px;
+border-left: 4px solid #666666;
+border-right: 4px solid #666666;
+float: left;
+margin-top: 10px;
+width: 10px;
+}
+
+.time {
+color: #666666;
+float: left;
+width: 8%;
+margin-top: 12px;
+font-size: 14px;
+margin-left: 10px;
+height: 18px;
+}
+
+#progress {
+float: left;
+width: 55%;
+height: 8px;
+background: #fff;
+box-shadow: 1px 1px 2px 2px #232;
+border-radius: 5px;
+margin-top: 16px;
+margin-left: 16px;
+position: relative;
+}
+
+#bar {
+width: 10%;
+height: 100%;
+background: #ccc;
+border-radius: 3px;
+display: inline-block;
+position: absolute;
+top: 0;
+left: 0;
+}
+
+#control {
+width: 17px;
+height: 17px;
+position: absolute;
+border-radius: 100%;
+left: 0;
+top: -4px;
+background: #fff;
+box-shadow: 1px 1px 2px 2px #132;
+}
+
+.soundon {
+width: 10px;
+height: 8px;
+border-right: 13px solid #666666;
+border-top: 6px solid rgba(255, 255, 255, 0);
+border-bottom: 6px solid rgba(255, 255, 255, 0);
+float: left;
+margin-top: 10px;
+}
+
+.soundoff {
+width: 10px;
+height: 8px;
+border-right: 13px solid #fff;
+border-top: 6px solid rgba(255, 255, 255, 0);
+border-bottom: 6px solid rgba(255, 255, 255, 0);
+float: left;
+margin-top: 10px;
+}
+
+#volume {
+float: left;
+width: 15%;
+height: 5px;
+background: #fff;
+box-shadow: 1px 1px 2px 2px #232;
+border-radius: 5px;
+margin-top: 16px;
+margin-left: 2px;
+position: relative;
+}
+
+#volume-bar {
+width: 10%;
+height: 100%;
+background: #ccc;
+border-radius: 3px;
+display: inline-block;
+position: absolute;
+top: 0;
+left: 0;
+}
+
+#volume-control {
+width: 15px;
+height: 15px;
+position: absolute;
+border-radius: 100%;
+left: 0;
+top: -4px;
+background: #fff;
+box-shadow: 1px 1px 2px 2px #132;
+}
+
+#full {
+width: 15px;
+height: 15px;
+border: 3px solid #ccc;
+float: left;
+margin-top: 10px;
+margin-left: 15px;
+transition: 0.5s all;
+}
+
+#full:hover {
+width: 20px;
+height: 20px;
+border: 3px solid #ccc;
+float: left;
+margin-top: 7px;
+margin-left: 13px;
+}
+#download {
+font-size: 20px;
+color: #666666;
+width: 15px;
+height: 15px;
+float: left;
+margin-top: 10px;
+margin-left: 15px;
+transition: 0.5s all;
+}
+#sound {
+font-size: 20px;
+color: #666666;
+width: 15px;
+height: 15px;
+float: left;
+margin-top: 10px;
+margin-left: 15px;
+transition: 0.5s all;
+}
+
+
+video::-webkit-media-controls-enclosure {
+overflow: hidden;
+}
+
+video::-webkit-media-controls-panel {
+width: calc(100% + 35px);
+}
+
+.video_goback {
+    position: absolute;
+    z-index: 99;
+    pointer-events:auto;
+    top: 50%;
+    left: 5%;
+    font-size: 2em; 
+    color: #777;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.head-bar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    justify-content: space-between;
+    height: 60px;
+    background: rgba(0,0,0,.65);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+</style>
+</head>
+<body>
+	<div class="head-bar flex flex-middle setting-head box">
+		<a href="index.html" class="iconfont video_goback">&#xe63b;</a>
+	</div>
+
+<video autoplay="autoplay" webkit-playsinline  playsinline style="max-height: 100%;max-width: 100%; width: 100%; height: 100%; display: block;" id="video">
+</video>
+<div id="box" class="foot-bar flex flex-middle box" style="display: none;">
+<!--播放暂停按钮-->
+<div style="width: 5%;float: left;padding-left: 10px;">
+<div id="play" class="play">
+</div>
+</div>
+<div id="time" class='time'>00:00</div>
+<!--进度条-->
+<div id="progress">
+<span id="bar">
+                 </span>
+<div id="control">
+</div>
+</div>
+<!--喇叭-->
+<div style="width: 10%;float: left;padding-left: 10px;">
+<div>
+<a id="sound" class="iconfont">&#xe602;</a>
+</div>
+
+</div>
+<!--<div id="full"></div>-->
+<div style="width: 10%;float: left;padding-left: 10px;">
+<div><a id="download" class="iconfont"  download >&#xe644;</a></div>
+</div>
+<!--声音控制-->
+<!--<div id="volume">
+<span id="volume-bar">
+                 </span>
+<div id="volume-control">
+</div>
+</div>-->
+
+
+</div>
+</body>
+
+<script>
+var sessionId = getParameterByName('sessionId');
+var frameIndex = getParameterByName('frameIndex');
+var url="/playback?sessionId="+sessionId+"&frameIndex="+frameIndex+ (getAccessToken()?'&access_token='+getAccessToken():'');
+var video = document.getElementById("video"); //视频对象
+var bar_timer=null;
+var downloaded=0;
+function reset_bar_timer()
+{
+	clearTimeout(bar_timer);
+	bar_timer=setTimeout(function(){
+		$(".box").hide();
+	}, 3000)
+}
+function downloadDone()
+{
+	if(downloaded){
+		console.log("reload");
+		video.src=url;
+		video.load();
+		downloaded=0;
+	}
+	console.log("show");
+	$(".box").show();
+	reset_bar_timer();
+}
+$(function(){
+var box = document.getElementById("box"); //box对象
+var play = document.getElementById("play"); //播放按钮
+var time = document.getElementById('time');
+var progress = document.getElementById("progress"); //进度条
+var bar = document.getElementById("bar"); //灰色进度条
+var control = document.getElementById("control"); //声音按钮
+var sound = document.getElementById("sound"); //喇叭
+//var full = document.getElementById("full") //全屏
+var download = document.getElementById("download") //全屏
+var progressOffsetWidth=$("#progress").actual('width')-$("#control").actual('width'); //进度条真实总长度
+
+$("#video").attr("src", url);
+if(!app_type) $("#download").attr("href", url);
+video.play();
+
+$("#video").on("click",function(){
+	if(downloaded) return downloadDone();
+	if($(".box").css("display")=="none") {
+		$(".box").show();
+		reset_bar_timer();
+	}else {
+		clearTimeout(bar_timer);
+		$(".box").hide();
+	}
+});
+
+video.addEventListener('play', function() {
+	console.log('play');
+//              that.video.savePoint = true;
+//              that.savePlayPoint();
+	play.className = "pauseV";
+});
+
+video.addEventListener('pause', function() {
+	console.log('pause');
+	play.className = "play";
+	//  that.savePlayPoint(true);
+});
+
+video.addEventListener('timeupdate', function() {
+	var timeStr = parseInt(video.currentTime);
+	console.log(timeStr);
+	var minute = parseInt(timeStr/60);
+	if(minute == 0){
+		if(timeStr < 10){
+			timeStr = "0"+timeStr  ;
+		}
+		minute = "00:"+timeStr;
+	}else{
+		var timeStr = timeStr%60;
+		if(timeStr < 10){
+			timeStr = "0"+timeStr  ;
+		}
+		minute = minute +":"+timeStr;
+	}
+	time.innerHTML = minute;
+});
+
+video.addEventListener('volumechange', function() {
+	if(video.muted) {
+		$("#sound").html("&#xe752;");
+		//sound.className = "soundoff"
+	} else {
+		$("#sound").html("&#xe602;");
+		//sound.className = "soundon"
+	}
+});
+
+/*
+full.addEventListener("click", function() {
+//video.mozRequestFullScreen()
+video.webkitRequestFullScreen()
+}, false)
+*/
+//下载
+download.addEventListener("click", function() {
+	reset_bar_timer();
+	video.pause();
+	console.log("download:"+url);
+	//alert("download:"+url);
+	if(app_type)  {
+		video.src="";
+		//video.preload="meta";
+		//video.autoplay="";
+		//video.load();
+		downloaded=1;
+		localControl.downloadVideo(url);
+	}
+}, false)
+
+play.onclick = function() {
+	if(video.paused) {
+		play.className = "pauseV";
+		video.play();
+	} else {
+		reset_bar_timer();
+		play.className = "play";
+		video.pause();
+	}
+}
+
+//缓冲
+$("#video").on("waiting", function() {
+	console.log("waiting");
+	$(".disconnected").show();
+})
+//播放中
+$("#video").on("playing", function() {
+	console.log("playing");
+	$(".disconnected").hide();
+})
+function updateVideoBar()
+{
+	progressOffsetWidth=$("#progress").actual('width')-$("#control").actual('width');
+	var scales = video.currentTime / video.duration;
+	//bar.style.width = progress.offsetWidth * scales + "px";
+	//control.style.left = (progress.offsetWidth-control.offsetWidth) * scales + "px";
+	bar.style.width = progressOffsetWidth * scales + "px";
+	control.style.left = progressOffsetWidth * scales + "px";
+}
+//进度条
+video.addEventListener("timeupdate", updateVideoBar, false);
+$(window).resize(updateVideoBar);
+
+var move = 'ontouchmove' in document ? 'touchmove' : 'mousemove';
+control.addEventListener("touchstart", function(e) {
+	reset_bar_timer();
+	var leftv = e.touches[0].clientX - progress.offsetLeft - box.offsetLeft;
+	if(leftv <= 0) {
+		leftv = 0;
+	}
+	if(leftv >= progress.offsetWidth) {
+		leftv = progress.offsetWidth;
+	}
+	control.style.left = leftv + "px"
+}, false);
+
+control.addEventListener('touchmove', function(e) {
+	reset_bar_timer();
+	var leftv = e.touches[0].clientX - progress.offsetLeft - box.offsetLeft;
+		if(leftv <= 0) {
+		leftv = 0;
+	}
+	if(leftv >= progress.offsetWidth) {
+		leftv = progress.offsetWidth;
+	}
+	control.style.left = leftv + "px"
+}, false);
+
+
+control.addEventListener("touchend", function(e) {
+	reset_bar_timer();
+	var scales = control.offsetLeft / progress.offsetWidth;
+	video.currentTime = video.duration * scales;
+	video.play();
+	//document.onmousemove = null;
+	//document.onmousedown = null;
+	//video.pause();
+}, false);
+
+progress.addEventListener("click", function(e) {
+	console.log("click:"+control.offsetLeft+" "+e.screenX+" "+e.clientX+" "+e.pageX);
+	reset_bar_timer();
+	var leftv = e.clientX - progress.offsetLeft - box.offsetLeft;
+		if(leftv <= 0) {
+		leftv = 0;
+	}
+	if(leftv >= progress.offsetWidth) {
+		leftv = progress.offsetWidth;
+	}
+	control.style.left = leftv + "px"
+	var scales = control.offsetLeft / (progress.offsetWidth-control.offsetWidth);
+	video.currentTime = video.duration * scales;
+	video.play();
+	//document.onmousemove = null;
+	//document.onmousedown = null;
+	//video.pause();
+}, false);
+
+$("#sound").on("click",function() {
+	reset_bar_timer();
+	if(video.muted) {
+		$("#sound").html("&#xe602;");
+		video.muted = false;
+		//sound.className = "soundon"
+	} else {
+		video.muted = true;
+		$("#sound").html("&#xe752;");
+		//sound.className = "soundoff"
+	}
+})
+
+$(".video_goback").on("click", function(){
+	//location.href = "index.html";
+})
+
+})
+</script>
+
+
+</html>

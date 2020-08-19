@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>aTLi-T100</title>
+    <meta name="keywords" content="aTLi-T100" />
+    <meta name="description" content="aTLi-T100" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+    <link rel="stylesheet" type="text/css" href="style/css/main.css" />
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+    <script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <script type="text/javascript" src="js/device.min.js"></script>
+    <script type="text/javascript" src="js/crypto-js.min.js"></script>
+    <script type="text/javascript" src="js/enc-base64.min.js"></script>
+    <script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+</head>
+<body class="setting-index">
+    <section class="setting-head">
+        <a href="javascript:;" class="iconfont goback" onclick="javascript:window.history.back(-1);">&#xe6ea;</a>
+        <p lan="findNew">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    </section>
+
+    <section class="setting-list log">
+        <div class="setting-newversion" lan="currentV">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="currentversion"></span></div>
+        <div class="setting-newversion" lan="newV">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="newversion"></span></div>
+        <div class="setting-newversion" lan="newLog">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <div class="log-content">
+        </div>
+    </section>
+    <div class="update-btn" lan="upgrade">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+    <div class="dialog-cover"></div>
+    <div class="forUpdate">
+    	<div class="updateStep" id="uploading">
+    		<div class="updateTitle" lan="uploadN">相机升级</div>
+    		<div class="updateProgress">
+    			<div class="update-progress-text">
+                	<div class="loading">
+	                	<div id="loading1">
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+						</div>
+	                </div>
+                    <div class="updateText" lan="updatePre">正在准备...</div>
+                </div>
+    		</div>
+
+    	</div>
+    	<div class="updateStep" id="writing">
+    		<div class="updateTitle" lan="uploadN">相机升级</div>
+    		<div class="updateProgress">
+    			<div class="update-progress-text">
+                	<div class="update-progress-ui">
+	                    <span style="width: 0%;"></span>
+	                </div>
+                    <div class="updateText" lan="upgradeN">正在升级...</div>
+                </div>
+    		</div>
+
+    	</div>
+    	<div class="updateStep" id="rebooting">
+    		<div class="updateTitle" lan="uploadN">相机升级</div>
+    		<div class="updateProgress">
+    			<div class="update-progress-text">
+                	<div class="update-progress-ui">
+	                    <span style="width: 0%;"></span>
+	                </div>
+                    <div class="updateText" lan="rebootN">正在重启...</div>
+                </div>
+    		</div>
+
+    	</div>
+    	<div class="updateStep" id="updateDone">
+    		<div class="updateTitle" lan="uploadN">相机升级</div>
+    		<div class="updateProgress">
+    			<div class="update-progress-text">
+                	<div class="update-progress-ui">
+	                    <span style="width: 100%;"></span>
+	                </div>
+                    <div class="updateText" lan="Done">升级结束</div>
+                </div>
+    		</div>
+
+    	</div>
+    	<div class="updateStep" id="updateError">
+    		<div class="updateTitle" lan="upErr">升级失败</div>
+    		<div class="updateProgress">
+    			<div class="update-progress-text">
+                	<!-- <div class="update-progress-ui">
+	                    <span style="width: 100%;"></span>
+	                </div> -->
+                    <div class="updateText" id="errorReason"></div>
+                </div>
+    		</div>
+    	</div>
+    	<div class="updatePrompt">
+        	<div lan="updatePro"></div>
+        </div>
+        <div class="updateBack">
+        	<a href="javascript:;" lan="back" id="upgradeBack">返回</a>
+        	<a href="javascript:;" lan="retry" id="upgradeRetry">重试</a>
+        </div>
+    </div>
+    <div class="dialog-poppup update-steps" style="display: none;">
+
+        <div class="update-step1" id="update-downloading" style="display: none;height: 200px;">
+            <div class="dialog-poppup-tit">正在下载</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                    <span></span><b>请勿触碰电源键或切断电源！</b>
+                </div>
+                <div class="update-progress-ui">
+                    <span style="width: 0%;"></span>
+                </div>
+            </div>
+        </div>
+        <div class="update-step1" id="update-uploading" style="display: none;height: 200px;">
+            <!-- <div class="dialog-poppup-tit">正在上传升级包</div> -->
+            <!-- <div class="dialog-poppup-tit" lan="upTit">升级固件版本</div> -->
+            <div class="dialog-poppup-tit" lan="uploadN">相机升级</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                	<!-- <p lan="uploadN">正在上传升级包</p> -->
+                	<div class="loading">
+	                	<div id="loading1">
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+						</div>
+	                </div>
+<!--                     <span></span><b class="update-prompt" lan="upP1">指示灯绿色闪烁期间</b>
+                    <b class="update-prompt" lan="upP2">切勿操作开关按键和切断供电</b> -->
+                    <div class="updateText" lan="updatePre">正在准备...</div>
+                </div>
+                <!-- <div class="update-progress-ui">
+                    <span style="width: 100%;"></span>
+                </div> -->
+                <!-- <div class="update-ui">
+                	<div class="update-img"><img src="style/images/resetting.gif"></div>
+                </div> -->
+                
+                
+            </div>
+            
+        </div>
+        <div class="update-step-ap" id="update-ap" style="display: none;height: 200px;">
+            <div class="dialog-poppup-tit" lan="upTit">升级固件版本</div>
+            <div class="update-progress">
+            	<div class="update-progress-text">
+            		<p lan="upgradeN">正在升级中</p>
+            		<div class="loading">
+	                	<div id="loading1">
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+					        <div class="demo1"></div>
+						</div>
+	                </div>
+                    <span></span><b class="update-prompt" lan="upP1">指示灯绿色闪烁期间</b>
+                    <p class="update-prompt" lan="upP2">切勿操作开关按键和切断供电</p>
+                </div>
+                <div class="update-progress-text">
+                    <span></span><b  id="update-ap-msg" lan="upDur">已用时 0 秒，预计用时2分钟</b>
+                </div>
+                
+                <!-- <div class="update-progress-ui">
+                    <span style="width: 100%;"></span>
+                </div> -->
+                <!-- <div class="update-ui">
+                	<div class="update-img"><img src="style/images/resetting.gif"></div>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="update-step2" id="update-writing" style="display: none;height: 200px;">
+            <div class="dialog-poppup-tit" lan="uploadN">相机升级</div>
+            <div class="update-progress">
+                
+                <div class="update-progress-ui">
+                    <span style="width: 0%;"></span>
+                </div>
+                <div class="update-progress-text">
+                	<div class="updateText" lan="upgradeN">正在升级...</div>
+                    <span></span><p class="update-prompt" lan="updatePro">升级过程中切勿操作开关按键!</p>
+                </div>
+            </div>
+        </div>
+        <div class="update-step3" id="update-reboot" style="display: none;height: 200px;">
+            <div class="dialog-poppup-tit" lan="uploadN">相机升级</div>
+            <div class="update-progress">
+                
+                <div class="update-progress-ui">
+                    <span style="width: 0%;"></span>
+                </div>
+                <!-- <div class="update-progress-text">
+                    <span></span><p lan="rebootN">正在重启...</p>
+                </div> -->
+                <div class="update-progress-text">
+                	<div lan="rebootN"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="update-step3" id="update-done" style="display: none;height: 200px;">
+            <div class="dialog-poppup-tit" lan="uploadN">相机升级</div>
+            <div class="update-progress">
+                
+                <div class="update-progress-ui">
+                    <span style="width: 100%;"></span>
+                </div>
+                <div class="update-progress-text">
+                    <span></span><b></b>
+                    <div lan="Done">升级结束</div>
+                </div>
+                <div class="update-complete-btn success">
+                    <span lan="upgradeBack">返回</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="update-step3" id="update-timeout" style="display: none;">
+            <div class="dialog-poppup-tit" lan="upDone">升级成功</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                    <span></span><b></b>
+                </div>
+                <!-- <div class="update-progress-ui">
+                    <span style="width: 100%;"></span>
+                </div> -->
+                <div class="update-complete-btn timeout">
+                    <span lan="back">返回</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="update-step4" id="update-error" style="display: none;height: 200px;">
+            <div class="dialog-poppup-tit" lan="upErr">升级失败</div>
+            <div class="update-progress">
+                <!-- <div class="update-error-text">
+                    <span></span><b></b>
+                </div> -->
+                <div class="update-error-ui">
+                    <span class="err-reason">内存不足</span>
+                </div>
+                <div class="update-complete-btn fail">
+                    <span lan="back">返回</span>
+                </div>
+            </div>
+        </div>
+        <div class="update-step5" id="update-error2" style="display: none;height: 200px;">
+            <div class="dialog-poppup-tit" lan="upErr">升级失败</div>
+            <div class="update-progress">
+                <!-- <div class="update-error-text">
+                    <span></span><b></b>
+                </div> -->
+                <div class="update-error-ui">
+                    <span class="err-reason2">内存不足</span>
+                </div>
+            </div>
+            <div class="dialog-btns flex">
+                <a href="javascript:;" id="tryCancel" lan="cancel">取消</a>
+                <a href="javascript:;" id="tryAgain" lan="retry">重试</a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/language.js"></script>
+    <script type="text/javascript">
+        inUpdatePage=true;
+        var connect = false;
+        var uploadFirmware=0;
+        var upgradeTimeout=null;
+        var upgradeStartTime=null;
+        var upgradeBackTime=null;
+        var duration=null;
+        var updateStatus = null;
+        var stopTime,startTime,updateFlag = false,stopFlag=true;
+        var uploadFlag=getParameterByName("uploadFlag");
+        uploadFlag=1;
+        isAP();
+        function uploadDone(flag){
+            if(!uploadFirmware) return;//不在上传文件状态
+            uploadFirmware=0;
+            console.log("uploadDone");
+            if(flag==0){//上传成功，开始升级
+                postJSON("/upgrade",{upgrade:1,upload:1},function(e,status){
+                    setUpdateStartTime();
+                    writing(0);
+                    setTimeout(update,1100);
+                },function(jqXHR,exception){
+                    if(language && language=="en"){error("EON not responsive!");}else{error("相机没有回应！")}
+                    console.log(jqXHR.status+exception);
+                },"text")
+            }else{
+                if(language && language=="en"){error("Upload firmware to camera failed !")}else{error("上传固件失败，退出升级程序 ！")}
+            }
+        }
+        function uploading(){
+            updateStatus = "uploading";
+            $("#uploading").show().siblings().hide();
+            $(".updatePrompt").show();
+        }
+        function writing(v){
+            updateStatus = "writing";
+            $("#writing").show().siblings().hide();
+            $(".updatePrompt").show();
+            if(v>=0 && v<=100){
+                $("#writing .update-progress-ui span").css("width",v+"%");
+            }
+        }
+        function done(){
+            updateStatus = "done";
+            $("#updateDone").show().siblings().hide();
+            $(".updateBack").show();
+            $("#upgradeBack").attr("type","done").show().siblings().hide();
+            setUpdateEnd();
+        }
+        function error(msg){
+            $("#errorReason").text(msg);
+            $("#updateError").show().siblings().hide();
+            $(".updateBack").show();
+            $("#upgradeBack").show().attr("type","error").siblings().hide();
+            setUpdateEnd();
+        }
+        function error2(msg){
+            $("#errorReason").text(msg);
+            $("#updateError").show().siblings().hide();
+            $(".updateBack").show();
+            $("#upgradeBack,#upgradeRetry").show().attr("type","error");
+            setUpdateEnd();
+        }
+        function error3(msg){
+            if(language && language=="en"){
+                if(msg=="need battery") error("Unable to upgrade due to battery not installed!")
+                if(msg=="need sdcard") error("Micro SD card not detected! ")
+                if(msg=="sdcard no enough space") error("Not enough storage space (50MB free space minimum)")
+                if(msg=="low bat capacity") error("Unable to upgrade due to low battery!")
+                if(msg=="INVALID PACKAGE") error("INVALID PACKAGE")
+                if(msg=="DOWNLOAD FAILED") error("DOWNLOAD FAILED")
+            }else{
+                if(msg=="need battery") error("未安装电池，无法升级")
+                if(msg=="need sdcard") error("未检测到存储卡")
+                if(msg=="sdcard no enough space") error("存储空间不足，至少需要50M空间！")
+                if(msg=="low bat capacity") error("电量过低，无法升级")
+                if(msg=="INVALID PACKAGE") error("无效升级包")
+                if(msg=="DOWNLOAD FAILED") error("下载固件失败")
+            }
+        }
+        var count = 0;
+        function reboot(){
+            updateStatus = "rebooting";
+            $("#rebooting .update-progress-ui span").css("width",(inAP==1?String(parseInt(count/35*100)):String(parseInt(count/45*100)))+"%");
+            if(count>=(inAP==1?35:45)){return done()}else{
+                upgradeTimeout=setTimeout(reboot, 1000);
+            }
+            $("#rebooting").show().siblings().hide();
+            $(".updatePrompt").show();
+            count++;
+            getJSON("/setting", function(e, status){
+            
+                if(e.sysinfo.firmware==$("#newversion").text() && count>8) {
+                    $("#rebooting .update-progress-ui span").css("width","100%");
+                    connect = true;
+                    clearTimeout(upgradeTimeout);
+                    return done();
+                }
+                else error("版本不一致");
+            } , function (XHR, e) {
+                console.log((XHR.status+e));
+                connect = false;
+            })
+        }
+        function setUpdateEnd(){
+            console.log("setUpdateEnd");
+            localControl.updateStartTime("updateEnd");
+            localControl.notify("networkMonitorOn");
+            setTimeout(function(){
+                localControl.notify("LostConn");
+            },300);
+        }
+        function setUpdateStartTime(){
+            console.log("setUpdateStartTime");
+            var d=new Date();
+            var t=transTime(d, "en");
+            localControl.updateStartTime(t);
+            localControl.notify("networkMonitorOff");
+        }
+        var updatingVersion=null;
+        function update(){
+            // if(!updateTimer) updateTimer=setTimeout(timeout, 75000);
+            getJSON("/upgrade", function(e, status){
+                if(e.status=="done") return done();
+                else if(e.status=="error") {
+                    return error3(e.errorMsg);
+                }
+                else if(e.status=="rebooting") return reboot();
+                //else if(e.status=="uploading") uploading();
+                // else if(e.status=="downloading") downloading(e.percentage);
+                else if(e.status=="writing") writing(e.percentage);
+                else if(e.status=="checking") writing(0);
+                if("currentVersion" in e && updateStatus!="uploading"){
+                    if(e.currentVersion==updatingVersion || updatingVersion=='' || updatingVersion==null) return done();
+                    else return error("版本不一致。升级:"+updatingVersion+",结果:"+e.currentVersion+" ");
+                }
+                // $("#newversion").text(e.version);
+                if(e.version) updatingVersion=e.version;
+                upgradeTimeout=setTimeout(update, 400);
+                
+            } , function (XHR, e) {
+                console.log((XHR.status+e));
+                upgradeTimeout=setTimeout(update, 2000);
+            })
+        }
+        function start_update(data){
+            console.log("start update");
+            getJSON("/status", function(e, status){
+                if(language && language=="en"){
+                    if(e.sdcard == "UNPLUG") return error2("Micro SD card not detected!  Please insert the card, then retry!");
+                    if(e.available < 1024*50) return error("Not enough storage space (50MB free space minimum)");
+                    if(e.recordinfo.status!="idle") return error("Unable to upgrade due to shooting in progress and/or an active shooting schedule!Please terminate all and then retry!");
+                    if(e.battery.status == "no_battery") return error2("Unable to upgrade due to battery not installed! Please install battery and then retry.");
+                    if(e.battery.status=="discharging" && e.battery.capacity<20) return error2("Unable to upgrade due to low battery! Please connect external power source and then retry.");
+                    if(uploadFlag) {
+                        var newV=localControl.getValue("LatestFirmware", data.sysinfo.firmware);
+                        $("#newversion").text(newV);
+                        if(data.sysinfo.firmware==newV) return error("Current firmware is the latest version:"+newV);
+                        localControl.upFirmware();//localControl.upFirmware()通知app开始上传固件版本到相机
+                        updateFlag = true;
+                        upgradeStartTime = new Date().getTime();
+                        uploading();
+                        console.log("start upFirmware");
+                        uploadFirmware=1;
+                    }else {
+                        // if(!("canUpgrade" in e) || e.canUpgrade!=1) return error("Current firmware is the latest version!");
+                        // postJSON("/upgrade", {upgrade:1}, function(e, status){
+                        //     downloading(0);
+                        //     setTimeout(update, 1000);
+                        // }, function (jqXHR, exception) {
+                        //     error("EON not responsive!");
+                        //     console.log((jqXHR.status+exception));
+                        // }, "text")
+                    }
+                }else{
+                    if(e.sdcard == "UNPLUG") return error2("未检测到存储卡，请插入存储卡后重试！");
+                    if(e.available < 1024*50) return error("存储空间不足，至少需要50M空间！");
+                    if(e.recordinfo.status!="idle") return error("有拍摄任务或定时任务，无法升级；停止任务后即可升级");
+                    if(e.battery.status == "no_battery") return error2("未安装电池，无法升级；请安装电池后重试");
+                    if(e.battery.status=="discharging" && e.battery.capacity<20) return error2("电量过低，无法升级；请连接充电电源后重试 ");
+                    if(uploadFlag) {
+                        var newV=localControl.getValue("LatestFirmware", data.sysinfo.firmware);
+                        $("#newversion").text(newV);
+                        if(data.sysinfo.firmware==newV) return error("已经是最新版本:"+newV);
+                        localControl.upFirmware();
+                        upgradeStartTime = new Date().getTime();
+                        updateFlag = true;
+                        uploading();
+                        console.log("start upFirmware");
+                        uploadFirmware=1;
+                    }else {
+                        // if(!("canUpgrade" in e) || e.canUpgrade!=1) return error("已经是最新版本！");
+                        // postJSON("/upgrade", {upgrade:1}, function(e, status){
+                        //     downloading(0);
+                        //     setTimeout(update, 1000);
+                        // }, function (jqXHR, exception) {
+                        //     error("设备没有回应！");
+                        //     console.log((jqXHR.status+exception));
+                        // }, "text")
+                    }
+                }
+                
+            })
+        }
+        document.addEventListener("visibilitychange",function(e){
+            if(document.hidden){//网页被挂起
+                if(updateFlag){
+                    stopTime = new Date().getTime();
+                    // console.log("网页被挂起："+stopTime);
+                    // clearTimeout(apSecondTimeout);
+                }
+            }else{//网页被呼出
+                if(updateFlag){
+                    upgardeBackTime = new Date().getTime();
+                    duration = upgardeBackTime-upgradeStartTime;
+                    if(!app_type) return;
+                    if(parseInt(upgardeBackTime-upgradeStartTime)>=120*1000){
+                        clearTimeout(upgradeTimeout);
+                        return done();
+                    }else{
+                        getJSON("/upgrade",function(){
+                            if(app_type=="android" && updateStatus=="uploading")return;
+                            clearTimeout(upgradeTimeout);
+                            // if(updateStatus=="uploading"){
+                            //     if(language=="en"){return error("Upload failed")}
+                            //     else{return error("上传失败")}
+                            // }
+
+                            update();
+                            stopFlag=false;
+                        },function(xhr,e){
+                            if(updateStatus=="rebooting" || updateStatus == "done")return;
+                            if(stopFlag){
+                                clearTimeout(upgradeTimeout);
+                                $("#writing").show().siblings().hide();
+                                var rest = 120000 - duration;
+                                $("#writing .update-progress-ui span").css("width",String(parseInt(duration/1000/120*100))+"%");
+                                $("#writing .update-progress-ui span").animate({
+                                    width:"100%"
+                                },rest,function(){
+                                    done();
+                                });
+                            }
+                        })
+                    }
+                    // startTime = new Date().getTime();
+                    // duration = parseInt((startTime-stopTime)/1000);
+                    // console.log("网页被呼出："+startTime+"\nduration:"+duration);
+                    // apUpdate();
+                }
+            }
+        })
+        $("#upgradeBack").on("click",function(){
+            if($("#upgradeBack").attr("type")=="done"){
+                if(connect){
+                    location.href = "index.html"
+                }else{
+                    if(app_type && localControl.getValue("appVer",0)>=2){
+                        localControl.notify("UpgradeDone");
+                        localControl.startPage("CameraManager");
+                    }else{
+                        localControl.notify("UpgradeDone");
+                        localControl.startPage("DeviceListPage");
+                        window.history.back(-1);
+                    }
+                }
+            }else if($("#upgradeBack").attr("type")=="error"){
+                window.history.back(-1);
+            }
+        })
+        $("#upgradeRetry").on("click",function(){
+            getJSON("/setting",function(data,status){
+                start_update(data);
+            })
+        })
+        $(function(){
+            getJSON("/setting", function(data, status){
+                console.log("get setting 1")
+                var v=data.sysinfo.firmware;
+                $("#currentversion").text(v);
+                if(uploadFlag){
+                    $("section").hide();
+                    $(".update-btn").hide();
+                    $(".forUpdate").show();
+                    start_update(data);
+                }
+                else {
+                    if(("canUpgrade" in data) && data.canUpgrade!="") $("#newversion").text(data.canUpgrade);
+                    $(".update-btn").on("click",function () { //按下升级按钮
+                        start_update(data);
+                    })
+                }
+            })
+        })
+    </script>
+</body>
+</html>

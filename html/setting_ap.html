@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body class="setting-index">
+	<section class="setting-head">
+		<a href="setting.html" class="iconfont goback">&#xe63b;</a>
+		<p>安全设置</p>
+		<a href="javascript:;" class="iconfont confirm">&#xe60b;</a>
+	</section>
+
+	<section class="setting-ap">
+		<form class="wlan-login">
+
+			<label class="flex flex-middle">
+				<div class="wlan-login-tit">AP密码</div>
+				<input type="password" class="fx1 wlan-login-ipt wlan-login-password" ssid=""/>
+				<div class="wlan-show-password iconfont">&#xe635;</div>
+			</label>
+			<p class="ap-text" id="ap-text">本机AP(AtliView S3 - xxxxxxxxxxx)的连接密码</p>
+			<label class="flex flex-middle">
+				<div class="wlan-login-tit">认证码</div>
+				<input type="password" class="fx1 wlan-login-ipt wlan-login-code" />
+				<div class="wlan-show-password iconfont">&#xe635;</div>
+			</label>
+			<p class="ap-text">连接相机时的安全认证码</p>
+			<!--<div class="setting-ap-btns">-->
+				<!--<a href="javascript:;" class="confirm">确认</a>-->
+				<!--<a href="javascript:;" class="cancel" onclick="javascript:window.history.back(-1);">取消</a>-->
+			<!--</div>-->
+		</form>
+	</section>
+	<div class="setting-ap-text">
+		注意:<br>
+		说明书中的原【相机连接码】包含了默认密码和认证码；<br>
+		修改安全设置后，原【相机连接码】将失效；<br>
+		恢复出厂设置可还原，<a href="javascript:;" class="howtoreset">如何恢复出厂设置？</a> 
+	</div>
+
+	<div class="dialog-cover"></div>
+	<div class="dialog-poppup">
+		<div class="dialog-poppup-main">
+			<p class="warning">非法输入</p>
+		</div>
+	<div class="dialog-btns flex">
+			<a href="javascript:;" class="dialog-no">返回</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="ap-modify">
+        <div class="update-step1" id="ap-wait">
+            <div class="dialog-poppup-tit">安全设置修改</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                    <span></span><b></b>
+                </div>
+            </div>
+        </div>
+        <div class="update-step2" id="ap-done" style="display: none;">
+            <div class="dialog-poppup-tit">安全设置修改</div>
+            <div class="update-progress">
+                <div class="update-progress-text">
+                    <span></span><b>修改成功！</b>
+                </div>
+                <div class="update-complete-btn" id="modify-complete-btn">
+                    <span>确认</span>
+                </div>
+
+            </div>
+        </div>
+
+	</div>
+
+<script type="text/javascript">
+$(function(){	
+	var connectType;
+	var oldKey=localControl.getValue("KEY", "");
+	var oldPassword;
+	//浏览器禁止修改
+	if(!app_type){
+		$(".setting-ap-text").text("您当前通过浏览器登录设备，无法修改安全设置。");
+		//$("input").attr("readonly", true);
+	}
+	//读取key
+	$(".wlan-login-code").val(oldKey);
+	
+	//点击显示密码
+	$("body").on("click",".wlan-show-password",function(e){
+		e.stopPropagation();
+		var ipt = $(this).siblings("input");
+		var state = ipt.attr("type");
+		if(state=="text"){
+			ipt.attr("type","password");
+			$(this).html("&#xe635;")
+		}else{
+			ipt.attr("type","text");
+			$(this).html("&#xe65f;");
+		}
+	})
+	//确认成功，返回设置页
+	$("#modify-complete-btn").on("click", function(){
+		location.href = "setting.html";
+	});
+	$("#apTrigger").on("click", function(){
+		var v=0;
+		if($(this).prop("checked")==true) v=1;
+		postJSON("/setting", {"ap":{"apEnable":v}});
+	})
+	$(".confirm").on("click", function(){
+		var ssid=$(".wlan-login-password").attr("ssid");
+		var password=$(".wlan-login-password").val();
+		var key=$(".wlan-login-code").val();
+		var v=0;
+		if(oldPassword==password && oldKey==key) { //没有改动，不做操作
+			location.href = "setting.html";
+			return; 
+		}
+		if($("#apTrigger").prop("checked")==true) v=1;
+		postJSON("/setting", {"apPassword":password,"accessKey":key}, function(e, status){
+			console.log("update前："+localControl.getValue("SSID","读取SSID失败")+" password:"+localControl.getValue("PASSWORD","读取PASSWORD失败")+" key:"+localControl.getValue("KEY","读取KEY失败")+"现在update:"+password+" "+key);
+			localControl.updatePwd(ssid,password,key);
+			console.log("update后："+localControl.getValue("SSID","读取SSID失败")+" password:"+localControl.getValue("PASSWORD","读取PASSWORD失败")+" key:"+localControl.getValue("KEY","读取KEY失败"));
+			//alert("测试用："+localControl.getValue("SSID","读取SSID失败")+" "+localControl.getValue("PASSWORD","读取PASSWORD失败")+" "+localControl.getValue("KEY","读取KEY失败"));
+			$(".dialog-cover").show();
+			putJSON("/webctl", {reboot:"access_key"});
+			var t=17000;
+			if(connectType=="ap"){ //需要切换手机网络
+				$("#ap-wait .update-progress-text").append("<p>修改成功，正在初始化...</p><p>手机稍后将重连相机。</p>");
+				setTimeout(function(){localControl.connectWifi(ssid, password)}, 17000);
+				t=20000;
+			}else {
+				$("#ap-wait b").text("修改成功，正在初始化...");
+			}
+			$("#ap-wait").show().siblings().hide();
+			$("#ap-modify").show();
+			setTimeout(function(){
+				$("#ap-done").show().siblings().hide();
+				$("#ap-modify").show();
+			},t);
+
+		},function(jqXHR, exception){
+			alert("修改失败："+jqXHR.status+" "+exception);
+		}, "text");
+	})
+	//判断是不是ap连接
+	getJSON("/sysinfo?wlan1_ip=1", function(e, status){
+		if("wlan1_ip" in e ){
+			if(e.wlan1_ip==document.domain) {
+				connectType="ap";
+			}
+		}
+	})
+	$(".howtoreset").on("click",function(){
+		localControl.startPage("usage_howtoreset");
+	});
+	function getAPInfo(){
+		getJSON("/setting", function(e, status){
+			if("ap" in e){
+				oldPassword=e.ap.apPassword;
+				$(".wlan-login-password").attr("ssid", e.ap.apSSID);
+				$("#ap-text").text("本机AP("+e.ap.apSSID+")的连接密码");
+				$(".wlan-login-password").val(e.ap.apPassword);
+				if(e.ap.apEnable==1) $("#apTrigger").prop("checked", true);
+				else $("#apTrigger").prop("checked", false);
+			}
+		}, function(jqXHR, exception){
+			console.log((jqXHR.status+exception));
+		});
+	}
+	getAPInfo();
+})
+</script>
+</body>
+</html>
