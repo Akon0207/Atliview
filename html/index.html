@@ -1,0 +1,5275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css?1" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/camera.js"></script>
+<script type="text/javascript" src="js/circleChart.min.js"></script>
+
+</head>
+<body class="flex flex-middle flex-center">
+	<div class="appUpdate">
+		<div class="iconfont backIndex">&#xe613;</div>
+		<div class="abIos">
+			<div class="iosOne" lan="iosOne"></div>
+			<div class="iosTwo" lan="iosTwo"></div>
+		</div>
+		<div class="androidOne" lan="androidOne">
+			APP版本过低，请升级
+		</div>
+		<div class="abAndroid2">
+			<div class="androidTwo" lan="androidTwo">
+				
+			</div>
+			<span class="copyLink" lan="copyLink"></span>
+			<div class="androidThr" lan="androidThr"></div>
+		</div>
+		<div class="copySuc" lan="copied"></div>
+	</div>
+	<section class="main">
+		<img src="" class="main-pic imgOriginal" id="preview"/>
+		<div class="gridline"></div>
+		<div class="amplifier">
+			<img src="" class="imgAmplifier">
+		</div>
+		<!-- <img src="" class="main-pic blur" /> -->
+		<div class="focus-area"><div class="iconfont locked">&#xe66d;</div><div class="iconfont unlocked">&#xe66e;</div></div>
+		<div class="focus-area"></div>
+		<div class="focus-area"></div>
+		<div class="focus-area"></div>
+		<div class="sun-container">
+			<div class="sun-track track1"></div>
+			<div class="sun">
+				<div class="sun-body"></div>
+				<div class="sun-light light1"></div>
+				<div class="sun-light light2"></div>
+				<div class="sun-light light3"></div>
+				<div class="sun-light light4"></div>
+				<div class="sun-light light5"></div>
+				<div class="sun-light light6"></div>
+				<div class="sun-light light7"></div>
+				<div class="sun-light light8"></div>
+			</div>
+			<div class="sun-track track2"></div>
+		</div>
+		<div class="exposureBiasShow">0</div>
+		<!-- 状态栏 start -->
+		<div class="top-bar">
+			<!-- <span id="forback"> -->
+			<i class="iconfont forback">&#xe613;</i>
+			<i class="wifi wifi3" style="display: block;"></i> <!-- 信号强中弱分别是wifi1 wifi2 wifi3 -->
+			<!-- <i class="iconfont hotspot" style="display: none;">&#xe61d;</i> -->
+			<!-- <i class="battery" style="display: none;"><div id="battery"><span></span><div class="battery-per"></div></div></i>  -->  <!-- 充电中 -->
+			<!-- <i class="battery" style="display: none;"><div id="battery"><span></span></div></i> -->
+			<!-- <i class="battery" style="display: block;"><img src="images/battery/battery101.png"><div id="battery"><span></span></div></i>  -->
+			<i class="battery" style="display: none;"><div id="battery"><span></span></div><div class="battery_png"><img src=""></div></i> 
+			<i class="iconfont no-battery" style="display: none;">&#xe649;</i> <!-- 未连接电池 -->
+			<i class="iconfont cutAudio" style="display: none;">&#xe611;</i>
+<!-- 			<i class="freeMemory">5 G/10 G</i> -->
+			<i class="iconfont lowmemory" style="display: none;">&#xe63c;</i>
+			<!-- </span> -->
+
+			<a href="javascript:;" class="mode" id="mode" data-mode="&#xe614;"></a>
+			<a class="iconfont more" data-mode="&#xe666;" href="javascript:;"></a>
+			<a href="javascript:;" class="iconfont HDRcss" id="hdr" data-mode="&#xec45;" style="display: none;"></a>
+			
+		</div>		
+		<!-- 状态栏 end -->
+		<!-- 测试-->
+		<!-- 测试 end-->
+		<div class="head-info" style="display: none;"></div>
+		<div class="effect-now">
+			<div><span lan="brightness">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="brightness-now">0</span></div>
+			<div><span lan="saturation">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="saturation-now">0</span></div>
+			<div><span lan="contrast">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="contrast-now">0</span></div>
+			<div><span lan="sharpness">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="sharpness-now">0</span></div>
+			<div><span lan="hue">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="hue-now">0</span></div>
+			<div><span lan="expCom">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="exposureBias-now">0</span></div>
+			<div><span lan="ISO">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="gain-now">0</span></div>
+			<div><span lan="whiteBal">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="whiteBalance-now">0</span></div>
+			<div><span lan="shutter">&nbsp;&nbsp;&nbsp;&nbsp;</span>:<span id="shutter-now">0</span></div>
+		</div>
+		<div class="iconfont infrared-up">&#xe60a;</div>
+		<!-- <div class="iconfont rotate">&#xe64f;</div> -->
+		
+		<div class="moreMask">
+			<div>
+				<!-- <div class="title">
+					横竖屏切换
+				</div> -->
+				<div class="content imgCtl">
+					<!-- <ul>
+						<li class="rotate">
+							<i class="iconfont ">&#xe661;</i>
+							<p lan="rotate">旋转</p>
+						</li>
+						<li class="horizontal" style="display: none">
+							<i class="iconfont ">&#xe662;</i>
+							<p lan="horizontal">横屏</p>
+						</li>
+						<li class="vertical">
+							<i class="iconfont ">&#xe663;</i>
+							<p lan="vertical">竖屏</p>
+						</li>
+					</ul> -->
+					<ul>
+						<li class="horizontal on">
+							<i class="iconfont">&#xe666;</i>
+						</li>
+						<li class="vertical">
+							<i class="iconfont">&#xe65c;</i>
+						</li>
+						<li class="rotate">
+							<i class="iconfont">&#xe665;</i>
+						</li>
+						<li class="verRotate">
+							<i class="iconfont">&#xec46;</i>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="all-modelist">
+			<div class="mode-list" id="modeList">
+				<ul>
+					<li class="on">
+						<i class="iconfont" mode-name="auto">&#xe614;</i>
+						<p lan="auto">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="cloud">&#xe615;</i>
+						<p lan="cloud">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="city-night">&#xe616;</i>
+						<p lan="cityNight">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="flower">&#xe617;</i>
+						<p lan="floral">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="star">&#xe618;</i>
+						<p lan="stars">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="sun">&#xe643;</i>
+						<p lan="sun">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+					</li>
+					<li id="manual">
+						<i class="iconfont" mode-name="manual">&#xe61c;</i>
+						<p lan="manual">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+					</li>
+				</ul>
+			</div>
+			<div class="customMode">
+				<div class="customModeList">
+					<ul>
+						<!-- <li>
+							<i class="iconfont" mode-name="mode1">&#xe769;</i>
+							<p>自定义1</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="mode2">&#xe65a;</i>
+							<p>自定义2</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="mode2">&#xe65a;</i>
+							<p>自定义2</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="mode2">&#xe65a;</i>
+							<p>自定义2</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="mode2">&#xe65a;</i>
+							<p>自定义2</p>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="moreFun">
+			<div class="rectangle">
+				<ul>
+					<li>
+						<i class="iconfont" mode-name="edit">&#xe601;</i>
+						<p lan="edit">编辑</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="">&#xe664;</i>
+						<p lan="del">删除</p>
+					</li>
+				</ul>
+			</div>
+			<div class="triangle"></div>
+		</div>
+
+		<!-- 场景选择 end -->
+
+		<!-- 拍摄模式 start -->
+		<div class="shootMode">
+			<div class="modeNow" id="modeNow" data-mode="&#xe603;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		</div>
+	
+		<div class="shootModeList">
+			<ul>
+				<li class="on">
+					<i class="iconfont" mode-name="timelapse" id="timelapse">&#xe603;</i>
+					<p lan="timelapse">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+				</li>
+				<li>
+					<i class="iconfont" mode-name="picture" id="picture">&#xe658;</i>
+					<p lan="photo">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+				</li>
+				<li>
+					<i class="iconfont" mode-name="video">&#xe64d;</i>
+					<p lan="video">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+				</li>
+				
+			</ul>
+		</div>
+		<!-- 拍摄模式 end -->
+
+		<!-- 暂停 start -->
+		<div class="pauseSelect">
+			<ul>
+				<li class="pause">
+					<i class="iconfont" mode-name="pause" id="pause">&#xe669;</i>
+					<p lan="pause">暂停</p>
+				</li>
+				<li class="continue" style="display: none;">
+					<i class="iconfont" mode-name="continue" id="continue">&#xe6e7;</i>
+					<p lan="continue">继续</p>
+				</li>
+				<li class="stop">
+					<i class="iconfont" mode-name="stop" id="stop">&#xe650;</i>
+					<p lan="stop">停止</p>
+				</li>
+			</ul>
+
+		</div>
+
+		<!-- 暂停 end -->
+		
+		<div class="dialog-cover2"></div>
+		<div class="dialog-cover"></div>
+		<div class="shootingPrompt" lan="shootingPrompt"></div>
+		<div class="continueWait">
+			<div class="continueOuter">
+				<div class="continueImg"><img src="images/netprompt.gif"></div>
+				<div class="continueText" lan="continueText">正在处理...</div>
+			</div>
+		</div>
+		<div class="portraitPrompt left" lan="portraitPrompt">推荐竖屏操作</div>
+		<div class="portraitPrompt right" lan="portraitPrompt">推荐竖屏操作</div>
+		<div class="landscapePrompt" lan="landscapePrompt">推荐横屏操作</div>
+		
+		<div class="dialog-poppup" id="prefabList">
+			<div class="dialog-poppup-tit" style="font-size: 12px;">可载入任一预设场景，在此基础上进行修改</div>
+			<div class="prefab-list">
+				<div class="mode-list" style="font-size: 18px;">
+					<ul>
+						<li class="on">
+							<i class="iconfont" mode-name="auto">&#xe614;</i>
+							<p>自动</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="cloud">&#xe615;</i>
+							<p>云彩</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="city-night">&#xe616;</i>
+							<p>城市夜景</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="flower">&#xe617;</i>
+							<p>鲜花</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="star">&#xe618;</i>
+							<p>星空</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="infrared">&#xe646;</i>
+							<p>红外</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="sun">&#xe641;</i>
+							<p>日出日落</p>
+						</li>
+						<li>
+							<i class="iconfont" mode-name="low-light">&#xe61b;</i>
+							<p>弱光</p>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="confirmPrefab">确定</a>
+			</div>
+		</div>
+		<div class="videoSign">
+			<div class="iconfont blink-icon">&#xec44;</div>
+			<div class="durationForVideo">00:00:00</div>
+		</div>
+		<div class="dialog-poppup" id="forAuth">
+			<div class="dialog-poppup-content" lan="authPrompt">安全认证失败，无法连接设备!</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="authConfirm" lan="OK">确定</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="infraredTip">
+			<div class="dialog-poppup-content" lan="infraredTip">
+				红外功能需要在黑暗环境搭配红外补光灯才可达到理想效果，确定要开启？
+			</div>
+			<div class="infraredLabel"><input type="checkbox" id="infraredCheckbox"><span lan="DNM">不再提醒</span></div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="infraredCancel" lan="giveUp">放弃</a>
+				<a href="javascript:;" id="infraredConfirm" lan="turnOn">开启</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="firstShootTip">
+			<div class="dialog-poppup-content" lan="FST">
+				请转动对焦环，确保被摄物清晰<br><br>点击查看 <span class="firstShootLink">对焦教程</span>
+			</div>
+			<div class="firstShootLabel"><input type="checkbox" id="firstShootCheckbox"><span lan="DNM">不再提醒</span></div>
+			<div class="dialog-btns flex">
+				<!-- <a href="javascript:;" id="infraredCancel">放弃</a> -->
+				<a href="javascript:;" id="firstShootConfirm" lan="IK">我知道了</a>
+			</div>
+		</div>
+		<div class="manualFocusPrompt">
+			<div class="iconfont focusPromptCancel">&#xe63b;</div>
+			<div class="focusPromptTitle" lan="focusPromptTitle">aTli EON采用手动对焦</div>
+			<div class="focusPromptImg"><img src="images/focusRing.png"></div>
+			<div class="focusPromptText" ><div class="pointclass"></div><div class="focusPromptContent" lan="focusPromptText1">拍摄80厘米以上，三角标 <img src="images/greenTriangle.png"> 对准指示灯</div></div>
+			<div class="focusPromptText"><div class="pointclass"></div><div class="focusPromptContent" lan="focusPromptText2">拍摄80厘米以下，才需要转动对焦，直到图像清晰</div></div>
+			<div class="divideLine"></div>
+			<div class="focusCourseCheck" lan="focusCourseCheck">点击查看教程</div>
+			<div class="focusNotPrompt"><div class="notPrompt"><span class="notPromptText" lan="DNM">不再提醒</span></div></div>
+		</div>
+		<div class="dialog-poppup" id="forSDformat">
+			<div class="dialog-poppup-content">
+				当前存储卡文件系统格式不符合要求
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="formatCancel" lan="cancel">取消</a>
+				<a href="setting_memory.html" id="formatConfirm" lan="formatN">前往格式化</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="forDelMode">
+			<div class="dialog-poppup-content" lan="delModePro">
+				确定删除此模式？
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="delModeCancel" lan="cancel">取消</a>
+				<a href="javascript:;" id="delModeConfirm" lan="delete">确认</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="forCoverMode">
+			<div class="dialog-poppup-content" lan="saveSuccess">
+				保存成功！
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="saveSucConfirm" lan="OK">确定</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="imgQualityTip">
+			<div class="dialog-poppup-content" lan="imgQTip">
+				<p>高清预览画质可能引起画面卡顿、操作延迟等负面影响，请酌情使用！</p>
+				<p>另：切换预览画质不会影响拍摄得到的实际画质。</p>
+			</div>
+			<div class="imgQualityLabel"><input type="checkbox" id="imgQualityCheckbox"><span lan="DNM">不再提醒</span></div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="imgQualityCancel" lan="giveUp">放弃</a>
+				<a href="javascript:;" id="imgQualityConfirm" lan="enable">开启</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="infrared-up">
+			<div class="dialog-poppup-content" lan="infTip">
+				红外成像功能已开启<br>点击<span style="color: #628ccd">关闭红外</span>可停用此功能
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="infraredUpCancel" lan="cancel">取消</a>
+				<a href="javascript:;" id="infraredUpConfirm" lan="shutDownInf">关闭红外</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="update" style="display: none">
+			<!--<div class="dialog-poppup-tit">发现新版本</div>-->
+			<div class="dialog-poppup-content" lan="newVTip">发现新版本，是否现在升级？</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="updateCancel" lan="later">以后升级</a>
+				<a href="update.html" id="updateConfirm" lan="now">确定</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="wifiTip" >
+			<div class="dialog-poppup-tit" lan="FR">温馨提示*</div>
+			<div class="dialog-poppup-content" lan="wifiTip">为了方便管理，建议配置相机连接至WIFI局域网</div>
+			<div class="wifiLabel"><input type="checkbox" id="wifiCheckbox"><span lan="DNM">不再提醒</span></div>
+			<div class="dialog-btns flex wifi-tip">
+				<a href="javascript:;" id="wifiTipCancel" lan="notNow">下次再说</a>
+				<a href="setting_wlan.html?wifiTip=1" id="wifiTipConfirm" lan="configureN">前往配置</a>
+			</div>
+			<!-- <a href="javascript:;" class="wifi-tip-delete" id="wifiTipDelete">不再提醒</a> -->
+		</div>
+		
+		<div class="dialog-poppup" id="memory-prompt" style="display: none;">
+			<div class="dialog-poppup-content"></div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="memoryConfirm" lan="OK">我知道了</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="memory-prompt3" style="display: none;">
+			<div class="dialog-poppup-content"></div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="memory3Confirm" lan="OK">我知道了</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="memory-prompt2" style="display: none;">
+			<div class="dialog-poppup-content" lan="MP2">剩余存储空间低于500M，确定要开始拍摄吗？</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="memory2Cancel" lan="cancel">取消</a>
+				<a href="javascript:;" id="memory2Confirm" lan="OK">确定</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="memory-prompt-stop" style="display: none;">
+			<div class="dialog-poppup-content" lan="MPS">因剩余存储空间少于50M，拍摄任务已被强制停止。</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="memoryStopConfirm" lan="OK">我知道了</a>
+			</div>
+		</div>
+		<!-- <div class="dialog-poppup" id="appVerPrompt" style="display: none;">
+			<div class="dialog-poppup-content" lan="appVerP">APP版本过低，无法体验相机的全部功能</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="goForU" lan="goForU">前往升级</a>
+			</div>
+		</div> -->
+		<!-- 自定义预设场景 start -->
+		<div class="customModePro" lan="customModePro">最多允许创建10个场景模式</div>
+		<div class="customModeBtn"><span id="addNewMode" lan="addNewMode">新建场景模式</span><span id="coverMode" lan="coverMode">覆盖保存</span><div class="iconfont forRight on">&#xe66c;</div><div class="iconfont forLeft">&#xe66b;</div></div>
+		<div class="dialog-poppup" id="saveCustomMode">
+			<div class="dialog-poppup-tit" lan="addNewModeTitle" id="addNewModeTitle">根据当前设置新建场景模式</div>
+			<div class="dialog-poppup-tit" lan="repairMode" id="repairModeTitle">修改名称和图标</div>
+			<div class="save-mode">
+				<div class="flex flex-middle">
+					<div class="tit" lan="netName">名称</div>
+					<input type="text fx1" class="name" id="modeName" />
+				</div>
+				<div class="flex flex-middle">
+					<div class="tit" lan="icon">图标</div>
+					<div class="save-icons">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode1">&#xe657;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode2">&#xe656;</i>
+								</div>
+								<div class="swiper-slide" >
+									<i class="iconfont" mode-name="mode3">&#xe6d6;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode4">&#xe60f;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode5">&#xe742;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode6">&#xe769;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode7">&#xe65a;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode8">&#xe6e6;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode9">&#xe659;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode10">&#xe6c5;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode11">&#xe655;</i>
+								</div>
+								<div class="swiper-slide">
+									<i class="iconfont" mode-name="mode12">&#xe6a9;</i>
+								</div>
+							</div>
+							<!-- <div class="swiper-pagination"></div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="dialog-btns flex">
+				<!-- <a href="javascript:;" id="cancelIcon">取消</a> -->
+				<a href="javascript:;" id="confirmIcon" lan="confirm">确认</a>
+			</div>
+		</div>
+		<!-- 自定义预设场景 end -->
+
+		<!-- <div class="dialog-poppup" id="saveMode">
+			<div class="dialog-poppup-tit">保存设置</div>
+			<div class="save-mode">
+				<div class="flex flex-middle">
+					<div class="tit">名称</div>
+					<input type="text fx1" class="name" id="modeName" />
+				</div>
+				<div class="flex flex-middle">
+					<div class="tit">场景</div>
+					<div class="icon fx1" id="selectIcon">请选择图标</div>
+				</div>
+			</div>
+			<div class="save-icons">
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe614;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe615;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe616;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe617;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe618;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe619;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe61a;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe61b;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe623;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe624;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe625;</i>
+						</div>
+						<div class="swiper-slide">
+							<i class="iconfont">&#xe626;</i>
+						</div>
+					</div>
+					<div class="swiper-pagination"></div>
+				</div>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="cancelIcon">取消</a>
+				<a href="javascript:;" id="confirmIcon">确定</a>
+			</div>
+		</div> -->
+
+		<!-- 参数设置 start -->
+		<div class="setting-content">
+			<!--暂时隐藏保存载入按钮
+			<div class="right-btn">
+				<div><a href="javascript:;" id="load">载入</a></div>
+				<div><a href="javascript:;" id="save">保存</a></div>
+			</div>
+			-->
+			<div class="setting-bar">
+				<!-- 快门时间 -->
+				<div class="parameter-exprosure">
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" lan="auto">自动</div>
+							<div class="swiper-slide">1/20K<span lan="second">秒</span></div>
+							
+							<div class="swiper-slide">1/10K<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/5K<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/2.5K<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/1000<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/500<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/250<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/125<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/60<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/30<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/15<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/8<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/4<span lan="second">秒</span></div>
+							<div class="swiper-slide on">1/2<span lan="second">秒</span></div>
+							<div class="swiper-slide">1<span lan="second">秒</span></div>
+							<div class="swiper-slide">1.4<span lan="second">秒</span></div>
+						</div>
+					</div>
+				</div>	
+				<!-- 快门时间 -->
+
+				<!-- 感光度 -->		
+				<div class="parameter-slider parameter-gian">
+					<div class="flex">
+						<div class="slider-minus"></div>
+						<input id="s0" data-slider-id='gianSlider' type="text" data-slider-min="100" data-slider-max="4000" data-slider-step="100" data-slider-value="1600" data-slider-default="1600" />
+						<div class="slider-plus"></div>
+						<div class="slider-manual on" lan="manual">手动</div>
+						<div class="slider-auto" lan="auto">自动</div>
+					</div>
+				</div>	
+				<!-- 感光度 -->
+
+				<!-- 曝光补偿 -->
+				<div class="parameter-exposurebiasSlider">
+					<div class="exposurebias-inner">
+						<div class="slider-minus"></div>
+						<div class="slider-plus"></div>
+					</div>
+					<div class="exposurebias-div">EV<span id="exposurebias-span">0</span></div>
+					<input type="hidden" value="0" id="exposurebias-input">
+				</div>
+				<!--曝光补偿-->
+
+				<!-- 白平衡 -->
+				<div class="parameter-whiteBalance">
+					<div class="parameter-slider parameter-whiteBalance-manual" style="display: none;">
+						<div class="flex">
+							<div class="slider-minus"></div>
+							<input id="s5" data-slider-id='saturationSlider' type="text" data-slider-min="2500" data-slider-max="10000" data-slider-step="100" data-slider-value="5000" data-slider-default="5000" />
+							<div class="slider-plus"></div>
+						</div>
+					</div>		
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide on" data-whiteBalance="&#xe614;" lan="auto">自动</div>
+							<!-- <div class="swiper-slide" data-whiteBalance="&#xe624;">城市夜景</div>
+							<div class="swiper-slide" data-whiteBalance="&#xe625;">夜晚</div>
+							<div class="swiper-slide" data-whiteBalance="&#xe628;">彩霞</div> -->
+							<div class="swiper-slide" data-whiteBalance="&#xe626;" lan="dayLight">日光</div>
+							<div class="swiper-slide" data-whiteBalance="&#xe623;" lan="cloudy">阴天</div>
+							<div class="swiper-slide" data-whiteBalance="&#xe627;" lan="fluorescent">荧光灯</div>
+							<div class="swiper-slide" data-whiteBalance="&#xe622;" lan="tungsten">白炽灯</div>
+							<div class="swiper-slide" data-whiteBalance="&#xe61c;" lan="manual">手动</div>
+						</div>
+					</div>
+				</div>		
+				<!-- 白平衡 -->	
+				
+				<!-- 效果 -->
+				<div class="parameter-effect">
+					<!-- 亮度 -->
+					<div class="parameter-slider parameter-brightnessSlider">
+						<div class="flex">
+							<div class="slider-minus"></div>
+							<input id="s6" data-slider-id='brightnessSlider' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+							<div class="slider-plus"></div>
+						</div>
+					</div>
+					<!-- 亮度 -->
+
+					<!-- 饱和度 -->
+					<div class="parameter-slider parameter-saturationSlider">
+						<div class="flex">
+							<div class="slider-minus"></div>
+							<input id="s2" data-slider-id='saturationSlider' type="text" data-slider-min="-30" data-slider-max="30" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+							<div class="slider-plus"></div>
+						</div>
+					</div>
+					<!-- 饱和度 -->
+
+					<!-- 对比度 -->
+					<div class="parameter-slider parameter-constrastSlider">
+						<div class="flex">
+							<div class="slider-minus"></div>
+							<input id="s1" data-slider-id='constrastSlider' type="text" data-slider-min="-16" data-slider-max="16" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+							<div class="slider-plus"></div>
+						</div>
+					</div>
+					<!-- 对比度 -->
+
+					<!-- 锐度 -->
+					<div class="parameter-slider parameter-gacutanceSlider">
+						<div class="flex">
+							<div class="slider-minus"></div>
+							<input id="s3" data-slider-id='acutanceSlider' type="text" data-slider-min="-30" data-slider-max="30" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+							<div class="slider-plus"></div>
+						</div>
+					</div>
+					<!-- 锐度 -->
+
+					<!-- 色相 -->
+					<div class="parameter-slider parameter-hueSlider">
+						<div class="flex">
+							<div class="slider-minus"></div>
+							<input id="s4" data-slider-id='hueSlider' type="text" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+							<div class="slider-plus"></div>
+						</div>
+					</div>
+					<!-- 色相 -->
+
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide on" setting-type='brightness'>
+								<p><span id="brightness" lan="brightness">亮度</span><span data-current-name="s6">0</span></p>
+							</div>
+							<div class="swiper-slide" setting-type='saturation'>
+								<p><span id="saturation" lan="saturation">饱和度</span><span data-current-name="s2">0</span></p>
+							</div>
+							<div class="swiper-slide" setting-type='contrast'>
+								<p><span id="contrast" lan="contrast">对比度</span><span data-current-name="s1">0</span></p>
+							</div>
+							<div class="swiper-slide" setting-type='sharpness'>
+								<p><span id="sharpness" lan="sharpness">锐度</span><span data-current-name="s3">0</span></p>
+							</div>
+							<div class="swiper-slide" setting-type='hue'>
+								<p><span id="hue" lan="hue">色相</span><span data-current-name="s4">0</span></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 效果 -->
+				<!-- 高级 -->
+				<div class="parameter-advance">
+					<div class="advance-outer">
+						<div class="infrared-setting">
+							<span class="inner-text" lan="infShoot">红外成像</span><span class="inner-content"><input type="checkbox" class="infrared-box"></span>
+						</div>
+						<div class="imgQuality">
+							<span class="inner-text">预览画质</span>
+							<div class="inner-content">
+								<ul>
+									<li>高清</li>
+									<li class="on">标清</li>
+									<li>普清</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 高级 -->
+			</div>
+			
+			<div class="setting-current">
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide on" setting-type='exposure'>
+							<p lan="shutter">快门时间</p>
+							<span id="exprosure">1/2<span lan="second">秒</span></span>
+						</div>
+						<div class="swiper-slide" setting-type='gain'>
+							<p lan="ISO">感光度</p>
+							<span data-current-name="s0" id="gian">800</span>
+						</div>
+						<div class="swiper-slide" setting-type="exposureBias" style="display: none">
+							<p lan="expCom">曝光补偿</p>
+							<span id="exposureBias" data-current-name="s7">0</span>
+						</div>
+						<div class="swiper-slide" setting-type='whitebalance'>
+							<p lan="whiteBal">白平衡</p>
+							<span id="whiteBalance" data-current-name="s5" lan="auto">自动</span>
+						</div>
+						<div class="swiper-slide" setting-type="effect">
+							<!-- <p lan="effect">效果</p> -->
+							<p lan="effect">图像</p>
+							<span id="effect">&nbsp</span>
+						</div>
+						<div class="swiper-slide" setting-type="advance">
+							<p lan="advance">高级</p>
+							<span id="advance">&nbsp</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 参数设置 end -->
+
+		<!-- 亮度调节 start -->
+		<!--<div class="brightness" id="brightness">-->
+			<!--<div class="iconfont">&#xe685;</div>-->
+				<!--<div class="slider">				-->
+					<!--<input id="brt" data-slider-id='brightnessSlider' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-default="0" />-->
+				<!--</div>-->
+		<!--</div>-->
+		<!-- 亮度调节 end -->
+		<!--呼出控制面板按钮 start -->
+		<div class="ctrl-icon">
+			<div class="iconfont">&#xe66a;</div>
+		</div>
+		<!--呼出控制面板按钮 end -->
+		<!-- 快门提示 start -->
+		<div class="exp-prompt" lan="expPrompt">
+			快门时长必须小于拍摄间隔
+		</div>
+		<div class="video-prompt" lan="videoPro">拍摄过程中无法进入相册</div>
+		<!-- 快门提示 end -->
+		<!-- 底部 start -->
+		<div class="foot-bar flex flex-middle">
+			<a href="setting.html" class="iconfont menu">&#xe620;</a>
+			<div class="iconfont update-icon">&#xec44;</div>
+			<!--<a href="javascript:;" class="shoot"><span></span></a>-->   <!-- 空闲时 -->
+			<!--<a class="shoot-percent circleChart" id="shoot-circle" data-value="77"> -->
+			<!--
+			<a href="javascript:;" class="shoot" id="shoot-circle">
+				<span></span>
+			</a>
+			-->
+			<div class="forShootShadow"></div>
+			<a href="javascript:;" class="shoot mode on" id="shoot-circle"><span></span></a>   <!-- 空闲时 延时摄影 -->
+			<!-- <a href="javascript:;" class="shoot-pause" id="shoot-pause"><div class="pauseIcon"></div></a> -->
+			<a href="javascript:;" class="shootP mode" id="shoot-photo"><span></span></a>      <!-- 拍照 -->
+			<a href="javascript:;" class="shootV mode" id="shoot-video"><span></span></a>	   <!-- 录像 -->
+			<a href="javascript:;" class="iconfont video">&#xe653;</a>
+			<a href="javascript:;" class="iconfont video-shooting">&#xe64b;</a>
+			<a href="javascript:;" class="theSpace" style="display: none;"></a>
+		</div>
+		<!-- 底部 end -->
+
+		<!-- <div class="dialog-cover"></div>		 -->
+		<div class="dialog-poppup" id="noCard">
+			<div class="dialog-poppup-tit" lan="alert">提示</div>
+			<div class="dialog-poppup-main">
+				<p class="warning" lan="noCardP">未检测到存储卡，无法开始拍摄</p>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="confirmCard" lan="OK">确定</a>
+			</div>
+		</div>
+		<div class="dialog-poppup" id="turnoffCron">
+			<!-- <div class="dialog-poppup-tit" lan="alert">提示</div> -->
+			<div class="dialog-poppup-main">
+				<p class="warning" lan="cronP">确定要关闭定时任务？</p>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" class="dialog-no" id="turnoffCronNo" lan="no">否</a>
+				<a href="javascript:;" class="dialog-yes" id="turnoffCronYes" lan="yes">是</a>
+			</div>
+		</div>	
+		<div class="dialog-poppup" id="turnoffVideo">
+			<!-- <div class="dialog-poppup-tit" lan="alert">提示</div> -->
+			<div class="dialog-poppup-main">
+				<p class="warning" lan="toVideoP">确定要停止拍摄？</p>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" class="dialog-no" id="turnoffVideoNo" lan="no">否</a>
+				<a href="javascript:;" class="dialog-yes" id="turnoffVideoYes" lan="yes">是</a>
+			</div>
+		</div>
+		<div class="interval-prompt">
+			<div class="interval-text" lan="intervalPro">拍摄间隔必须大于快门时长</div>
+		</div>
+		<!-- <div class="horizontalPrompt" lan="horPro">当前图像为横向<br>请横屏操作</div> -->
+		<!-- <div class="verticalPrompt" lan="verPro">当前图像为竖向<br>请竖屏操作</div> -->
+		<!-- 定时任务 start -->
+		<div class="time-poppup" style="display: none;">
+			<div class="time-tab flex">
+				<div class="time-tab-interval on" lan="shtInt">拍摄间隔</div>
+				<div class="time-tab-cron">
+					<span lan="shtTim">拍摄时长</span>
+					<input class="switch-box" type="checkbox"></input>
+					</label>
+				</div>
+			</div>
+			<div class="shooting-tips" lan="ShtTip">
+				<p>当前的拍摄模式为<span class="iconfont currentMode"> </span>,推荐拍摄间隔为<span class="currentInterval"> </span>秒</p>
+			</div>
+			<!-- <div class="interval-prompt">
+				<div class="interval-text">拍摄间隔必须大于快门时长</div>
+			</div> -->
+			<div class="time-main">
+				<div class="time-main-interval">
+					<div class="flex">
+						<div class="time-select">
+							<div class="time-plus"></div>
+							<div class="time-insert">
+								<input type="number" value="00" class="hour" id="interval-hour"><span lan="hour">时</span>
+							</div>
+							<div class="time-minus"></div>
+						</div>
+						<div class="time-select">
+							<div class="time-plus"></div>
+							<div class="time-insert">
+								<input type="number" value="00" class="minute" id="interval-minute"><span lan="min">分</span>
+							</div>
+							<div class="time-minus"></div>
+						</div>
+						<div class="time-select">
+							<div class="time-plus"></div>
+							<div class="time-insert">
+								<input type="number" value="04" class="second" id="interval-second"><span lan="second">秒</span>
+							</div>
+							<div class="time-minus"></div>
+						</div>
+					</div>
+				</div>
+				<div class="time-main-cron disabled" style="display: none;">
+					<div class="flex">
+						<div class="time-select">
+							<div class="time-plus"></div>
+							<div class="time-insert">
+								<input type="number" value="00" class="day" readonly="readonly" id="duration-day" /><span lan="day">天</span>
+							</div>
+							<div class="time-minus"></div>
+						</div>
+						<div class="time-select">
+							<div class="time-plus"></div>
+							<div class="time-insert">
+								<input type="number" value="00" class="hour" readonly="readonly" id="duration-hour" /> <span lan="hour">时</span>
+							</div>
+							<div class="time-minus"></div>
+						</div>
+						<div class="time-select">
+							<div class="time-plus"></div>
+							<div class="time-insert">
+								<input type="number" value="00" class="minute" readonly="readonly" id="duration-minute" /><span lan="min">分</span>
+							</div>
+							<div class="time-minus"></div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<span class="time-total" style="display: none;" lan="timTot">预计生成视频 <span id="time-total-hour">00</span>小时<span id="time-total-minute">00</span>分钟<span id="time-total-second">00</span>秒</span>
+			<div class="promptControl"><div class="outPutPrompt" lan="outPutPrompt">注意：当前设置为输出“视频+图组”</div></div>
+			<div class="time-btns">
+				<a href="javascript:;" id="start-shooting" lan="startSht">开始拍摄</a>
+				<a href="javascript:;" id="continue-shooting" lan="continueSht" style="display: none;">继续拍摄</a>
+			</div>
+		</div>
+		<!-- 定时任务 end -->
+	</section>
+<script type="text/javascript" src="js/language.js"></script>
+<script type="text/javascript">
+	indexPage=true;
+	// showList=$("#mode,.more");
+	showList=$("#mode,.more,.rotate");
+	// $.fn.extend({
+	// 	holdShow: function() {
+	// 		showList=showList.not($(this)).add($(this));
+	// 		//alert(showList);
+	// 		//console.log(showList);
+	// 		if(!hideCTL) $(this).show();
+	// 		else $(this).hide();
+	// 	},
+	// 	holdHide: function() {
+	// 		showList=showList.not($(this));
+	// 		//console.log(showList);
+	// 		$(this).hide();
+	// 	},
+	// 	holdSlideDown: function(speed, easing, fn) {
+	// 		showList=showList.not($(this)).add($(this));
+	// 		if(!hideCTL) $(this).slideDown(speed, easing, fn);
+	// 		else $(this).hide();
+	// 	},
+	// 	holdSlideUp: function(speed, easing, fn) {
+	// 		showList=showList.not($(this));
+	// 		if(!hideCTL) $(this).slideUp(speed, easing, fn);
+	// 		else $(this).hide();
+	// 	},
+	// 	holdToggle: function(speed,easing,fn) {
+	// 		if(!hideCTL) $(this).toggle(speed, easing, fn);
+	// 		else $(this).hide();
+	// 	}
+	// });
+
+
+$(function(){	
+	var sessionId = '-';
+	var sessionType = 'timelapse';
+	var currentMode = 'auto';
+	var frameRate = 25;
+	var SDavailable = 0;
+	var batteryNow = 0;
+	var batteryStatus = null;
+	var recordInterval=4;
+	var updateCancelTime=null;
+	var lastWifiTipTime=null;
+	var lastStatusTime=null;
+	var nextRecordMS=0;
+	var NoWifiTip=null;
+	var frameIndex=0;
+	var nowIndex=0;
+	var thisIndex=0;
+	var cron=0;
+	var durationForVideo = 0;
+	var timerForVideo = null;
+	var videoStartAt = null;
+	var CameraAlbumPage=null;
+	var currentFirmware=null;
+	var lastMemoryTipTime=null;
+	var unPlugAlert=false;
+	var formatAlert=false;
+	var firstLoadPage=true;
+	var SDStatus = null;
+	var limit_time = null;//判断是不是一个定时任务的flag，如果是定时任务点了拍摄按钮直接提示是否停止拍摄，参数保存在本地（以后如果是定时任务会有个flag放在status里）
+	var playbackurl = null;
+	var recordStatus = null;
+	var intervalArray;
+	var intervalFlag = 0;
+	var imgArchiveArray = new Array("horizontal","vertical");
+	var imgArchive = null;
+	var pauseStatus = 0;
+	var livePreviewUrl = null;
+	var rotate180 = false;
+	var cronFlag = getParameterByName("cron");
+	var cronInterval = localControl.getValue("cronInterval");
+	var changeFlag = true;
+	var switchSessionFlag = true;
+	var orientationFlag = true;
+	var firstLoadPage2 = true;
+	var exposureBias_now = null;
+	var setPortraitInterval = null;
+	var setLandscapeInterval = null;
+	var setPorInterFlag = true;
+	var setLanInterFlag = true;
+	var cutAudio = null;
+	var focusNotPrompt = null;
+	var amplifierShowFlag = true;
+	var grid = null;
+	var outPutMode = null;
+	localControl.putValue("keepAlive","enable");//发送keepalive给app
+	if(language && language=="en"){
+		$(".iconfont.menu").attr("href","setting.html?language=en")
+	}else{
+		$(".iconfont.menu").attr("href","setting.html?language=zh")
+	}
+	var exposureArray=new Array(1,38,77,153,306,765,1531,3062,6123,12756,25513,51026,95673,191346,382692,765384,1048512);
+	var gainObj = {"16":"100","17":"100","18":"100","19":"100","20":"100",
+	"21":"200","22":"200","23":"200","24":"200","25":"200","26":"300","27":"300","28":"300","29":"300","30":"300",
+	"31":"300","32":"400","33":"400","34":"400","35":"400","36":"400","37":"400","38":"500","39":"500","40":"500",
+	"41":"500","42":"500","43":"500","44":"600","45":"600","46":"600","47":"600","48":"600","49":"600","50":"700",
+	"51":"700","52":"700","53":"700","54":"700","55":"700","56":"800","57":"800","58":"800","59":"800","60":"800",
+	"61":"800","62":"900","63":"900","64":"900","65":"900","66":"900","67":"900","68":"900","69":"1000","70":"1000",
+	"71":"1000","72":"1000","73":"1000","74":"1000","75":"1100","76":"1100","77":"1100","78":"1100","79":"1100","80":"1100",
+	"81":"1200","82":"1200","83":"1200","84":"1200","85":"1200","86":"1200","87":"1300","88":"1300","89":"1300","90":"1300",
+	"91":"1300","92":"1300","93":"1400","94":"1400","95":"1400","96":"1400","97":"1400","98":"1400","99":"1500","100":"1500",
+	"101":"1500","102":"1500","103":"1500","104":"1500","105":"1600","106":"1600","107":"1600","108":"1600","109":"1600","110":"1600",
+	"111":"1600","112":"1700","113":"1700","114":"1700","115":"1700","116":"1700","117":"1700","118":"1800","119":"1800","120":"1800",
+	"121":"1800","122":"1800","123":"1800","124":"1900","125":"1900","126":"1900","127":"1900","128":"1900","129":"1900","130":"2000",
+	"131":"2000","132":"2000","133":"2000","134":"2000","135":"2000","136":"2100","137":"2100","138":"2100","139":"2100","140":"2100",
+	"141":"2100","142":"2200","143":"2200","144":"2200","145":"2200","146":"2200","147":"2200","148":"2300","149":"2300","150":"2300",
+	"151":"2300","152":"2300","153":"2300","154":"2300","155":"2400","156":"2400","157":"2400","158":"2400","159":"2400","160":"2400",
+	"161":"2500","162":"2500","163":"2500","164":"2500","165":"2500","166":"2500","167":"2600","168":"2600","169":"2600","170":"2600",
+	"171":"2600","172":"2600","173":"2700","174":"2700","175":"2700","176":"2700","177":"2700","178":"2700","179":"2800","180":"2800",
+	"181":"2800","182":"2800","183":"2800","184":"2800","185":"2900","186":"2900","187":"2900","188":"2900","189":"2900","190":"2900",
+	"191":"3000","192":"3000","193":"3000","194":"3000","195":"3000","196":"3000","197":"3000","198":"3100","199":"3100","200":"3100",
+	"201":"3100","202":"3100","203":"3100","204":"3200","205":"3200","206":"3200","207":"3200","208":"3200","209":"3200","210":"3300",
+	"211":"3300","212":"3300","213":"3300","214":"3300","215":"3300","216":"3300","217":"3400","218":"3400","219":"3400","220":"3400",
+	"221":"3400","222":"3500","223":"3500","224":"3500","225":"3500","226":"3500","227":"3500","228":"3600","229":"3600","230":"3600",
+	"231":"3600","232":"3600","233":"3600","234":"3600","235":"3700","236":"3700","237":"3700","238":"3700","239":"3700","240":"3700",
+	"241":"3800","242":"3800","243":"3800","244":"3800","245":"3800","246":"3800","247":"3900","248":"3900","249":"3900","250":"3900",
+	"251":"3900","252":"4000","253":"4000","254":"4000","255":"4000"};
+	var gainObjR = {"100":"16","200":"22","300":"28","400":"34","500":"40","600":"46","700":"52","800":"58","900":"64","1000":"71","1100":"77","1200":"83","1300":"89","1400":"95","1500":"101","1600":"107","1700":"114","1800":"120","1900":"126","2000":"132","2100":"138","2200":"144","2300":"150","2400":"157","2500":"163","2600":"169","2700":"175","2800":"181","2900":"187","3000":"193","3100":"200","3200":"206","3300":"212","3400":"218","3500":"224","3600":"230","3700":"237","3800":"243","3900":"249","4000":"255"};
+	//白平衡数值说明：0-自动，3500-城市夜景，3000-夜晚，3200-白炽灯，2000-彩霞，4000-荧光灯，5200-日光，7500-阴天
+	// var whiteBalanceArray=new Array(0,3500,3000,3200,2000,4000,5200,7500);
+	var whiteBalanceArray = new Array(0,5200,7500,4000,3200);
+	var whiteBalModeIndex = {
+		dayLight:1,cloudy:2,fluorescent:3,tungsten:4
+	}
+	var whiteBalModeArray = new Array("Auto","dayLight","cloudy","fluorescent","tungsten");
+	if(language && language == "en"){
+		var whiteBalMode = {
+			dayLight:"DayLight",cloudy:"Cloudy",fluorescent:"Fluorescent",tungsten:"Tungsten"
+		}
+	}else{var whiteBalMode = {
+			dayLight:"日光",cloudy:"阴天",fluorescent:"荧光灯",tungsten:"白炽灯"
+		}
+	 }
+	//预览画质数组
+	var imgQualityArray = ["high","mid","low"];
+	if(app_type=="ios" && hideCTL!=1) {
+		localControl.inPage("index");
+	}
+	console.log("IndexStart");
+	//if(hideCTL) {
+		$(".shootMode").holdShow();
+		$("#mode").holdShow();
+		$(".foot-bar.flex.flex-middle").holdShow();
+		//$(".ctrl-icon").holdShow();
+	//}
+	function getPortrait(){//返回是否竖屏
+		if (window.orientation === 180 || window.orientation === 0) return true;
+		else return false
+		//var mql = window.matchMedia('(orientation: portrait)');
+		//return mql.matches
+	}
+	//如果app版本低于2.2，提醒更新
+	$(".backIndex").on("click",function(){
+		localControl.focus("disabled");
+		clearTimeout(clearAreaTimer);
+		focusCMD=null;
+		focusTimeout();
+		localControl.focus("disabled");
+		if(app_type) showCTL(0);
+		if(app_type && appVer >= 2) localControl.startPage("CameraManager");
+		else localControl.startPage("DeviceListPage");
+	})
+	if(appVer<2.2 && app_type){
+		$(".appUpdate").holdShow();
+		if(app_type=="ios"){
+			$(".abIos").show();
+		}else{
+			$(".androidOne,.abAndroid2").show();
+			if(language && language=="en"){
+				$(".appUpdate .abAndroid2 .androidTwo").css("text-align","left")
+			}else{
+				$(".appUpdate .abAndroid2 .androidTwo").css("text-align","center")
+			}
+		}
+	}
+	//安卓字体大小设置14px，苹果设置16px
+	if(app_type=="ios") $(".landscapePrompt").css("font-size","16px");
+	else if(app_type=="android") $(".landscapePrompt").css("font-size","14px");
+
+	$(".copyLink").on("click",function(){
+		// app.atliview.com
+		var input = document.createElement("input");
+		input.setAttribute("readonly","readonly");
+		input.setAttribute("value","app.atliview.com");
+		document.body.appendChild(input);
+    	input.setSelectionRange(0, 9999);
+		input.select();
+		if(document.execCommand("copy")){
+			document.execCommand("copy");
+			$(".copySuc").show();
+			setTimeout(function(){
+				$(".copySuc").hide();
+			},1000)
+			console.log("复制成功");
+		}
+		document.body.removeChild(input);
+	})
+	//离开页面，关闭图片和长连接
+/*
+	window.onpagehide = function(e){
+		console.log("onpagehide");
+		if(statusEventSource){
+			console.log("stop status EventSource");
+			statusEventSource.close();
+			statusEventSource = null;
+		}
+		// stopFocusEventSource();
+		window.stop();
+		// setDefaultPerview();
+	};
+*/
+	//实时监听横竖屏状态
+	window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
+	    // if (window.orientation === 180 || window.orientation === 0) {//竖屏状态
+	    //     // alert('竖屏状态！');
+	    //     console.log("实时监听竖屏||||||");
+	    //     $(".verticalPrompt").holdHide();
+	    //     if(imgArchive == "horizontal"){
+	    //     	$(".horizontalPrompt").holdShow();
+	    //     }else if(imgArchive == "vertical"){
+	    //     	$(".horizontalPrompt").holdHide();
+	    //     }
+	    // }
+	    // if (window.orientation === 90 || window.orientation === -90 ){//横屏状态
+	    //     // alert('横屏状态！');
+	    //     console.log("实时监听横屏||||||");
+	    //     $(".horizontalPrompt").holdHide();
+	    //     if(imgArchive == "horizontal"){
+     //    	 	$(".verticalPrompt").holdHide();
+	    //     }else if(imgArchive == "vertical"){
+     //    	 	$(".verticalPrompt").holdShow();
+	    //     }
+	    // } 
+	    // setOrientation(imgArchive,true);
+	    if($(".amplifier").css("display")=="block"){
+			$(".amplifier").hide();
+			putJSON("/webctl",{previewZoom:0});
+		}
+	    $(".moreFun").hide();
+	    if($(".focus-area").css("display")=="block"){
+	    	$(".focus-area,.sun-container,.exposureBiasShow").hide();
+	    }
+	    putJSON("/webctl",{previewZoom:0});
+	    $(".gridline").holdHide();
+	    setOrientation(imgArchive,true);
+	}, false);
+	//timelaspe输出方式提示
+	getJSON("/setting",function(data){
+		outPutMode = data.timelapse_output;
+		if(data.timelapse_output==1){
+			$(".promptControl").show();
+		}
+		if("grid" in data){
+			grid = data.grid;
+		}
+	});
+	//获取录像设置数据
+	getJSON("/REC",function(data,status){
+		/*静音 1是关闭静音，0是开启静音*/
+		if(data.audio==1) {cutAudio=false;}
+		else {cutAudio=true;}
+		
+	}, function (jqXHR, exception) {
+        	console.log((jqXHR.status+exception));
+	});
+	var onPageHideTimer=null;
+	function setPageWhenHide(){
+		if(sessionType=='video' || app_type=="ios"){
+			if(imgArchive == "horizontal"){
+				$("#preview").attr("src","images/preload_1.jpg");
+			}else{
+				$("#preview").attr("src","images/preload_2.jpg");
+			}
+		}else {
+			console.log("set :"+'/preview?sessionId=' + sessionId +"&frameIndex="+nowIndex+ (getAccessToken()?'&access_token='+getAccessToken():''));
+			$("#preview").attr("src", '/preview?sessionId=' + sessionId +"&frameIndex="+nowIndex+ (getAccessToken()?'&access_token='+getAccessToken():''));
+		}
+	
+	}
+	function onPageHide(){
+		if(app_type==null || appVer < 2) return;
+		CameraAlbumPage=1;
+/*
+		if(statusEventSource){
+			console.log("stop status EventSource");
+			statusEventSource.close();
+			statusEventSource = null;
+		}
+*/
+		// stopFocusEventSource();
+		console.log("onPageHide");
+		setPageWhenHide();
+		onPageHideTimer=setTimeout(function(){
+			if(app_type=="android") window.stop();
+			console.log("window");
+		},2000);
+
+
+	}
+	//跳转相册
+	$(".video").on("click", function(e){
+		console.log("appVer:"+appVer);
+		/*
+		if(recordStatus != "idle" && recordStatus != "waiting"){
+			e.stopPropagation();
+			$(".video-prompt").slideDown(1000);
+			setTimeout(function(){
+				$(".video-prompt").slideUp(1000);
+			},2000);
+			return false;
+		}*/
+		localControl.focus("disabled");
+		clearTimeout(clearAreaTimer);
+		focusCMD=null;
+		focusTimeout();
+		if(app_type && appVer >= 2) {
+			console.log("goto CameraAlbum");
+			localControl.startPage("CameraAlbum");
+
+		}else {
+			if(language && language=="en"){
+				location.href = "video.html?language=en"
+			}else{
+				location.href = "video.html?language=zh"
+			}
+			
+		}; 
+	});
+	//记录跳转到播放页面
+	/*
+	$(".video-shooting").on("click", function(){
+		console.log("goto playback:"+$(".video-shooting").prop("href"));
+		if(app_type=="ios" && window.webkit.messageHandlers.previewPlayback) console.log("has playback api");
+		else console.log("no playback api");
+		playPage=1;
+
+		if(app_type=="ios" && window.webkit.messageHandlers.previewPlayback) {
+			CameraAlbumPage=1;
+			if(statusEventSource){
+				console.log("stop status EventSource");
+				statusEventSource.close();
+				statusEventSource = null;
+			}
+			stopFocusEventSource();
+			window.stop();
+			var playbackUrl=$(".video-shooting").prop("href");
+			playbackUrl=playbackUrl.replace('.html', '');
+			localControl.playback(playbackUrl);
+			return false;
+		}
+	})*/
+	/*
+	var startTime,count=0;
+	function setLanTimeout(){
+		count=count+1;
+		var screenWidth = $(".main").width();
+		var moveDistance = parseInt((screenWidth+250+100)/720);
+		
+		var timeNow = new Date().getTime();
+		var offset = timeNow-(startTime+count*18*1000);
+		var nextTime = 18*1000 - offset;
+		if(nextTime<0)nextTime=0;
+		$(".landscapePrompt").css("left",String(screenWidth+100)+"px");
+		$(".landscapePrompt").holdShow();
+		var animateInterval = setInterval(function(){
+			var theOffsetLeft = $(".landscapePrompt").offset().left;
+			if(theOffsetLeft>-250){
+				$(".landscapePrompt").offset({
+					left:theOffsetLeft-moveDistance
+				})
+			}else{
+				$(".landscapePrompt").holdHide();
+				clearInterval(animateInterval);
+			}
+		},25)
+		// $(".landscapePrompt").hide(2000);
+		setLandscapeInterval = setTimeout(setLanTimeout,nextTime);
+	}
+	function setPorTimeout(){
+		count=count+1;
+		var screenWidth = $(".main").width();
+		var moveDistance = parseInt((screenWidth+250+100)/720);
+		
+		var timeNow = new Date().getTime();
+		var offset = timeNow-(startTime+count*18*1000);
+		var nextTime = 18*1000 - offset;
+		if(nextTime<0)nextTime=0;
+		$(".portraitPrompt").css("left",String(screenWidth+100)+"px");
+		$(".portraitPrompt").holdShow();
+		var animateInterval = setInterval(function(){
+			var theOffsetLeft = $(".portraitPrompt").offset().left;
+			if(theOffsetLeft>-250){
+				$(".portraitPrompt").offset({
+					left:theOffsetLeft-moveDistance
+				})
+			}else{
+				$(".portraitPrompt").holdHide();
+				clearInterval(animateInterval);
+			}
+		},25)
+		// $(".portraitPrompt").hide(2000);
+		setPortraitInterval = setTimeout(setPorTimeout,nextTime);
+	}*/
+	function setPromptTimeout(){
+		if($(".manualFocusPrompt").css("display")=="block" || $(".netprompt-cover").css("display")=="block"){
+			if(orientationMode==1 || orientationMode==2){
+				$(".landscapePrompt,.portraitPrompt").holdHide();
+			}
+		}else{
+			if(orientationMode==1){
+				$(".landscapePrompt").holdShow();
+				var imgTop = $(".imgOriginal").offset().top;
+				var imgHeight = $(".imgOriginal").height();
+				$(".landscapePrompt").offset({top:imgTop+imgHeight});
+			}else if(orientationMode==2){
+				$(".portraitPrompt").holdShow();
+			}else{
+				$(".landscapePrompt,.portraitPrompt").holdHide();
+			}
+		}
+		setTimeout(setPromptTimeout,500);
+	}
+	setPromptTimeout();
+	function setOrientation(orientation,flag){
+		if(orientation=="horizontal"){
+			if(getPortrait()){
+				$(".main-pic").css({
+					"width":"100%",
+					"transform":"translate(-50%,-50%)",
+					"-ms-transform":"translate(-50%,-50%)",
+					"-o-transform":"translate(-50%,-50%)",
+					"-webkit-transform": "translate(-50%,-50%)"
+				});
+				if($(".portraitPrompt").css("display")=="block"){
+					$(".portraitPrompt").holdHide();
+				}
+				if(flag){
+					$(".landscapePrompt").holdShow();
+					setTimeout(function(){
+						if(grid && grid==1){
+							$(".gridline").css({
+								"width":String($(".main-pic").width())+"px",
+								"height":String($(".main-pic").height())+"px",
+								"transform":"translate(-50%,-50%)",
+								"-ms-transform":"translate(-50%,-50%)",
+								"-o-transform":"translate(-50%,-50%)",
+								"-webkit-transform": "translate(-50%,-50%)",
+								"background":"-webkit-linear-gradient(top, transparent " + String($(".main-pic").height()/3) + "px, rgba(255,255,255,.5) " + String($(".main-pic").height()/3+2) + "px),-webkit-linear-gradient(left, transparent " + String($(".main-pic").width()/3) + "px, rgba(255,255,255,.5) " + String($(".main-pic").width()/3+2) + "px)",
+								"background-size":String($(".main-pic").width()/3+2)+"px "+String($(".main-pic").height()/3+2)+"px"
+							}).holdShow();
+						}else{$(".gridline").holdHide()}	
+					},500)
+				}
+				hideFocus = true;
+				orientationMode = 1;
+			}else{
+				$(".main-pic").css({
+					"width":"100%",
+					"transform":"translate(-50%,-50%)",
+					"-ms-transform":"translate(-50%,-50%)",
+					"-o-transform":"translate(-50%,-50%)",
+					"-webkit-transform": "translate(-50%,-50%)"
+				});
+				
+				if($(".landscapePrompt").css("display")=="block"){
+					$(".landscapePrompt").holdHide();
+				}
+				if($(".portraitPrompt").css("display")=="block"){
+					$(".portraitPrompt").holdHide();
+				}
+				if(flag){
+					if((recordStatus=="idle" || recordStatus=="waiting" || recordStatus=="pausing") && sessionType!="video"){
+						hideFocus = false;
+					}
+					setTimeout(function(){
+						if(grid && grid==1){
+							$(".gridline").css({
+								"width":String($(".main-pic").width())+"px",
+								"height":String($(".main-pic").height())+"px",
+								"transform":"translate(-50%,-50%)",
+								"-ms-transform":"translate(-50%,-50%)",
+								"-o-transform":"translate(-50%,-50%)",
+								"-webkit-transform": "translate(-50%,-50%)",
+								"background":"-webkit-linear-gradient(top, transparent " + String($(".main-pic").height()/3) + "px, rgba(255,255,255,.5) " + String($(".main-pic").height()/3+2) + "px),-webkit-linear-gradient(left, transparent " + String($(".main-pic").width()/3) + "px, rgba(255,255,255,.5) " + String($(".main-pic").width()/3+2) + "px)",
+								"background-size":String($(".main-pic").width()/3+2)+"px "+String($(".main-pic").height()/3+2)+"px"
+							}).holdShow();
+						}else{$(".gridline").holdHide()}
+							
+					},500)
+				}
+				clearTimeout(setLandscapeInterval);
+				clearTimeout(setPortraitInterval);
+				setLanInterFlag = true;
+				setPorInterFlag = true;
+				orientationMode = null;
+			}
+			$(".imgAmplifier").css({
+				"transform":"rotate(0deg)",
+				"-ms-transform":"rotate(0deg)",
+				"-o-transform":"rotate(0deg)",
+				"-webkit-transform": "rotate(0deg)"
+			})
+		}else if(orientation=="vertical"){
+			if(getPortrait()){
+				$(".main-pic").css({
+					"width":"177.778vw",
+					"transform":"translate(-50%,-50%) rotate(90deg)",
+					"-ms-transform":"translate(-50%,-50%) rotate(90deg)",
+					"-o-transform":"translate(-50%,-50%) rotate(90deg)",
+					"-webkit-transform": "translate(-50%,-50%) rotate(90deg)"
+				});
+				
+				if($(".portraitPrompt").css("display")=="block"){
+					$(".portraitPrompt").holdHide();
+				}
+				if($(".landscapePrompt").css("display")=="block"){
+					$(".landscapePrompt").holdHide();
+				}
+				if(flag){
+					if((recordStatus=="idle" || recordStatus=="waiting" || recordStatus=="pausing") && sessionType!="video"){
+						hideFocus = false;
+					}
+					setTimeout(function(){
+						if(grid && grid==1){
+							$(".gridline").css({
+								"width":String($(".main-pic").height())+"px",
+								"height":String($(".main-pic").width())+"px",
+								"transform":"translate(-50%,-50%)",
+								"-ms-transform":"translate(-50%,-50%)",
+								"-o-transform":"translate(-50%,-50%)",
+								"-webkit-transform": "translate(-50%,-50%)",
+								"background":"-webkit-linear-gradient(top, transparent " + String($(".main-pic").width()/3) + "px, rgba(255,255,255,.5) " + String($(".main-pic").width()/3+2) + "px),-webkit-linear-gradient(left, transparent " + String($(".main-pic").height()/3) + "px, rgba(255,255,255,.5) " + String($(".main-pic").height()/3+2) + "px)",
+								"background-size":String($(".main-pic").height()/3+2)+"px "+String($(".main-pic").width()/3+2)+"px"
+							}).holdShow();
+						}else{$(".gridline").holdHide()}
+							
+					},500)
+						
+				}
+				clearTimeout(setLandscapeInterval);
+				clearTimeout(setPortraitInterval);
+				setLanInterFlag = true;
+				setPorInterFlag = true;
+				orientationMode = null;
+			}else{
+				$(".main-pic").css({
+					"width":"100vh",
+					"transform":"translate(-50%,-50%) rotate(90deg)",
+					"-ms-transform":"translate(-50%,-50%) rotate(90deg)",
+					"-o-transform":"translate(-50%,-50%) rotate(90deg)",
+					"-webkit-transform": "translate(-50%,-50%) rotate(90deg)"
+				});
+				if($(".landscapePrompt").css("display")=="block"){
+					$(".landscapePrompt").holdHide();
+				}
+				if(flag){
+					$(".portraitPrompt").holdShow();
+					setTimeout(function(){
+						if(grid && grid==1){
+							$(".gridline").css({
+								"width":String($(".main-pic").height())+"px",
+								"height":String($(".main-pic").width())+"px",
+								"transform":"translate(-50%,-50%)",
+								"-ms-transform":"translate(-50%,-50%)",
+								"-o-transform":"translate(-50%,-50%)",
+								"-webkit-transform": "translate(-50%,-50%)",
+								"background":"-webkit-linear-gradient(top, transparent " + String($(".main-pic").width()/3) + "px, rgba(255,255,255,.5) " + String($(".main-pic").width()/3+2) + "px),-webkit-linear-gradient(left, transparent " + String($(".main-pic").height()/3) + "px, rgba(255,255,255,.5) " + String($(".main-pic").height()/3+2) + "px)",
+								"background-size":String($(".main-pic").height()/3+2)+"px "+String($(".main-pic").width()/3+2)+"px"
+							}).holdShow();
+						}else{$(".gridlined").holdHide()}
+							
+					},500)
+				}
+				hideFocus = true;
+				orientationMode = 2;	
+			}
+			$(".imgAmplifier").css({
+				"transform":"rotate(90deg)",
+				"-ms-transform":"rotate(90deg)",
+				"-o-transform":"rotate(90deg)",
+				"-webkit-transform": "rotate(90deg)"
+			})
+		}
+		if($(".focus-area").css("display")=="block"){
+	    	$(".focus-area,.sun-container,.exposureBiasShow").hide();
+	    }
+		if(!flag){
+			return false
+		}
+	}
+	/* 更多功能点击事件 start*/
+	$(".more").on("click",function(){
+		if(recordStatus!="idle"){
+			$(".shootingPrompt").show();
+			setTimeout(function(){$(".shootingPrompt").hide();},2000);
+			return false;
+		}
+		if($(".amplifier").css("display")=="block"){
+			$(".amplifier").hide();
+			putJSON("/webctl",{previewZoom:0});
+		}
+		localControl.focus("disabled");
+		clearTimeout(clearAreaTimer);
+		focusCMD=null;
+		focusTimeout();
+		// $(".moreMask").holdToggle();
+		if($(".moreMask").css("display")=="block"){
+			$(".moreMask").hide();
+		}else{$(".moreMask").show();}
+	})
+	function moreRestore(orientation){
+		setOrientation(orientation,true);
+		getJSON("/status",function(data){
+			imgArchive = data.imgArchive;
+			localControl.notify(imgArchive);
+			if("imgRotate" in data){
+				rotate180 = true
+			}else{rotate180 = false}
+			$(".more").removeClass("shooting-now");
+		})
+	}
+	$(".imgCtl li").each(function(index){
+		$(this).on("click",function(){
+			$(".moreMask").hide();
+			$(this).addClass("on").siblings().removeClass("on");
+			$(".more").addClass("shooting-now").attr("data-mode",$(this).find("i").text());
+			var appNotice = index+1;
+			var imgCtlData = {},imgOrientation;
+			console.log(appNotice);
+			localControl.orientation(appNotice);
+			$(".gridline").holdHide();
+			if(index == 0){
+				if(imgArchive != "horizontal" && rotate180){
+					imgCtlData.imgArchive = "horizontal";
+					imgCtlData.imgRotate = "180";
+					// postJSON("/imgCtl",{imgArchive:"horizontal",imgRotate:"180"},moreRestore);
+				}else if(imgArchive != "horizontal" && !rotate180){
+					imgCtlData.imgArchive = "horizontal";
+					// postJSON("/imgCtl",{imgArchive:"horizontal"},moreRestore);
+				}else if(imgArchive == "horizontal" && rotate180){
+					imgCtlData.imgRotate = "180";
+					// postJSON("/imgCtl",{imgRotate:"180"},moreRestore);
+				}
+				imgOrientation = "horizontal";
+				// setOrientation("horizontal",true);
+			}else if(index == 1){
+				if(imgArchive != "vertical" && rotate180){
+					imgCtlData.imgArchive = "vertical";
+					imgCtlData.imgRotate = "180";
+					// postJSON("/imgCtl",{imgArchive:"vertical",imgRotate:"180"},moreRestore);
+				}else if(imgArchive != "vertical" && !rotate180){
+					imgCtlData.imgArchive = "vertical";
+					// postJSON("/imgCtl",{imgArchive:"vertical"},moreRestore);
+				}else if(imgArchive == "vertical" && rotate180){
+					imgCtlData.imgRotate = "180";
+					// postJSON("/imgCtl",{imgRotate:"180"},moreRestore);
+				}
+				imgOrientation = "vertical";
+				// setOrientation("vertical",true);
+			}else if(index == 2){
+				if(imgArchive == "vertical" && !rotate180){
+					imgCtlData.imgArchive = "horizontal";
+					imgCtlData.imgRotate = "180";
+					// postJSON("/imgCtl",{imgArchive:"horizontal",imgRotate:"180"},moreRestore);
+				}else if(imgArchive != "vertical" && !rotate180){
+					imgCtlData.imgRotate = "180";
+					// postJSON("/imgCtl",{imgRotate:"180"},moreRestore);
+				}else if(imgArchive == "vertical" && rotate180){
+					imgCtlData.imgArchive = "horizontal";
+					// postJSON("/imgCtl",{imgArchive:"horizontal"},moreRestore);
+				}
+				imgOrientation = "horizontal";
+				// setOrientation("horizontal",true);
+			}else if(index == 3){
+				if(imgArchive == "horizontal" && !rotate180){
+					imgCtlData.imgArchive = "vertical";
+					imgCtlData.imgRotate = "180";
+					// postJSON("/imgCtl",{imgArchive:"vertical",imgRotate:"180"},moreRestore);
+				}else if(imgArchive != "horizontal" && !rotate180){
+					imgCtlData.imgRotate = "180";
+					// postJSON("/imgCtl",{imgRotate:"180"},moreRestore);
+				}else if(imgArchive == "horizontal" && rotate180){
+					imgCtlData.imgArchive = "vertical";
+					// postJSON("/imgCtl",{imgArchive:"vertical"},moreRestore);
+				}
+				imgOrientation = "vertical";
+				// setOrientation("vertical",true);
+			}
+			postJSON("/imgCtl",imgCtlData,function(){
+				moreRestore(imgOrientation);
+			})
+			
+		})
+	})
+
+	/* 更多功能点击事件 end*/
+
+	
+	//点击取消按钮隐藏确认框
+	$("#turnoffCronNo").on("click",function(){
+		$(".dialog-cover,#turnoffCron").hide();
+	})
+	//点击确认按钮隐藏确认框，改变拍摄按钮样式
+	
+	$("#turnoffCronYes").on("click",function(){
+		$(".dialog-cover,#turnoffCron").hide();
+		$("#shoot-circle").attr("state","idle");
+		$(".video-shooting,.theSpace").hide().siblings(".video").show();
+	})
+	
+	/* 暂停停止点击事件 start */
+	$(".pauseSelect li").each(function(index){
+		
+		$(this).on("click",function(){
+			$(".pauseSelect").animate({
+				top:"100%",
+				width:"20px",
+				height:"10px"
+			},500,function(){
+				$(this).hide();
+			});
+			if(index==0){
+				localControl.putValue("pauseStatus",1);
+				$(".dialog-cover").hide().removeClass("tp");
+				$(".pauseSelect li").eq(0).hide().siblings(".continue").show();
+				$("#shoot-circle").css("pointer-events","none");
+				// $("#shoot-circle").addClass("pause");
+				console.log("shoot-circle remove class on ========================");
+				// setTimeout(function(){$("#shoot-pause").show();},400);
+				putJSON("/timelapse",{sessionId:sessionId,action:"pause"},function(data){
+					livePreviewUrl = data.url;
+					localControl.putValue("livePreviewUrl",livePreviewUrl);
+					$("#shoot-circle").css("pointer-events","auto");
+				});
+				$("#modeNow").addClass("shooting-now");
+				$(".circleChart_canvas").remove(".circleChart_canvas");
+				$("#shoot-circle").attr("state","pausing");
+				$("#shoot-circle").removeClass("shoot-percent circleChart");
+				$("#shoot-circle").addClass("shoot pause");
+				$("#shoot-circle").children("span").removeClass("shoot-percent-inside");
+			}else if(index==1){
+				$(".pauseSelect li").eq(1).hide().siblings(".pause").show();
+				$(".time-poppup .time-main-interval").show().siblings(".time-main-cron").hide();
+				$(".time-poppup .time-tab-cron").hide();
+				$("#start-shooting").hide();
+				$("#continue-shooting").show();
+				$(".time-poppup").show();
+				// continueRecording();
+			}else if(index==2){
+				$(".dialog-cover").hide().removeClass("tp");;
+				$("#shoot-circle").removeClass("pause");
+				// $("#shoot-pause").hide();
+				stopRecording();
+				$("#start-shooting").show().siblings("#continue-shooting").hide();
+				$(".time-poppup .time-tab-cron").show();
+			}
+		})
+	})
+	
+	$("#continue-shooting").on("click",function(){
+		continueRecording();
+	})
+	/* 暂停停止点击事件 end */
+
+	//拍摄模式点击事件
+	$(".shootMode .modeNow").on("click",function(e){
+		e.stopPropagation();
+		$(".shootModeList").toggle();
+		localControl.focus("disabled");
+		clearTimeout(clearAreaTimer);
+		focusCMD=null;
+		focusTimeout();
+		// $(".mode-list").hide();
+		$(".all-modelist").hide();
+		$(".moreMask").hide();
+	});
+	$(".shootModeList li").each(function(index){
+		$(this).on("click",function(e){
+			e.stopPropagation();
+			$(".shootModeList").toggle();
+			localControl.putValue("shootMode",index);
+			var sType;
+			if(index==0){
+				sType="timelapse";
+			}else if(index==1){
+				sType="image";
+			}
+			else if(index==2){
+				sType="video";
+				if(rotate180){
+					postJSON("/imgCtl",{imgRotate:"180"});
+				}
+				if(imgArchive=="vertical"){
+					postJSON("/imgCtl",{imgArchive:"horizontal"},function(){
+						moreRestore("horizontal");
+					});
+				}
+			}
+			
+			postJSON("/switch_session", { type:sType }, function(e, status){
+				console.log("switch_session "+sType+" ok");
+			}, function () {
+				console.log("switch_session "+sType+" error");
+			}, "text");
+
+			console.log("change to"+index+" "+sType);
+		})
+	});
+	
+	
+	/*拍照 --start*/
+	if((window.webkit && window.webkit.messageHandlers) || window.atliviewControl){//手机端
+		$("#shoot-photo").on("touchstart",function(){
+			$(this).addClass("mousedown");
+		});
+		$("#shoot-photo").on("touchend",function(){
+			$(this).removeClass("mousedown");
+			// var firstShootFlag = localControl.getValue("firstShootFlag","1");
+			// if(firstShootFlag==="1"){
+			// 	// $("#firstShootTip,.dialog-cover").show();
+			// 	$("#firstShootTip,.dialog-cover").show();
+			// }else{
+				shootStart(sessionType);
+			// }
+			
+		});
+	}else{//普通浏览器端
+		$("#shoot-photo").mousedown(function(){
+			$(this).addClass("mousedown");
+		});
+		$("#shoot-photo").mouseup(function(){
+			$(this).removeClass("mousedown");
+			// var firstShootFlag = localControl.getValue("firstShootFlag","1");
+			// if(firstShootFlag==="1"){
+			// 	$("#firstShootTip,.dialog-cover").show();
+			// }else{
+				shootStart(sessionType);
+			// }
+		});
+	}
+
+	function takePicture(){
+		hideFocus=true;
+		$("#shoot-circle").css("pointer-events","none");
+		$("#shoot-photo,.modeNow").addClass("shooting-now");
+		postJSON("/image",{sessionId:sessionId, timezone: -(new Date().getTimezoneOffset()/60)},function(){
+			setTimeout(function(){
+				$(".dialog-cover").toggle();
+				setTimeout(function(){
+					$(".dialog-cover").toggle();
+				},200);
+			},500);
+			hideFocus=false;
+			$("#shoot-circle").css("pointer-events","auto");
+			console.log("image success!");
+			$("#shoot-photo,.modeNow").removeClass("shooting-now");
+		},function(xhr,errorText,errorType){
+			hideFocus=false;
+			$("#shoot-circle").css("pointer-events","auto");
+			console.log("image error:"+xhr.status+"-"+xhr.statusText);
+			$("#shoot-photo,.modeNow").removeClass("shooting-now");
+		},"text");
+		
+	}
+	/*拍照 --end*/	
+
+	function setVideoStatus(status){
+		if(status=="video"){
+			$(".shootV").addClass("shootV-running");
+			$(".shootV").addClass("run");
+			$(".modeNow").addClass("shooting-now");
+			//$(".effect-now").holdHide();
+			// $(".videoSign").show();	
+		}else {
+			$(".shootV").removeClass("shootV-running");
+			$(".shootV").removeClass("run");
+			$(".modeNow").removeClass("shooting-now");
+			$(".videoSign").holdHide();
+			$(".durationForVideo").text("00:00:00");
+			//if($("#manual").hasClass("on")) $(".effect-now").holdShow();
+		}
+	} 
+	/*录像 --start*/
+	$(".shootV").on("click",function(){
+		if($(this).hasClass("shootV-running")){
+			$("#turnoffVideo").show();
+			if(language && language=="en"){
+				$("#turnoffVideoYes").text("End The Shooting");
+				$("#turnoffVideoNo").text("No");
+			}
+		}else{
+			//var recCtrl = { sessionId: sessionId, starttime:transTimeyMDHIS() };
+			// var firstShootFlag = localControl.getValue("firstShootFlag","1");
+			// if(firstShootFlag==="1"){
+			// 	$("#firstShootTip,.dialog-cover").show();
+			// }else{
+				shootStart(sessionType);
+			// }
+			
+		}
+	});
+
+	$("#turnoffVideoNo").on("click",function(){
+		$("#turnoffVideo").hide();
+	});
+	$("#turnoffVideoYes").on("click",function(){
+		$("#turnoffVideo").hide();
+		putJSON("/video", { sessionId: sessionId }, function(e, status){
+			console.log("stop video ok");
+			setVideoStatus("idle");
+		}, function () {
+			console.log("stop video error");
+		}, "text");
+	});
+	/*录像 --end*/
+
+	/*放大镜--start*/
+	var distance = {};//用来存放原始图像长宽，横纵坐标等等
+	var moveflag;//pc端需要一个flag控制放大镜移动（鼠标长按放大镜才能移动）
+	var multiple = 2.5;//放大镜倍数
+	function handleMove(e){//放大镜移动控制函数
+		e.preventDefault();
+		var demoLeft = $(".imgOriginal").offset().left,
+			demoTop = $(".imgOriginal").offset().top;
+		if(imgArchive=="horizontal"){
+			var width = $(".imgOriginal").width(),
+				height = $(".imgOriginal").height();
+		}else if(imgArchive=="vertical"){
+			var width = $(".imgOriginal").height(),
+				height = $(".imgOriginal").width();
+		}
+		var maxLeft = demoLeft+width-$(".amplifier").width()/2,
+			maxTop = demoTop+height-$(".amplifier").width()/2,
+			leastLeft = demoLeft-$(".amplifier").width()/2,
+			leastTop = demoTop-$(".amplifier").width()/2,top,left;
+		switch(e.type){
+			case "touchstart":
+				distance.top = $(".amplifier").offset().top;
+				distance.left = $(".amplifier").offset().left;
+				distance.imgTop = $(".imgAmplifier").offset().top;
+				distance.imgLeft = $(".imgAmplifier").offset().left;
+				if(e.originalEvent.touches.length==1){
+					distance.onestart = [e.originalEvent.touches[0].pageX,e.originalEvent.touches[0].pageY];
+				}
+				break;
+			case "touchmove":
+				if(e.originalEvent.touches.length==1){
+					distance.onestop = [e.originalEvent.touches[0].pageX,e.originalEvent.touches[0].pageY];
+					var dis = [distance.onestop[0]-distance.onestart[0],distance.onestop[1]-distance.onestart[1]];
+					if((distance.top+dis[1])<maxTop && (distance.top+dis[1])>leastTop){
+						top = distance.top+dis[1];
+					}else if((distance.top+dis[1])>=maxTop){
+						top = maxTop
+					}else if((distance.top+dis[1])<=leastTop){
+						top = leastTop
+					}
+					if((distance.left+dis[0])<maxLeft && (distance.left+dis[0])>leastLeft){
+						left = distance.left+dis[0];
+					}else if((distance.left+dis[0])>=maxLeft){
+						left = maxLeft
+					}else if((distance.left+dis[0])<=leastLeft){
+						left = leastLeft
+					}
+					$(".amplifier").offset({
+						top:top,
+						left:left
+					});
+					distance.amplifierTop = $(".amplifier").offset().top+$(".amplifier").width()/2;
+					distance.amplifierLeft = $(".amplifier").offset().left+$(".amplifier").width()/2;
+					$(".imgAmplifier").offset({
+						// top:distance.amplifierTop-(distance.amplifierTop-demoTop)*2.5,
+						// left:distance.amplifierLeft-(distance.amplifierLeft-demoLeft)*2.5
+						top:distance.amplifierTop-(distance.amplifierTop-demoTop)*multiple,
+						left:distance.amplifierLeft-(distance.amplifierLeft-demoLeft)*multiple
+					})
+				}
+				break;
+			case "mousedown":
+				moveflag = true;
+				$(".showDiv").html("mousedown"+e.pageX+":"+e.pageY);
+				distance.top = $(".amplifier").offset().top;
+				distance.left = $(".amplifier").offset().left;
+				distance.imgTop = $(".imgAmplifier").offset().top;
+				distance.imgLeft = $(".imgAmplifier").offset().left;
+				distance.onestart = [e.pageX,e.pageY];
+				break;
+			case "mousemove":
+				$(".showDiv").html("mousemove" + e.pageX + ":" + e.pageY);
+					distance.onestop = [e.pageX,e.pageY];
+					var dis = [distance.onestop[0]-distance.onestart[0],distance.onestop[1]-distance.onestart[1]];
+					if(moveflag==true){
+						if((distance.top+dis[1])<maxTop && (distance.top+dis[1])>leastTop){
+							top = distance.top+dis[1];
+						}else if((distance.top+dis[1])>=maxTop){
+							top = maxTop
+						}else if((distance.top+dis[1])<=leastTop){
+							top = leastTop
+						}
+						if((distance.left+dis[0])<maxLeft && (distance.left+dis[0])>leastLeft){
+							left = distance.left+dis[0];
+						}else if((distance.left+dis[0])>=maxLeft){
+							left = maxLeft
+						}else if((distance.left+dis[0])<=leastLeft){
+							left = leastLeft
+						}
+						$(".amplifier").offset({
+							top:top,
+							left:left
+						});
+						distance.amplifierTop = $(".amplifier").offset().top+$(".amplifier").width()/2;
+						distance.amplifierLeft = $(".amplifier").offset().left+$(".amplifier").width()/2;
+						$(".imgAmplifier").offset({
+							// top:distance.amplifierTop-(distance.amplifierTop-demoTop)*2.5,
+							// left:distance.amplifierLeft-(distance.amplifierLeft-demoLeft)*2.5
+							top:distance.amplifierTop-(distance.amplifierTop-demoTop)*multiple,
+							left:distance.amplifierLeft-(distance.amplifierLeft-demoLeft)*multiple
+						})
+					}
+				break;
+			case "mouseup":
+				moveflag = false;
+				if($(".focus-area").eq(0).css("display")=="block"){
+					focusTimeout();
+				}
+		}
+	}
+	$(".amplifier").on("touchstart",handleMove);
+	$(".amplifier").on("touchmove",handleMove);
+	$(".amplifier").on("mousedown",handleMove);
+	$(".amplifier").on("mousemove",handleMove);
+	$(".amplifier").on("mouseup",handleMove);
+	/*长按触发放大镜功能*/
+	var touchStartTime,touchStopTime;
+	$(".imgOriginal").on("mousedown touchstart",function(e){
+
+		// e.preventDefault();
+		var imgWidth = $(".imgOriginal").width(),
+			imgHeight = $(".imgOriginal").height();
+		// var width = imgWidth*2.5+"px";
+		var width = imgWidth*multiple+"px";
+		$(".imgAmplifier").css("width",width);
+		if(imgWidth/window.screen.height<3/5){
+			$(".amplifier").css({
+				"width":imgWidth/2+"px",
+				"height":imgWidth/2+"px"
+			})
+		}else{
+			$(".amplifier").css({
+				"width":imgWidth/3+"px",
+				"height":imgWidth/3+"px"
+			})
+		}
+		
+		touchStartTime = new Date().getTime();
+		distance.pointX = e.pageX?e.pageX:e.originalEvent.touches[0].pageX;
+		distance.pointY = e.pageY?e.pageY:e.originalEvent.touches[0].pageY;
+		var demoLeft = $(".imgOriginal").offset().left,
+			demoTop = $(".imgOriginal").offset().top;
+		console.log(demoLeft+":"+demoTop);
+		distance.X = distance.pointX-demoLeft;
+		distance.Y = distance.pointY-demoTop;
+		longTouch = setTimeout(function(){
+			// $(".amplifier").show();
+			if(amplifierShowFlag){
+				localControl.focus("disabled");
+				$(".amplifier").show();
+				putJSON("/webctl",{previewZoom:1});
+				$(".amplifier").offset({//设置放大镜出现位置
+					top:distance.pointY-$(".amplifier").width()/2,
+					left:distance.pointX-$(".amplifier").width()/2
+				});
+				$(".imgAmplifier").offset({//设置放大镜内图片位置
+					// top:distance.pointY-distance.Y*2.5,
+					// left:distance.pointX-distance.X*2.5
+					top:distance.pointY-distance.Y*multiple,
+					left:distance.pointX-distance.X*multiple
+				})
+				
+			}
+		},750)
+	})
+	$(".imgOriginal").on("mouseup touchend",function(e){
+		touchStopTime = new Date().getTime();
+		if((touchStopTime-touchStartTime)<750){
+			clearTimeout(longTouch);
+			// $(".amplifier").hide();
+			if($(".amplifier").css("display")=="block"){
+				imgEnableClick=false;
+				$(".amplifier").hide();
+				putJSON("/webctl",{previewZoom:0});
+			}
+		}
+	})
+	/*放大镜--end*/
+	/*曝光补偿滑条--start*/
+
+	var exposureBiasPostVal = null;
+	var exposureBiasPost_isDoing = false;
+	var exposureBiasPostTimer = null;
+	function exposureBiasPostComplete(){ //本次设置完成时，开始下一个设置
+		console.log("本次曝光补偿发送完毕，尝试发送下一个");
+		exposureBiasPost_isDoing = false;
+		clearTimeout(exposureBiasPostTimer);
+		doExposureBiasPost();
+	}
+	function doExposureBiasPost(){
+		if(exposureBiasPost_isDoing == false && exposureBiasPostVal !== null){
+			console.log("发送曝光补偿:"+exposureBiasPostVal);
+			postJSON("/control",{exposureBias:exposureBiasValue},updateControls, null, 'json', exposureBiasPostComplete);
+			exposureBiasPost_isDoing = true;
+			exposureBiasPostVal = null;
+			clearTimeout(exposureBiasPostTimer);
+                        exposureBiasPostTimer=setTimeout(exposureBiasPostComplete, 5000); //万一网络无返回，也要执行下一个设置
+		}else {
+			if(exposureBiasPost_isDoing == true) console.log("已有在发送的曝光补偿，延迟发送");
+			else if(exposureBiasPostVal === null) console.log("曝光补偿队列已发送完毕");
+		}
+	}
+	
+	var lastExposureBias = null;
+	function setExposureBiasPost(v){
+		if(v==40 || v==-40) {
+			console.log("滑条上下限："+v+", 立即发送曝光补偿");
+			if(lastExposureBias === v) return;
+			exposureBiasPostVal = null;
+			postJSON("/control",{exposureBias:exposureBiasValue},updateControls); //如果是上下限，立马执行
+		}
+		else {
+			exposureBiasPostVal = v;
+			doExposureBiasPost();
+		}
+		lastExposureBias = v;
+	}
+	function handleSun(e){
+    // e.preventDefault();
+    // e.stopPropagation();
+	    if($(".focus-area").eq(0).css("display")=="none"){return}
+		switch(e.type){
+	      	case "touchstart":
+	        	clearTimeout(clearAreaTimer);
+	        	height1=$(".track1").height();
+	        	height2=$(".track2").height();
+	        
+	        	pointOneX = e.originalEvent.touches[0].pageX;
+	        	pointOneY = e.originalEvent.touches[0].pageY;
+	        // $(".showheight").html("track1:"+$(".track1").height()+",track2:"+$(".track2").height()+",pointY:"+pointOneY);
+	        	break;
+	      	case "touchmove":
+	        	e.preventDefault();
+	        	amplifierShowFlag = false;
+	        	if($(".amplifier").css("display")=="none"){
+	        		clearTimeout(clearAreaTimer);
+		        	pointTwoX = e.originalEvent.touches[0].pageX;
+		        	pointTwoY = e.originalEvent.touches[0].pageY;
+		        	distanceX = pointTwoX-pointOneX;
+		        	distanceY = pointTwoY-pointOneY;
+	          		var track1 = parseInt(height1+distanceY/4);
+	          		var	track2 = (orientationMode?80:160)-track1;
+		        	if(track1>(orientationMode?80:160)){track1 = (orientationMode?80:160)}
+		        	if(track2>(orientationMode?80:160)){track2 = (orientationMode?80:160)}
+		        	if(track1<0){track1 = 0}  
+		        	if(track2<0){track2 = 0} 
+		        	console.log("--------------track2 is"+track2+"--------------------" ) 
+		        	$(".track1").css("height",track1+"px");
+		        	$(".track2").css("height",track2+"px");
+		       	 	if(track2%(orientationMode?1:2)==0){
+		          		// exposureBiasValue = (parseInt(track2/2)-40)/10;
+		          		exposureBiasValue = parseInt(track2/(orientationMode?1:2))-40;
+		          		console.log("--------------track2 is "+track2+"--------------------" ) 
+		          		// exposureBiasValue = parseInt(track2/2)-30;
+		          		if(exposureBias_now==exposureBiasValue){return}
+					setExposureBiasPost(exposureBiasValue);
+		          		var v = exposureBiasValue==0?exposureBiasValue:(exposureBiasValue/10).toFixed(1);
+		          		if(exposureBiasValue>0){
+		            		v="+"+v;
+		            	}
+		          		$(".exposureBiasShow").text(v);
+		        	}
+	        	}
+	        	break;
+	      	case "touchend":
+	      		amplifierShowFlag = true;
+	        	focusTimeout();
+	        	break;
+	      	case "mousedown":
+	        	clearTimeout(clearAreaTimer);
+	        	height1=$(".track1").height();
+	        	height2=$(".track2").height();
+	        	moveFlag = true;
+	        
+	        	pointOneX = e.pageX;
+	        	pointOneY = e.pageY;
+	    		break;
+	      	case "mousemove":
+	        	if(moveFlag==true){
+	        		imgEnableClick=false;
+		          	e.preventDefault();
+		          	amplifierShowFlag = false;
+	        		if($(".amplifier").css("display")=="none"){
+			          	clearTimeout(clearAreaTimer);
+			          	pointTwoX = e.pageX;
+			          	pointTwoY = e.pageY;
+			          	distanceX = pointTwoX-pointOneX;
+			          	distanceY = pointTwoY-pointOneY;
+			      		// var track1 = height1+distanceY/2,
+			        //     	track2 = height2-distanceY/2;
+		            	var track1 = parseInt(height1+distanceY/4);
+	          				// track2 = parseInt(height2-distanceY/4);
+	          			var	track2 = (orientationMode?80:160)-track1;
+			          	if(track1>(orientationMode?80:160)){track1 = (orientationMode?80:160)}
+			          	if(track2>(orientationMode?80:160)){track2 = (orientationMode?80:160)} 
+			          	if(track1<0){track1 = 0} 
+			          	if(track2<0){track2 = 0}  
+			          	// if(track1>120){track1 = 120;}
+			          	// if(track2>120){track2 = 120;} 
+			          	// if(track1<0){track1 = 0} 
+			          	// if(track2<0){track2 = 0}
+			      		$(".track1").css("height",track1+"px");
+			          	$(".track2").css("height",track2+"px");
+		          		if(track2%(orientationMode?1:2)==0){
+		            		// exposureBiasValue = (parseInt(track2/2)-40)/10;
+		            		exposureBiasValue = parseInt(track2/(orientationMode?1:2))-40;
+		            		// exposureBiasValue = parseInt(track2/2)-30;
+		            		if(exposureBias_now==exposureBiasValue){return}
+					setExposureBiasPost(exposureBiasValue);
+			            	var v = exposureBiasValue==0?exposureBiasValue:(exposureBiasValue/10).toFixed(1);
+			            	if(exposureBiasValue>0){
+			            		v="+"+v;
+			            	}
+			          		$(".exposureBiasShow").text(v);
+		          		}
+	        		}     	
+	        	}
+	        	break;
+	      	case "mouseup":
+	        	moveFlag = false;
+	        	amplifierShowFlag = true;
+	        	focusTimeout();
+	        	break;
+    	}
+  	}
+	$(".imgOriginal").on("mousedown",handleSun);
+	$(".imgOriginal").on("mousemove",handleSun);
+	$(".imgOriginal").on("mouseup",handleSun);
+	$(".imgOriginal").on("touchstart",handleSun);
+	$(".imgOriginal").on("touchmove",handleSun);
+	$(".imgOriginal").on("touchend",handleSun);
+  	/*曝光补偿滑条--end*/
+	function shootStart(shootType){
+		$("#memory2Confirm").attr("type",shootType);
+		if(SDStatus == "UNPLUG"){
+			if(language && language == "en"){
+				// $("#memory-prompt3 .dialog-poppup-content").text("No memory card found, Shooting is prohibited!");
+				$("#memory-prompt3 .dialog-poppup-content").text("Memory card  not detected. Please insert a memory card before shooting.");
+			}else{
+				$("#memory-prompt3 .dialog-poppup-content").text("未检测到存储卡，无法开始拍摄！");
+			}
+			$("#memory-prompt3, .dialog-cover").show();
+		}else if(SDStatus == "NOT_FAT"){
+			if(language && language == "en"){
+				$("#memory-prompt3 .dialog-poppup-content").text("Invalid card format!  Unable to start shooting!");
+			}else{
+				$("#memory-prompt3 .dialog-poppup-content").text("存储卡格式不符合要求，无法开始拍摄！");
+			}
+			$("#memory-prompt3, .dialog-cover").show();
+		}else if(SDStatus == "UNRECOGNIZED"){
+			if(language && language == "en"){
+				$("#memory-prompt3 .dialog-poppup-content").text("Unrecognized card format!  Unable to start shooting!");
+			}else{
+				$("#memory-prompt3 .dialog-poppup-content").text("无法识别存储卡的文件系统格式,无法开始拍摄！");
+			}
+			$("#memory-prompt3, .dialog-cover").show();
+		}else if(SDStatus == "PLUG"){
+			if(SDavailable<50*1024){
+				if(language && language == "en"){
+					$("#memory-prompt3 .dialog-poppup-content").text("Unable to start shooting due to low memory card storage");
+				}else{
+					$("#memory-prompt3 .dialog-poppup-content").text("剩余存储空间不足，无法开始拍摄！");
+				}
+				
+				// $("#memory-prompt3, .dialog-cover").show();
+				$("#memory-prompt3, .dialog-cover").show();
+			}else if(SDavailable<500*1024){
+				if(batteryStatus=="discharging" && batteryNow<5){
+					if(language && language == "en"){
+						$("#memory-prompt3 .dialog-poppup-content").text("Less than 5% battery!  Unable to start shooting!");
+					}else{
+						$("#memory-prompt3 .dialog-poppup-content").text("电量低于5%，无法开始拍摄！");
+					}
+					
+					// $("#memory-prompt3, .dialog-cover").show();
+					$("#memory-prompt3, .dialog-cover").show();
+				}else{
+					if(shootType!="image"){
+						if(language && language == "en"){
+							$("#memory-prompt2 .dialog-poppup-content").text("Memory card storage less than 500MB. Are you sure you want to start shooting?");
+						}else{
+							$("#memory-prompt2 .dialog-poppup-content").text("剩余存储空间低于500M，确定要开始拍摄吗？");
+						}
+						
+						// $("#memory-prompt2, .dialog-cover").show();
+						$("#memory-prompt2, .dialog-cover").show();
+					}else{
+						takePicture();
+					}
+				}
+			}else{
+				if(batteryStatus=="discharging" && batteryNow<5){
+					if(language && language == "en"){
+						$("#memory-prompt3 .dialog-poppup-content").text("Less than 5% battery!  Unable to start shooting!");
+					}else{
+						$("#memory-prompt3 .dialog-poppup-content").text("电量低于5%，无法开始拍摄！");
+					}
+					// $("#memory-prompt3, .dialog-cover").show();
+					$("#memory-prompt3, .dialog-cover").show();
+				}else if(batteryStatus=="discharging" && batteryNow<20){
+					if(shootType!="image"){
+						if(language && language == "en"){
+							// $("#memory-prompt2 .dialog-poppup-content").text("The current battery level is 20%.  When it is below 5%, shooting will be terminated automatically.  Do you still want to start shooting?");
+							$("#memory-prompt2 .dialog-poppup-content").text("Battery less than 20%. Are you sure you want to start shooting?");
+						}else{
+							$("#memory-prompt2 .dialog-poppup-content").text("当前剩余电量低于20%，当电量低于5%时，相机将强制停止拍摄，确定开始拍摄？");
+						}
+						// $("#memory-prompt2, .dialog-cover").show();
+						$("#memory-prompt2, .dialog-cover").show();
+					}else{
+						takePicture();
+					}		
+				}else{
+					if(shootType=="video") videoRun();
+					else if(shootType=="timelapse") {
+						$(".time-poppup,.dialog-cover").show();
+						$(".dialog-cover").addClass("tp");
+					}else takePicture();
+				}
+			}
+		}
+	}
+	
+	function videoRun(){
+		var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60)};
+		console.log(recCtrl);
+		$("#shoot-circle").css("pointer-events","none");
+		postJSON("/video", recCtrl, function (data) {
+			console.log("start video OK");
+			setVideoStatus("video");
+			$("#shoot-circle").css("pointer-events","auto");
+		}, function (e, status) {
+			console.log("start video error " + status);
+			$("#shoot-circle").css("pointer-events","auto");
+		}, "text");
+	}
+	/*录像 --end*/
+
+	//红外成像点击事件
+	
+	$(".infrared-box").on("click",function(){
+		var infraredTip = localControl.getValue("infraredTip",0);
+		if(infraredTip!=1 && $(".infrared-box").get(0).checked){
+			$(".dialog-cover,#infraredTip").show();
+			return false;
+		}
+		var v = 0;
+		if($(".infrared-box").prop("checked")){v = 1}
+
+		controlPostJSON("/control", {"infrared":v},updateControls);
+		if(v==1){
+			$(".infrared-up").holdShow();
+		}else{
+			$(".infrared-up").holdHide();
+			$(".infrared-box").prop("checked",false);
+		}
+	});
+
+	
+	$("#infraredCancel").on("click",function(){
+		$(".dialog-cover,#infraredTip").hide();
+		$(".infrared-box").get(0).checked = false;
+		if($("#infraredCheckbox").get(0).checked){
+			localControl.putValue("infraredTip",1);	
+		}
+	});
+	$("#infraredConfirm").on("click",function(){
+		$(".dialog-cover,#infraredTip").hide();
+		$(".infrared-box").get(0).checked = true;
+		controlPostJSON("/control", {"infrared":1},updateControls);
+		$(".infrared-up").holdShow();
+		if($("#infraredCheckbox").get(0).checked){
+			localControl.putValue("infraredTip",1);
+		}
+	});
+	$("#infraredUpCancel").on("click",function(){
+		$(".dialog-cover,#infrared-up").hide();
+	});
+	$("#infraredUpConfirm").on("click",function(){
+		$(".dialog-cover,#infrared-up").hide();
+		controlPostJSON("/control",{"infrared":0},updateControls);
+		$(".infrared-up").holdHide();
+		$(".infrared-box").prop("checked",false);
+	});
+	$(".infrared-up").on("click",function(){
+		$("#infrared-up,.dialog-cover").show();
+	});
+	//预览画质点击事件
+	$(".imgQuality .inner-content li").each(function(index){
+		$(this).on("click",function(e){
+			if($(this).hasClass("on")){
+				return
+			}else{
+				if(index==0){
+					var noImgQuality = localControl.getValue("noImgQuality",0);
+					if(noImgQuality==0){$("#imgQualityTip,.dialog-cover").show();}
+					else{
+						$(this).addClass("on").siblings().removeClass("on");
+						postJSON("/setting",{"imgQuality":imgQualityArray[index]});
+					}
+				}else{
+					$(this).addClass("on").siblings().removeClass("on");
+					postJSON("/setting",{"imgQuality":imgQualityArray[index]});
+				}
+			}
+			
+		})
+	})
+	$("#imgQualityCancel").on("click",function(){
+		$(".dialog-cover,#imgQualityTip").hide();
+		if($("#imgQualityCheckbox").prop("checked")){
+			localControl.putValue("noImgQuality",1);
+		}
+	});
+	$("#imgQualityConfirm").on("click",function(){
+		$(".dialog-cover,#imgQualityTip").hide();
+		$(".imgQuality .inner-content li").eq(0).addClass("on").siblings().removeClass("on");
+		if($("#imgQualityCheckbox").prop("checked")){
+			localControl.putValue("noImgQuality",1);
+		}
+		postJSON("/setting",{"imgQuality":imgQualityArray[index]});
+		
+	})
+
+	//延时摄影拍摄按钮点击事件
+	$("#shoot-circle").on("click",function(){
+		localControl.focus("disabled");
+		clearTimeout(clearAreaTimer);
+		focusCMD=null;
+		focusTimeout();
+		if($("#shoot-circle").attr("state")=="recording"){
+			// limit_time = localControl.getValue("limit_time",0);
+			if(limit_time!="1"){//拍摄中点击拍摄按钮弹出暂停或者停止
+				$(".dialog-cover").addClass("tp");
+				$(".pauseSelect,.dialog-cover").show();
+				$(".pauseSelect").animate({
+					top:"50%",
+					width:"200px",
+					height:"100px"
+				})
+			}else{
+				if(language && language=="en"){//拍摄中点击拍摄按钮弹出确认框
+					$("#turnoffCron .warning").html("Are you sure you want to end the shooting?");
+					$("#turnoffCronNo").text("No");
+					$("#turnoffCronYes").text("End The Shooting");
+				}else{
+					$("#turnoffCron .warning").html("确认要停止拍摄？");
+				}
+				
+				$(".dialog-cover,#turnoffCron").show();
+			}
+			
+		}
+		else if($("#shoot-circle").attr("state")=="pausing"){
+			$(".dialog-cover").addClass("tp");
+			$(".pauseSelect,.dialog-cover").show();
+			$(".pauseSelect").animate({
+				top:"50%",
+				width:"200px",
+				height:"100px"
+			});
+		}
+		else if($("#shoot-circle").attr("state")=="waiting" || $("#shoot-circle").attr("state")=="cronRunning"){
+			//等待中点击拍摄按钮弹出确认框
+			if(language && language=="en"){
+				$("#turnoffCron .warning").html("Are you sure you want to cancel the schedule?");
+				$("#turnoffCronNo").text("No");
+				$("#turnoffCronYes").text("Cancel Schedule");
+			}else{
+				$("#turnoffCron .warning").html("确定要关闭定时任务？");
+			}
+			$(".dialog-cover,#turnoffCron").show();
+		}
+		else {
+			//空闲状态点击拍摄按钮弹出确认框
+			var firstShootFlag = localControl.getValue("firstShootFlag","1");
+			// if(firstShootFlag==="1"){
+			// 	$("#firstShootTip,.dialog-cover").show();
+			// }else{
+				shootStart(sessionType);
+			// }
+		}
+	});
+	
+	/*第一次拍摄弹窗点击事件*/
+	$("#firstShootConfirm").on("click",function(){
+		$("#firstShootTip,.dialog-cover").hide();
+		var firstShootFlag = "1";
+		if($("#firstShootCheckbox").prop("checked")==true){//是否不再提醒
+			firstShootFlag = "0";
+		}
+		localControl.putValue("firstShootFlag",firstShootFlag);
+		shootStart(sessionType);
+	});
+	/*手动对焦提醒*/
+	var promptCancelTime = null;
+	focusNotPrompt=localControl.getValue("notPrompt",0);
+	if(focusNotPrompt==0){//没有选择不再提醒
+		promptCancelTime=localControl.getValue("promptCancelTime","notSet");
+		if(promptCancelTime!="notSet"){
+			console.log("-----------promptCancelTime is"+promptCancelTime+"---------------");
+			if((new Date().getTime()-promptCancelTime)>24*3600*1000){//超过一天没提醒
+			// if((new Date().getTime()-parseInt(promptCancelTime))>20*1000){//超过一天没提醒
+				// $(".manualFocusPrompt").holdShow();
+				setTimeout(function(){$(".manualFocusPrompt").holdShow();},1000)
+			}
+		}else{
+			// $(".manualFocusPrompt").holdShow();
+			setTimeout(function(){$(".manualFocusPrompt").holdShow();},1000)
+		}
+	}
+	$(".notPrompt").on("click",function(){
+		$(".notPrompt").toggleClass("on");
+	})
+	$(".focusCourseCheck").click(function(){//查看对焦教程
+		localControl.startPage("usage_howtofocus");
+	});
+	$(".focusPromptCancel").on("click",function(){
+		$(".manualFocusPrompt").holdHide();
+		var timeNow = new Date().getTime();
+		localControl.putValue("promptCancelTime",timeNow);
+		if($(".notPrompt").hasClass("on")){
+			localControl.putValue("notPrompt",1);
+		}
+	});
+	/*点击进入对焦教程*/
+	$(".firstShootLink").click(function(){
+		localControl.startPage("usage_howtofocus");
+	});
+	/*内存不足点击事件 start*/
+	$("#memoryConfirm").on("click",function(){
+		// $("#memory-prompt, .dialog-cover2").hide();
+		$("#memory-prompt, .dialog-cover2").hide();
+		/*if($("#memoryConfirm").attr("type")=="UNPLUG"){
+			lastMemoryTipTime=new Date().getTime();
+			localControl.putValue("lastMemoryTipTime", lastMemoryTipTime);
+		}*/
+		
+	});
+	$("#memory3Confirm").on("click",function(){
+		// $("#memory-prompt3, .dialog-cover").hide();
+		$("#memory-prompt3, .dialog-cover").hide();
+	});
+	$("#memory2Cancel").on("click",function(){
+		// $("#memory-prompt2, .dialog-cover").hide();
+		$("#memory-prompt2, .dialog-cover").hide();
+	});
+	$("#memory2Confirm").on("click",function(){//内存低于500M或电量低于20%时确定拍摄点击事件
+		if($(this).attr("type")=="video"){//录像模式
+			// $("#memory-prompt2,.dialog-cover").hide();
+			$("#memory-prompt2, .dialog-cover").hide();
+			videoRun();
+		}else if($(this).attr("type")=="timelapse"){//延时摄影模式
+			$("#memory-prompt2").hide();
+			// $(".time-poppup,.dialog-cover").show();
+			$(".time-poppup,.dialog-cover").show();
+			$(".dialog-cover").addClass("tp");
+		}else{
+			takePicture();
+		}
+	});
+	$("#memoryStopConfirm").on("click",function(){
+		$("#memory-prompt-stop, .dialog-cover").hide();
+		if(sessionType=="video"){
+			setVideoStatus("idle");
+		}
+		postJSON("/sysinfo", {"camStop":0});
+	})
+	/*内存不足点击事件 end*/
+	$("#formatCancel").on("click",function(){
+		$("#forSDformat,.dialog-cover2").hide();
+	});
+	$(".main").on("click", ".dialog-cover.tp", function(e){
+		e.stopPropagation();
+		console.log(1);
+		// $("#saveCustomMode").hide();
+		// $(".time-poppup").hide();
+		$("#saveCustomMode").hide();
+		$(".time-poppup").hide();
+		$(".pauseSelect").animate({
+			top:"100%",
+			width:"20px",
+			height:"10px"
+		},500,function(){
+			$(this).hide();
+		})
+		$(".dialog-cover").removeClass("tp").hide();
+	})
+	//时间数字不足2位补0
+	$(".time-insert input[type='text']").on("change blur",function(){
+		var v = $(this).val();
+		if(v.toString().length<2){
+			var w = (Array(2).join('0') + v).slice(-2);
+			$(this).val(w);
+		}
+	})
+
+	//时间增减按钮
+	
+	$(".time-plus").each(function(){
+		$(this).on("click",function(){
+			var ipt = $(this).siblings(".time-insert").find("input"),
+				val = parseInt(ipt.val())+1;
+
+			if(ipt.hasClass("second")){
+				if($('#interval-hour').val()!="00" || $('#interval-minute').val()!="00"){
+					val = parseFloat(ipt.val())+1;
+				}else{
+					if(parseFloat(ipt.val())<2){
+						val = parseFloat(ipt.val())+0.5;
+					}else{
+						val = parseFloat(ipt.val())+1;
+					}
+				}
+				
+			}
+			
+			if(ipt.hasClass("second") || ipt.hasClass("minute")){
+				if(val==60){
+					return false;
+				}
+			}
+			if(ipt.hasClass("hour") || ipt.hasClass("minute")){
+			}
+			var x = PrefixInteger(val,2);
+			ipt.val(x);
+			updateTimeTotal();
+		})
+	})
+	$(".time-minus").on("click",function(){
+		var ipt = $(this).siblings(".time-insert").find("input"),
+			val = parseInt(ipt.val())-1;
+		if(ipt.hasClass("second")){
+			if($('#interval-hour').val()!="00" || $('#interval-minute').val()!="00"){
+				val = parseInt(ipt.val())-1;
+			}else{
+				if(parseFloat(ipt.val())<=2 && parseFloat(ipt.val())>0){
+					val = parseFloat(ipt.val())-0.5;
+				}
+			}
+		}
+		
+		if(val<0){
+			if(ipt.hasClass("second")) return 0.5
+			else return false;
+		}
+		var x = PrefixInteger(val,2);
+		ipt.val(x);
+		updateTimeTotal();
+	})
+
+	//切换拍摄间隔和拍摄时长
+	$(".time-tab>div").each(function(e){
+		$(this).on("click",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			$(".time-main>div").hide().eq(e).show();
+		})
+	})
+	//点击隐藏定时设置
+	$(".time-btns a").on("click",function(event){
+	    event.stopPropagation();
+		$(".time-poppup,.dialog-cover").hide();
+		$(".dialog-cover").removeClass("tp");
+	})
+
+	//点击弹出定时设置
+	$("#time").on("click",function(){
+		$(".time-poppup,.dialog-cover").show();
+	})
+
+	function updateTimeTotal() {
+		if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1)$('#interval-second').val(0.5);
+		if(($('#interval-hour').val()!="00" || $('#interval-minute').val()!="00")) {
+			if($('#interval-second').val()=="0.5"){
+				$('#interval-second').val("00");
+			}else if($('#interval-second').val()=="1.5"){
+				$('#interval-second').val("01");
+			}
+		}
+		if($("#duration-day").val()==''){
+			$("#duration-day").val("00");
+		}
+		if($("#duration-hour").val()==''){
+			$("#duration-hour").val("00");
+		}
+		if($("#duration-minute").val()==''){
+			$("#duration-minute").val("00");
+		}
+		if(parseInt($('#interval-hour').val(), 10) >= 24){
+			$('#interval-second').val("00");
+			$('#interval-minute').val("00");
+			$('#interval-hour').val("24");
+		}
+		$(".parameter-exprosure .swiper-slide").each(function(index){
+			if($(this).hasClass("on")){
+				if(!($(".mode-list li").eq(0).hasClass("on"))){
+					if(index==14){//拍摄间隔限制，跟快门时长对应，互相限制
+						if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1){
+							$('#interval-second').val("01");
+							$(".interval-prompt").slideDown(1000);
+							setTimeout(function(){
+								$(".interval-prompt").slideUp(1000);
+							},2000);
+						}
+
+					}else if(index>14){
+						if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<=1){
+							$('#interval-second').val("02");
+							$(".interval-prompt").slideDown(1000);
+							setTimeout(function(){
+								$(".interval-prompt").slideUp(1000);
+							},2000);
+						}
+					}
+				}
+			}
+		})
+		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
+		var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
+
+		//var frames = Math.ceil(duration/interval);
+		var frames = Math.floor(duration/interval);
+
+		console.log("interval=" + interval + " duration=" + duration + " frames=" + frames);
+
+		if(frames < frameRate){
+			$('#time-total-second').text('01');
+			$('#time-total-minute').text('00');
+			$('#time-total-hour').text('00');
+		}
+		else {
+			var sec = Math.floor(frames/25)%60;
+			var min = Math.floor(frames/25/60)%60;
+			var hr = Math.floor(frames/25/3600);
+
+			$('#time-total-second').text(sec<10?"0"+sec:sec);
+			$('#time-total-minute').text(min<10?"0"+min:min);
+			$('#time-total-hour').text(hr<10?"0"+hr:hr);
+		}
+
+	}
+
+	$('#interval-hour').change(updateTimeTotal);
+	$('#interval-minute').change(updateTimeTotal);
+	$('#interval-second').change(updateTimeTotal);
+	$('#duration-day').change(updateTimeTotal);
+	$('#duration-hour').change(updateTimeTotal);
+	$('#duration-minute').change(updateTimeTotal);
+
+	//开关定时功能时，隐藏和显示统计时间
+	$(".time-poppup .switch-box").on("click",function(){
+		// if(!$(this).attr('checked')){
+		// 	$(".time-main-cron").removeClass("disabled");
+		// }
+		$(this).attr('checked', !$(this).attr('checked'));
+		$(".time-main-cron .time-insert input").attr("readonly",!$(this).attr('checked'));
+		$(".time-total").toggle();
+		$(".time-main-cron").toggleClass("disabled");
+		if($(this).attr('checked'))updateTimeTotal();
+	})
+
+	
+	$(".time-insert input.second,.time-insert input.minute").each(function(){
+		$(this).on("change keyup",function(){
+			var v = $(this).val();
+			//v=v.replace(/\D/g,'');
+			if(v>59){
+				$(this).val(59);
+			}
+			if(v<0){
+				$(this).val("00");
+			}
+		})
+	})
+	$(".time-insert input.hour").on("change keyup",function(){
+		var v = $(this).val();
+		//v=v.replace(/\D/g,'');
+		if(v<0){
+			$(this).val("00");
+		}
+	})
+
+	//if(){  //如果没有存储卡
+	// 	$(".dialog-cover,#noCard").show();
+	// }
+	$("#confirmCard").on("click",function(){
+		$(".dialog-cover,#noCard").hide();
+	})
+
+	function setMode(mode) {
+		console.log("setMode: " + mode);
+		currentMode = mode;
+		controlPostJSON("/control", {recordMode:mode}, updateControls);
+	}
+
+	function setAutoGain(b) {
+		console.log("setAutoGain: "  + b);
+		controlPostJSON("/control", { autoGain: b?1:0 }, updateControls);
+	}
+
+	function setGain(g) {
+		// g=Math.round(g/100*16);
+		console.log("setGain: " + g);
+		controlPostJSON("/control", { autoGain: 0, gain: gainObjR[g] }, updateControls);
+	}
+
+	function setExposure(e) {
+		console.log("exposure " + e);
+		if(e > 0){
+			//var expo = Math.round((1048576 - 1024)/12*e);
+			controlPostJSON("/control", { autoExposure: 0, exposure: exposureArray[e] }, updateControls);
+		}
+		else {
+			controlPostJSON("/control", { autoExposure: e+1 }, updateControls);
+		}
+	}
+
+	function setWhiteBalance(e) {
+		console.log("setWhiteBalance " + e);
+		if(e==0){
+			controlPostJSON("/control", { autoWhiteBalance: 1}, updateControls);
+		}else if(e==5){ //手动模式
+			var v = $("#s5").slider('getValue');
+			controlPostJSON("/control", { autoWhiteBalance : 0, whiteBalance : v }, updateControls);
+		}else if(e>0 && e<5){
+			controlPostJSON("/control", { autoWhiteBalance : 0, whiteBalanceMode : whiteBalModeArray[e] }, updateControls);
+		}
+	}
+
+	//场景的展开和切换
+	$("#mode").on("click",function(e){
+		e.stopPropagation();
+		localControl.focus("disabled");
+		clearTimeout(clearAreaTimer);
+		focusCMD=null;
+		focusTimeout();
+		// $("#modeList").toggle();
+		$(".all-modelist").toggle();
+		$("body").toggleClass("mode-opened");
+		$(".shootModeList").hide();
+		$(".moreMask").hide();
+	})
+	// $(".modeList").on("click",function(e){
+	// 	e.stopPropagation();
+	// })
+	$(".all-modelist").on("click",function(e){
+		e.stopPropagation();
+		var target = $(e.target),
+			tag1 = $(".customModeList li,.mode-list li");
+			if(target.closest(tag1).length == 0){
+				$(".moreFun").hide();
+			}
+
+	})
+	//模式和主体点击事件 
+
+	$("#modeList li").each(function(e){
+		$(this).on("click",function(f){
+			f.stopPropagation();
+			firstLoadPage2=true;
+			$(".setting-content").holdHide();
+			var that = $(this);
+			var m = that.text();
+			var modeName = that.find('i').attr("mode-name");
+			setMode(modeName);
+			that.addClass("on").siblings().removeClass("on");
+			$(".customModeList li").removeClass("on");
+			$("#mode").attr("data-mode",m);
+			// $("#modeList").hide();
+			$(".all-modelist").hide();
+			$(".moreFun").hide();
+			$("body").removeClass("mode-opened");
+			if(e==0){
+				$(".ctrl-icon").holdHide();
+				$(".customModeBtn").holdHide();
+			}else if(e==6){
+				$(".setting-content").holdShow();
+				$(".ctrl-icon").holdHide();
+				setTimeout(function(){
+					$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
+				},200);
+				currentSwiper.update();
+				$(".setting-current .swiper-slide").eq(0).click();
+				$(".setting-bar>div").hide();
+				$(".setting-bar>div").eq(0).show(); 
+				exprosureSwiper.update();
+				var m = $(".parameter-exprosure .swiper-slide.on").index();
+				exprosureSwiper.slideTo(m);
+			}else{
+				$(".ctrl-icon").holdSlideDown(800);
+				$(".customModeBtn").holdHide();
+			}
+		})
+	})
+
+	var tag1 = $(".setting-content,.dialog-poppup,.foot-bar,.dialog-cover,.time-poppup,.customModeBtn"),
+		tag2 = $(".dialog-poppup"),
+		tag3 = $("#brightness"),
+		tag4 = $(".shootModeList"),
+		tag5 = $(".moreMask,.more"),
+		tag6 = $(".customModeBtn,.setting-content"),
+		tag7 = $(".moreFun"),
+		tag8 = $(".amplifier"),
+		flag = true;
+	//呼出控制面板小按钮点击事件
+	$(".ctrl-icon .iconfont").on("click",function (e) {
+	    e.stopPropagation();
+	    localControl.focus("disabled");
+		clearTimeout(clearAreaTimer);
+		focusCMD=null;
+		focusTimeout();
+		$(".ctrl-icon").holdHide();
+//		$(".setting-content").show();
+		$(".setting-content").holdSlideDown(1000);
+		setTimeout(function(){
+			$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
+		},1000);
+		exprosureSwiper.update();
+		var m = $(".parameter-exprosure .swiper-slide.on").index();
+		exprosureSwiper.slideTo(m);
+		currentSwiper.update();
+		controlGetJSON("/control",updateControls);
+    });
+	//空白处点击事件
+	$(".main").on("click",function(e){
+        var target = $(e.target);
+//        alert(target.closest(tag1).get(0));
+		if(target.closest(tag4).length==0 && flag==true){
+        	$(".shootModeList").holdHide();
+            flag = true;
+        }
+        if(target.closest(tag5).length==0 && flag == true){
+        	$(".moreMask").hide();
+        }
+		$(".mode-list li").each(function (index) {
+			if($(this).hasClass("on")){
+			    if(index==0){
+                    if(target.closest(tag1).length==0 && flag==true){
+//				$("#brightness").show();
+						// $(".ctrl-icon").hide();
+                        flag = false;
+                	}else if(target.closest(tag1).length>0){
+                    }else{
+//				$("#brightness").hide();
+                        flag = true;
+                    }
+				}else{
+                    if(target.closest(tag1).length==0 && flag==true){
+                    	$(".shootModeList").holdHide();
+                        $(".setting-content").holdSlideUp("1000");
+                        $(".customModeBtn").holdHide();
+                        if(sessionType != "video"){
+                        	//if(!hideCTL) {
+					$(".ctrl-icon").holdSlideDown(800);
+				//}
+                        }
+                        flag = false;
+                    }else{
+//				$(".setting-content").show();
+                        flag = true;
+                    }
+				}
+			}
+        });
+        if(target.closest(tag6).length == 0){
+        	$(".customModeBtn span").hide(500);
+			$(".forLeft").removeClass("on").siblings(".forRight").addClass("on");
+        }
+        if(target.closest(tag7).length == 0){
+        	$(".moreFun").hide();
+        }
+//		if($("#manual").hasClass("on")){
+////			$("#brightness").hide();
+////			var target = $(e.target);
+//			if(target.closest(tag1).length==0 && flag==true){
+//				$(".setting-content").hide();
+//				$(".ctrl-icon").show();
+//				flag = false;
+//			}else{
+////				$(".setting-content").show();
+//				flag = true;
+//			}
+//		}else{
+////			var target = $(e.target);
+//			if(target.closest(tag1).length==0 && flag==true){
+////				$("#brightness").show();
+//				flag = false;
+//			}else if(target.closest(tag1).length>0){
+//			}else{
+////				$("#brightness").hide();
+//				flag = true;
+//			}
+//		}
+		//console.log(flag);
+	});
+    <!--模式和主体点击事件 end-->
+
+
+	//曝光补偿+ -点击事件
+	$(".parameter-exposurebiasSlider .slider-plus").on("click",function () {
+		var v = parseInt($("#exposurebias-input").val())+1;
+		if(v>4){
+		    v = 4
+		}
+		controlPostJSON("/control", { exposureBias: v}, updateControls);
+        $("#exposurebias-input").val(v);
+		if(v>0){
+		    v = "+" + v;
+		}
+		$("#exposurebias-span").text(v);
+		$("#exposureBias").text(v);
+    });
+    $(".parameter-exposurebiasSlider .slider-minus").on("click",function () {
+        var v = parseInt($("#exposurebias-input").val())-1;
+        if(v<-4){
+            v = -4
+        }
+	controlPostJSON("/control", { exposureBias: v}, updateControls);
+        $("#exposurebias-input").val(v);
+        if(v>0){
+            v = "+" + v;
+        }
+        $("#exposurebias-span").text(v);
+        $("#exposureBias").text(v);
+    });
+
+
+	//亮度调节控件
+	var brt = $("#brt").slider({
+		tooltip: 'always',
+		orientation: 'vertical',
+		tooltip_position:'right',
+		reversed: true
+	});	
+	setSliderEvent(brt,$("#brt"),$("#brightness .tooltip-inner1"),updateBrightness);
+
+
+
+
+	$(".main").on("click",function(){
+		
+		if($("body").hasClass("mode-opened")){
+			// $("#modeList").hide();
+			$(".all-modelist").hide();
+			$(".moreFun").hide();
+			$("body").removeClass("mode-opened");
+		}
+	})
+
+	//获取默认参数索引
+	var initialExprosure = $(".parameter-exprosure .swiper-slide.on").index();
+	var initialGian = $(".parameter-gian .swiper-slide.on").index();
+	var initialCurrent = $(".setting-current .swiper-slide.on").index();
+
+
+	//初始化当前参数滑动控件
+	var currentSwiper = new Swiper('.setting-current .swiper-container',{
+		freeMode : true,
+		slidesPerView :'auto',
+		initialSlide: initialCurrent,
+		on: {
+			resize: function(){
+				this.update();
+			}, 
+		},
+	});
+	currentSwiper.update();
+
+	//初始化效果参数滑动控件
+	var effectSwiper = new Swiper('.parameter-effect .swiper-container',{
+	    freeMode :true,
+		slidesPerView : 'auto',
+//		initialSlide : initialCurrent,
+		on : {
+	        resize : function () {
+				this.update();
+            }
+		}
+	});
+	$(".setting-current .swiper-slide").each(function(e){
+		$(this).click(function(event){
+			if($(this).hasClass("on")){
+				$(".setting-bar>div").eq(e).toggle(); 
+			}else{
+				currentSwiper.slideTo(e);
+				$(this).addClass("on").siblings().removeClass("on");
+				$(".setting-bar>div").hide().eq(e).show(); //.find("input").slider('relayout');
+				var t = setTimeout(function(){
+
+				})
+				if(e==3){
+					whiteBalanceSwiper.update();
+					var m = $(".parameter-whiteBalance .swiper-slide.on").index();
+					whiteBalanceSwiper.slideTo(m);
+				}
+				if(e==0){
+					exprosureSwiper.update();
+					var m = $(".parameter-exprosure .swiper-slide.on").index();
+					exprosureSwiper.slideTo(m);
+				}
+				if(e==4){
+					effectSwiper.update();
+					var m = $(".parameter-effect .swiper-slide.on").index();
+					effectSwiper.slideTo(m);
+					$(".parameter-effect .swiper-slide").each(function (index) {
+						if($(this).hasClass("infrared-disabled")) {
+							$(".parameter-effect .parameter-slider").hide().eq(index).hide();
+						}else if($(this).hasClass("on")){
+							$(".parameter-effect .parameter-slider").hide().eq(index).show();
+			//				$("#effect").text($(".parameter-effect .swiper-slide span[id]").eq(index).text());
+						}
+        			});
+				}
+			}
+			$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px");
+			
+		})
+	})
+
+	//初始化快门时间滑动控件
+	var exprosureSwiper = new Swiper('.parameter-exprosure .swiper-container',{
+		freeMode : true,
+		slidesPerView :'auto',
+		initialSlide: initialExprosure,
+		on: {
+			resize: function(){
+				this.update();
+			}, 
+		},
+	});
+	exprosureSwiper.update();
+	var m = $(".parameter-exprosure .swiper-slide.on").index();
+	exprosureSwiper.slideTo(m);	
+
+	//点击设置快门时间
+	$(".parameter-exprosure .swiper-slide").each(function(e){
+		$(this).click(function(){
+			if(e==14){//快门时长的限制，跟拍摄间隔相对应，互相限制
+				if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1){
+					if($(this).hasClass("greyColor")){
+						$(".exp-prompt").slideDown(1000);
+						setTimeout(function(){
+							$(".exp-prompt").slideUp(1000);
+						},2000);
+						return false
+					}
+					$('#interval-second').val("01");
+				}
+			}else if(e>14){
+				if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<2){
+					if($(this).hasClass("greyColor")){
+						$(".exp-prompt").slideDown(1000);
+						setTimeout(function(){
+							$(".exp-prompt").slideUp(1000);
+						},2000);
+						return false
+					}
+					$('#interval-second').val("02");
+				}
+			}
+			exprosureSwiper.slideTo(e);
+			setExposure(e);
+			$(this).addClass("on").siblings().removeClass("on");
+			$("#exprosure").text($(this).text());
+			currentSwiper.slideTo(0);
+			localControl.putValue("exprosure",e);
+		})
+	})
+	//点击设置色相，饱和度，对比度，锐度
+	$(".parameter-effect .swiper-slide").each(function (index) {
+		$(this).click(function () {
+			effectSwiper.slideTo(index);
+//			$("#effect").text($(".parameter-effect .swiper-slide span[id]").eq(index).text());
+            if($(this).hasClass("on")){
+                $(".parameter-effect .parameter-slider").eq(index).toggle();
+            }else {
+                // currentSwiper.slideTo(index);
+                $(this).addClass("on").siblings().removeClass("on");
+                $(".parameter-effect .parameter-slider").hide().eq(index).show();
+            }
+            $(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px");
+        })
+    });
+	var sendControlTimer;
+	var ctrldata
+	function updateValue(v, noCallback, delay){
+		var delayMS=0;
+		var type = $(".setting-current .swiper-slide.on").attr('setting-type');
+		if(type=="effect") type=$(".parameter-effect .swiper-slide.on").attr('setting-type');
+		clearTimeout(sendControlTimer);
+		console.log("updateValue: " + type + '=' + v);
+		if(type=="gain") v=gainObjR[v];
+		ctrldata = {};
+		ctrldata[type] = v;
+		if(delay=="delay") delayMS=300;
+		if(sendControlTimer==null) controlConnCount++; 
+		console.log("delayMS:"+delayMS+" controlConnCount:"+controlConnCount+" v:"+v);
+		sendControlTimer=setTimeout(function(){
+			controlConnCount--;
+			console.log(" controlConnCount:"+controlConnCount);
+			sendControlTimer=null;
+			controlPostJSON("/control", ctrldata, updateControls)
+		}, delayMS);
+	}
+
+	//设置亮度
+	function updateBrightness(v, noCallback){
+		var type = "brightness";
+		console.log("updateValue: " + type + '=' + v);
+		var ctrldata = {};
+		ctrldata[type] = v;
+		if(noCallback) controlPostJSON("/control", ctrldata);
+		else controlPostJSON("/control", ctrldata, updateControls);
+	}
+
+	//初始化滑块控件	
+	var sliderArray = new Array();
+	var sliderSetting = {
+		tooltip: 'hide',
+	}
+	var sliderLength = $(".parameter-slider").length;
+	var i;
+	for(i=0; i<sliderLength; i++){
+		sliderArray.push($("#s"+i).slider(sliderSetting));
+		setSliderEvent(sliderArray[i],$("#s"+i),$("span[data-current-name=s" + i + "]"), updateValue);
+	}
+	$(".tooltip-main").each(function(){
+		var thisInput = $(this).parent().siblings("input");
+		var n = thisInput.attr("data-slider-default");		
+		if(n>0 && thisInput.attr("id")!="s0"){
+			n = "+" + n;
+		}
+		$(this).append("<div class='tooltip-arrow1'></div><div class='tooltip-inner1'>"+n+"</div>");
+	})
+	$(".slider-manual").on("click",function(){
+		$(this).addClass("on").siblings("input").slider("enable");
+		$(this).siblings(".slider-auto").removeClass("on");
+		$(this).siblings(".slider-plus,.slider-minus").removeClass("disabled");
+	})
+	$(".parameter-gian .slider-manual").on("click",function(){
+		var v = $(this).siblings("input").slider("getValue");	
+		setGain(v);
+		if(v>0){
+			v = "+" + v;
+		}
+		$("#gian").text(v);
+	})
+	$(".slider-auto").each(function(e){
+		$(this).on("click",function(event){
+			var input = $(this).siblings("input"),
+				dataDefault = input.attr("data-slider-default");
+			$(this).addClass("on").siblings(".slider-manual").removeClass("on");
+			$(this).siblings(".slider-plus,.slider-minus").addClass("disabled");
+			input.slider("disable"); //.slider("setValue",dataDefault);
+			//$("span[data-current-name]").eq(e).text(dataDefault);
+		})
+	})
+	$(".parameter-gian .slider-auto").on("click",function(){
+		setAutoGain(true);
+		$("#gian").text("自动");
+	})
+
+
+	//初始化白平衡滑动控件
+	var whiteBalanceSwiper = new Swiper('.parameter-whiteBalance .swiper-container',{
+		freeMode : true,
+		slidesPerView :'auto',
+		on: {
+			resize: function(){
+				this.update();
+			}, 
+		},
+	})
+	//点击设置白平衡
+	$(".parameter-whiteBalance .swiper-slide").each(function(e){
+		var n = $(".parameter-whiteBalance .swiper-slide").length;
+		$(this).click(function(){
+
+			whiteBalanceSwiper.slideTo(e);
+			$(this).addClass("on").siblings().removeClass("on");
+			$("#whiteBalance").text($(this).text());
+			// $("#whiteBalance").text($(this).text());
+			setWhiteBalance(e);
+			if(e+1==n){
+				$(".parameter-whiteBalance-manual").show();
+				$("#whiteBalance").text($(".parameter-whiteBalance-manual").find("input").attr("data-slider-default"));
+			}else{
+				$(".parameter-whiteBalance-manual").hide();
+			}
+			$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px");
+			currentSwiper.slideTo(3);
+		})
+	})
+
+
+	$("#load").on("click",function(){
+		$(".dialog-cover,#prefabList").show();
+	})
+	$("#prefabList .mode-list li").on("click",function(){
+		$(this).addClass("on").siblings().removeClass("on");
+	})
+	$("#confirmPrefab").on("click",function(){
+		$(".dialog-cover,#prefabList").hide();
+	})
+
+
+	$("#save").on("click",function(){
+		$(".dialog-cover,#saveMode").show();
+	})
+
+	var saveSwiper = new Swiper('.save-icons .swiper-container',{
+		pagination: {
+			el: '.save-icons .swiper-pagination',
+		},
+		// effect: 'left',
+		// slidesPerView: 5,
+		// slidesPerGroup : 5,
+		// watchOverflow: true,
+		freeMode :true,
+		slidesPerView : 'auto',
+//		initialSlide : initialCurrent,
+		on : {
+	        resize : function () {
+				this.update();
+            }
+		}
+	})
+	$("#selectIcon").on("click",function(){
+		$(".save-icons,.dialog-cover").show();
+		saveSwiper.update();
+	})
+	$(".save-icons .swiper-slide").each(function(){
+		$(this).on("click",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			$("#selectIcon").addClass("on").html($(this).html());
+		})
+	});
+
+	// 自定义预设场景
+	getJSON("/customRecordMode",updateCustomModeList);
+	$(".forRight").on("click",function(){
+		$("#addNewMode").show(500);
+		$(".forRight").removeClass("on").siblings(".forLeft").addClass("on");
+		if($(".customModeList li.on").length == 1){
+			$("#coverMode").show(500);
+		}else{$("#coverMode").hide();}
+	});
+
+	$(".forLeft").on("click",function(){
+		$(".customModeBtn span").hide(500);
+		$(".forLeft").removeClass("on").siblings(".forRight").addClass("on");
+	});
+	$("#addNewMode").on("click",function(){
+		var top = $(".customModeBtn").offset().top;
+		$(".customModePro").offset({top:top-39});
+		if($(".customModeList li").length==10){
+			$(".customModePro").slideDown(1000);
+			setTimeout(function(){
+				$(".customModePro").slideUp(1000);
+			},2000);
+			return false;
+		}
+		$("#addNewModeTitle").show().siblings("#repairModeTitle").hide();
+		$("#confirmIcon").attr("type","new");
+		$(".dialog-cover").addClass("tp");
+		$("#modeName").val("");
+		$(".save-icons .swiper-slide").removeClass("on");
+		// $("#saveCustomMode,.dialog-cover").show();
+		$("#saveCustomMode,.dialog-cover").show();
+		saveSwiper.update();
+	});
+	$(".rectangle li").each(function(index){
+		$(this).on("click",function(e){
+			if(index==0){
+				$(".moreFun").hide();
+				$("#repairModeTitle").show().siblings("#addNewModeTitle").hide();
+				$("#modeName").val($(".customModeList li").eq($("#saveCustomMode").attr("index")).attr("alias"));
+				$(".save-icons .swiper-slide").each(function(index){
+					if($(this).find("i").html() == $(".customModeList li").eq($("#saveCustomMode").attr("index")).find("i").html()){
+						$(this).addClass("on").siblings().removeClass("on");
+					}
+				})
+				$(".dialog-cover").addClass("tp");
+				// $("#saveCustomMode,.dialog-cover").show();
+				$("#saveCustomMode,.dialog-cover").show();
+				$("#confirmIcon").attr("type","repair");
+				saveSwiper.update();
+			}else{
+				$(".moreFun").hide();
+				// $("#forDelMode,.dialog-cover").show();
+				$("#forDelMode,.dialog-cover").show();
+			}
+		})
+	});
+	$("#delModeCancel").on("click",function(){
+		// $("#forDelMode,.dialog-cover").hide();
+		$("#forDelMode,.dialog-cover").hide();
+	});
+	$("#delModeConfirm").on("click",function(){
+		// $("#forDelMode,.dialog-cover").hide();
+		$("#forDelMode,.dialog-cover").hide();
+		if($(".customModeList li").eq($("#saveCustomMode").attr("index")).hasClass("on")){
+			setMode("auto");
+		}
+		setTimeout(function(){
+			putJSON("/customRecordMode",{deleteMode:$(".customModeList li").eq($("#saveCustomMode").attr("index")).children("i").attr("mode-name")},function(data){
+				updateCustomModeList(data);
+				getJSON("/control",updateControls);
+			});
+		},300);
+		
+
+	});
+	function poll(){
+		if($("#modeName").val().length==0 || $(".save-icons .swiper-slide.on").length==0){
+			$("#confirmIcon").css({
+				"background":"#999",
+				"pointer-events":"none"
+			})
+		}else{
+			$("#confirmIcon").css({
+				"background":"#628ccd",
+				"pointer-events":"auto"
+			})
+		}
+		setTimeout(poll,300);
+	}
+
+	poll();
+	function updateCustomModeList(data){
+		if(data.custom.length!=0){
+			$(".customMode").show();
+			var myData = data.custom;
+			myData.sort(function(a,b){
+				var aa = a.seq,bb = b.seq;
+				if(aa>bb)return 1;
+				if(aa<bb)return -1;
+				return 0;
+			});
+			$(".customModeList ul").empty();
+			for(i=0;i<myData.length;i++){
+				var thisli = '<li icon="' + myData[i].icon +'" mode="' + myData[i].name + '" alias="' + myData[i].alias + '" seq="' + myData[i].seq + '" brightness="' + myData[i].brightness + '" contrast="' + myData[i].contrast + '" hue="' + myData[i].hue + '" sharpness="' + myData[i].sharpness + '" saturation="' + myData[i].saturation + '" exposureBias=' + myData[i].exposureBias + '" autoWhiteBalance="' + myData[i].autoWhiteBalance + '" autoGain="' + myData[i].autoGain + '" autoExposure="' + myData[i].autoExposure +'" ';
+				if(myData[i].autoWhiteBalance==0){
+					if(myData[i].whiteBalanceMode){
+						thisli = thisli + 'whiteBalanceMode="' + myData[i].whiteBalanceMode + '" ';
+					}else{
+						thisli = thisli + 'whiteBalance="' + myData[i].whiteBalance + '" ';
+					}
+				}
+				if(myData[i].autoGain==0){
+					thisli = thisli + 'gain="' + myData[i].gain + '" ';
+				}
+				if(myData[i].autoExposure==0){
+					thisli = thisli + 'exposure="' + myData[i].exposure + '" ';
+				}
+				thisli = thisli + '><i class="iconfont" mode-name="'+myData[i].name+'">'+myData[i].icon+'</i><p>'+myData[i].alias+'</p></li>';
+				$(".customModeList ul").append(thisli);
+			}
+			var touchStartTime = null,touchEndTime = null,longTouch=null;
+			$(".customModeList li").each(function(index){
+				$(this).on("touchstart mousedown",function(e){
+					e.stopPropagation();
+					touchStartTime = new Date().getTime();
+					longTouch = setTimeout(function(){
+						var top = $(".customModeList li").eq(index).offset().top,
+							left = $(".customModeList li").eq(index).offset().left,
+							width = $(".customModeList li").eq(index).width(),
+							height = $(".moreFun").height();
+						$(".moreFun").show();
+						if((index>2 && index<5) || index>6){
+							$(".triangle").css("left","130px");
+							$(".moreFun").offset({
+								top:top-height,
+								left:left+width/2-136
+							})
+						}else{
+							$(".triangle").css("left","18px");
+							$(".moreFun").offset({
+								top:top-height,
+								left:left+width/2-24
+							})
+						}
+						// console.log(index);
+						$("#saveCustomMode").attr("index",index);
+					},750)
+				});
+				$(this).on("touchend mouseup",function(e){
+					e.preventDefault();
+					touchEndTime = new Date().getTime();
+					var duration = touchEndTime - touchStartTime;
+					console.log(duration);
+					if(duration<750){
+						clearTimeout(longTouch);
+						$(this).addClass("on").siblings().removeClass("on");
+						$("#modeList li").removeClass("on");
+						$(".customModeBtn").holdHide();
+						$(".ctrl-icon").holdSlideDown(800);
+						$(".setting-content").holdSlideUp("1000");
+						$(".all-modelist").hide();
+						$(".moreFun").hide();
+						$("body").removeClass("mode-opened");
+						var modeName = $(this).find("i").attr("mode-name"),
+							icon = $(this).find("i").html();
+							$("#mode").attr("data-mode",icon);
+						firstLoadPage2=true;
+						setMode(modeName);
+					}
+				})
+			});
+		}else{
+			$(".customMode").hide();
+		}
+	}
+	
+	$("#coverMode").on("click",function(e){
+		var ctrlData = {},
+			thisli = $(".customModeList li.on");
+		ctrlData.seq = parseInt(thisli.attr("seq"));
+		ctrlData.icon = thisli.attr("icon");
+		ctrlData.alias = thisli.attr("alias");
+		ctrlData.name = thisli.attr("mode");
+		var exposureIndex = $(".parameter-exprosure .swiper-slide.on").index();
+		if(exposureIndex>0){
+			ctrlData["autoExposure"] = 0;
+			ctrlData["exposure"] = exposureArray[exposureIndex];
+		}else{
+			ctrlData["autoExposure"] = 1;
+		}
+		if($(".slider-auto").hasClass("on")){
+			ctrlData["autoGain"] = 1
+		}else{
+			ctrlData["autoGain"] = 0;
+			ctrlData["gain"] = parseInt(gainObjR[$("#s0").slider("getValue")]);
+		}
+		ctrlData["exposureBias"] = parseInt($("#exposurebias-input").val());
+		var whiteBalanceIndex = $(".parameter-whiteBalance .swiper-slide.on").index();
+		if(whiteBalanceIndex==0){
+			ctrlData["autoWhiteBalance"] = 1;
+		}else if(whiteBalanceIndex==5){
+			ctrlData["autoWhiteBalance"] = 0;
+			ctrlData["whiteBalance"] =  $("#s5").slider('getValue');
+		}else{
+			ctrlData["autoWhiteBalance"] = 0;
+			ctrlData["whiteBalanceMode"] = whiteBalModeArray[whiteBalanceIndex];
+		}
+		ctrlData["brightness"] = $("#s6").slider('getValue');
+		ctrlData["saturation"] = $("#s2").slider('getValue');
+		ctrlData["contrast"] = $("#s1").slider('getValue');
+		ctrlData["sharpness"] = $("#s3").slider('getValue');
+		ctrlData["hue"] = $("#s4").slider('getValue');
+		putJSON("/customRecordMode",ctrlData,function(data){
+			updateCustomModeList(data);
+			getJSON("/control",updateControls);
+			$("#forCoverMode,.dialog-cover").show();
+		});
+	})
+	$("#saveSucConfirm").on("click",function(){
+		$("#forCoverMode,.dialog-cover").hide();
+	})
+	$("#confirmIcon").on("click",function(){//提交按钮触发事件
+		var ctrlData = {},
+			seq = 1,
+			removeArray = new Array(),
+			modeArray = ["mode1","mode2","mode3","mode4","mode5","mode6","mode7","mode8","mode9","mode10"];
+		$(".save-icons .swiper-slide").each(function(index){
+			if($(this).hasClass("on")){
+				ctrlData["icon"] = $(this).children().text();
+			}
+		});
+		ctrlData["alias"] = $.trim($("#modeName").val());
+		if($(this).attr("type")=="new"){//当提交按钮type属性为new时，是新建预设场景
+			if($(".customModeList li").length==0){
+				ctrlData["name"] = "mode1";
+			}else{
+				$(".customModeList li").each(function(index){
+					removeArray[index] = $(this).attr("mode");
+				});
+				for(i=0;i<removeArray.length;i++){
+					modeArray.splice($.inArray(removeArray[i],modeArray),1);
+				}
+				ctrlData["name"] = modeArray[0];
+			}
+			var exposureIndex = $(".parameter-exprosure .swiper-slide.on").index();
+			if(exposureIndex>0){
+				ctrlData["autoExposure"] = 0;
+				ctrlData["exposure"] = exposureArray[exposureIndex];
+			}else{
+				ctrlData["autoExposure"] = 1;
+			}
+			if($(".slider-auto").hasClass("on")){
+				ctrlData["autoGain"] = 1
+			}else{
+				ctrlData["autoGain"] = 0;
+				ctrlData["gain"] = parseInt(gainObjR[$("#s0").slider("getValue")]);
+			}
+			ctrlData["exposureBias"] = parseInt($("#exposurebias-input").val());
+			var whiteBalanceIndex = $(".parameter-whiteBalance .swiper-slide.on").index();
+			if(whiteBalanceIndex==0){
+				ctrlData["autoWhiteBalance"] = 1;
+			}else if(whiteBalanceIndex==5){
+				ctrlData["autoWhiteBalance"] = 0;
+				ctrlData["whiteBalance"] =  $("#s5").slider('getValue');
+			}else{
+				ctrlData["autoWhiteBalance"] = 0;
+				ctrlData["whiteBalanceMode"] = whiteBalModeArray[whiteBalanceIndex];
+			}
+			ctrlData["brightness"] = $("#s6").slider('getValue');
+			ctrlData["saturation"] = $("#s2").slider('getValue');
+			ctrlData["contrast"] = $("#s1").slider('getValue');
+			ctrlData["sharpness"] = $("#s3").slider('getValue');
+			ctrlData["hue"] = $("#s4").slider('getValue');
+			if($(".customModeList li").length>0){
+				seq = parseInt($(".customModeList li:last").attr("seq"))+1;
+			}
+			ctrlData["seq"] = seq;
+			postJSON("/customRecordMode",ctrlData,function(data){
+				updateCustomModeList(data);
+				setMode(ctrlData["name"]);
+			});
+		}else{//当type属性不为repair时，是修改图标和名字
+			var index = $("#saveCustomMode").attr("index");
+			var thisli = $(".customModeList li").eq(index);
+			ctrlData["name"] = thisli.attr("mode");
+			ctrlData.seq = parseInt(thisli.attr("seq"));
+			ctrlData.autoExposure = parseInt(thisli.attr("autoexposure"));
+			if(ctrlData.autoExposure == 0){
+				ctrlData.exposure = parseInt(thisli.attr("exposure"));
+			}
+			ctrlData.autoWhiteBalance = parseInt(thisli.attr("autowhitebalance"));
+			if(thisli.attr("autoWhitebalance") == 0){
+				if(thisli.attr("whitebalanceMode")){
+					ctrlData.whiteBalanceMode = parseInt(thisli.attr("whitebalancemode"));
+				}
+				if(thisli.attr("whiteBalance")){
+					ctrlData.whiteBalance = parseInt(thisli.attr("whitebalance"));
+				}
+			}
+			ctrlData.autoGain = parseInt(thisli.attr("autogain"));
+			if(thisli.attr("autogain") == 0){
+				ctrlData.gain = parseInt(thisli.attr("gain"));
+			}
+			ctrlData.exposureBias = parseInt(thisli.attr("exposurebias"));
+			ctrlData.brightness = parseInt(thisli.attr("brightness"));
+			ctrlData.sharpness = parseInt(thisli.attr("sharpness"));
+			ctrlData.saturation = parseInt(thisli.attr("saturation"));
+			ctrlData.hue = parseInt(thisli.attr("hue"));
+			ctrlData.contrast = parseInt(thisli.attr("contrast"));
+			putJSON("/customRecordMode",ctrlData,function(data){
+				updateCustomModeList(data);
+				getJSON("/control",updateControls);
+			});
+		}
+		
+		$("#modeName").val("");
+		$(".save-icons .swiper-slide").removeClass("on");
+		// $("#saveCustomMode,.dialog-cover").hide();
+		$("#saveCustomMode,.dialog-cover").hide();
+		$(".dialog-cover").removeClass("tp");
+
+	})
+	//取消升级
+
+	$("#updateCancel").on("click",function () {
+//		e.stopPropagation();
+		updateCancelTime=new Date().getTime();
+		localControl.putValue("notupdate", updateCancelTime); //保存取消的时间，等1天后再询问
+		// $("#update").holdHide();
+		// $(".dialog-cover").holdHide();
+		$("#update,.dialog-cover").holdHide();
+	});
+	/*hdr点击事件*/
+	$("#hdr").on("click",function(){
+		if(recordStatus!="idle"){
+			$(".shootingPrompt").show();
+			setTimeout(function(){$(".shootingPrompt").hide();},2000);
+			return false;
+		}
+		if($(this).hasClass("on")){
+			postJSON("/imgCtl",{hdr:0});
+		}else{
+			postJSON("/imgCtl",{hdr:1});
+		}
+		$(this).toggleClass("on");
+	})
+	//暂时取消wifi tip
+	$("#wifiTipCancel").on("click", function(){
+		lastWifiTipTime=new Date().getTime();
+		localControl.putValue("last_wifi_tip", lastWifiTipTime); //保存取消的时间，等1天后再询问
+		if($("#wifiCheckbox").prop("checked")){//选中不再提醒时，提交no_wifi_tip=1到本地，永不提醒
+			console.log("取消时触发永不提醒");
+			localControl.putValue("no_wifi_tip", 1);
+		}
+		$("#wifiTip").holdHide();
+		$(".dialog-cover").holdHide();
+	});
+	//点击前往设置时触发事件
+	$("#wifiTipConfirm").on("click",function(){
+		if($("#wifiCheckbox").prop("checked")){//选中不再提醒时，提交no_wifi_tip=1到本地，永不提醒
+			console.log("前往设置时触发永不提醒");
+			localControl.putValue("no_wifi_tip", 1);
+		}
+	});
+	//永久取消wifi tip
+	/*
+	$("#wifiTipDelete").on("click", function(){
+		NoWifiTip=1;
+		localControl.putValue("no_wifi_tip", 1);
+		$("#wifiTip").holdHide();
+		$(".dialog-cover").holdHide();
+	});*/
+	$(".wifiLabel,.infraredLabel,.imgQualityLabel,.firstShootLabel").each(function(index){
+		$(this).on("click",function(e){
+			var target = $(e.target);
+			if(!target.is($(this).children().eq(0))){
+				if($(this).children().eq(0).prop("checked")){
+					$(this).children().eq(0).prop("checked",false);
+				}else{
+					$(this).children().eq(0).prop("checked",true);
+				}
+			}
+			
+		});
+	});
+	// $("#confirmIcon").on("click",function(e){
+	// 	e.stopPropagation();
+	// 	if($("#modeName").val()!='' && $("#selectIcon").hasClass("on")==true){
+	// 		$("#saveMode,.dialog-cover").hide();
+	// 	}else{
+	// 		alert("请输入要保存的模式的名称！");
+	// 	}
+	// })
+	// $("#cancelIcon").on("click",function(e){
+	// 	e.stopPropagation();
+	// 	$("#saveCustomMode,.dialog-cover").hide();
+	// })
+	//取消安全认证弹窗
+	$("#authConfirm").on("click",function(){
+		$("#forAuth").hide();
+	});
+
+	function getSessionId() {
+		var d = new Date();
+
+		return (d.getTime() & 0x7fffffff);
+	}
+
+	function updateEffectNow(e, v) {
+		e.text(v);
+		if(v==0) e.parent().hide(); 
+		else e.parent().show();
+	}
+
+
+	
+	var controlConnCount=0;
+	var controlConnCountTimer;
+	var autoGetControlsTimeout;
+	function resetControlConnCount(){
+		console.log("reset controlConnCount:"+controlConnCount);
+		controlConnCount=0;
+		controlGetJSON("/control",updateControls);
+	}
+	function controlComplete(){
+		console.log("controlComplete controlConnCount:"+controlConnCount);
+		if(--controlConnCount<=0) {
+			controlConnCount=0;
+			clearTimeout(autoGetControlsTimeout);
+			autoGetControlsTimeout = setTimeout(autoGetControls,2000);
+		}else {
+			clearTimeout(controlConnCountTimer);
+			controlConnCountTimer=setTimeout(resetControlConnCount, 30000);
+		}
+	}
+	function controlPostJSON(url, obj, successCallback, errorCallback, dataType){
+		console.log("controlPostJSON controlConnCount:"+controlConnCount);
+		if(++controlConnCount < 1 ) controlConnCount=1; 
+		postJSON(url, obj, successCallback, errorCallback, dataType?dataType:'json', controlComplete);
+	}
+	function controlGetJSON(url, successCallback, errorCallback, dataType){
+		console.log("controlGetJSON controlConnCount:"+controlConnCount);
+		if(++controlConnCount <1 ) controlConnCount=1;
+		getJSON(url, successCallback, errorCallback, dataType?dataType:'json', controlComplete) 
+	}
+	function autoGetControls(){
+		if(($("#mode").attr("data-mode")!="\ue614") && ($(".ctrl-icon").get(0).style.display == "none")){
+			controlGetJSON("/control",updateControls);
+		}else{
+			clearTimeout(autoGetControlsTimeout);
+		}
+	}
+	function updateControls(e,status) {
+			console.log(e);
+			if(controlConnCount > 1){ //还存在其他的control连接没返回
+				console.log("controlConnCount:"+controlConnCount);
+				return;
+			}
+			/*非手动模式下需要设置亮度*/
+			var v=e.brightness;
+			$("#s6").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
+			$("#s6").slider('setValue', v);
+			if(v>0) v="+"+v;
+			//$("#brightness-now").text(v);
+			updateEffectNow($("#brightness-now"),  v);
+			$("span[data-current-name='s6']").text(v);
+			$("#s6").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
+
+			/*设置场景*/
+			if("recordMode" in e){
+				var thisi=$("i[mode-name='"+e.recordMode+"']");
+				//console.log(thisi);
+				$(".all-modelist i[mode-name]").each(function(index){
+					if($(this).attr("mode-name") == e.recordMode){
+						$(this).parent().addClass("on");
+					}else{
+						$(this).parent().removeClass("on");
+					}
+				})
+				// thisi.parent().addClass("on").siblings().removeClass("on");
+				//console.log(thisi.html());
+				$("#mode").attr("data-mode",thisi.html());
+				currentMode=e.recordMode;
+				setEffectNow();
+			}
+
+			/*设置红外infrared*/
+			
+			if(e.infrared == 1){
+				$(".infrared-box").prop("checked",true);
+				$(".infrared-up").holdShow();
+			}else {
+				$(".infrared-box").prop("checked",false);
+				$(".infrared-up").holdHide();
+			}
+			
+			// if(e.recordMode == "auto") {
+			if($(".mode-list li").eq(0).hasClass("on")){
+				$(".ctrl-icon").holdHide(); //隐藏上拉图标
+				$(".customModeBtn").holdHide();//隐藏新建场景外拉图标
+				$(".shooting-tips").holdHide();
+				// return; //自动模式下不需要设置下列参数
+			}
+			if($(".setting-content").css("display")=="none"  && sessionType != "video" && e.recordMode != "auto") {
+				$(".ctrl-icon").holdSlideDown(800); //显示上拉图标
+				// $(".customModeBtn").holdShow();//显示新建场景外拉图标
+			}
+			//flag = false; //点击空闲页面显示设置项
+			/*设置快门时间Exposure */
+			exposureIndex=-1;
+			if("autoExposure" in e){
+				exposureIndex=e.autoExposure-1;
+			}
+			if(!("autoExposure" in e) || (e.autoExposure != 1)){
+				$.each(exposureArray, function(i,value){
+					if(value>=e.exposure) {
+						exposureIndex=i;
+						return false;
+					}
+				});
+			}
+			if(exposureIndex>=0) {
+				$(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").addClass("on").siblings().removeClass("on");
+				$("#exprosure").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());	
+			}
+			if(e.autoExposure == 0){//快门为手动时显示快门时间在界面上
+				$("#shutter-now").text($(".parameter-exprosure .swiper-slide:eq("+exposureIndex+")").text());
+				$("#shutter-now").parent().show();
+			}else{$("#shutter-now").parent().hide();}
+			/*设置感光度 autoGain gain*/
+			// if(e.gain==255)e.gain+=1;
+			// v=(e.gain/16)*100;
+			v=gainObj[e.gain];
+			$("#s0").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
+			$("#s0").slider('setValue', v);
+			// if(v>0) v="+"+v;
+			$("#s0").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
+			
+			if(e.autoGain==1){
+				$(".slider-auto").addClass("on").siblings(".slider-manual").removeClass("on");
+				$(".slider-auto").siblings(".slider-plus,.slider-minus").addClass("disabled");
+				$("#s0").slider("disable");
+				if(language && language=="en"){$("#gian").text("Auto");}else{$("#gian").text("自动");}
+				$("#gain-now").parent().hide();
+			}else {
+				$(".slider-auto").removeClass("on").siblings(".slider-manual").addClass("on");
+				$(".slider-auto").siblings(".slider-plus,.slider-minus").removeClass("disabled");
+				$("#s0").slider("enable");
+				$("#gian").text(v);
+				$("#gain-now").text(v);
+				$("#gain-now").parent().show();
+			}
+			/*当感光度和快门为自动时曝光补偿不可点击*/
+			if(e.autoGain==0&&e.autoExposure==0){
+				$(".swiper-slide[setting-type=exposureBias]").addClass("infrared-disabled");
+				$("#exposureBias").css("display","none");
+			}else {
+				$(".swiper-slide[setting-type=exposureBias]").removeClass("infrared-disabled");
+				$("#exposureBias").css("display","inline-block");
+			}
+			/*设置白平衡 autoWhiteBalance whitebalance*/
+			
+			
+			if(e.autoWhiteBalance==1){
+				$(".parameter-whiteBalance .swiper-slide:eq(0)").addClass("on").siblings().removeClass("on");
+				if(language && language=="en"){$("#whiteBalance").text("Auto");}else{$("#whiteBalance").text("自动");}
+				$("#whiteBalance-now").parent().hide();
+			}else {
+				v = e.whiteBalance;
+				// $("#whiteBalance-now").text(v);
+				$("#whiteBalance-now").parent().show();
+				// if($("#whiteBalance").text()=="自动" || $("#whiteBalance").text()=="Auto"){
+					$(".parameter-whiteBalance .swiper-slide").last().addClass("on").siblings().removeClass("on");
+					$("#s5").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
+					$("#s5").slider('setValue', v);
+					if(v>0) v="+"+v;
+					$("#s5").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
+					if("whiteBalanceMode" in e){
+						$(".parameter-whiteBalance .swiper-slide").eq(whiteBalModeIndex[e.whiteBalanceMode]).addClass("on").siblings().removeClass("on");
+						$("#whiteBalance").text(whiteBalMode[e.whiteBalanceMode]);
+						$("#whiteBalance-now").text(whiteBalMode[e.whiteBalanceMode]);
+					}else{
+						$("#whiteBalance").text(v);
+						$("#whiteBalance-now").text(v);
+					}
+				// }
+			}
+
+			/*设置饱和度 saturation*/
+			v=e.saturation;
+			$("input[data-slider-id='constrastSlider']").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v});
+			$("#s2").slider('setValue', v);
+			if(v>0) v="+"+v;
+			//$("#saturation-now").text(v);
+			updateEffectNow($("#saturation-now"), v);
+			$("span[data-current-name='s2']").text(v);
+			$("#s2").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v);
+
+			/*设置曝光补偿 exposureBias*/
+			v = e.exposureBias;
+			exposureBias_now = e.exposureBias;
+			$("#exposurebias-input").attr("value",v);
+			var vShow = v/10;
+			vShow = vShow==0?vShow:vShow.toFixed(1);
+			if(v>0) vShow = "+"+vShow;
+			if(firstLoadPage2){
+				// $(".track2").css("height",String((v*10+40)*2)+"px");
+				// $(".track1").css("height",String(160-(v*10+40)*2)+"px");
+				$(".track2").css("height",String((v+40)*(orientationMode?1:2))+"px");
+				$(".track1").css("height",String((orientationMode?80:160)-(v+40)*(orientationMode?1:2))+"px");
+				// $(".track2").css("height",String((v+30)*2)+"px");
+				// $(".track1").css("height",String(120-(v+30)*2)+"px");
+				$(".exposureBiasShow").text(vShow);
+				console.log("--------------set sun----------------")
+				firstLoadPage2=false;
+			}
+			$("span[data-current-name='s7']").text(vShow);
+			$("#exposurebias-span").text(vShow);
+			
+			updateEffectNow($("#exposureBias-now"), vShow);
+
+			/*设置对比度 contrast*/
+			$("input[data-slider-id='constrastSlider']").attr({"data-slider-value":e.contrast, "data-slider-default":e.contrast, "data-value":e.contrast, "value":e.contrast});
+			$("#s1").slider('setValue', e.contrast);
+			if(e.contrast>0) e.contrast="+"+e.contrast;
+			//$("#contrast-now").text(e.contrast);
+			updateEffectNow($("#contrast-now"), e.contrast);
+			$("span[data-current-name='s1']").text(e.contrast);
+			$("#s1").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.contrast);
+
+			/*设置锐度 sharpness*/
+			$("input[data-slider-id='acutanceSlider']").attr({"data-slider-value":e.sharpness, "data-slider-default":e.sharpness, "data-value":e.sharpness, "value":e.sharpness});
+			$("#s3").slider('setValue', e.sharpness);
+			if(e.sharpness>0) e.sharpness="+"+e.sharpness;
+			//$("#sharpness-now").text(e.sharpness);
+			updateEffectNow($("#sharpness-now"), e.sharpness);
+			$("span[data-current-name='s3']").text(e.sharpness);
+			$("#s3").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.sharpness);
+
+			/*设置色相 hue*/
+			$("input[data-slider-id='hueSlider']").attr({"data-slider-value":e.hue, "data-slider-default":e.hue, "data-value":e.hue, "value":e.hue});
+			$("#s4").slider('setValue', e.hue);
+			if(e.hue>0) e.hue="+"+e.hue;
+			//$("#hue-now").text(e.hue);
+			updateEffectNow($("#hue-now"), e.hue);
+			$("span[data-current-name='s4']").text(e.hue);
+			$("#s4").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(e.hue);
+			//alert("slider"+$("#s4").slider('getValue'));
+
+			
+			
+			/*设置拍摄间隔*/
+			// alert($(".mode-list li.on").index());
+			if(language && language=="en"){
+				var selectMode = Array("Auto","Cloud","Cityscape","Flower","Star","Sunrise/Sunset","Manual");
+			}else{
+				var selectMode = Array("自动","云彩","城市夜景","鲜花","星空","日出日落","手动");
+			}
+			
+			$(".currentMode").text(selectMode[$(".mode-list li.on").index()]);
+			if("interval" in e){
+				$(".shooting-tips").show();
+				$(".currentInterval").text(e.interval);
+				var timeArray = formatTime(e.interval);
+				$("#interval-hour").attr("value",timeArray[0]);
+				$("#interval-minute").attr("value",timeArray[1]);
+				$("#interval-second").attr("value",timeArray[2]);
+			}else {
+				$(".shooting-tips").holdHide();
+			}
+			/*设置亮度brightness*/
+			
+		//}, function () {
+		//	console.log("get control error");
+		//}); 
+	}
+
+	//返回APP首页
+	$(".forback,.wifi").on("click",function(e){
+		e.stopPropagation();
+		localControl.focus("disabled");
+		clearTimeout(clearAreaTimer);
+		focusCMD=null;
+		focusTimeout();
+		localControl.focus("disabled");
+		if(app_type) showCTL(0);
+		if(app_type && appVer >= 2) localControl.startPage("CameraManager");
+		else localControl.startPage("DeviceListPage");
+	})
+	//内存闪烁图标点击事件
+	$(".lowmemory").on("click",function(){
+		if($(this).attr("type")=="one"){
+			$("#memory-prompt, .dialog-cover2").show();
+		}else if($(this).attr("type")=="two"){
+			$("#forSDformat,.dialog-cover2").holdShow();
+		}
+		
+	});
+
+	function setStatus(e) {
+	//function setStatus() {
+		//getJSON("/test.php", function(e, status){
+			//console.log(e);
+			//热点
+			// if(("ap" in e) && e.ap=='on') {
+			// 	$(".iconfont.hotspot").show();
+			// }else $(".iconfont.hotspot").hide();
+			//wifi
+			recordStatus = e.recordinfo.status;
+			if((window.webkit && window.webkit.messageHandlers) || window.atliviewControl){
+				$(".forback").holdShow();
+				$(".top-bar .wifi").css("margin-left","1%");
+			}else{
+				$(".forback").holdHide();
+				$(".top-bar .wifi").css("margin-left","5%");
+			}
+			if(("wlan" in e)){
+				if(e.wlan.status=="unconnected") $(".wifi").holdHide();
+				else {
+					var signal=e.wlan.signal;
+					if(signal>=-65) $(".wifi").removeClass("wifi2 wifi3").addClass("wifi1");
+					else if(signal <-65 && signal>=-73 ) $(".wifi").removeClass("wifi1 wifi3").addClass("wifi2");
+					else $(".wifi").removeClass("wifi1 wifi2").addClass("wifi3");
+					$(".wifi").holdShow();
+				}
+			}
+			//定时任务会有limitRecordTime参数
+			if("limitRecordTime" in e && e.limitRecordTime==1){limit_time = 1;}
+			//图像旋转180°时旋转图标高亮
+			if("imgRotate" in e){rotate180 = true;
+			}else{rotate180 = false;}
+			
+			// if(e.recordinfo.status!="idle"){//非空闲状态不给设置横竖屏和旋转180°
+			// 	$(".more").addClass("shooting-now greyColor");
+			// }else{
+			// 	$(".more").removeClass("shooting-now greyColor");
+			// }
+			
+			//横屏竖屏视频格式
+
+			imgArchive = e.imgArchive;
+			
+			if(changeFlag){
+				if(!hideCTL){
+					setOrientation(imgArchive,changeFlag);
+					changeFlag=false;
+				}
+			}
+			// setOrientation(imgArchive);
+			// if(firstLoadPage){
+			if(e.imgArchive == "horizontal"){//horizontal为横屏
+				// $(".verticalPrompt").holdHide();
+				if("imgRotate" in e){
+					$(".imgCtl li").eq(2).addClass("on").siblings().removeClass("on");
+					$(".more").attr("data-mode",$(".imgCtl li").eq(2).find("i").text());
+					if(orientationFlag==true && !hideCTL){
+						localControl.orientation(3);
+						orientationFlag=false;
+						console.log("----------------orientation3------------------");
+					}
+					
+				}else{
+					$(".imgCtl li").eq(0).addClass("on").siblings().removeClass("on");
+					$(".more").attr("data-mode",$(".imgCtl li").eq(0).find("i").text());
+					if(orientationFlag==true && !hideCTL){
+						localControl.orientation(1);
+						orientationFlag=false;
+						console.log("----------------orientation1------------------");
+					}
+				}
+			}else if(e.imgArchive == "vertical"){//vertical为竖屏
+				// $(".horizontalPrompt").holdHide();
+				if("imgRotate" in e){
+					$(".imgCtl li").eq(3).addClass("on").siblings().removeClass("on");
+					$(".more").attr("data-mode",$(".imgCtl li").eq(3).find("i").text());
+					if(orientationFlag==true && !hideCTL){
+						localControl.orientation(4);
+						orientationFlag=false;
+						console.log("----------------orientation4------------------");
+					}
+				}else{
+					$(".imgCtl li").eq(1).addClass("on").siblings().removeClass("on");
+					$(".more").attr("data-mode",$(".imgCtl li").eq(1).find("i").text());
+					if(orientationFlag==true && !hideCTL){
+						localControl.orientation(2);
+						orientationFlag=false;
+						console.log("----------------orientation2------------------");
+					}
+				}
+			}
+				// 	firstLoadPage = false;
+				// }
+				
+
+
+
+			//电池
+			if(("battery" in e)){
+				batteryNow = e.battery.capacity;
+				batteryStatus = e.battery.status;
+				if(e.battery.capacity<=5){
+					$("#battery > span").css("width","5%");
+				}else{
+					$("#battery > span").css("width", e.battery.capacity+"%");
+				}
+				
+				if($(".battery .battery_png>img").attr("src") != "images/battery/battery"+e.battery.capacity+".png") 
+					$(".battery .battery_png>img").attr("src","images/battery/battery"+e.battery.capacity+".png");
+				// $(".battery-per").text(e.battery.capacity);
+				$(".battery").holdShow();
+				if(e.battery.status=="charging") {
+					// $("#battery > span").addClass("charging");
+					$("#battery > span").css("background","#3ad200");
+					$(".iconfont.no-battery").holdHide();
+				}
+				else if(e.battery.status=="discharging") {
+					// $("#battery > span").removeClass("charging");
+					$("#battery > span").css("background","#9f9f9f");
+					if(e.battery.capacity < 20){
+						$("#battery > span").css("background", "#f00");
+					}
+					$(".iconfont.no-battery").holdHide();
+				}else if(e.battery.status=="no_battery"){
+					$(".battery").holdHide();
+					$(".iconfont.no-battery").holdShow();
+				}
+				else {
+					/* //取消无电池状态
+					   $(".battery").hide();
+					   $(".iconfont.no-battery").show();
+					 */
+					// $("#battery > span").addClass("charging");
+					$("#battery > span").css("background","#9f9f9f");
+					$(".iconfont.no-battery").holdHide();
+				}
+			}
+			//储存空间
+			// if(!lastMemoryTipTime) lastMemoryTipTime = localControl.getValue("lastMemoryTipTime",0);
+			if(e.sdcard == "UNPLUG"){
+				SDStatus = "UNPLUG";
+				$("#memoryConfirm").attr("type","UNPLUG");
+				if(language && language=="en"){
+					$("#memory-prompt .dialog-poppup-content").text("Memory card is not detected. ");
+				}else{
+					$("#memory-prompt .dialog-poppup-content").text("未检测到Micro SD存储卡！");
+				}
+				
+				$(".iconfont.lowmemory").attr("type","one").holdShow();
+				if(unPlugAlert == false){
+					$("#forSDformat,.dialog-cover2").holdHide();
+					$("#memory-prompt, .dialog-cover2").holdShow();
+					unPlugAlert = true;
+				}
+				
+			}else if(e.sdcard == "PLUG"){
+				SDStatus = "PLUG";
+				unPlugAlert = false;
+				formatAlert = false;
+				// $("#memory-prompt, .dialog-cover2").specialHide();
+				$("#forSDformat,.dialog-cover2").holdHide();
+				if("available" in e){
+					SDavailable = e.available;
+					if(e.available<50*1024 && e.available!=0){
+						$("#memoryConfirm").attr("type","PLUG");
+						if(language && language=="en"){
+							$("#memory-prompt .dialog-poppup-content").text("Memory card storage less than 50MB");
+						}else{$("#memory-prompt .dialog-poppup-content").text("存储空间低于50M！");}
+						if(firstLoadPage){
+							$("#memory-prompt, .dialog-cover2").holdShow();
+							firstLoadPage=false;
+						}
+						$(".iconfont.lowmemory").attr("type","one").holdShow();
+					}else{
+						$(".iconfont.lowmemory").holdHide();
+						if($("#memory-prompt").css("display")=="block"){
+							$("#memory-prompt, .dialog-cover2").holdHide();
+						}
+					}
+				}
+			}else if(e.sdcard == "NOT_FAT"){
+				SDStatus = "NOT_FAT";
+				$(".iconfont.lowmemory").attr("type","two").holdShow();
+				if(formatAlert == false){
+					$("#memory-prompt, .dialog-cover2").holdHide();
+					if(language && language=="en"){
+						$("#forSDformat .dialog-poppup-content").text("Memory card is not readable. ");
+					}else{
+						$("#forSDformat .dialog-poppup-content").text("存储卡文件系统格式不符合要求");
+					}
+					$("#forSDformat,.dialog-cover2").holdShow();
+					formatAlert = true;
+				}	
+			}else if(e.sdcard == "UNRECOGNIZED"){
+				SDStatus = "UNRECOGNIZED";
+				$(".iconfont.lowmemory").attr("type","two").holdShow();
+				if(formatAlert == false){
+					$("#memory-prompt, .dialog-cover2").holdHide();
+					if(language && language=="en"){
+						$("#forSDformat .dialog-poppup-content").text("Unrecognized card format");
+					}else{
+						$("#forSDformat .dialog-poppup-content").text("无法识别存储卡的文件系统格式");
+					}
+					$("#forSDformat,.dialog-cover2").holdShow();
+					formatAlert = true;
+				}
+			}
+			
+			//拍摄状态
+			if(("cron" in e) && e.cron==1) cron=1;
+			else cron=0;
+			if((e.sessionType == "timelapse") && ("recordinfo" in e) && e.recordinfo.status=="waiting"){
+				var d = new Date(e.recordinfo.cronStartAt);
+				// date = d.toLocaleString();
+				if(language && language=="en"){
+					$(".head-info").html("<p>The next schedule will run on "+transFullTime(d,"en")+"</p>");
+				}else{
+					$(".head-info").html("<p>定时任务将于 "+transFullTime(d,"zh")+" 开始</p>");
+				}
+				if(cronInterval){
+					console.log("1111111111111cronInterval:"+cronInterval);
+					if(cronInterval==0.5){
+						$(".parameter-exprosure .swiper-slide").each(function(index){
+							if(index>=14){
+								$(this).addClass("greyColor");
+							}
+						})
+					}else if(cronInterval==1){
+						$(".parameter-exprosure .swiper-slide").each(function(index){
+							if(index>=15){
+								$(this).addClass("greyColor");
+							}
+						})
+					}else{
+						$(this).removeClass("shooting-now").removeClass("greyColor");
+					}
+				}
+				$(".head-info").holdShow();
+			}
+			else if(e.frameIndex==0 && (("cron" in e) && e.cron==1)){ //老版本等待状态
+				if(language && language=="en"){
+					$(".head-info").html("<p>Scheduled task waiting</p>").holdShow();
+				}else{
+					$(".head-info").html("<p>定时任务等待中</p>").holdShow();
+				}
+
+				e.recordinfo.status="waiting";
+			}else if(e.sessionType == "video"){
+				// $(".head-info").html("录像中..");
+				$(".ctrl-icon").holdHide();
+				$(".customModeBtn").holdHide();
+				$("#mode").holdHide();
+				$(".video-shooting").holdHide();
+				$(".video").holdShow();
+				if(("recordinfo" in e) && (e.recordinfo.status=="recording")){
+					var videoStartAt = Date.parse(e.recordinfo.currentVideo.startAt)/1000;
+					// var currentTime = Date.parse(new Date())/1000;
+					var currentTime = Date.parse(e.devTime)/1000;
+					var timeArrayVideo = formatTime(currentTime-videoStartAt);
+					$(".durationForVideo").text(timeArrayVideo[0]+":"+timeArrayVideo[1]+":"+timeArrayVideo[2]);
+					$(".videoSign").holdShow();
+	
+					// $(".video").holdHide();
+					// $(".video-shooting").holdHide();
+					// $(".theSpace").holdShow();
+					$("#mode").holdHide();
+					setVideoStatus("video");
+				}else{
+					// $(".theSpace").holdHide();
+					// $(".video-shooting").holdHide();
+					// $(".video").holdShow();
+					setVideoStatus("idle");
+				}
+			}else if(e.sessionType == "timelapse"){
+				$(".head-info").holdShow();
+				$(".videoSign").holdHide();
+				
+				if(("recordinfo" in e) && (e.recordinfo.status=="recording" || e.recordinfo.status=="cronRunning")){	
+					// $("#shoot-pause").hide()
+					// $("#shoot-circle").addClass("on");
+					console.log("shoot-circle add class on recording ========================");
+					$(".pauseSelect li").eq(1).hide().siblings(".pause").show();
+					var dhms;
+					var date = new Date(e.recordinfo.currentVideo.startAt);
+					// date = date.toLocaleString();
+					sizeFormt=renderSize(e.recordinfo.currentVideo.size*1024)
+					//console.log(dhms+parseInt(duration/60)+"分");
+					if(language && language=="en"){
+						dhms=secondtoHIS(e.recordinfo.currentVideo.duration, "en");
+						var recordinfo="<p>Start Time: "+transFullTime(date,"en")+"</p>"+
+						"<p>Video Length: "+dhms+"</p>";
+					}else{
+						dhms=secondtoHIS(e.recordinfo.currentVideo.duration);
+						var recordinfo="<p>拍摄始于 "+transFullTime(date,"zh")+"</p>"+
+						"<p>生成视频 "+dhms+"</p>";
+					}
+					
+					if(e.recordinfo.status!="video") {
+						if("interval" in e.recordinfo.currentVideo) {
+							recordInterval=e.recordinfo.currentVideo.interval;
+							if(language && language=="en"){
+								recordinfo+="<p>Interval: "+e.recordinfo.currentVideo.interval+" Sec</p>";
+								recordinfo+=(outPutMode==0?"":"<p>Output: Video + Photo Sequence</p>");
+							}else{
+								recordinfo+="<p>当前拍摄间隔 "+e.recordinfo.currentVideo.interval+" 秒</p>";
+								recordinfo+=(outPutMode==0?"":"<p>输出 视频+图组</p>");
+							}
+							
+							if(e.recordinfo.currentVideo.interval==1){
+								$(".parameter-exprosure .swiper-slide").each(function(index){
+									if(index>=15){
+										$(this).addClass("greyColor");
+									}
+								})
+							}
+							intervalArray = formatTime(e.recordinfo.currentVideo.interval);
+						}else {
+							if(language && language=="en"){
+								recordinfo+="<p>Interval: "+e.recordinfo.currentVideo.intervalms/1000+" Sec</p>";
+								recordinfo+=(outPutMode==0?"":"<p>Output: Video + Photo Sequence</p>");
+							}else{
+								recordinfo+="<p>当前拍摄间隔 "+e.recordinfo.currentVideo.intervalms/1000+"秒</p>";
+								recordinfo+=(outPutMode==0?"":"<p>输出 视频+图组</p>")
+							}
+							recordInterval=e.recordinfo.currentVideo.intervalms/1000;
+							$(".parameter-exprosure .swiper-slide").each(function(index){
+								if(index>=14){
+									$(this).addClass("greyColor");
+								}
+							})
+							intervalArray = new Array("00","00",recordInterval);
+						}
+						if(language && language=="en"){
+							recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>Live Preview</span></a></p>";
+							recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow2\" style=\"display:none;\"></a></p>";
+						}else{
+							recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>实时预览</span></a></p>";
+							recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow2\" style=\"display:none;\"></a></p>";
+						}
+						
+					}
+					$(".head-info").html(recordinfo);
+					// if(e.frameIndex > 25){
+					// 	console.log("before:::::"+e.frameIndex);
+					// 	e.frameIndex = e.frameIndex-10;
+					// 	console.log("after:::::"+e.frameIndex);
+					// }
+					//设置预览连接
+					console.log("appVer::::"+appVer);
+
+					if(appVer<2.1){
+						playbackurl = "/playback?sessionId="+e.sessionId+"&frameIndex="+e.frameIndex+ (getAccessToken()?'&access_token='+getAccessToken():'');
+					}else{playbackurl = "/playback.html?sessionId="+e.sessionId+"&frameIndex="+e.frameIndex+ (getAccessToken()?'&access_token='+getAccessToken():'');}
+					console.log("暂停之前url："+playbackurl);
+					localControl.putValue("playbackurl",playbackurl);
+					$("#videoShow2").attr("href",playbackurl);
+					
+					// $(".video").holdHide();
+					// $(".theSpace").holdHide();
+					// $(".video-shooting").holdShow();
+				}else if(("recordinfo" in e) && e.recordinfo.status=="pausing"){
+					$(".outPutPrompt").hide();
+					// $("#shoot-circle").removeClass("on");
+					console.log("shoot-circle remove class on pausing ========================");
+					var date = new Date(e.recordinfo.currentVideo.startAt);
+					// date = date.toLocaleString();
+					sizeFormt=renderSize(e.recordinfo.currentVideo.size*1024)
+					if(language && language=="en"){
+						dhms=secondtoHIS(e.recordinfo.currentVideo.duration, "en");
+						var recordinfo="<p>Start Time: "+transFullTime(date,"en")+"</p>"+
+						"<p>Video Length: "+dhms+"</p>";
+					}else{
+						dhms=secondtoHIS(e.recordinfo.currentVideo.duration);
+						var recordinfo="<p>拍摄始于 "+transFullTime(date,"zh")+"</p>"+
+						"<p>生成视频 "+dhms+"</p>";
+					}
+					if("interval" in e.recordinfo.currentVideo) {
+						recordInterval=e.recordinfo.currentVideo.interval;
+						if(language && language=="en"){
+							recordinfo+="<p>Interval: "+e.recordinfo.currentVideo.interval+" Sec</p>";
+							recordinfo+=(outPutMode==0?"":"<p>Output: Video + Photo Sequence</p>");
+						}else{
+							recordinfo+="<p>当前拍摄间隔 "+e.recordinfo.currentVideo.interval+" 秒</p>";
+							recordinfo+=(outPutMode==0?"":"<p>输出 视频+图组</p>");
+						}
+						
+						if(e.recordinfo.currentVideo.interval==1){
+							$(".parameter-exprosure .swiper-slide").each(function(index){
+								if(index>=15){
+									$(this).addClass("greyColor");
+								}
+							})
+						}
+						intervalArray = formatTime(e.recordinfo.currentVideo.interval);
+					}else {
+						if(language && language=="en"){
+							recordinfo+="<p>Interval: "+e.recordinfo.currentVideo.intervalms/1000+" Sec</p>";
+							recordinfo+=(outPutMode==0?"":"<p>Output: Video + Photo Sequence</p>");
+						}else{
+							recordinfo+="<p>当前拍摄间隔 "+e.recordinfo.currentVideo.intervalms/1000+"秒</p>";
+							recordinfo+=(outPutMode==0?"":"<p>输出 视频+图组</p>");
+						}
+						recordInterval=e.recordinfo.currentVideo.intervalms/1000;
+						$(".parameter-exprosure .swiper-slide").each(function(index){
+							if(index>=14){
+								$(this).addClass("greyColor");
+							}
+						})
+						intervalArray = new Array("00","00",String(recordInterval));
+					}
+					/*
+					if(language && language=="en"){
+						recordinfo+="<div class=\"pauseNow\">Paused</div>";
+					}else{recordinfo+="<div class=\"pauseNow\">已暂停</div>";}
+					*/
+					if(language && language=="en"){
+						recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>Live Preview</span></a></p>"
+					}else{
+						recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>实时预览</span></a></p>"
+					}
+					$(".head-info").html(recordinfo);
+					// playbackurl = localControl.getValue("playbackurl");
+					// console.log("暂停之后url :::"+playbackurl);
+					// console.log("/playback.html?sessionId="+e.sessionId+"&frameIndex="+e.frameIndex+ (getAccessToken()?'&access_token='+getAccessToken():''));
+					// $("#videoShow").attr("href",playbackurl);
+					
+					console.log("recordStatus:::::::::::::::"+recordStatus);
+					$(".pauseSelect li").eq(0).hide().siblings(".continue").show();
+					$("shoot-circle").addClass("pause");
+					// setTimeout(function(){$("#shoot-pause").show();},400);
+				}else {
+					$(".outPutPrompt").show();
+					pauseStatus = localControl.getValue("pauseStatus",0);
+					console.log("pauseStatus:++++++++++++++++++++"+pauseStatus);
+					if(pauseStatus==0){
+						$("shoot-circle").removeClass("pause");
+						$(".pauseSelect li").eq(1).hide().siblings(".pause").show();
+						$(".head-info").holdHide();
+						$(".video-shooting").holdHide();
+						$(".theSpace").holdHide();
+						$(".video").holdShow();
+						$(".shooting-tips2").holdShow();
+						$(".videoSign").holdHide();
+						$(".parameter-exprosure .swiper-slide").each(function(index){
+							$(this).removeClass("shooting-now").removeClass("greyColor");
+						});
+					}else{
+						console.log("pauseStatus:===================== 1");
+						localControl.putValue("pauseStatus",0);
+					}
+					
+				}
+				if(intervalArray && intervalFlag == 0){
+					$("#interval-hour").val(intervalArray[0]);
+					$("#interval-minute").val(intervalArray[1]);
+					$("#interval-second").val(intervalArray[2]);
+					intervalFlag = 1;
+				}
+			}else {
+				$(".head-info").holdHide();
+				$(".video-shooting").holdHide();
+				$(".theSpace").holdHide();
+				$(".video").holdShow();
+				$(".shooting-tips2").holdShow();
+				$(".videoSign").holdHide();
+				$(".parameter-exprosure .swiper-slide").each(function(index){
+					$(this).removeClass("shooting-now").removeClass("greyColor");;
+				})
+			}
+			if(e.sessionType == "timelapse" || e.sessionType == "image"){
+				nowIndex = e.frameIndex;	
+			}
+			/*点击进入实时预览*/
+			$("#videoShow").on("click",function(){
+				//如果是ios用系统播放器播放
+				if(recordStatus && recordStatus == "pausing"){
+					livePreviewUrl = localControl.getValue("livePreviewUrl",null);
+					if(livePreviewUrl){
+						location.href = livePreviewUrl+(getAccessToken()?'?access_token='+getAccessToken():'');
+					}
+					return false
+				}
+				console.log("goto playback:"+$("#videoShow2").attr("href"));
+				if(app_type=="ios" && window.webkit.messageHandlers.previewPlayback) console.log("has playback api");
+				else console.log("no playback api");
+				playPage=1;
+				if(app_type=="ios" && window.webkit.messageHandlers.previewPlayback) {
+					CameraAlbumPage=1;
+					if(statusEventSource){
+						console.log("stop status EventSource");
+						statusEventSource.close();
+						statusEventSource = null;
+					}
+					// stopFocusEventSource();
+					window.stop();
+					playbackurl=$("#videoShow2").prop("href");
+					playbackurl=playbackurl.replace('.html', '');
+					localControl.playback(playbackurl);
+					return false;
+				}
+				//安卓或者电脑端用网页播放器播放
+				window.location.href = $("#videoShow2").attr("href");
+			})
+			/*hdr设置*/
+			if("hdr" in e && e.hdr == 1){
+				$("#hdr").addClass("on");
+			}else{
+				$("#hdr").removeClass("on");
+			}
+			if(e.sessionType == "video"){
+				// $("#hdr").holdHide();
+				$(".main-pic").removeAttr("style");
+				// $(".more").holdHide();
+				$(".moreMask li").eq(1).hide();
+				$(".moreMask li").eq(3).hide();
+				$(".horizontalPrompt").holdHide();
+				$(".verticalPrompt").holdHide();
+			}else{
+				// $(".more").holdShow();
+				$(".moreMask li").eq(1).show();
+				$(".moreMask li").eq(3).show();
+				// $("#hdr").holdShow();
+			}
+/*			
+			//设置升级提醒
+			if(("canUpgrade" in e) && e.canUpgrade==1){
+				//259200000
+				if(!updateCancelTime) updateCancelTime=localControl.getValue("notupdate", 0);
+				if( e.recordinfo.status=="idle" && (!updateCancelTime ||(((new Date().getTime()) - updateCancelTime) > 24*3600*1000))){ //1天
+					// $("#update").show();
+					// $(".dialog-cover").show();
+				// }
+				// $(".update-icon").show();
+			}else {
+				// $(".update-icon").hide();
+			}
+*/
+			//设置警告提醒
+			if("warning" in e){
+				if(e.warning.camStop=="lowSpace") {
+					// if(e.available<50*1024){
+						$("#memory-prompt-stop, .dialog-cover").holdShow();
+					// }else if(e.battery.capacity<=5){		
+					// }	
+				}else if(e.warning.camStop=="lowBattery"){
+					if(language && language=="en"){
+						$("#memory-prompt-stop").children().eq(0).text("Shooting has been terminated due to low battery");
+					}else{
+						$("#memory-prompt-stop").children().eq(0).text("因电量过低，拍摄任务已被强制终止");
+					}
+					$("#memory-prompt-stop, .dialog-cover").holdShow();
+				}
+			}
+			if(e.sessionType!="video") setRecording(e.recordinfo.status, e);
+			
+		//}, function () {
+			//console.log("get status error");
+		//});		
+	}
+	var circleInit=0;
+	var circleTimer=null;
+	function clearCircle(){
+		circleInit=0;
+		if(circleTimer) clearTimeout(circleTimer);
+		circleTimer=null;
+		thisIndex=0;
+	}
+	function drawShootCircle(next, auto, changed){
+		console.log(recordInterval+" "+changed+" "+auto+" "+thisIndex+" "+next); 
+		//if(recordInterval>5 || thisIndex<2 || changed || auto){ //是否重绘制
+			if(changed) thisIndex=1; //改变后第一帧
+			if(recordInterval<=5 && thisIndex>=2 && !changed) circleInit=1; //低间隔时自动循环
+			else {
+				clearCircle();
+				thisIndex=1;
+			}
+			$(".continueWait").hide();
+			if(circleTimer) clearTimeout(circleTimer);
+			$(".circleChart_canvas").remove(".circleChart_canvas");//先取消之前的绘制
+			$("#shoot-circle").addClass("shoot-percent circleChart");
+			$("#shoot-circle").removeClass("shoot pause");
+			$("#shoot-circle").children("span").addClass("shoot-percent-inside");
+			var maxInterval=(next>=recordInterval*1000)?(next+1):(recordInterval*1000);
+ 			$("#shoot-circle").circleChart({
+				color: "red",
+				backgroundColor: "#fff",
+				size: 45,
+				widthRatio: 0.1,
+				startAngle: 75,
+				lineCap: 'butt',
+				value: 100*(maxInterval-next)/maxInterval, //百分比
+				animation: 'linearTween',
+				redraw: true,
+				speed: 0,
+			});
+			
+			setTimeout(function() {
+ 				$("#shoot-circle").circleChart({
+					startAngle: 75+(maxInterval-next)/maxInterval*10,
+					value: 100, //百分比
+					redraw: false,
+					speed: next,
+				});
+			}, 1);
+
+			if(circleInit==1) circleTimer=setTimeout(function(){drawShootCircle(next, 1)}, next);   
+			console.log("1.draw "+100*(maxInterval-next)/maxInterval+";2.draw "+next+"MS from "+75+(maxInterval-next)/maxInterval*10);
+		//}
+	}
+
+	function setRecording(state, e) {
+		if(state == "recording" || state == "cronRunning"){
+			var changed=0;
+			var next=0;
+			// $(".shooting-tips2").hide();
+			// $(".focus-area").hide();
+			$("#modeNow").addClass("shooting-now");
+			// $("#shoot-circle").removeClass("shoot pause");
+			if(frameIndex==e.frameIndex) return; //同一帧，忽略
+			frameIndex=e.frameIndex;
+			if(e.recordinfo.currentVideo && e.recordinfo.currentVideo.interval && recordInterval<1) {
+				if(recordInterval!=e.recordinfo.currentVideo.interval){
+					recordInterval=e.recordinfo.currentVideo.interval;
+					changed=1; //拍摄间隔改变
+				}
+			}
+
+			if(e.recordinfo.currentVideo && e.recordinfo.currentVideo.next) {
+				var d = new Date(e.recordinfo.currentVideo.next);
+				nextRecordMS=new Date().getTime();
+				next=d.getTime()-nextRecordMS;
+				console.log("next:"+next+"ms");
+			}
+			if(recordInterval<1) next=recordInterval*1000;  //低间隔，用假的next
+			else if(thisIndex>0 && next<10000) {
+				next=recordInterval*1000; 
+			} else changed=1;////第一帧或定时任务中间的等待用next,需要重绘制
+			
+			thisIndex++;
+			if(cron==1)$("#shoot-circle").attr("state", "cronRunning");
+			else $("#shoot-circle").attr("state", state);
+			if(circleInit==0 || changed) drawShootCircle(next, 0, changed);
+			// $("#shoot-circle").removeClass("pause shoot");
+			//重新计时
+/*
+			$(".circleChart_canvas").remove(".circleChart_canvas");//先取消之前的绘制
+			$("#shoot-circle").addClass("shoot-percent circleChart");
+			$("#shoot-circle").removeClass("shoot");
+			$("#shoot-circle").removeAttr("data-waiting");
+			$("#shoot-circle").children("span").addClass("shoot-percent-inside");
+			
+			$("#shoot-circle").circleChart({
+				color: "red",
+				backgroundColor: "#fff",
+				size: 45,
+				widthRatio: 0.1,
+				startAngle: 75,
+				lineCap: 'butt',
+				value: 100, //百分比
+				animation: 'linearTween',
+				redraw: true,
+				speed: next,
+			});
+			console.log("draw "+next+"MS");
+*/
+		}
+		else if(state == "waiting"){
+			$(".circleChart_canvas").remove(".circleChart_canvas");
+			$("#shoot-circle").attr("state", state);
+			$("#shoot-circle").attr("data-waiting", true);
+			$("#shoot-circle").removeClass("shoot-percent circleChart pause");
+			$("#shoot-circle").addClass("shoot");
+			$("#shoot-circle").children("span").removeClass("shoot-percent-inside"); 
+			// $(".shooting-tips2").hide();
+			$("#modeNow").addClass("shooting-now");
+			clearCircle();
+			//$(".head-info").hide();
+		}
+		else if(state == "idle"){
+			$(".circleChart_canvas").remove(".circleChart_canvas");
+			$("#shoot-circle").attr("state", state);
+			$("#shoot-circle").removeAttr("data-waiting");
+			$("#shoot-circle").removeClass("shoot-percent circleChart");
+			$("#shoot-circle").addClass("shoot").removeClass("pause");
+			$("#shoot-circle").children("span").removeClass("shoot-percent-inside");	
+			clearCircle();
+			// $(".shooting-tips2").holdShow();	
+			$("#modeNow").removeClass("shooting-now");
+			//$(".head-info").hide();
+		}else if(state == "pausing"){
+			$("#modeNow").addClass("shooting-now");
+			$(".circleChart_canvas").remove(".circleChart_canvas");
+			$("#shoot-circle").attr("state", state);
+			$("#shoot-circle").removeAttr("data-waiting");
+			$("#shoot-circle").removeClass("shoot-percent circleChart");
+			$("#shoot-circle").addClass("shoot pause");
+			$("#shoot-circle").children("span").removeClass("shoot-percent-inside");
+			clearCircle();
+		}
+		else clearCircle();
+	}
+
+	function startRecording() {
+		$("#shoot-circle").css("pointer-events","none");
+		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
+		//if(parseInt(interval)>=1) interval=parseInt(interval);
+		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60) };
+		//var recCtrl = { sessionId: sessionId, frameRate: frameRate, starttime:transTimeyMDHIS()};
+		//设置横屏竖屏录制
+		if(imgArchive == "horizontal"){
+			recCtrl["orientation"] = 0;
+		}else if(imgArchive == "vertical"){
+			recCtrl["orientation"] = 90;
+		}
+		if($(".time-poppup .switch-box").attr('checked')){
+			// localControl.putValue("limit_time",1);
+			var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
+			var maxFrames = Math.floor(duration/interval);
+			//recCtrl['maxFrames'] = maxFrames;
+			if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames;
+			else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames;
+		}
+		else {
+			if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
+			else recCtrl['schedule'] = 'd'+interval;
+		}
+		recordInterval=interval;
+                console.log(recCtrl);
+		postJSON("/" + sessionType, recCtrl, function (data) {
+			setRecording(true, interval);
+			setTimeout(function(){
+				$("#shoot-circle").css("pointer-events","auto");
+			},1000);
+			$(".circleChart_canvas").remove(".circleChart_canvas");//先取消之前的绘制
+			$("#shoot-circle").addClass("shoot-percent circleChart");
+			$("#shoot-circle").removeClass("shoot");
+			$("#shoot-circle").children("span").addClass("shoot-percent-inside");
+ 			$("#shoot-circle").circleChart({
+				color: "red",
+				backgroundColor: "#fff",
+				size: 45,
+				widthRatio: 0.1,
+				startAngle: 75,
+				lineCap: 'butt',
+				value: 0.01, //百分比
+				animation: 'linearTween',
+				redraw: true,
+				speed: 0,
+			});
+			console.log("start recording OK");
+		}, function (e, status) {
+			setRecording(false);
+			console.log("start recording error " + status);
+			$("#shoot-circle").removeClass("shooting-now");
+		}, "text");
+	}
+	$('#start-shooting').on('click', startRecording);
+
+	function continueRecording(){
+		$("#shoot-pause").hide();
+		$("#shoot-circle").css("pointer-events","none");
+		// $("#shoot-circle").attr("state","recording");
+		// $(".circleChart_canvas").remove(".circleChart_canvas");//先取消之前的绘制
+		// $("#shoot-circle").removeClass("shoot pause");
+		// $("#shoot-circle").addClass("shoot-percent circleChart");
+		// $("#shoot-circle").children("span").addClass("shoot-percent-inside");
+		// $("#shoot-circle").circleChart({
+		// 	color: "red",
+		// 	backgroundColor: "#fff",
+		// 	size: 45,
+		// 	widthRatio: 0.1,
+		// 	startAngle: 75,
+		// 	lineCap: 'butt',
+		// 	value: 0.01, //百分比
+		// 	animation: 'linearTween',
+		// 	redraw: true,
+		// 	speed: 0,
+		// });
+		$(".continueWait").show();
+		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
+		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60),action:"splice"};
+		if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
+			else recCtrl['schedule'] = 'd'+interval;
+		recordInterval=interval;
+                console.log(recCtrl);
+        if(imgArchive == "horizontal"){
+        	recCtrl["orientation"] = 0;
+        }else if(imgArchive == "vertical"){
+        	recCtrl["orientation"] = 90;
+        }
+		postJSON("/" + sessionType, recCtrl, function (data) {
+			setRecording(true, interval);
+			$("#shoot-circle").css("pointer-events","auto");
+			console.log("start recording OK");
+		}, function (e, status) {
+			setRecording(false);
+			$(".continueWait").hide();
+			$("#shoot-circle").css("pointer-events","auto");
+			console.log("start recording error " + status);
+		}, "text");
+	}
+	
+
+	function stopRecording() {
+		$("#shoot-circle").css("pointer-events","none");
+		// localControl.putValue("limit_time",0);
+		limit_time = null;
+		var recCtrl = {}
+		recCtrl["sessionId"] = sessionId;
+		if(recordStatus && recordStatus == "pausing"){
+			recCtrl["action"] = "terminate";
+		}
+		putJSON("/" + sessionType, recCtrl, function(e, status){
+			frameIndex=0;
+			$("#shoot-circle").css("pointer-events","auto");
+			console.log("stop recording ok");
+			setRecording("idle");
+		}, function () {
+			console.log("stop recording error");
+			$("#shoot-circle").css("pointer-events","auto");
+		}, "text");
+		$(".dialog-cover,#turnoffCron").holdHide();
+	}
+
+	//开始摄像
+	function startVideo(){
+		//var recCtrl = { sessionId: sessionId, starttime:transTimeyMDHIS() };
+		var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60) };
+                console.log(recCtrl);
+		postJSON("/" + sessionType, recCtrl, function (data) {
+			console.log("start video OK");
+		}, function (e, status) {
+			console.log("start video error " + status);
+		}, "text");
+	}
+	//停止摄像
+	function stopVideo(){
+		putJSON("/video", { sessionId: sessionId }, function(e, status){
+			console.log("stop video ok");
+			setRecording("idle");
+		}, function () {
+			console.log("stop video error");
+		}, "text");
+	}
+	$('#turnoffCronYes').on('click', stopRecording);
+
+	// //主动发送keepalive给app
+	// isWebAlive();
+
+	var fixPreviewCssTimer=null;
+	var toVisible=1;
+	function fixPreviewCss(){
+
+		var width = $(".main-pic").css("width");
+		$(".main-pic").css("width", "99%");
+		//$(".main-pic").css("width", width);
+
+		if(!fixPreviewCssTimer){
+		    fixPreviewCssTimer = setTimeout(function(){
+			$(".main-pic").css("width", width);
+			console.log("css:"+width);
+			fixPreviewCssTimer=null;
+			setOrientation(imgArchive,true);
+			//positionFixed();
+		    }, 1);
+		}
+
+	};
+	//ios检查网页切换，解决黑屏问题
+	var getStatusTimer=null;
+	var gotoVisable = false;
+	document.addEventListener("visibilitychange", function() {
+		console.log( "index "+document.visibilityState );
+		if(document.visibilityState=="visible"){
+			if(CameraAlbumPage==1){
+				console.log("goback from CameraAlbum");
+				CameraAlbumPage=0;
+				playPage=0;
+			}
+			gotoVisable = true;
+			clearTimeout(onPageHideTimer);
+			toVisible = 1;
+			setOrientation(imgArchive,true);
+			fixPreviewCss();
+			//statusEventSourceOnerror();
+
+			console.log("try to get status")
+			//getStatusTimer=window.setTimeout(function(){
+				getJSON("/status", function(e, statue){
+					console.log("status.session="+e.sessionId+" statusError=="+statusError);
+					if(e.sessionId===0) {
+					console.log("sessionId===0!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					//updateStatus(e);
+					statusEventSourceOnerror();
+					}
+				})
+			//}, 1000);
+			
+		}
+/*
+		if(app_type && document.visibilityState=="visible" && CameraAlbumPage==1){
+			console.log("goback from CameraAlbum");
+			CameraAlbumPage=0;
+			playPage=0;
+			if(app_type=="ios"){
+				statusEventSourceOnerror();
+				sessionId=null;
+			}
+		}else if(app_type=="ios" && document.visibilityState=="visible"){
+			console.log("try to get status")
+			getStatusTimer=window.setTimeout(function(){
+			  getJSON("/status", function(e, statue){
+				console.log("status.session="+e.sessionId+" statusError=="+statusError);
+				if(e.sessionId===0) {
+					console.log("sessionId===0!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+					//updateStatus(e);
+					statusEventSourceOnerror();
+				}
+			  })
+			}, 1000);
+*/
+		else if(app_type=="ios" && document.visibilityState=="hidden"){
+			if(getStatusTimer) clearTimeout(getStatusTimer);
+			getStatusTimer=null;
+			onPageHide();
+		}else if(app_type=="android" && document.visibilityState=="hidden"){ //安卓切到回台后关闭图像和长连接
+			if(getStatusTimer) clearTimeout(getStatusTimer);
+			getStatusTimer=null;
+			onPageHide();
+		}
+	});
+
+
+	var imgSrc=null;
+	var recordPreImg = new Image();
+	function setPerview(PreviewState, index, status){
+		console.log( "setPerview:"+PreviewState+" visibilityState:"+document.visibilityState );
+		if(document.visibilityState!="visible") {
+			//setPageWhenHide();
+			return;
+		}
+		imgSrc=null;
+		if(sessionType=="timelapse" && PreviewState=='recording'){
+			console.log((new Date()).toLocaleString()+" img cpmplete:"+recordPreImg.complete);
+			//if(("interval" in status.recordinfo.currentVideo) || document.getElementById("preview").complete){
+			if(recordPreImg.complete){
+				recordPreImg.src='/preview?sessionId=' + sessionId + '&frameIndex='+ index + (getAccessToken()?'&access_token='+getAccessToken():'');
+			
+				//$('.main-pic,.imgAmplifier').attr('src', '/preview?sessionId=' + sessionId + '&frameIndex='+ index + (getAccessToken()?'&access_token='+getAccessToken():''));
+			}
+			else { //还没加载完上一帧图片时，等待加载完再加载下一帧
+				console.log((new Date()).toLocaleString()+" delay set preview");
+				imgSrc = '/preview?sessionId=' + sessionId + '&frameIndex='+ index + (getAccessToken()?'&access_token='+getAccessToken():'');
+/*
+				$('.main-pic').one("load error", function(){
+					console.log((new Date()).toLocaleString()+" set preview");
+					if(imgSrc!=null){
+						 $('.main-pic,.imgAmplifier').attr('src', imgSrc);
+						imgSrc=null;
+					}
+				});
+*/
+			}
+			recordPreImg.onload=function(){
+				console.log((new Date()).toLocaleString()+" preview onload");
+				if(sessionType=="timelapse" && (recordStatus == "recording" || recordStatus == "cronRunning")){
+					console.log((new Date()).toLocaleString()+" set preview");
+					$('.main-pic,.imgAmplifier').attr('src', recordPreImg.src);
+					if(imgSrc!=null){
+						recordPreImg.src=imgSrc;
+						imgSrc=null;
+					}
+				}
+			}
+			recordPreImg.onerror=function(){
+				console.log((new Date()).toLocaleString()+" preview onerror");
+				if(sessionType=="timelapse" && (recordStatus == "recording" || recordStatus == "cronRunning") && imgSrc!=null){
+					recordPreImg.src=imgSrc;
+					imgSrc=null;
+				}
+			}
+	
+		}else if((sessionType=="timelapse" && PreviewState=='changedToIdle') || PreviewState=='newSessionId' ){
+			$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
+		}
+	}
+	
+	function updateStatus(status) {
+		console.log(status);
+		
+		var d = new Date();
+		var t = d.getTime();
+		var newSession=0;
+		if(status.sessionId !== sessionId || status.sessionType !== sessionType || status.sessionId === 0) {
+			if(status.sessionId === 0) {
+				sessionId = getSessionId();
+			}
+			else {
+				sessionId = status.sessionId;
+			}
+
+			if(status.sessionType === null){
+                                sessionType = 'timelapse';
+			}
+			else sessionType = status.sessionType;
+
+			postJSON('/status', {'time': d.toJSON()});	
+			setShootMode();
+
+			newSession=1;
+			//console.log('setPreview: /' + sessionType + '?sessionId=' + sessionId);
+			//console.log($('#preview'));
+			//setPerview('newSessionId');
+			//$('#preview').attr('src', '/' + sessionType + '?sessionId=' + sessionId +'&t='+ t  + (getAccessToken()?'&access_token='+getAccessToken():''));
+			// controlGetJSON("/control", updateControls);
+			controlGetJSON("/control",updateControls);
+			if(sessionType=='video' || status.recordinfo.status!="idle") { 
+				// stopFocusEventSource();
+			}
+		}else {
+
+/* 尝试其他方式解决ios黑屏问题
+		}else if(("fresh" in status) && status.fresh==1){
+			$('#preview').attr('src', '/' + sessionType + '?sessionId=' + sessionId +'&t='+ t  + (getAccessToken()?'&access_token='+getAccessToken():''));
+			console.log("fresh reset preview");
+		}else { 
+			if(status.recordinfo.status!="idle"){ //解决IOS黑屏问题
+				if(nextRecordMS!=0 && t>(nextRecordMS+5000)){ //超过5秒才收到status，重设图片
+					console.log("timeout reset preview");
+					$('#preview').attr('src', '/' + sessionType + '?sessionId=' + sessionId +'&t='+ t  + (getAccessToken()?'&access_token='+getAccessToken():''));
+					
+				}
+			}else nextRecordMS=0;
+*/
+		}
+		if(sessionType=="timelapse" && ("recordinfo" in status) && (status.recordinfo.status=="recording" || status.recordinfo.status=="cronRunning")){ //拍摄中设置静态页面
+			setPerview('recording', status.frameIndex, status);
+		}else if((("recordinfo" in status) && status.recordinfo.status=="idle") && $("#shoot-circle").attr("state") && $("#shoot-circle").attr("state")!="idle"){
+			setPerview('changedToIdle');
+		}else if(newSession==1){
+			setPerview('newSessionId');
+		}else if(gotoVisable){
+			gotoVisable = false;
+			setPerview('newSessionId');
+		}
+
+		hideFocus=false;
+		// if( /*enableFocus==1 && */sessionType!='video' && (status.recordinfo.status=="idle" || status.recordinfo.status=="pausing" || status.recordinfo.status=="waiting") && status.sessionType){
+		if( /*enableFocus==1 && */sessionType!='video' && status.sessionType){
+			if((getPortrait() && status.imgArchive == "horizontal") || (!getPortrait() && status.imgArchive == "vertical")){
+				hideFocus = true;
+				// stopFocusEventSource();
+			}else{
+				// if(recordStatus && (recordStatus=="idle"|| recordStatus=="waiting")){
+				if(recordStatus){
+					hideFocus = false;
+					// if(!focusEventSource && !startFocusTimer) {
+					// 	startFocusTimer=setTimeout(initFocusEventSource, 2000);
+					// }
+				}	
+			}
+		}
+//		else if(sessionType=='video' || (status.recordinfo.status!="idle" && status.recordinfo.status!="pausing") || status.sessionType==null) {
+		else {
+			hideFocus=true;
+			// stopFocusEventSource();
+			setShootMode();
+			//getJSON("/control", updateControls);
+		}
+/* 
+		else if(enableFocus!=1) {
+			stopFocusEventSource();
+		}
+*/
+		if("meteringLock" in status){
+			meteringLock = status.meteringLock;
+			$(".locked").show().siblings(".unlocked").hide();
+		}else{
+			$(".locked").hide().siblings(".unlocked").show();
+			meteringLock = null;
+		}
+		setStatus(status);
+	}
+	function setEffectNow(){
+		console.log(sessionType+" "+currentMode);
+		// if((sessionType=="timelapse" || sessionType=="image") && currentMode!="auto") $(".effect-now").holdShow();//自动模式下也要显示曝光补偿
+		if(sessionType=="timelapse" || sessionType=="image") $(".effect-now").holdShow();
+		else $(".effect-now").holdHide();
+	}
+	function setShootMode(){
+		//if(typeof(shootModeIndex) == "undefined") shootModeIndex = localControl.getValue("shootMode",0);
+		var shootModeIndex=0;
+		if(sessionType=="video") shootModeIndex=2;
+		else if(sessionType=="image") shootModeIndex=1;
+		else shootModeIndex=0;
+		$(".shootModeList li").each(function(index){
+			if(shootModeIndex==index){
+				$(this).addClass("on").siblings().removeClass("on");
+				$(".shootMode .modeNow").text($(this).children().eq(1).text());
+				$(".shootMode .modeNow").attr("data-mode",$(this).children().eq(0).text());
+				$(".foot-bar .mode").eq(index).addClass("on").siblings().removeClass("on");
+			}
+		})
+		if(shootModeIndex==2) { //录像中
+			$(".ctrl-icon").holdHide();
+			$(".customModeBtn").holdHide();
+			$(".setting-content").holdHide();
+			$("#mode").holdHide();
+			if(cutAudio){
+				$(".cutAudio").holdShow();
+			}
+			$(".theSpace").holdHide();
+			$(".video-shooting").holdHide();
+			$(".video").holdShow();
+			//$(".effect-now").holdHide();
+		}else if(shootModeIndex==1) {
+			$("#mode").holdShow();
+			$(".video").holdShow();
+			$(".video-shooting").holdHide();
+			$(".theSpace").holdHide();
+			$(".cutAudio").holdHide();
+			//$(".effect-now").holdShow();
+		}else {
+			$(".cutAudio").holdHide();
+			$(".video-shooting").holdHide();
+			$(".theSpace").holdHide();
+			$(".video").holdShow();
+			$("#mode").holdShow();
+			//$(".effect-now").holdShow();
+		}
+		setEffectNow();
+	}
+	var statusError=0;
+	var statusEventSource;
+	function statusEventSourceOnerror(){
+		localControl.statusEventSourceError();
+		// setDefaultPerview();
+		console.log("statusEventSourceOnerror");
+		if(statusEventSource) statusEventSource.close();
+		if(statusError==0) initStatusEventSource();
+		else {
+			window.setTimeout(function(){
+				initStatusEventSource();
+			}, 3000);
+		}
+		statusError=1;
+	}
+	function initStatusEventSource() {
+		console.log("initStatusEventSource");
+		statusEventSource = new EventSource("/status?sse=true" + (getAccessToken()?'&access_token='+getAccessToken():''));
+		if(getStatusTimer) clearTimeout(getStatusTimer);
+		getStatusTimer=null;
+		statusEventSource.onmessage = function(e) {
+			statusError=0;
+			netConnected();
+			var mydate = new Date();
+			console.log(mydate.toLocaleString());
+			console.log(e.data);
+
+			var status = JSON.parse(e.data);
+			updateStatus(status);
+		}
+
+		statusEventSource.onerror = function() {
+			console.log("statusEventSource.onerror!!statusError:"+statusError);
+			statusEventSourceOnerror();
+			sessionId=null;
+			netDisconnected();
+		}
+	}
+	function doInit(status, s, xhr) {
+		setOrientation(status.imgArchive,true);
+		localControl.notify(status.imgArchive);
+		if(status.imgArchive == "horizontal"){
+			$("#preview").attr("src","images/preload_1.jpg");
+		}else{
+			$("#preview").attr("src","images/preload_2.jpg");
+		}
+		
+		var d=new Date(xhr.getResponseHeader('Date'));                                                                                         
+		var serverTime=d.getTime();
+		d = new Date();
+		var localTime = d.getTime();
+		if(localTime-serverTime > 10*60000){
+			postJSON('/status', {'time': d.toJSON()}, function(){
+				getJSON("/status", doInit);
+			});
+			return;
+		}
+		
+		getJSON("/setting",function(data,status){
+			//获取版本号
+			if(("sysinfo" in data) && "firmware" in data.sysinfo){ //保存版本号，判断是否有新版本
+				var v=data.sysinfo.firmware;
+				currentFirmware=v;
+				localControl.putValue("CurrentFirmware", v);
+			}
+			//设置预览画质状态
+			if(data.imgQuality && (imgQualityArray.indexOf(data.imgQuality) != -1)){
+				$(".imgQuality .inner-content li").eq(imgQualityArray.indexOf(data.imgQuality)).addClass("on").siblings().removeClass("on");
+			}
+		},function(xhr,errorText,errorType){
+			console.log("error:"+xhr.status+"-"+errorType);
+		});
+		initStatusEventSource();
+		$("#preview").load(function(){ //加载完图片后关闭app的"正在加载"提醒
+			if(toVisible){
+				fixPreviewCss();
+				toVisible = 0;
+			}
+			localControl.notify("IndexLoaded");
+			window.setTimeout(function(){
+				var lastestfirmware = localControl.getValue("LatestFirmware", null);
+				// var currentFirmware = localControl.getValue("CurrentFirmware", null);
+				var SDUpgradeDialog = localControl.getValue("SDUpgradeDialog",0);//app升级通道是否关闭，若关闭，不提示升级
+				console.log("lastest:"+lastestfirmware+"\ncurrent:"+currentFirmware+"\nSDupgrade:"+SDUpgradeDialog);
+				if(isNewVersion(currentFirmware, lastestfirmware)){
+					$(".update-icon").holdShow();
+					console.log("firmware");
+					if(!updateCancelTime) updateCancelTime=localControl.getValue("notupdate", 0);
+					console.log(updateCancelTime+" "+(!updateCancelTime)+" "+ (new Date().getTime())+" " );
+					if($("#shoot-circle").attr("state")==null || $("#shoot-circle").attr("state")=="idle"){ //空闲状态才会有红点提示
+						// $(".update-icon").holdShow();
+						if((updateCancelTime==0 ||(((new Date().getTime()) - updateCancelTime) > 24*3600*1000)) && SDUpgradeDialog == 0 && (SDavailable > 100*1024) && batteryStatus!="no_battery" && !(batteryNow<20 && batteryStatus == "discharging")){//1天
+							$("#updateConfirm").attr("href", "update.html?uploadFlag=1");
+							// $("#update").holdShow();
+							// $(".dialog-cover").holdShow();
+							$("#update,.dialog-cover").holdShow();
+						}
+					}
+					// }else $(".update-icon").holdHide();
+				}
+			}, 1500);
+		});
+
+		//获取提醒
+		/*wifi模块性能不够好，暂时不弹窗提醒用户连接WiFi
+		getJSON("/sysinfo?wifiTip=1", function(e, status){
+			//设置wifi提醒
+			if(("wifiTip" in e) && e.wifiTip==1){
+				console.log("check wifiTip");
+				if(NoWifiTip===null) NoWifiTip=localControl.getValue("no_wifi_tip", 0);
+				if(NoWifiTip!=1 && lastWifiTipTime===null) lastWifiTipTime=localControl.getValue("last_wifi_tip", 0);
+				if(NoWifiTip!=1 && (lastWifiTipTime==0 || (((new Date().getTime()) - lastWifiTipTime) > 24*3600*1000))){
+					console.log("wifiTip show");
+					$("#wifiTip").holdShow();
+					$(".dialog-cover").holdShow();
+				}
+			}
+		});
+		*/
+
+	}
+	getJSON("/status", doInit);
+})
+</script>
+<!-- <script type="text/javascript" src="js/amplifier.js"></script> -->
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body class="setting-index">
+	<section class="setting-head">
+		<a href="setting.html" class="iconfont goback">&#xe6ea;</a>
+		<p lan="stoCard">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+	</section>
+
+	<section class="setting-memory">
+		<div class="has-card">
+			<div class="memory-percent circleChart" id="memoryPer" data-value="77"></div>
+			<div class="memory-info" lan="stoLeft">
+				&nbsp;&nbsp;&nbsp;&nbsp;:<span id="freeSpace"></span> / &nbsp;&nbsp;&nbsp;&nbsp;:<span id="totalMemory"></span>
+			</div>
+		</div>
+		<div class="no-card one">
+			<div class="memory-nocard"></div>
+			<div class="memory-info" lan="noCard">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		</div>
+		<div class="no-card two">
+			<div class="memory-nocard"></div>
+			<div class="memory-info"></div>
+		</div>
+	</section>
+	<div class="memory-format" lan="forCard">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+	<div class="dialog-cover"></div>
+	<div class="dialog-poppup format-steps">
+		<div class="format-step1">
+			<div class="dialog-poppup-main">
+				<p class="warning" lan="forCardP">执行此操作将清除存储卡中所有数据，确定要格式化存储卡？</p>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="cancelFormat" lan="cancel">取消</a>
+				<a href="javascript:;" id="confirmFormat" lan="formatN">确认</a>
+			</div>
+		</div>
+		<div class="format-step2" style="display: none;">
+			<div class="dialog-poppup-tit" lan="forCard">格式化存储卡</div>
+			<div class="format-progress">
+				<div class="format-progress-text">
+					<span></span><b lan="forCardR">进行中....</b>
+				</div>
+				<div class="format-progress-ui" style="display: none;">
+					<span style="width: 0%;"></span>
+				</div>
+				<div class="format-complete-btn">
+					<span lan="OK">确定</span>
+				</div>
+			</div>
+		</div>
+		<div class="format-step3" style="display: none;">
+			<div class="dialog-poppup-tit" lan="forCard">格式化存储卡</div>
+			<div class="format-progress">
+				<div class="format-progress-text" >
+					<span></span><b lan="done">完成....</b>
+				</div>
+				<div class="format-progress-ui" style="display: none;">
+					<span style="width: 100%;"></span>
+				</div>
+				<div class="format-complete-btn">
+					<span lan="OK">返回</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript" src="js/language.js"></script>
+<script type="text/javascript" src="js/circleChart.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	if(language && language=="en"){
+		$(".iconfont.goback").attr("href","setting.html?language=en")
+	}else{
+		$(".iconfont.goback").attr("href","setting.html?language=zh")
+	}
+	function initGetMemory(){
+		getJSON("/setting", function(e, status){
+			if(!("storage" in e)){
+				return;
+			}
+			var freeSpace = e.storage.available,   //后台获取的存储数据
+			totalMemory = e.storage.total,
+			memoryPer = (totalMemory-freeSpace)/totalMemory*100;
+			// if(totalMemory == null || totalMemory==0){  //假如未插存储卡
+			$(".memory-format").show();
+			if(e.storage.sdcard == "UNPLUG"){	
+				$(".no-card.one").show();
+				$(".no-card.two").hide();
+				$(".has-card").hide();
+				$(".memory-format").hide();
+				return;
+			}else if(e.storage.sdcard == "NOT_FAT"){
+				if(language && language=="en"){
+					$(".no-card.two .memory-info").text("Memory Card is not Readable. ");
+				}else{
+					$(".no-card.two .memory-info").text("当前存储卡文件系统格式不符合要求");
+				}
+				
+				$(".no-card.two").show();
+				$(".no-card.one").hide();
+				$(".has-card").hide();
+				return;
+			}else if(e.storage.sdcard == "UNRECOGNIZED"){
+				if(language && language=="en"){
+					$(".no-card.two .memory-info").text("Unrecognized card format!");
+				}else{
+					$(".no-card.two .memory-info").text("无法识别存储卡的文件系统格式");
+				}
+				$(".no-card.two").show();
+				$(".no-card.one").hide();
+				$(".has-card").hide();
+				return
+			}
+			$(".no-card").hide();
+			$(".has-card").show();
+			freeSpace = renderSize(freeSpace*1024);
+			totalMemory = renderSize(totalMemory*1024);
+			console.log("freeSpace:"+freeSpace+"\ntotalMemory:"+totalMemory);
+			setTimeout(function(){
+				$("#freeSpace").html(freeSpace);
+				$("#totalMemory").html(totalMemory);
+				console.log("write freeSpace");
+			},100);
+			$("#memoryPer").circleChart({
+				color: "#00d2ff",
+				backgroundColor: "#f0f0f0",
+				size: 120,
+				widthRatio: 0.2,
+				startAngle: 75,
+				lineCap: 'butt',
+				value: memoryPer,
+				animation: 'linearTween',
+				speed: 2000,
+ 			});
+
+			if(e.storage.available < 100000) {
+				$("#memoryPer").circleChart({
+					color: "red",
+					value: memoryPer,
+				});
+    			}
+		}, function(jqXHR, exception){
+			console.log((jqXHR.status+exception));
+		});
+	}
+	initGetMemory();
+	window.setInterval(function(){
+		initGetMemory();
+	}, 10000);
+
+    $(".memory-format").on("click",function(){
+    	$(".dialog-cover,.dialog-poppup.format-steps").show();
+    })
+    $("body").on("click","#cancelFormat",function(){
+    	$(".dialog-cover,.dialog-poppup").hide();
+    })
+    $("body").on("click","#confirmFormat",function(){
+    	if(language && language=="en"){
+			$(".format-progress-text b").text("Processing...");
+		}else{
+			$(".format-progress-text b").text("进行中....");
+		}
+    	$(".format-step2").show().siblings().hide();
+    	startFormat();
+    })
+
+    //格式化进度
+	function setPercentage(e){
+		/*
+			var v=e.percentage;
+			if(v>=0 && v<=100){
+				$(".format-progress-ui span").css({
+					"width": v+"%",
+				});
+				$(".format-progress-text span").text(v+"%");
+			}
+		*/
+		if(e.status=="done"){
+			if(language && language=="en"){
+				$(".format-progress-text b").text(" Format successfully.");
+			}else{
+				$(".format-progress-text b").text("成功....");
+			}
+			$(".format-complete-btn").show();
+		}else if(e.status=="error" || e.status=="fail"){
+			if(language && language=="en"){
+				$(".format-progress-text b").text("Failed....");
+			}else{
+				$(".format-progress-text b").text("格式化失败!");
+			}
+			
+			$(".format-complete-btn").show();
+		}else if(e.status=="formatting"){
+			$(".format-complete-btn").hide();
+			setTimeout(function(){ getJSON("/sdformat", setPercentage);}, 5000);
+		}
+		
+	}
+    function startFormat(){
+	putJSON("/sdformat", "", function(e){
+		//$(".format-progress-ui span").css({"width": "0%",});
+		//$(".format-progress-text span").text("0%");
+		$(".format-complete-btn").hide();
+		setPercentage(e);
+	},function(jqXHR, exception){
+		console.log((jqXHR.status+exception));
+	});
+    }
+     
+    $(".format-complete-btn span").on("click",function(){
+    	$(".dialog-cover,.dialog-poppup").hide();
+		$(".format-step1").show().siblings().hide();
+		initGetMemory();
+/*
+		$("#memoryPer").circleChart({
+			value: 1,
+			redraw: true,
+		});
+*/
+    })
+    getJSON("/status", function(e, status){
+	if("recordinfo" in e) {
+		if(e.recordinfo.status != "idle") {
+			$(".memory-format").addClass("shooting-now");
+		}
+	}
+    });
+
+})
+</script>
+</body>
+</html>
+
+
+
+

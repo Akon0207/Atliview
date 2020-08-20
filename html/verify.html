@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body class="flex verify">
+	<div class="verify-btn flex flex-middle flex-center">
+		<a href="javascript:;">
+			<div class="iconfont">&#xe639;</div>
+			<div class="tit">手电筒</div>
+		</a>
+		<a href="javascript:;">
+			<div class="iconfont">&#xe638;</div>
+			<div class="tit">手动输入验证码</div>
+		</a>
+	</div>
+	<div class="dialog-cover" style="display: block;"></div>
+	<div class="dialog-poppup">
+		<div class="dialog-poppup-main">
+			<p class="warning">验证失败</p>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;">重新扫描验证</a>
+			<a href="javascript:;">手动输入验证码</a>
+		</div>
+	</div>
+	<div class="dialog-poppup">
+		<div class="dialog-poppup-main">
+			<p class="warning">非法输入</p>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;">重新扫描验证</a>
+			<a href="javascript:;">手动输入验证码</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" style="display: block;">
+		<div class="dialog-poppup-tit">输入验证码</div>
+		<div class="dialog-code-main">
+			<div class="flex flex-center">
+				<input type="number" />
+				<input type="number" />
+				<input type="number" />
+				<input type="number" />
+				<input type="number" />
+				<input type="number" />
+			</div>
+		</div>
+		<div class="dialog-code-submit">确认</div>
+	</div>
+
+<script type="text/javascript">
+$(function(){
+	$(".dialog-code-main input").each(function(e){
+		$(this).on("keyup paste change blur",function(){
+			var v = $(this).val();
+			if(isNumber(v)==true){
+				console.log(1);
+				if(v.toString().length>1){
+					$(this).val(v.slice(0,1));
+				}else{
+					if(e<5){
+						$(this).next().focus();
+					}else{
+						$(this).val(v.slice(0,1));
+					}
+				}
+			}else{
+				this.value=v.replace(/\D/g,'')
+			}
+		})
+	})
+})
+</script>
+</body>
+</html>
+
+
+
+

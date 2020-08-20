@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body class="setting-index">
+	<section class="setting-head">
+		<a href="setting.html" class="iconfont goback">&#xe6ea;</a>
+		<p>WLAN</p>
+		
+	</section>
+	<section class="setting-list wlan-list">
+	</section>
+	<section class="setting-list">
+		<div class="setting-item" id="other" style="display: none;">
+			<a href="javascript:;" class="flex flex-middle">
+				<div class="setting-item-name fx1" lan="other">&nbsp;&nbsp;&nbsp;&nbsp;...</div>
+				<!-- <div class="setting-wlan-lock"></div> -->
+			</a>
+		</div>
+	</section>
+	<div class="dialog-cover" id="dialog-cover"></div>
+	
+		<div class="dialog-poppup" id="dialog-poppup">
+			<div class="dialog-poppup-tit"></div>
+			<form class="wlan-login">
+				<label class="flex flex-middle">
+					<div class="wlan-login-tit" lan="pass">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+					<input type="password" id="wlanPassword" class="fx1 wlan-login-ipt wlan-login-password" />
+					<div class="wlan-show-password iconfont">&#xe635;</div>
+				</label>
+			</form>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="cancelConnect" lan="cancel">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+				<a href="javascript:;" class="shooting-now" id="confirmConnect" lan="conn">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+			</div>
+		</div>
+	
+	
+	<div class="searching-now">
+<!-- 		<div class="picture"></div>
+		<div class="text">正在搜索WIFI</div> -->
+		<div id="loading3">
+		    <div class="demo3"></div>
+		    <div class="demo3"></div>
+		    <div class="demo3"></div>
+		    <div class="demo3"></div>
+		    <div class="demo3"></div>
+		    <div class="demo3"></div>
+		    <div class="demo3"></div>
+		    <div class="demo3"></div>
+		</div>
+	</div>
+	<section class="wlan-other" style="display: none;">
+		<a href="javascript:;" class="iconfont otherCancel">&#xe63b;</a>
+		<div class="wlan-other-name" lan="othNet">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<a href="javascript:;" class="iconfont otherConfirm shooting-now">&#xe60b;</a>
+		<div class="other-name flex flex-middle">
+			<div class="wlan-other-tit" lan="netName">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<input type="text" class="fx1 wlan-other-ssid" id="wlan-other-ssid" lan="wlanNameP" placeholder="网络名称">
+		</div>
+		<div class="other-security flex flex-middle">
+			<div class="wlan-other-tit" lan="security">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<div class="securityMode" value="psk">
+				<!-- <select class="fx1 wlan-other-security" id="securityMode"> -->
+				<!-- <input type="text" id="securityMode_text" readonly="readonly" value="无"/>
+				<select id="securityMode">
+					<option value="none" lan="sec1">&nbsp;&nbsp;</option>
+					<option value="psk" selected="selected" lan="sec2">&nbsp;&nbsp;&nbsp;&nbsp;</option>
+					<option value="eap" lan="sec3">&nbsp;&nbsp;&nbsp;&nbsp;</option>
+				</select>   -->
+			</div>
+<!-- 			<div class="wlan-other-more iconfont">&#xe6e9;</div> -->
+		</div>
+		<div class="other-user flex flex-middle" style="display: none">
+			<div class="wlan-other-tit" lan="userNam">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<div style="width: 100%;padding: 0 3%;"><input type="text" class="fx1 wlan-other-ssid" id="wlan-other-user"></div>
+		</div>
+		<div class="other-password flex flex-middle" style="display: none">
+			<div class="wlan-other-tit" lan="pass">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+			<div style="width: 100%;padding: 0 3%;"><input type="password" class="fx1 wlan-other-ssid" id="wlan-other-password"></div>
+		</div>
+		<div class="securityMode-select">
+			<ul>
+				<li value="none">
+					<i lan="sec1">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+				</li>
+				<li value="psk" class="on">
+					<i lan="sec2">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+				</li>
+				<li value="eap">
+					<i lan="sec3">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<section class="wlan-detail" style="display: none;">
+		<a href="javascript:;" class="iconfont cancel">&#xe63b;</a>
+		<div class="wlan-detail-name bottom-line">SSID_1</div>
+		<a href="javascript:;" class="iconfont confirm">&#xe60b;</a>
+		<div class="wlan-detail-tit" lan="status">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="wlan-detail-status">
+			<p>IP地址: 192.168.1.100</p>
+			<p>子网掩码：255.255.255.0</p>
+			<p>默认网关: 192.168.1.1</p>
+		</div>
+		<div class="wlan-detail-tit" lan="st">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<!-- <div class="wlan-detail-item flex flex-middle bottom-line">
+			<p class="fx1">自动连接</p>
+			<input type="checkbox" class="switch-box" checked="checked"></input>
+		</div>		 -->
+		<!--
+		<div class="wlan-password show">
+			<div class="wlan-detail-item flex flex-middle bottom-line">
+				<p class="fx1" id="passwordText">设置密码</p>
+				<input type="password" id="password" class="wlan-manual-ip" placeholder="点击此处输入密码"  />
+			</div>
+			<div class="passPrompt">密码不足8位</div>
+		</div>
+		-->
+		
+		<div class="selector">
+			<!-- <div class="select-inner"><input type="radio" name="select" value="dhcp" id="dhcp" checked><label for="dhcp">DHCP</label></div>
+			<div class="select-inner"><input type="radio" name="select" value="fixed" id="fixed"><label for="fixed" lan="staIP">&nbsp;&nbsp;&nbsp;&nbsp;IP</label></div> -->
+			<ul>
+				<li class="on">
+					<i>DHCP</i>
+				</li>
+				<li>
+					<i lan="staIP">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+				</li>
+			</ul>
+		</div>
+		<div class="wlan-detail-item flex flex-middle bottom-line">
+			<p class="fx1" lan="ipSet">IP&nbsp;&nbsp;&nbsp;&nbsp;</p>
+			<div class="wlan-ip-select" style="width: 120px;">
+				<!-- <select id="wlanIpmode">
+					<option value="0">DHCP</option>
+					<option value="1" lan="staIP">固定IP</option> 
+				</select> -->
+				DHCP
+			</div>
+		</div>
+		<div class="wlan-manual">
+			<div class="wlan-detail-item flex flex-middle bottom-line">
+				<p class="fx1" lan="ipAddr">IP&nbsp;&nbsp;&nbsp;&nbsp;</p>
+				<input type="text" id="staticIP" class="wlan-manual-ip" placeholder="输入IP地址" lan="ipInput" />
+			</div>
+			<div class="wlan-detail-item flex flex-middle bottom-line">
+				<p class="fx1" lan="netmask">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+				<input type="text" id="staticNetmask" class="wlan-manual-ip" placeholder="输入子网掩码" value="255.255.255.0" lan="netInput"/>
+			</div>
+			<div class="wlan-detail-item flex flex-middle bottom-line">
+				<p class="fx1" lan="router">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+				<input type="text" id="staticRoute" class="wlan-manual-ip" placeholder="输入网关地址" lan="rouInput" />
+			</div>
+			<div class="wlan-detail-item flex flex-middle bottom-line">
+				<p class="fx1">DNS</p>
+				<input type="text" id="dns" class="wlan-manual-ip" placeholder="输入域名服务器地址"  lan="dnsInput"/>
+			</div>
+			<div class="wlan-detail-item flex flex-middle bottom-line">
+				<p class="fx1">DNS2</p>
+				<input type="text" id="dns2" class="wlan-manual-ip" placeholder="输入域名服务器地址" lan="dnsInput"  />
+			</div>
+		</div>
+		<div class="wlan-delete flex flex-middle bottom-line">
+			<a href="javascript:;" id="deleteWlan" lan="delNet">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+<!--
+		<div class="wlan-btns">
+			<a href="javascript:;" class="wlan-btns-cancel">取消</a>
+			<a href="javascript:;" class="wlan-btns-confirm">确认</a>
+		</div>
+-->
+	</section>
+
+	<div class="dialog-cover" id="dialog-cover-delete"></div>
+	<div class="dialog-poppup" id="dialog-poppup-delete">
+		<!-- <div class="dialog-poppup-tit" lan="alert">&nbsp;&nbsp;&nbsp;&nbsp;</div> -->
+		<div class="dialog-poppup-main">
+			<p class="warning" lan="netP">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;？</p>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="noDelWlan" lan="cancel">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+			<a href="javascript:;" id="yesDelWlan" lan="forget">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+	</div>
+
+	<div class="dialog-cover" id="dialog-cover-connect-fail"></div>
+	<div class="dialog-poppup" id="dialog-poppup-connect-fail">
+		<div class="dialog-poppup-tit" lan="alert">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="dialog-poppup-main">
+			<p class="warning" lan="connFail">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="connect-fail" lan="OK">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+	</div>
+                <div class="dialog-poppup" id="net-error">
+                        <div class="dialog-poppup-tit" lan="alert">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                        <div class="dialog-poppup-main">
+                                <p class="warning" lan="reconnP">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        </div>
+                        <div class="dialog-btns flex">
+                                <a href="javascript:;" id="net-error-go" lan="go">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        </div>
+                </div>
+
+                <div class="dialog-poppup" id="guide-net-error">
+                        <div class="dialog-poppup-tit" lan="alert">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                        <div class="dialog-poppup-main">
+                                <p class="warning" lan="reconnP2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        </div>
+                        <div class="dialog-btns flex">
+                                <a href="javascript:;" id="guide-net-error-go" lan="back">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        </div>
+                </div>
+
+                <div class="dialog-poppup" id="guide-net-done">
+                        <div class="dialog-poppup-tit" lan="alert">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                        <div class="dialog-poppup-main">
+                                <p class="warning"></p>
+                        </div>
+                        <div class="dialog-btns flex">
+                                <a href="javascript:;" id="guide-net-done-go" lan="OK">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        </div>
+                </div>
+
+	<div class="dialog-poppup format-steps" id="wifi-tip-done">
+		<div class="format-step1">
+			<div class="dialog-poppup-main">
+				<p class="warning"></p>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="wifi-tip-done-cancel" lan="bule">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+				<a href="javascript:;" id="wifi-tip-done-confirm" lan="haode">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+			</div>
+		</div>
+	</div>
+
+
+
+<script type="text/javascript" src="js/language.js"></script>
+<script type="text/javascript">
+$(function(){
+	var getListTimer=null;
+	var connectingSSID=null; //正在尝试验证身份的ssid
+	var wifiConn_tip=getParameterByName('wifiTip');
+	var wifiSet=null;
+	var wifiSetTimer=null;
+	var connectType=null;
+	var pwd=null;
+	var flag = true;
+	var modeFlag = true;
+	var dialogScrollYFlag = true;
+	var wScrollY = 0;
+	var otherFlag = true;
+	var guide=getParameterByName('guide');
+	var dialogScrollY=null;
+	var freshCount = 1;
+	if(language && language=="en"){
+		$(".iconfont.goback").attr("href","setting.html?language=en")
+	}else{
+		$(".iconfont.goback").attr("href","setting.html?language=zh")
+	}
+	if(guide==1) $(".setting-head").hide();
+	
+	//开关WiFi切换样式
+	$("#wlanTrigger").on("click",function(){
+		$(this).attr('checked', !$(this).attr('checked'));
+		if($(this).attr('checked')==null){
+			$(".wlan-list .connected").removeClass("connected");
+		}
+	});
+
+
+
+	//点击显示密码
+	$("body").on("click",".wlan-show-password",function(e){
+		e.stopPropagation();
+		var ipt = $(this).siblings("input");
+		var state = ipt.attr("type");
+		if(state=="text"){
+			ipt.attr("type","password");
+			$(this).html("&#xe635;")
+		}else{
+			ipt.attr("type","text");
+			$(this).html("&#xe65f;");
+		}
+	})
+	//点击取消隐藏wlan登陆框
+	$("#cancelConnect").on("click",function(){
+		$(".dialog-cover,.dialog-poppup").hide();
+		$(".wlan-login-password").val("");
+	})
+
+	//连接其他需要密码的wifi
+	$("#confirmConnect").on("click",function(){
+		var infoDivObj = $("#dialog-poppup .dialog-poppup-tit");
+		var ssid=infoDivObj.attr("ssid");
+		var wifiCtrl={"ssid":ssid, "auth": infoDivObj.attr("auth"), "psk":$(".wlan-login-password").val()};
+		if(infoDivObj.attr("mode") && infoDivObj.attr("mode") == "static"){
+			wifiCtrl.mode = "static";
+			wifiCtrl.staticIP = infoDivObj.attr("ip");
+			wifiCtrl.staticNetmask = infoDivObj.attr("netmask");
+			wifiCtrl.staticRoute = infoDivObj.attr("router");
+			wifiCtrl.dns = infoDivObj.attr("dns");
+			wifiCtrl.dns2 = infoDivObj.attr("dns2");
+		}
+		postJSON("/wifi_config", wifiCtrl);
+		wifiSet=ssid;
+		wifiSetTimer=setTimeout(netError, 15000);
+		pwd=$(".wlan-login-password").val();
+		changeConnect(ssid);
+		clearTimeout(getListTimer);
+		getListTimer=setTimeout(getWlanList, 5000);
+		$(".dialog-cover,.dialog-poppup").hide();
+		$(".wlan-login-password").val("");
+	})
+	//选择固定IP时弹出输入框
+	$("#wlanIpmode").change(function(){
+		if($(this).val()==1){
+			$(".wlan-manual").addClass("show");
+		}else{
+			$(".wlan-manual").removeClass("show");
+		}
+	});
+	//判断相机与手机是通过ap还是wifi连接
+	getJSON("/sysinfo?wlan1_ip=1", function(e, status){
+        if("wlan1_ip" in e ){
+            if(e.wlan1_ip==document.domain) {
+                connectType="ap";
+            }else{
+            	connectType="wifi";
+            }
+        }
+	})
+	//点击删除网络，弹出确认框
+	$("#deleteWlan").on("click",function(){
+		if(connectType=="ap"){
+			$("#dialog-cover-delete,#dialog-poppup-delete").show();
+        	$("#yesDelWlan").attr("type","ap");
+		}else{
+			if(language && language=="en"){
+				$("#dialog-poppup-delete .dialog-poppup-main .warning").text("Forgetting this network may disconnect your device from the camera, are you sure you want to continue?");
+			}else{
+				$("#dialog-poppup-delete .dialog-poppup-main .warning").text("当前正在通过此WIFI网络连接相机，删除此网络将导致连接断开。确定删除此网络？");
+			}
+			
+        	$("#dialog-cover-delete,#dialog-poppup-delete").show();
+        	$("#yesDelWlan").attr("type","wifi");
+		}
+	});
+	//取消删除网络，隐藏确认框
+	$("#noDelWlan,#connect-fail").on("click",function(){
+		$(".dialog-cover,.dialog-poppup").hide();
+	})
+	//确认删除网络
+	$("#yesDelWlan").on("click",function(){
+		if($(this).attr("type")=="ap"){
+			var ssid=$(".wlan-detail-name").attr("ssid");
+			var wifiCtrl={"delete":ssid};
+			$(".dialog-cover,.dialog-poppup").hide();
+			postJSON("/wifi_config", wifiCtrl);
+			$(".setting-item[ssid='"+ssid+"']").removeClass("connected"); //假取消状态
+			clearTimeout(getListTimer);
+			getListTimer=setTimeout(getWlanList, 5000);
+			showList();
+		}else{
+			var ssid=$(".wlan-detail-name").attr("ssid");
+			var wifiCtrl={"delete":ssid};
+			$(".dialog-cover,.dialog-poppup").hide();
+			postJSON("/wifi_config", wifiCtrl);
+			localControl.startPage("CameraManager");
+			setTimeout(function(){
+				localControl.notify("LostConn");
+			},300);
+	
+		}
+		
+	})
+	function showList(){ //点击关闭已连接的wifi详情，并显示列表
+		$(".wlan-detail,.setting-list.wlan-list,.setting-head,#other").toggle();
+		// $(".goback").off("click");
+		// $(".goback").attr("onclick", "javascript:window.history.back(-1);");
+	}
+	//返回上一个页面
+	$(".goback").on("click",function(){
+		window.history.back(-1);
+	});
+	//点击显示wifi列表，隐藏已连接wifi详情
+	$(".iconfont.cancel").on("click",function(){
+		$(".wlan-detail,.setting-list.wlan-list,.setting-head,#other").toggle();
+		modeFlag = true;
+	})
+	//提交数据
+	$(".iconfont.confirm").on("click",function(){
+		var ssid=$(".wlan-detail-name").attr("ssid");
+		var thisobj = $(".setting-item[ssid='"+ ssid +"']");
+			// auth=$(".wlan-detail-name").attr("auth"),
+			// password = $("#password").val();
+		var wifiCtrl={};
+		
+		wifiCtrl.ssid = ssid;
+		
+		//自动连接暂时屏蔽，目前没有效果
+		// if($(".switch-box").is(":checked")) wifiCtrl.autoConnectE=ssid;
+		// else wifiCtrl.autoConnectD=ssid;
+		if($(".select ul li").eq(0).hasClass("on")){
+			wifiCtrl.mode = "dhcp";
+			thisobj.attr("mode","dhcp");
+			// return
+		}else if($(".select ul li").eq(1).hasClass("on")){
+			if($(".wlan-detail-name").attr("active")){
+				wifiCtrl.mode = "static";	
+			}else{
+				wifiCtrl.mode = "setstatic";
+			}
+			wifiCtrl.staticIP = $("#staticIP").val();
+			wifiCtrl.staticNetmask = $("#staticNetmask").val();
+			wifiCtrl.staticRoute = $("#staticRoute").val();
+			wifiCtrl.dns = $("#dns").val();
+			wifiCtrl.dns2 = $("#dns2").val();
+			thisobj.attr("mode","static").attr("ip",wifiCtrl.staticIP).attr("netmask",wifiCtrl.staticNetmask).attr("router",wifiCtrl.staticRoute).attr("dns",wifiCtrl.dns).attr("dns2",wifiCtrl.dns2);
+		}
+		
+
+		modeFlag = true;
+		postJSON("/wifi_config", wifiCtrl);
+		clearTimeout(getListTimer);
+		getListTimer=setTimeout(getWlanList, 5000);
+		showList();
+	})
+	//网络连接失败后跳转设备列表
+	$("#net-error-go, #guide-net-error-go").on("click", function(){
+		$(".dialog-cover,#net-error,#guide-net-error").hide();
+		if(app_type && localControl.getValue("appVer", 0)>=2) {
+			localControl.startPage("CameraManager");
+			location.href = "index.html"; 
+		}
+		else localControl.startPage("DeviceListPage");
+	});
+	//设置成功取消设置手机wifi
+	$("#wifi-tip-one-cancel").on("click", function(){
+		$(".dialog-cover,#wifi-tip-done").hide();
+	});
+	//设置成功前往设置手机wifi
+	$("#wifi-tip-done-confirm,#guide-net-done-go").on("click", function(){
+		$(".dialog-cover,#wifi-tip-done").hide();
+		localControl.connectWifi(wifiSet, pwd);
+	});
+	//设置成功取消前往设置手机wifi
+	$("#wifi-tip-done-cancel").on("click",function(){
+		$(".dialog-cover,#wifi-tip-done").hide();
+	});
+	//网络连接失败
+	function netError(){
+		if(wifiConn_tip!=1 || guide!=1) return;
+		$(".dialog-cover").show();
+		if(guide==1) $("#guide-net-error").show();
+		else $("#net-error").show();
+	}
+	function changeConnect(ssid){  //假连接状态
+		$(".setting-item.connected").removeClass("connected");
+		$(".wifi-tip").remove();
+		if(language && language=="en"){
+			$(".setting-item[ssid='"+ssid+"'] .setting-item-name").html(ssid+"<span class='wifi-tip'>Connecting...</span>");
+		}else{
+			$(".setting-item[ssid='"+ssid+"'] .setting-item-name").html(ssid+"<span class='wifi-tip'>正在连接...</span>");
+		}
+		var thisWifi = $(".setting-item[ssid='"+ssid+"']");
+		$(".setting-item[ssid='"+ssid+"']").remove();
+		$(".setting-list.wlan-list").prepend(thisWifi);
+	}
+	function addWlanList(i, wifi){
+		// if(wifi.signal >= -65) wclass="wifi1";  //信号强度
+		// else if(wifi.signal < -65 && wifi.signal >= -73) wclass="wifi2";
+		// else if(wifi.signal < -73 && wifi.signal >= -80) wclass="wifi3";
+		// else return;
+		if(wifi.signal >= -52) wclass="wifi1";  //信号强度
+		else if(wifi.signal < -52 && wifi.signal >= -59) wclass="wifi2";
+		else if(wifi.signal < -60 && wifi.signal > -66) wclass="wifi3";
+		else return;
+
+		$(".setting-list.wlan-list").append("<div id=wlan"+i+"/>");
+		var wid="#wlan"+i;
+		var wclass;
+		$(wid).addClass("setting-item").html('<a href="javascript:;" class="flex flex-middle">'
+				+'<div class="setting-item-name fx1 wifi"></div>'
+				+'<div class="setting-wlan-lock"></div></a>');
+		if(wifi.auth=="none") $(wid).addClass("none"); //没有密码
+		$(wid).attr("auth", wifi.auth); //保存是否需要密码
+		$(wid).attr("ssid", wifi.ssid); 
+		$(wid+" .setting-item-name").text(wifi.ssid).addClass(wclass);
+		if("active" in wifi)$(wid).attr("active", wifi.active);	
+		if("mode" in wifi)$(wid).attr("mode", wifi.mode);
+		if("id" in wifi)$(wid).attr("wifi_id", wifi.id);
+		if("ip" in wifi)$(wid).attr("ip", wifi.ip);
+		if("netmask" in wifi)$(wid).attr("netmask", wifi.netmask);
+		if("router" in wifi)$(wid).attr("router", wifi.router);
+		if("dns" in wifi){$(wid).attr("dns", wifi["dns"])}
+			// var dnsList = wifi.dns.split(" ");
+			// $(wid).attr("dns", dnsList[0]);
+			// if(dnsList.length == 2){
+			// 	$(wid).attr("dns2", dnsList[1]);
+			// }
+		if("dns2" in wifi){$(wid).attr("dns2", wifi["dns2"])}
+		if(wifi.active==true) { //已连接的wifi
+			$(wid).addClass("connected");
+			var thisWifi = $(wid);
+			$(wid).remove();
+			$(".setting-list.wlan-list").prepend(thisWifi);//把已经连接的wifi列为第一个
+			// $(wid+" .setting-wlan-lock").on("click", function(){  //点击显示已连接的wifi详情
+			// 	$(".wlan-detail,.setting-list.wlan-list,.setting-head,#other").toggle(); // 
+				// $(".goback").removeAttr("onclick");
+				// $(".iconfont.confirm").show();
+				//$(".wlan-btns-cancel").off("click");
+				// $(".wlan-btns-cancel,.goback").on("click", function(){ //点击关闭已连接的wifi详情，并显示列表
+				// 	$(".wlan-detail,.setting-list.wlan-list,.setting-head").toggle();
+				// 	$(".goback").off("click");
+				// 	$(".goback").attr("onclick", "javascript:window.history.back(-1);");
+				// })
+			// });
+			// $(".wlan-detail-name").text(wifi.ssid); //连接的wifi详情中保存ssid
+			// $(".wlan-detail-status").html("<p>IP地址: "+wifi.ip+"</p><p>子网掩码："+wifi.netmask+"</p><p>默认网关: "+wifi.router+"</p>");
+			/*
+			if(wifi.mode == "static" && modeFlag == true){
+				$("#wlanIpmode").val(1);
+				$("#staticIP").val(wifi.ip);
+				$("#staticNetmask").val(wifi.netmask);
+				$("#staticRoute").val(wifi.router);
+				$(".wlan-manual").addClass("show");
+				modeFlag = false;
+			}else if(wifi.mode == "dhcp" && modeFlag == true){
+				modeFlag = false;
+				$("#wlanIpmode").val(0);
+				$(".wlan-manual").removeClass("show");
+			}*/
+			//首次连接，提示切换手机网络
+			if(wifiConn_tip==1 && wifiSet==wifi.ssid ){
+				$(".dialog-cover, #wifi-tip-done").show();
+				if(language && language=="en"){
+					$("#wifi-tip-done .warning").html("Connected WiFi network: "+wifiSet+"<br><br>Your cellphone is recommended to connect to the same netwofk.");
+				}else{
+					$("#wifi-tip-done .warning").html("相机已成功连接WIFI："+wifiSet+"<br><br>建议将手机连接至同一WIFI");
+				}
+				
+			} else if(guide==1 && wifiSet==wifi.ssid){
+				$(".dialog-cover, #guide-net-done").show();
+				if(language && language=="en"){
+					$("#guide-net-done .warning").html("相机已成功连接WIFI："+wifiSet+"<br><br>点击“确定”后，手机也将连接相同WIFI。");
+				}else{
+					$("#guide-net-done .warning").html("Connected WiFI network:"+wifiSet+"<br><br>Click “Confirm”");
+				}
+			}
+			
+		}else if(("id" in wifi) && !("status" in wifi)){ //未连接已保存的wifi
+			$(wid).addClass("id");
+		}else if(("status" in wifi) && wifi.status=="connect"){ //正在连接的wifi
+			//显示正在验证的信息
+			if(language && language=="en"){
+				$(wid+" .setting-item-name").html(wifi.ssid+"<span class='wifi-tip'>Connecting...</span>");
+			}else{
+				$(wid+" .setting-item-name").html(wifi.ssid+"<span class='wifi-tip'>正在连接...</span>");
+			}
+			var thiswifi = $(wid);
+			$(wid).remove();
+			$(".setting-list.wlan-list").prepend(thiswifi);
+			connectingSSID=wifi.ssid;
+		}else if(("status" in wifi) && wifi.status=="wrong key"){ //密码错误的wifi
+			if(connectingSSID==wifi.ssid){
+				if(language && language=="en"){
+					$("#dialog-poppup  .dialog-poppup-tit").text(wifi.ssid+"Password error!").attr("auth", wifi.auth).attr("ssid", wifi.ssid);
+				}else{
+					$("#dialog-poppup  .dialog-poppup-tit").text(wifi.ssid+"密码错误！").attr("auth", wifi.auth).attr("ssid", wifi.ssid);
+				}
+				$("#dialog-cover,#dialog-poppup").show();
+			}
+		}else if(("status" in wifi) && wifi.status=="conn failed"){ //连接失败的wifi
+			if(connectingSSID==wifi.ssid){
+				//$("#dialog-poppup-connect-fail  .dialog-poppup-tit").text(wifi.ssid+"连接失败").attr("auth", wifi.auth).attr("ssid", wifi.ssid);
+				if(language && language=="en"){
+					$("#dialog-poppup-connect-fail  .warning").text(wifi.ssid+"Connection failed!");
+				}else{
+					$("#dialog-poppup-connect-fail  .warning").text(wifi.ssid+"连接失败!");
+				}
+				$("#dialog-cover-connect-fail,#dialog-poppup-connect-fail").show();
+			}
+		}
+		if(connectingSSID==wifi.ssid && (!("status" in wifi) || wifi.status!="connect")) connectingSSID=null; //不处于验证状态
+		//点击显示wifi详情页
+		$(wid).children().children(".setting-wlan-lock").on("click",function(e){
+			console.log("click start");
+			var thisdiv = $(this).parents(".setting-item");
+			console.log(thisdiv.html());
+			var ssid = thisdiv.attr("ssid"),
+				auth = thisdiv.attr("auth"),
+				active = thisdiv.attr("active"),
+				mode = thisdiv.attr("mode"),
+				id = thisdiv.attr("wifi_id"),
+				ip = thisdiv.attr("ip"),
+				netmask = thisdiv.attr("netmask"),
+				router = thisdiv.attr("router"),
+				dnsOne = thisdiv.attr("dns"),
+				dnsTwo = thisdiv.attr("dns2");
+			if(ssid!=""){$(".wlan-detail-name").text(ssid);
+			}else{
+				if(language && language=="en"){
+					$(".wlan-detail-name").text("No name");//为了避免名字为空的wifi导致页面布局混乱，若为空则显示未命名WiFi
+				}else{
+					$(".wlan-detail-name").text("未命名WiFi");
+				}
+			}
+			$(".wlan-detail-name").attr("ssid",ssid);
+			$(".wlan-detail-name").attr("auth",auth);
+			if(mode && mode=="static"){
+				// $("#wlanIpmode").val(1);
+				$(".selector ul li").eq(1).addClass("on").siblings().removeClass("on");
+				if(language && language=="en"){
+					$(".wlan-ip-select").text("Static IP");
+				}else($(".wlan-ip-select").text("固定IP"))
+				$("#staticIP").val(ip);
+				$("#staticNetmask").val(netmask);
+				$("#staticRoute").val(router);
+				$(".wlan-manual").addClass("show");
+				$("#dns").val(dnsOne);
+				$("#dns2").val(dnsTwo);
+			}else{
+				// $("#wlanIpmode").val(0);
+				$(".wlan-ip-select").text("DHCP");
+				$(".selector ul li").eq(0).addClass("on").siblings().removeClass("on");
+				$("#staticIP").val("");
+				$("#staticNetmask").val("255.255.255.0");
+				$("#staticRoute").val("");
+				$(".wlan-manual").removeClass("show");
+			}
+			if(active && active == "true"){
+				if(language && language=="en"){
+					$(".wlan-detail-status").html("<p>IP address:"+ip+"</p><p>Subnet Mask:"+netmask+"</p><p>Router:"+router+"</p>");
+				}else{
+					$(".wlan-detail-status").html("<p>IP地址: "+ip+"</p><p>子网掩码："+netmask+"</p><p>默认网关: "+router+"</p>");
+				}
+				$(".wlan-detail-name").attr("active","true");
+			}else{
+				if(language && language=="en"){
+					$(".wlan-detail-status").html("<p>Unconnected</p>");
+				}else{
+					$(".wlan-detail-status").html("<p>未连接</p>");
+				}
+				$(".wlan-detail-name").removeAttr("active");
+			}
+			if(id){
+				$(".wlan-delete").show();
+				
+			}else{
+				
+				$(".wlan-delete").hide();
+			}
+			$(".wlan-detail,.setting-list.wlan-list,.setting-head,#other").toggle();
+		})
+
+	}
+	function getWlanList(){
+		if(freshCount == 1 || freshCount == 2){
+			var interval=10000;
+			freshCount++;
+		}else{
+			var interval=15000;
+		}
+		if(flag == true){
+			$(".searching-now").show();
+		}
+		getJSON("/wifi_config", function(e, status){
+			console.log(e);
+			var wifiList = [];
+			var wifiListTrue = [];
+			var wifiData = [];
+			var wifiListTrue2 = [];
+			for(var i=0;i<e.length;i++){
+				wifiList.push(e[i].ssid);
+			}
+			console.log(wifiList);
+			for(var i=0;i<wifiList.length;i++){
+				if(wifiListTrue.indexOf(wifiList[i])==-1){
+					wifiListTrue.push(wifiList[i]);
+				}
+			}
+			for(var i=0;i<e.length;i++){
+				for(var j=0;j<wifiListTrue.length;j++){
+					if(e[i].ssid ==  wifiListTrue[j] &&  wifiListTrue2.indexOf(e[i].ssid)==-1){
+						wifiData.push(e[i]);
+						wifiListTrue2.push(e[i].ssid);
+					}
+				}
+			}
+			console.log(wifiData);
+			wifiData.sort(function(a,b){
+				var aa = a.signal,
+					bb = b.signal;
+				if(aa>bb) return-1;
+				else if(aa<bb) return 1;
+				return 0;
+			})
+			flag = false;
+			$(".searching-now").hide();
+			if(otherFlag == true){
+				$("#other").show();
+				otherFlag = false;
+			}
+			
+			//e.sort(function(a, b){
+				
+			//});
+			clearTimeout(wifiSetTimer);
+			$(".setting-list.wlan-list").empty(); 
+			// $.each(e, function(i, wifi){
+			$.each(wifiData, function(i, wifi){
+				//忽略无法显示名字的wifi
+				if(wifi.ssid.indexOf("\u0000") != 0) addWlanList(i, wifi);
+			});
+			console.log("connectingSSID:"+connectingSSID);
+			//点击wlan列表如果需要密码则弹出输入密码
+			$(".wlan-list .setting-item").not(".connected").not(".id").not(".none").each(function(){
+				var thisName = $(this).children().children(".setting-item-name");
+				thisName.click(function(){
+					var tit = $(this).text();
+					var fatherDivObj = $(this).parents(".setting-item");
+					$("#dialog-poppup  .dialog-poppup-tit").text(tit).attr("auth", fatherDivObj.attr("auth")).attr("ssid", tit);
+					if(fatherDivObj.attr("mode") && fatherDivObj.attr("mode") == "static"){
+						$("#dialog-poppup  .dialog-poppup-tit").attr("mode","static");
+						$("#dialog-poppup  .dialog-poppup-tit").attr("ip",fatherDivObj.attr("ip"));
+						$("#dialog-poppup  .dialog-poppup-tit").attr("netmask",fatherDivObj.attr("netmask"));
+						$("#dialog-poppup  .dialog-poppup-tit").attr("router",fatherDivObj.attr("router"));
+						$("#dialog-poppup  .dialog-poppup-tit").attr("dns",fatherDivObj.attr("dns"));
+						$("#dialog-poppup  .dialog-poppup-tit").attr("dns2",fatherDivObj.attr("dns2"));
+					}else{
+						$("#dialog-poppup  .dialog-poppup-tit").removeAttr("mode");
+						$("#dialog-poppup  .dialog-poppup-tit").removeAttr("ip");
+						$("#dialog-poppup  .dialog-poppup-tit").removeAttr("netmask");
+						$("#dialog-poppup  .dialog-poppup-tit").removeAttr("router");
+						$("#dialog-poppup  .dialog-poppup-tit").removeAttr("dns");
+						$("#dialog-poppup  .dialog-poppup-tit").removeAttr("dns2");
+					}
+
+					$("#dialog-cover,#dialog-poppup").show();
+					if(dialogScrollYFlag==true){
+						dialogScrollY = document.getElementById("dialog-poppup").offsetTop;
+						console.log("dialogScrollY:"+dialogScrollY);
+						dialogScrollYFlag = false;
+					}
+					$("#dialog-poppup").css("top",(dialogScrollY+wScrollY));
+					console.log("dialogScrollY:"+dialogScrollY+"\n wScrollY:"+wScrollY);
+				})
+			})
+			//点击wlan列表如果不需要密码则直接连接
+			$(".wlan-list .setting-item.none").not(".connected").each(function(){
+				var thisName = $(this).children().children(".setting-item-name");
+				var infoDivObj = $(this);
+				thisName.click(function(){
+					var ssid=thisName.text();
+					var wifiCtrl = {};
+					wifiCtrl.ssid = ssid;
+					wifiCtrl.auth = "none";
+					if(infoDivObj.attr("mode") && infoDivObj.attr("mode") == "static"){
+						wifiCtrl.mode = "static";
+						wifiCtrl.staticIP = infoDivObj.attr("ip");
+						wifiCtrl.staticNetmask = infoDivObj.attr("netmask");
+						wifiCtrl.staticRoute = infoDivObj.attr("router");
+						wifiCtrl.dns = infoDivObj.attr("dns");
+						wifiCtrl.dns2 = infoDivObj.attr("dns2");
+					}
+
+					postJSON("/wifi_config", wifiCtrl);
+					wifiSet=ssid;
+					wifiSetTimer=setTimeout(netError, 15000);
+					pwd=null;
+					changeConnect(ssid);
+					interval=5000;
+				})
+			})
+			//击wlan列表如果以保存信息则直接切换
+			$(".wlan-list .setting-item.id").each(function(){
+				var thisName = $(this).children().children(".setting-item-name");
+				thisName.click(function(){
+					var ssid=thisName.text();
+					postJSON("/wifi_config", { connect: ssid});
+					changeConnect(ssid);
+					interval=5000;
+				})
+			})
+			if(getListTimer=null) interval=5000;
+			getListTimer=setTimeout(getWlanList, interval);
+		}, function (jqXHR, exception) {
+			if(getListTimer=null) interval=5000;
+			else interval=10000;
+			getListTimer=setTimeout(getWlanList, interval);
+			console.log((jqXHR.status+exception));
+		});
+		
+	}
+	getWlanList();
+
+	/*密码弹出框输入时根据聚焦和失焦调整弹出框的位置 -start*/
+	$(window).scroll(function(e){
+		wScrollY = window.scrollY;
+		console.log("window.scrollY:"+wScrollY);
+		$(".dialog-cover").css("top",wScrollY);
+	});
+
+	if(app_type=="android"){
+		$("#wlanPassword").focus(function(){
+			var positionNow = document.getElementById("dialog-poppup").offsetTop;
+			$("#dialog-poppup").css("top",positionNow-150);
+		});
+	}
+	if(app_type=="android" || app_type=="ios"){
+		$("#wlanPassword").blur(function(){
+			setTimeout(function(){
+				var positionNow = document.getElementById("dialog-poppup").offsetTop;
+				$("#dialog-poppup").css("top",positionNow+150);
+			},250)
+		});
+	}
+	/*密码弹出框输入时根据聚焦和失焦调整弹出框的位置 -end*/
+	$(".securityMode").on("click",function(){
+		$("#dialog-cover,.securityMode-select").show();
+	})
+
+	// $("#securityMode_text").on("click",function(){
+	// 	$("#securityMode_dummy").click();
+	// 	$(".mbsc-fr-w").addClass("no");
+	// });
+	//每次进入页面时设置匿名wifi默认模式为WPA/WPA2-PSK
+	$(".securityMode").text("WPA/EPA2-PSK");
+	$(".other-user").hide();
+	$(".other-password").show();
+	$(".securityMode-select ul li").each(function(index){
+		$(this).on("click",function(){
+			$("#dialog-cover,.securityMode-select").hide();
+			$(".securityMode").text($(this).children().text());
+			$(".securityMode").attr("value",$(this).attr("value"));
+			$(this).addClass("on").siblings().removeClass("on");
+
+			if(index==0){
+				$("#wlan-other-user,#wlan-other-password").val("");
+	   			$(".other-user,.other-password").hide();
+	   			if($("#wlan-other-ssid").val().length > 0){
+	   				$(".otherConfirm").removeClass("shooting-now").css("color","rgb(0, 114, 255)");
+	   			}else{$(".otherConfirm").addClass("shooting-now").css("color","#999");}
+			}else if(index==1){
+				$("#wlan-other-user,#wlan-other-password").val("");
+	   			$(".other-user").hide();
+	   			$(".other-password").show();
+	   			if($("#wlan-other-ssid").val().length > 0 && $("#wlan-other-password").val().length >= 8){
+					$(".otherConfirm").removeClass("shooting-now").css("color","rgb(0, 114, 255)");
+				}else{
+					$(".otherConfirm").addClass("shooting-now").css("color","#999");
+				}	
+			}else{
+				$("#wlan-other-user,#wlan-other-password").val("");
+	   			$(".other-user,.other-password").show();
+	   			if($("#wlan-other-ssid").val().length > 0 && $("#wlan-other-password").val().length >= 8 && $("#wlan-other-user").val().length > 0){
+					$(".otherConfirm").removeClass("shooting-now").css("color","rgb(0, 114, 255)");
+				}else{
+					$(".otherConfirm").addClass("shooting-now").css("color","#999");
+				}
+			}
+		})
+	})
+	$("#dialog-cover").on("click",function(){$("#dialog-cover,.securityMode-select").hide();})
+	//用mobiscroll插件生成模式选择界面
+	var cronMode = mobiscroll.select('#securityMode', {  
+	    theme: 'ios',
+	    lang: 'zh',
+	    display: 'bottom',
+	    onSet: function(event, inst){
+	    	var a = event.valueText;
+	    	$("#securityMode_dummy").val(a);
+	    	console.log("event.valueText:"+a);
+	    	var b = $("#securityMode").val();
+	   		if(b == "none"){
+	   			$("#wlan-other-user,#wlan-other-password").val("");
+	   			$(".other-user,.other-password").hide();
+	   			if($("#wlan-other-ssid").val().length > 0){
+	   				$(".otherConfirm").removeClass("shooting-now").css("color","rgb(0, 114, 255)");
+	   			}else{$(".otherConfirm").addClass("shooting-now").css("color","#999");}
+	   		}else if(b == "psk"){
+	   			$("#wlan-other-user,#wlan-other-password").val("");
+	   			$(".other-user").hide();
+	   			$(".other-password").show();
+	   			if($("#wlan-other-ssid").val().length > 0 && $("#wlan-other-password").val().length >= 8){
+					$(".otherConfirm").removeClass("shooting-now").css("color","rgb(0, 114, 255)");
+				}else{
+					$(".otherConfirm").addClass("shooting-now").css("color","#999");
+				}	
+	   		}else if(b == "eap"){
+	   			$("#wlan-other-user,#wlan-other-password").val("");
+	   			$(".other-user,.other-password").show();
+	   			if($("#wlan-other-ssid").val().length > 0 && $("#wlan-other-password").val().length >= 8 && $("#wlan-other-user").val().length > 0){
+					$(".otherConfirm").removeClass("shooting-now").css("color","rgb(0, 114, 255)");
+				}else{
+					$(".otherConfirm").addClass("shooting-now").css("color","#999");
+				}	
+	   		}
+	    	inst.setVal(a);
+	    	$("#securityMode_dummy,#securityMode_text").val(a);
+	    	inst.hide();
+	    	console.log("getVal:"+inst.getVal());
+	    }
+	});
+	function otherToggle(){//匿名wifi界面和wifi列表之间的切换
+		$(".setting-list.wlan-list,.setting-head,#other,.wlan-other").toggle();
+		$("#wlan-other-user,#wlan-other-ssid,#wlan-other-password").val("");
+	}
+	$("#other,.otherCancel,.otherConfirm").each(function(index){
+		$(this).on("click",function(){
+			if(index == 2){//点击确认时提交匿名wifi到后台，并暂时在网页上生成假的正在连接的状态
+				var ssid = $("#wlan-other-ssid").val();
+				// var auth = $("#securityMode").val();
+				var auth = $(".securityMode").attr("value");
+				var user = $("#wlan-other-user").val();
+				var password = $("#wlan-other-password").val();
+				$(".setting-list.wlan-list").prepend("<div id='wlan-other'></div>");
+				var wid="#wlan-other";
+				$(wid).addClass("setting-item").html('<a href="javascript:;" class="flex flex-middle">'
+						+'<div class="setting-item-name fx1 wifi"></div>'
+						+'<div class="setting-wlan-lock"></div></a>');
+				$(wid).attr("auth", auth); //保存是否需要密码
+				$(wid).attr("ssid", ssid); 
+				$(wid+" .setting-item-name").text(ssid);
+				if(auth == "none"){
+					$(wid).addClass("none"); //没有密码
+					postJSON("/wifi_config", { "ssid": ssid, "auth": 'none' });
+					wifiSet=ssid;
+					wifiSetTimer=setTimeout(netError, 15000);
+					pwd=null;
+					changeConnect(ssid);
+					interval=5000;
+				}else if(auth == "psk"){
+					var wifiCtrl={"ssid":ssid, "auth":auth, "psk":password };
+					postJSON("/wifi_config", wifiCtrl);
+					wifiSet=ssid;
+					wifiSetTimer=setTimeout(netError, 15000);
+					pwd=password;
+					changeConnect(ssid);
+					clearTimeout(getListTimer);
+					getListTimer=setTimeout(getWlanList, 5000);
+				}else if(auth == "eap"){
+					var wifiCtrl={"ssid":ssid, "auth":auth, "user":user,"passwd":password};
+					postJSON("/wifi_config", wifiCtrl);
+					wifiSet=ssid;
+					wifiSetTimer=setTimeout(netError, 15000);
+					pwd=password;
+					changeConnect(ssid);
+					clearTimeout(getListTimer);
+					getListTimer=setTimeout(getWlanList, 5000);
+				}
+			}
+			setTimeout(otherToggle,500);
+		})
+	});
+
+	$("#wlanPassword").bind("input propertychange",function(){//密码低于8位确认键灰色失效
+		if($("#wlanPassword").val().length < 8){
+			$("#confirmConnect").addClass("shooting-now").css("background-color","#999");
+		}else{
+			$("#confirmConnect").removeClass("shooting-now").css("background-color","#628ccd");
+		}
+	})
+	$("#wlan-other-ssid,#wlan-other-user,#wlan-other-password").each(function(index){//密码低于8位确认键灰色失效
+		$(this).bind("input propertychange",function(){
+			if($(".securityMode").attr("value") == "none"){
+				if($("#wlan-other-ssid").val().length > 0){
+					$(".otherConfirm").removeClass("shooting-now").css("color","rgb(0, 114, 255)");
+				}else{
+					$(".otherConfirm").addClass("shooting-now").css("color","#999");
+				}	
+			}else if($(".securityMode").attr("value") == "psk"){
+				if($("#wlan-other-ssid").val().length > 0 && $("#wlan-other-password").val().length >= 8){
+					$(".otherConfirm").removeClass("shooting-now").css("color","rgb(0, 114, 255)");
+				}else{
+					$(".otherConfirm").addClass("shooting-now").css("color","#999");
+				}	
+			}else if($(".securityMode").attr("value") == "eap"){
+				if($("#wlan-other-ssid").val().length > 0 && $("#wlan-other-password").val().length >= 8 && $("#wlan-other-user").val().length > 0){
+					$(".otherConfirm").removeClass("shooting-now").css("color","rgb(0, 114, 255)");
+				}else{
+					$(".otherConfirm").addClass("shooting-now").css("color","#999");
+				}	
+			}
+		})
+	});
+	$(".wlan-ip-select").on("click",function(){
+		$("#dialog-cover").addClass("tp")
+		$(".selector,#dialog-cover").show();
+	});
+	$(".selector ul li").each(function(index){
+		$(this).on("click",function(){
+			$("#dialog-cover").removeClass("tp");
+			$(".selector,#dialog-cover").hide();
+			$(".wlan-ip-select").text($(this).children().text());
+			$(this).addClass("on").siblings().removeClass("on");
+			// console.log($(this).children().eq(1).text()+":"+$(this).children().eq(0).prop("checked")+"value:"+$("input[name=select]:checked").val());
+			if(index==1){$(".wlan-manual").addClass("show");
+			}else{$(".wlan-manual").removeClass("show");}
+		})
+	});
+	$(".dialog-cover.tp").on("click",function(){
+		$(this).removeClass("tp");
+		$(".selector,#dialog-cover").hide();
+	})
+
+	
+
+//	window.setInterval(function(){	getWlanList()}, 10000);
+
+})
+</script>
+</body>
+</html>
+

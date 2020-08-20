@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<style type="text/css">
+	.mbsc-fr-btn-cont {
+    	display: none;
+	}
+</style>
+</head>
+<body class="video-index">
+	<section class="setting-head">
+		<a href="index.html" class="iconfont goback">&#xe6ea;</a>
+		<p>相册</p>
+
+		<label class="video-style iconfont">
+			<select id="videoStyle">
+				<option value="0">按日期</option>
+				<option value="1">按月份</option>
+				<option value="2">平铺</option>
+			</select>
+		</label>
+
+	</section>
+
+	
+
+
+	<section class="video-list" id="byDate" style="display: block;">
+	</section>
+
+
+	<section class="video-list" id="byMonth" style="display: none;">
+	</section>
+	<section class="video-list" id="mediaList" style="display: none;">
+		<ul>
+		</ul>
+	</section>
+    <div class="dialog-cover"></div>
+    <div class="dialog-poppup" id="downloadPack" style="display: none;">
+
+     <div class="dialog-poppup-content" >是否要下载该文件夹中的图片?</div>
+     <div class="dialog-btns flex">
+       <a href="javascript:;" id="downloadCancel" lan="cancel">取消</a>
+       <a href="javascript:;" id="downloadConfirm" lan="OK">确定</a>
+     </div>
+    </div>
+
+	<div class="dialog-poppup" id="downloadError" style="display: none;">
+		<div class="dialog-poppup-content">压缩文件夹失败!</div>
+		<div class="dialog-btns flex">
+		 <a href="javascript:;" id="downloadErrorConfirm" lan="OK">确定</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="packing" style="display: none;">
+		<div class="dialog-poppup-content" id="packSecMsg">开始图片压缩</div>
+		<div class="dialog-btns flex">
+		</div>
+	</div>
+
+
+<script type="text/javascript" src="js/language.js"></script>
+<script type="text/javascript">
+$(function(){
+	//选择排列方式
+	if(language && language=="en"){
+		$(".iconfont.goback").attr("href","index.html?language=en")
+	}else{
+		$(".iconfont.goback").attr("href","index.html?language=zh")
+	}
+	var arrangeMode = localControl.getValue("arrangeMode",0);
+	$(".video-list").each(function(index){
+		if(arrangeMode == index){
+			$(this).show();
+		}else{
+			$(this).hide();
+		}
+	})
+	var videoStyle = mobiscroll.select('#videoStyle', { 
+	    theme: 'ios',
+	    lang: 'zh',
+	    display: 'bottom',
+	    onBeforeShow: function(event, inst) {	    	
+			$(".mbsc-fr-btn-cont").hide();
+			arrangeMode = localControl.getValue("arrangeMode",0);
+			inst.setVal(arrangeMode);
+	    },
+	    /*
+	    onSet: function(event, inst){
+	    	if(inst.getVal()==0){
+	    		$(".video-list").hide();
+	    		$("#byDate").show();
+	    	}else if(inst.getVal()==1){
+	    		$(".video-list").hide();
+	    		$("#byMonth").show();
+	    	}else if(inst.getVal()==2){
+	    		$(".video-list").hide();
+	    		$("#mediaList").show();
+			}
+	    }
+	    */
+	    onChange:function(event,inst){
+	    	var a = event.valueText;
+	    	// alert(a);
+	    	if(a == "按日期"){
+	    		$(".video-list").hide();
+	    		$("#byDate").show();
+	    		inst.setVal(0);
+	    		localControl.putValue("arrangeMode",0);
+	    	}else if(a == "按月份"){
+	    		$(".video-list").hide();
+	    		$("#byMonth").show();
+	    		inst.setVal(1);
+	    		localControl.putValue("arrangeMode",1);
+	    	}else if(a == "平铺"){
+	    		$(".video-list").hide();
+	    		$("#mediaList").show();
+	    		inst.setVal(2);
+	    		localControl.putValue("arrangeMode",2);
+			}
+			inst.hide();
+	    }
+	});
+})
+
+
+var mediaData=[];
+var index = 0;
+var recount = 0;
+var byMonthObj = {},
+	byDateObj = {};
+
+
+var packID=null;
+function setMiddle(id)
+{
+	$(".dialog-poppup").hide();
+	$(id).css("top",($(window).height() - $(id).outerHeight())/2 + $(document).scrollTop()).show();
+	$(".dialog-cover").css("top",($(window).height() - $(".dialog-cover").outerHeight())/2 + $(document).scrollTop()).show();
+}
+function timeout()
+{
+	setMiddle("#downloadError");
+	//setMiddle(".dialog-cover");
+	//$("#downloadError, .dialog-cover").show();
+	console.log("打包超时");
+}
+function downloadPack()
+{
+	$(".dialog-poppup,.dialog-cover").hide();
+	var link = document.createElement('a');
+	link.setAttribute("download", "");
+	link.href = "/media/"+packID+".tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
+	link.click();
+	setTimeout(function(){postJSON("/tgz", {rm:packID+".tgz"})}, 1000);
+}
+var packSec=0;
+var packMacSec=60;
+var allAmount=0;
+function checkPack()
+{
+	if(packSec > packMacSec) timeout();
+	getJSON("/tgz", function(e, status){
+		$("#packSecMsg").html("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒");
+		console.log("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒");
+		packSec++;
+		if(e.tgz != packID ) {
+			setMiddle("#downloadError");
+			//setMiddle(".dialog-cover");
+			//$("#downloadError, .dialog-cover").show();
+			console.log("打包ID错误");
+		}
+		else if(e.status == "done") {
+			console.log("打包成功");
+			downloadPack();
+		}
+		else setTimeout(checkPack, 1000);
+	} , function (XHR, e) {
+		console.log((XHR.status+e));
+		setTimeout(checkPack, 1000);
+	})
+}
+function packImages()
+{
+	postJSON("/tgz", {tgz:packID}, function(e, status){
+		packSec=0;
+		$("#packSecMsg").html("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒");
+		setMiddle("#packing");
+		setTimeout(checkPack, 1000);
+	}, function (jqXHR, exception) {
+		//error("EON not responsive!");
+		setMiddle("#downloadError");
+		console.log((jqXHR.status+exception));
+	}, "text");
+}
+
+$("#downloadErrorConfirm").on("click",function(){
+	$("#downloadError, .dialog-cover").hide();
+});
+$("#downloadCancel").on("click",function(){
+	$("#downloadPack, .dialog-cover").hide();
+});
+$("#downloadConfirm").on("click",function(){
+	$("#downloadPack, .dialog-cover").hide();
+	packImages();
+});
+
+function askPack(id, url, amount)
+{
+	packID = id;
+	packMacSec = parseInt(amount);
+	console.log("压缩限制时间:"+packMacSec+"秒");
+	setMiddle("#downloadPack");
+	//setMiddle(".dialog-cover");
+	//$("#downloadPack, .dialog-cover").show();
+}
+function checkSlice()
+{
+	getJSON("/timeslice", {"folderID":packID});
+	setTimeout(checkSlice, 1000);
+}
+function timeslice(id, url)
+{
+	packID = id;
+	postJSON("/timeslice", {"folderID":id, "style":"0", "frame":"60", "range":"10-500","seq":"0"}, function(e, status){
+		packSec=0;
+		//$("#packSecMsg").html("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒");
+		//setMiddle("#packing");
+		setTimeout(checkSlice, 1000);
+	}, function (jqXHR, exception) {
+		//error("EON not responsive!");
+		//setMiddle("#downloadError");
+		console.log((jqXHR.status+exception));
+	}, "text");
+
+}
+function setItem(mediaInfo)
+{
+	if(mediaInfo) {
+		var date = new Date(mediaInfo.date);
+		mediaInfo.date = date.toLocaleString();
+		console.log(".time"+mediaInfo.id);
+		timeArray = formatTime(mediaInfo.duration);
+		mediaInfo.duration = timeArray[0]+':'+timeArray[1]+':'+timeArray[2];
+		var itemStr;
+		if(mediaInfo.type==='folder'){
+			//itemStr = '<li onClick="timeslice(' +"'"+ mediaInfo.id +"','"+mediaInfo.url+"',"+mediaInfo.amount+ ')"><div class="pic" style="background-image: url(/images/folder_album.png'+ (getAccessToken()?'?access_token='+getAccessToken():'')+'),url(' + (mediaInfo.type==='video'?mediaInfo.cover:mediaInfo.url) + (getAccessToken()?'?access_token='+getAccessToken():'')+');background-size: 70%;"></div><div class="txt"><div class="size">' + mediaInfo.amount + '(pic)</div></div>';
+			itemStr = '<li onClick="location.href=';
+			itemStr += '\'folder.html?id=' + mediaInfo.id + (getAccessToken()?'&access_token='+getAccessToken():'')+'\'">';
+			itemStr += '<div class="pic" style="background-image: url(/images/folder_album.png'+ (getAccessToken()?'?access_token='+getAccessToken():'')+'),url(/media/'+mediaInfo.id+'/TLS_000000001.jpg' + (getAccessToken()?'?access_token='+getAccessToken():'')+');background-size: 70%;"></div>';
+			itemStr += '<div class="txt"><div class="size">' + mediaInfo.timelapse_end_index + '(pic)</div></div>';
+			//<div class="pic" style="background-image: url(/images/folder_album.png'+ (getAccessToken()?'?access_token='+getAccessToken():'')+'),url("/media/'+mediaInfo.id+'/TLS_000000001.jpg' + (getAccessToken()?'?access_token='+getAccessToken():'')+');background-size: 70%;'></div><div class="txt"><div class="size">' + mediaInfo.timelapse_end_index + '(pic)</div></div>';
+		}
+		else {
+			itemStr = '<li onClick="location.href=' + "'video_detail.html?id=" + mediaInfo.id + (getAccessToken()?'&access_token='+getAccessToken():'')+"'" + '"><div class="pic" style="background-image: url(' + (mediaInfo.type==='video'?mediaInfo.cover:mediaInfo.url) + (getAccessToken()?'?access_token='+getAccessToken():'')+');"></div>';
+			if(mediaInfo.type==='video') itemStr += '<div class="txt"><div class="time">'+ mediaInfo.duration +'</div><div class="size">' + renderSize(mediaInfo.size) + '</div></div><div class="iconfont playicon">&#xe647;</div>';
+		}
+		itemStr += '</li>';
+		$('#mediaList ul').append(itemStr);
+		console.log(mediaInfo.type==='video'?mediaInfo.cover:mediaInfo.url);
+		var monthStr = date.getFullYear()+'年'+transformTime(date.getMonth()+1)+'月';
+		var dateStr = date.getFullYear()+'年'+transformTime(date.getMonth()+1)+"月"+transformTime(date.getDate())+'日';
+		createList(byMonthObj,monthStr,'byMonth',mediaInfo,itemStr);
+		createList(byDateObj,dateStr,'byDate',mediaInfo,itemStr);
+
+	}
+
+}
+function getNext()
+{
+	if(index < mediaData.length){
+		if(mediaData[index].type=="folder") {
+			setItem(mediaData[index]);
+			index++;
+			getNext();
+		} else {
+		$.getJSON('/media/' + mediaData[index].id + (getAccessToken()?'?access_token='+getAccessToken():''), function(mediaInfo){
+			console.log(mediaInfo);
+			setItem(mediaInfo);
+		}, function(err, status) {
+			console.log("get media info for " + mediaData[index].id + " "+err.status+" "+status);
+		}).always(
+			function(){
+				index++;
+				getNext();
+			} 
+		)
+		}
+	}
+}
+function createList(obj,typeStr,type,data,itemStr){//按月或日排序
+	if(obj[typeStr]){
+		obj[typeStr].push(data);
+		$('#'+typeStr).append(itemStr);
+	}else{
+		obj[typeStr] = [data];
+		$("#"+type).append('<div class="video-list-tit">'+ typeStr +'</div><ul id="' + typeStr + '">'+itemStr);
+	}
+}
+function populateFlatList()
+{
+  mediaData.sort(function(a, b){
+  	var aa = a.id.slice(a.id.indexOf("_")+1,a.id.length);
+  	var bb = b.id.slice(b.id.indexOf("_")+1,b.id.length);
+    if(aa > bb)return -1;
+    if(aa < bb)return 1;
+    return 0;
+  });
+
+  var mediaList = $('#mediaList'),
+  	  byMonthList = $("#byMonth"),
+  	  byDateList = $("#byDate")
+
+  mediaList.empty();
+  mediaList.append("<ul></ul>");
+  byMonthList.empty();
+  byDateList.empty();
+
+/*
+  var list = $('#mediaList ul'); 
+
+  for(var i=0; i<mediaData.length; i++){
+    var id=mediaData[i].id;
+    //list.append('<li onClick="location.href=' + "'video_detail.html?id=" + mediaData[i].id + "'" + '"><div class="pic" style="background-image: url(' + (mediaData[i].type==='video'?mediaData[i].cover:mediaData[i].url) + ');"></div><div class="txt"><div class="time">'+secondtoHIS(mediaData[i].duration)+'</div><div class="size">'+renderSize(mediaData[i].size*1024)+'</div></div></li>');
+    list.append('<li onClick="location.href=' + "'video_detail.html?id="+id+"'" + '"><div class="pic" id="pic'+id+'"></div><div class="txt"><div class="time" id="time'+id+'"></div><div class="size"></div></div></li>');
+  }
+*/
+}
+
+getJSON('/media2/', function(data) {
+	console.log(data);
+	mediaData=data;
+	populateFlatList(data);
+	getNext();
+}, function(err, status) {
+	console.log(err.status+status);
+});
+
+</script>
+</body>
+</html>
+
+
+
+

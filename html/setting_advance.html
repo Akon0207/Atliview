@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>aTLi-T100</title>
+    <meta name="keywords" content="aTLi-T100" />
+    <meta name="description" content="aTLi-T100" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+    <link rel="stylesheet" type="text/css" href="style/css/main.css" />
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+    <script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <script type="text/javascript" src="js/device.min.js"></script>
+    <script type="text/javascript" src="js/crypto-js.min.js"></script>
+    <script type="text/javascript" src="js/enc-base64.min.js"></script>
+    <script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+</head>
+<body class="setting-index">
+<section class="setting-head">
+    <a href="setting.html" class="iconfont goback">&#xe6ea;</a>
+    <p>高级</p>
+</section>
+<section class="setting-list">
+
+    <div class="setting-item">
+        <a href="#" class="flex flex-middle">
+            <div class="setting-item-name fx1 mark">时间水印</div>
+            <input type="checkbox"  class="switch-box" id="mark"></input>
+        </a>
+        <p>在每一帧画面的右下角添加时间水印</p>
+    </div>
+    <div class="setting-item">
+        <a href="#" class="flex flex-middle">
+            <div class="setting-item-name fx1 infrared">红外成像</div>
+            <input type="checkbox" class="switch-box" id="infrared"></input>
+        </a>
+        <p>需要红外补光灯的辅助</p>
+    </div>
+
+</section>
+<script type="text/javascript">
+$(function(){
+	$("#mark").on("click", function(){
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		postJSON("/setting", {"timeMarkEnable":v});
+	})
+	$("#infrared").on("click", function(){
+		var v=0;
+		if($(this).prop("checked")) v=1;
+		postJSON("/control", {"infrared":v});
+	})
+
+})
+</script>
+
+</body>
+</html>

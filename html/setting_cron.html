@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>aTLi-T100</title>
+<meta name="keywords" content="aTLi-T100" />
+<meta name="description" content="aTLi-T100" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/swiper.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
+<link rel="stylesheet" type="text/css" href="style/css/iosSelect.css" />
+<link rel="stylesheet" type="text/css" href="style/css/main.css" />
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+<script type="text/javascript" src="js/device.min.js"></script>
+<script type="text/javascript" src="js/crypto-js.min.js"></script>
+<script type="text/javascript" src="js/enc-base64.min.js"></script>
+<script type="text/javascript" src="js/hmac-sha256.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/rolldate.min.js"></script>
+</head>
+<body class="setting-index">
+	<div id="commonSetting">
+	<section class="setting-head">
+		<a href="javascript:;" class="iconfont goback">&#xe6ea;</a>
+		<p lan="cron">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+	</section>
+
+	<section class="setting-cron top-line">
+		
+		<div class="setting-cron-item bottom-line flex flex-middle" id="modeSelect">
+			<div class="setting-cron-name fx1">模式选择</div>
+			<div class="setting-cron-select">
+				<input type="text" id="cronMode_val"  readonly="readonly" value="普通"/>
+				<select id="cronMode">
+					<option value="普通">普通</option>
+					<option value="按天循环">按天循环</option>
+				</select>
+			</div>
+		</div>
+
+		<div id="loopNormal">
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1" lan="startT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<div class="setting-cron-select">
+					<input id="startTime" type="text" readonly class="setting-cron-time" />
+				</div>
+			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1" lan="endT">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<div class="setting-cron-select">
+					<input id="endTime" type="text" readonly class="setting-cron-time" />
+				</div>
+			</div>
+<!--
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1">预设场景</div>
+				<div class="setting-cron-select">
+					<a href="javascript:;" class="trigger" id="prefabTrigger">自动</a>
+				</div>
+			</div>
+-->
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1" id="intervalTitle" lan="shtInt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<div class="setting-cron-select">
+					<a href="javascript:;" class="trigger" id="intervalTrigger" second="10">10<span lan="second">&nbsp;&nbsp;</span></a>
+				</div>
+			</div>
+
+<!--
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1">曝光补偿</div>
+				<div class="setting-cron-select">
+					<a href="javascript:;" class="trigger" id="exposureTrigger">0</a>
+				</div>
+			</div>
+-->
+			<div class="setting-cron-item bottom-line flex flex-middle" id="testCron" style="display: none;">
+				<div class="setting-cron-name fx1"><span id="send">发送定时任务:</span><input type="text" id="schedule" style="width: 240px; height:26px;"></div>
+			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle" id="testPut" style="display: none;">
+				<div class="setting-cron-name fx1"><span id="dotestPut">测试PUT(k,v):</span><input type="text" style="width: 80px; height:26px;"><input type="text" style="width: 80px; height:26px;"></div>
+			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle" id="testGet" style="display: none;">
+				<div class="setting-cron-name fx1"><span id="dotestGet">测试GET(k):</span><input type="text" style="width: 80px; height:26px;"></div>
+			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle" id="testUpdate" style="display: none;">
+				<div class="setting-cron-name fx1"><span id="dotestUpdate">测试UPDATE:</span><input type="text" style="width: 80px; height:26px;"><input type="text" style="width: 80px; height:26px;"><input type="text" style="width: 80px; height:26px;"></div>
+			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle" id="testDel" style="display: none;">
+				<div class="setting-cron-name fx1"><span id="dotestDel">测试删除相机:</span><input type="text" style="width: 240px; height:26px;"></div>
+			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle" id="testPage" style="display: none;">
+				<div class="setting-cron-name fx1"><span id="dotestPage">测试跳回APP:</span><input type="text" style="width: 240px; height:26px;"></div>
+			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle" id="testWifi" style="display: none;">
+				<div class="setting-cron-name fx1"><span id="dotestWifi">测试连接WIFI:</span><input type="text" style="width: 89px; height:26px;"><input type="text" style="width: 80px; height:26px;"></div>
+			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle" id="testUpFirmware" style="display: none;">
+				<div class="setting-cron-name fx1"><span id="dotestUpFirmware">测试上传文件:</span></div>
+			</div>
+
+		</div>
+
+		<div id="loopDays" style="display: none;">
+			<div class="setting-cron-item bottom-line flex flex-middle" id="loopDaySel">
+				<div class="setting-cron-name fx1" lan="loopDays">循环天数</div>
+				<div class="setting-cron-select">
+					<input type="text" id="loopMode_val" lan="loopModeV" readonly="readonly" value="不限" />
+					<select id="loopMode">
+						<option value="不限" lan="notLim">不限</option>
+						<option value="自定义" lan="custom">自定义</option>
+					</select>
+				</div>
+			</div>
+			<div class="setting-cron-table">
+				<table>
+					<tbody>
+						<tr>
+							<th class="bottom-line"> </th>
+							<th class="bottom-line" lan="startT">开始时间</th>
+							<th class="bottom-line" lan="endT">结束时间</th>
+							<!--<th class="bottom-line">预设场景</th>-->
+							<th class="bottom-line" lan="shtInt">拍摄间隔</th>
+							<!--<th class="bottom-line">曝光补偿</th>-->
+						</tr>
+					</tbody>
+					<tbody id="seqList">
+					</tbody>
+				</table>
+			</div>
+			<div class="add-cron-time">
+				<a href="javascript:;" id="addPeriod" lan="addPer">添加时段</a>
+			</div>
+		</div>
+	<div class="cron-btns">
+		<a href="javascript:;" class="cron-btns-confirm post" lan="startCro">开始任务</a>
+	</div>
+	
+	</section>
+	<div class="cronPrompt" lan="cronP1">正在拍摄中，无法设置定时任务</div>
+	<div class="cronPrompt2" lan="cronP2">录像或拍照模式下，无法设置定时任务。<br>开始任务将自动为您切换到<span style="color: #337fe5;">延时摄影</span>模式。</div>
+	</div>
+	<!-- <div class="dialog-poppup" id="forCron">
+		<div class="dialog-poppup-tit">温馨提示*</div>
+		<div class="dialog-poppup-content">录像或拍照模式下，无法设置定时任务。开始任务将自动为您切换到<span style="color: #337fe5;">延时摄影</span>模式</div>
+		<div class="dialog-btns flex wifi-tip">
+			<a href="javascript:;" id="cronConfirm">我知道了</a>
+		</div>
+	</div> -->
+	<div class="dialog-poppup" id="setTimeWarning">
+		<!-- <div class="dialog-poppup-tit" lan="alert">提示</div> -->
+		<div class="dialog-poppup-main">
+			<p class="warning" lan="timWar">无效时间！</p>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="resetConfirm" lan="OK">确认</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="setLoopDays">	
+		<div class="dialog-poppup-tit" lan="setLooDay">设置循环天数</div>	
+		<div class="time-main">
+			<div class="time-main-interval">
+				<div class="flex">
+					<div class="time-select">
+						<div class="time-plus"></div>
+						<div class="time-insert">
+							<input type="number" value="1" id="day"><span lan="days">天</span>
+						</div>
+						<div class="time-minus"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="cancelDays" lan="cancel">取消</a>
+			<a href="javascript:;" id="confirmDays" lan="set">设置</a>
+		</div>
+	</div>
+	<div class="time-poppup" id="setLoopInterval">
+		<div class="dialog-poppup-tit" lan="shtInt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="time-main">
+			<div class="time-main-interval">
+				<div class="flex">
+					<div class="time-select">
+						<div class="time-plus"></div>
+						<div class="time-insert">
+							<input type="number" value="00" class="hour" id="normal-interval-hour"><span lan="hour">&nbsp;&nbsp;</span>
+						</div>
+						<div class="time-minus"></div>
+					</div>
+					<div class="time-select">
+						<div class="time-plus"></div>
+						<div class="time-insert">
+							<input type="number" value="00" class="minute" id="normal-interval-minute"><span lan="min">&nbsp;&nbsp;</span>
+						</div>
+						<div class="time-minus"></div>
+					</div>
+					<div class="time-select">
+						<div class="time-plus"></div>
+						<div class="time-insert">
+							<input type="number" value="10" class="second" id="normal-interval-second"><span lan="second">&nbsp;&nbsp;</span>
+						</div>
+						<div class="time-minus"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="cancelInterval" lan="cancel">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+			<a href="javascript:;" id="confirmInterval" lan="set">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="prefabList">
+		<div class="dialog-poppup-tit">预设场景</div>
+		<div class="prefab-list">
+			<div class="mode-list">
+				<ul>
+					<li class="on">
+						<i class="iconfont" mode-name="auto">&#xe614;</i>
+						<p>自动</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="cloud">&#xe615;</i>
+						<p>云彩</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="city-night">&#xe616;</i>
+						<p>城市夜景</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="flower">&#xe617;</i>
+						<p>鲜花</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="star">&#xe618;</i>
+						<p>星空</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="infrared">&#xe646;</i>
+						<p>红外</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="sun">&#xe641;</i>
+						<p>日出日落</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="low-light">&#xe61b;</i>
+						<p>弱光</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;"  id="confirmPrefab" lan="confirm">确定</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="exposureBias">
+		<div class="dialog-poppup-tit" lan="expCom">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="parameter-slider">		
+			<div class="flex">
+				<div class="slider-minus"></div>
+				<input id="exp" data-slider-id='exposureSlider' type="text" data-slider-min="-10" data-slider-max="10" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+				<div class="slider-plus"></div>
+			</div>	
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;"  id="confirmExposure" lan="confirm">确定</a>
+		</div>
+	</div>
+	<div style="display: none;">
+		<select id="editChoice">
+			<option value="1" lan="editPer" lan="editPer">编辑此时间段</option>
+			<option value="0" lan="delPer" lan="delPer">删除此时间段</option>
+		</select>
+	</div>
+	<div class="dialog-cover"></div>
+
+	<div id="bydaySetting" style="display: none;">
+	<section class="setting-head">
+		<a href="javascript:;" class="iconfont cancel">&#xe63b;</a>
+		<p lan="addPer">添加时段</p>
+		<a href="javascript:;" class="iconfont confirm">&#xe60b;</a>
+	</section>
+
+	<section class="setting-cron top-line">
+		<div class="setting-cron-item bottom-line flex flex-middle">
+			<div class="setting-cron-name fx1" lan="startT">开始时间</div>
+			<div class="setting-cron-select">
+				<input id="bydayStartTime" type="text" readonly class="setting-cron-time" />
+			</div>
+		</div>
+		<div class="setting-cron-item bottom-line flex flex-middle">
+			<div class="setting-cron-name fx1" lan="endT">结束时间</div>
+			<div class="setting-cron-select">
+				<input id="bydayEndTime" type="text" readonly class="setting-cron-time"/>
+			</div>
+		</div>
+<!--
+		<div class="setting-cron-item bottom-line flex flex-middle">
+			<div class="setting-cron-name fx1">预设场景</div>
+			<div class="setting-cron-select">
+				<a href="javascript:;" class="trigger" id="bydayPrefabTrigger">自动</a>
+			</div>
+		</div>
+-->
+		<div class="setting-cron-item bottom-line flex flex-middle">
+			<div class="setting-cron-name fx1" lan="shtInt">拍摄间隔</div>
+			<div class="setting-cron-select">
+				<a href="javascript:;" class="trigger" id="bydayIntervalTrigger" second="10">10<span lan="second"></span></a>
+			</div>
+		</div>
+<!--
+		<div class="setting-cron-item bottom-line flex flex-middle">
+			<div class="setting-cron-name fx1">曝光补偿</div>
+			<div class="setting-cron-select">
+				<a href="javascript:;" class="trigger" id="bydayExposureTrigger">0</a>
+			</div>
+		</div>
+-->
+	</section>
+	<div class="cron-btns">
+		<a href="javascript:;" class="cron-btns-del" lan="del">删除</a>
+		<!-- <a href="javascript:;" class="cron-btns-confirm peroid" lan="confirm">确认</a> -->
+	</div>
+	</div>
+
+	<div class="dialog-poppup" id="deleteWarning">
+		<!-- <div class="dialog-poppup-tit" lan="alert">提示</div> -->
+		<div class="dialog-poppup-main">
+			<p class="warning" lan="delPerP">确定删除此时间段吗？</p>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" class="dialog-no" lan="no">否</a>
+			<a href="javascript:;" class="dialog-yes" lan="yes">是</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="bydaySetTimeWarning">
+		<!-- <div class="dialog-poppup-tit" lan="alert">提示</div> -->
+		<div class="dialog-poppup-main">
+			<p class="warning" lan="setTimWar">结束时间不能早于开始时间</p>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="bydayResetConfirm" lan="OK">确认</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="bydaySetLoopDays">	
+		<div class="dialog-poppup-tit" lan="setLooDay">设置循环天数</div>	
+		<div class="time-main">
+			<div class="time-main-interval">
+				<div class="flex">
+					<div class="time-select">
+						<div class="time-plus"></div>
+						<div class="time-insert">
+							<input type="number" value="1" id="day"><span lan="days">天</span>
+						</div>
+						<div class="time-minus"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="cancelDays" lan="cancel">取消</a>
+			<a href="javascript:;" id="confirmDays" lan="st">设置</a>
+		</div>
+	</div>
+	<div class="time-poppup" id="bydaySetLoopInterval">
+		<div class="dialog-poppup-tit" lan="shtInt">拍摄间隔</div>
+		<div class="time-main">
+			<div class="time-main-interval">
+				<div class="flex">
+					<div class="time-select">
+						<div class="time-plus"></div>
+						<div class="time-insert">
+							<input type="number" value="00" class="hour" id="byday-interval-hour"><span lan="hour">时</span>
+						</div>
+						<div class="time-minus"></div>
+					</div>
+					<div class="time-select">
+						<div class="time-plus"></div>
+						<div class="time-insert">
+							<input type="number" value="00" class="minute" id="byday-interval-minute"><span lan="min">分</span>
+						</div>
+						<div class="time-minus"></div>
+					</div>
+					<div class="time-select">
+						<div class="time-plus"></div>
+						<div class="time-insert">
+							<input type="number" value="10" class="second" id="byday-interval-second"><span lan="second">秒</span>
+						</div>
+						<div class="time-minus"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="bydayCancelInterval" lan="cancel">取消</a>
+			<a href="javascript:;" id="bydatConfirmInterval" lan="set">设置</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="bydayPrefabList">
+		<div class="dialog-poppup-tit">预设场景</div>
+		<div class="prefab-list">
+			<div class="mode-list">
+				<ul>
+					<li class="on">
+						<i class="iconfont" mode-name="auto">&#xe614;</i>
+						<p>自动</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="cloud">&#xe615;</i>
+						<p>云彩</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="city-night">&#xe616;</i>
+						<p>城市夜景</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="flower">&#xe617;</i>
+						<p>鲜花</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="star">&#xe618;</i>
+						<p>星空</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="infrared">&#xe619;</i>
+						<p>红外</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="sun">&#xe61a;</i>
+						<p>日出日落</p>
+					</li>
+					<li>
+						<i class="iconfont" mode-name="low-light">&#xe61b;</i>
+						<p>弱光</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;"  id="confirmPrefab">确定</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="bydayExposureBias">
+		<div class="dialog-poppup-tit" lan="expCom">曝光补偿</div>
+		<div class="parameter-slider">		
+			<div class="flex">
+				<div class="slider-minus"></div>
+				<input id="bydayExp" data-slider-id='bydayExposureSlider' type="text" data-slider-min="-10" data-slider-max="10" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+				<div class="slider-plus"></div>
+			</div>	
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;"  id="bydayConfirmExposure">确定</a>
+		</div>
+	</div>
+	<div class="outPutCronPro">
+		<div class="iconfont cancel">&#xe63b;</div>
+		<div class="proContent" lan="proContent"></div>
+		<div class="keepCurrent"><a href="javascript:;" lan="keepCurrent"></a></div>
+		<div class="notKeepCurrent"><a href="javascript:;" lan="notKeepCurrent"></a></div>
+	</div>
+	<div class="dialog-poppup" id="save-result">
+<!-- 		<div class="dialog-poppup-tit" lan="croRes">定时任务开启结果</div> -->
+		<div class="dialog-poppup-main">
+			<p class="warning" lan="croUpTxt">已开启定时任务！</p>
+		</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="relsut-confirm" lan="OK">确认</a>
+		</div>
+	</div>
+	<div class="dialog-poppup" id="testAlert">
+		<div class="dialog-poppup-content">测试反馈文字</div>
+		<div class="dialog-btns flex">
+			<a href="javascript:;" id="testConfirm">我知道了</a>
+		</div>
+	</div>
+
+<script type="text/javascript" src="js/language.js"></script>
+<script type="text/javascript" src="js/iosSelect.js"></script>
+<script type="text/javascript" src="js/setting_cron.js"></script>
+</body>
+</html>
+
+
+
+
