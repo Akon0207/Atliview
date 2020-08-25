@@ -14,9 +14,11 @@ function setLanguage(data){
 		}
 	})
 	console.log("complete setLanguage");
-	$(".firstShootLink").click(function(){
-		console.log("click");
-		localControl.startPage("usage_howtofocus");
+}
+function checkContent(){
+	getJSON(url,setLanguage,function (){
+		setTimeout(checkContent,5000);
 	});
 }
-getJSON(url,setLanguage);
+checkContent();
+
