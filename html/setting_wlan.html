@@ -362,9 +362,17 @@ $(function(){
         	$("#yesDelWlan").attr("type","ap");
 		}else{
 			if(language && language=="en"){
-				$("#dialog-poppup-delete .dialog-poppup-main .warning").text("Forgetting this network may disconnect your device from the camera, are you sure you want to continue?");
+				if($(".wlan-detail-name").attr("active")){
+					$("#dialog-poppup-delete .dialog-poppup-main .warning").text("Forgetting this network may disconnect your device from the camera, are you sure you want to continue?");
+				}else{
+					$("#dialog-poppup-delete .dialog-poppup-main .warning").text("Forget this Network?");
+				}
 			}else{
-				$("#dialog-poppup-delete .dialog-poppup-main .warning").text("当前正在通过此WIFI网络连接相机，删除此网络将导致连接断开。确定删除此网络？");
+				if($(".wlan-detail-name").attr("active")){
+					$("#dialog-poppup-delete .dialog-poppup-main .warning").text("当前正在通过此WIFI网络连接相机，删除此网络将导致连接断开。确定删除此网络？");
+				}else{
+					$("#dialog-poppup-delete .dialog-poppup-main .warning").text("确定要删除该网络？");
+				}
 			}
 			
         	$("#dialog-cover-delete,#dialog-poppup-delete").show();
@@ -671,9 +679,7 @@ $(function(){
 			}
 			if(id){
 				$(".wlan-delete").show();
-				
 			}else{
-				
 				$(".wlan-delete").hide();
 			}
 			$(".wlan-detail,.setting-list.wlan-list,.setting-head,#other").toggle();

@@ -19,10 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc86321a-e3a9-4988-93ab-fdb7c3b5b492" name="Default Changelist" comment="第一次把项目提交到github">
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="第一次提交更新，把整个项目的所有目录所有文件提交上去">
+      <change beforePath="$PROJECT_DIR$/.idea/Atliview.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Atliview.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/js/language.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/js/language.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/language/zh.json" beforeDir="false" afterPath="$PROJECT_DIR$/html/language/zh.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/setting_wlan.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/setting_wlan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../learnES6/1_html.html" beforeDir="false" afterPath="$PROJECT_DIR$/../learnES6/1_html.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +42,15 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/Akon0207/Atliview" />
+      </set>
+    </option>
+  </component>
   <component name="ProjectId" id="1gLM6XAREQN6eLArytLJ2crseMn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -46,13 +58,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../learnES6" />
     <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="cc86321a-e3a9-4988-93ab-fdb7c3b5b492" name="Default Changelist" comment="" />
+      <changelist id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="第一次提交更新，把整个项目的所有目录所有文件提交上去" />
       <created>1597889245494</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -66,6 +78,8 @@
       <workItem from="1597909443508" duration="93000" />
       <workItem from="1597913142240" duration="14000" />
       <workItem from="1598321653073" duration="2305000" />
+      <workItem from="1598336381832" duration="2136000" />
+      <workItem from="1598341211131" duration="1872000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -101,10 +115,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="184" y="85" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1597889985619" />
-    <state x="990" y="303" key="FileChooserDialogImpl" timestamp="1597908878164">
+    <state x="990" y="303" key="FileChooserDialogImpl" timestamp="1598336541514">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="990" y="303" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1597908878164" />
+    <state x="990" y="303" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1598336541514" />
     <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1597895249188">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
