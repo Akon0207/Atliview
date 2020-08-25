@@ -348,16 +348,7 @@
 				<a href="javascript:;" id="infraredConfirm" lan="turnOn">开启</a>
 			</div>
 		</div>
-		<div class="dialog-poppup" id="firstShootTip">
-			<div class="dialog-poppup-content" lan="FST">
-				请转动对焦环，确保被摄物清晰<br><br>点击查看 <span class="firstShootLink">对焦教程</span>
-			</div>
-			<div class="firstShootLabel"><input type="checkbox" id="firstShootCheckbox"><span lan="DNM">不再提醒</span></div>
-			<div class="dialog-btns flex">
-				<!-- <a href="javascript:;" id="infraredCancel">放弃</a> -->
-				<a href="javascript:;" id="firstShootConfirm" lan="IK">我知道了</a>
-			</div>
-		</div>
+
 		<div class="manualFocusPrompt">
 			<div class="iconfont focusPromptCancel">&#xe63b;</div>
 			<div class="focusPromptTitle" lan="focusPromptTitle">aTli EON采用手动对焦</div>
@@ -2502,10 +2493,7 @@ $(function(){
 			localControl.putValue("notPrompt",1);
 		}
 	});
-	/*点击进入对焦教程*/
-	$(".firstShootLink").click(function(){
-		localControl.startPage("usage_howtofocus");
-	});
+
 	/*内存不足点击事件 start*/
 	$("#memoryConfirm").on("click",function(){
 		// $("#memory-prompt, .dialog-cover2").hide();
