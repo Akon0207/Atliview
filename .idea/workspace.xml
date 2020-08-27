@@ -19,14 +19,23 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="表单里面还有一个reset表单，用来重置所有表单数据">
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="加了一些注释">
+      <change afterPath="$PROJECT_DIR$/../learnES6/5_css3动画.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../learnES6/tmall/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../learnES6/tmall/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../learnES6/tmall/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../learnES6/tmall/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="PUSH_TAGS">
@@ -35,7 +44,7 @@
         <option name="title" value="All" />
       </GitPushTagMode>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../learnES6" />
   </component>
   <component name="GithubPullRequestsUISettings">
     <option name="hiddenUrls">
@@ -45,12 +54,15 @@
     </option>
   </component>
   <component name="ProjectId" id="1gLM6XAREQN6eLArytLJ2crseMn" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../learnES6" />
@@ -77,7 +89,7 @@
       <workItem from="1598341211131" duration="4894000" />
       <workItem from="1598404135202" duration="2258000" />
       <workItem from="1598427571945" duration="4040000" />
-      <workItem from="1598493523227" duration="3618000" />
+      <workItem from="1598493523227" duration="6968000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -107,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598404544183</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="加了一些注释">
+      <created>1598518935682</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1598518935683</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -129,7 +148,8 @@
     <MESSAGE value="第一次把项目提交到github" />
     <MESSAGE value="zh.json文件少了一个数据，补上了，wlan页面删除wifi的提示文字修复" />
     <MESSAGE value="表单里面还有一个reset表单，用来重置所有表单数据" />
-    <option name="LAST_COMMIT_MESSAGE" value="表单里面还有一个reset表单，用来重置所有表单数据" />
+    <MESSAGE value="加了一些注释" />
+    <option name="LAST_COMMIT_MESSAGE" value="加了一些注释" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="85" key="DiffContextDialog" timestamp="1597889985619">
@@ -140,9 +160,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="990" y="303" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1598336541514" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1598404594748">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1598518954434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598404594748" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598518954434" />
+    <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598522222147">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1598522222147" />
   </component>
 </project>
