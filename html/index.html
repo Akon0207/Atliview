@@ -1131,7 +1131,7 @@ $(function(){
 	if(app_type=="ios") $(".landscapePrompt").css("font-size","16px");
 	else if(app_type=="android") $(".landscapePrompt").css("font-size","14px");
 
-	$(".copyLink").on("click",function(){
+	$(".copyLink").on("click",function(){//点击链接把文字复制到粘贴板
 		// app.atliview.com
 		var input = document.createElement("input");
 		input.setAttribute("readonly","readonly");
@@ -1883,7 +1883,7 @@ $(function(){
 			var width = $(".imgOriginal").height(),
 				height = $(".imgOriginal").width();
 		}
-		var maxLeft = demoLeft+width-$(".amplifier").width()/2,
+		var maxLeft = demoLeft+width-$(".amplifier").width()/2,//放大镜上下左右最大移动距离
 			maxTop = demoTop+height-$(".amplifier").width()/2,
 			leastLeft = demoLeft-$(".amplifier").width()/2,
 			leastTop = demoTop-$(".amplifier").width()/2,top,left;
@@ -1922,8 +1922,6 @@ $(function(){
 					distance.amplifierTop = $(".amplifier").offset().top+$(".amplifier").width()/2;
 					distance.amplifierLeft = $(".amplifier").offset().left+$(".amplifier").width()/2;
 					$(".imgAmplifier").offset({
-						// top:distance.amplifierTop-(distance.amplifierTop-demoTop)*2.5,
-						// left:distance.amplifierLeft-(distance.amplifierLeft-demoLeft)*2.5
 						top:distance.amplifierTop-(distance.amplifierTop-demoTop)*multiple,
 						left:distance.amplifierLeft-(distance.amplifierLeft-demoLeft)*multiple
 					})
@@ -1964,8 +1962,6 @@ $(function(){
 						distance.amplifierTop = $(".amplifier").offset().top+$(".amplifier").width()/2;
 						distance.amplifierLeft = $(".amplifier").offset().left+$(".amplifier").width()/2;
 						$(".imgAmplifier").offset({
-							// top:distance.amplifierTop-(distance.amplifierTop-demoTop)*2.5,
-							// left:distance.amplifierLeft-(distance.amplifierLeft-demoLeft)*2.5
 							top:distance.amplifierTop-(distance.amplifierTop-demoTop)*multiple,
 							left:distance.amplifierLeft-(distance.amplifierLeft-demoLeft)*multiple
 						})
@@ -2024,8 +2020,6 @@ $(function(){
 					left:distance.pointX-$(".amplifier").width()/2
 				});
 				$(".imgAmplifier").offset({//设置放大镜内图片位置
-					// top:distance.pointY-distance.Y*2.5,
-					// left:distance.pointX-distance.X*2.5
 					top:distance.pointY-distance.Y*multiple,
 					left:distance.pointX-distance.X*multiple
 				})
@@ -2156,19 +2150,12 @@ $(function(){
 			          	pointTwoY = e.pageY;
 			          	distanceX = pointTwoX-pointOneX;
 			          	distanceY = pointTwoY-pointOneY;
-			      		// var track1 = height1+distanceY/2,
-			        //     	track2 = height2-distanceY/2;
 		            	var track1 = parseInt(height1+distanceY/4);
-	          				// track2 = parseInt(height2-distanceY/4);
 	          			var	track2 = (orientationMode?80:160)-track1;
 			          	if(track1>(orientationMode?80:160)){track1 = (orientationMode?80:160)}
 			          	if(track2>(orientationMode?80:160)){track2 = (orientationMode?80:160)} 
 			          	if(track1<0){track1 = 0} 
-			          	if(track2<0){track2 = 0}  
-			          	// if(track1>120){track1 = 120;}
-			          	// if(track2>120){track2 = 120;} 
-			          	// if(track1<0){track1 = 0} 
-			          	// if(track2<0){track2 = 0}
+			          	if(track2<0){track2 = 0}
 			      		$(".track1").css("height",track1+"px");
 			          	$(".track2").css("height",track2+"px");
 		          		if(track2%(orientationMode?1:2)==0){
@@ -2204,7 +2191,6 @@ $(function(){
 		$("#memory2Confirm").attr("type",shootType);
 		if(SDStatus == "UNPLUG"){
 			if(language && language == "en"){
-				// $("#memory-prompt3 .dialog-poppup-content").text("No memory card found, Shooting is prohibited!");
 				$("#memory-prompt3 .dialog-poppup-content").text("Memory card  not detected. Please insert a memory card before shooting.");
 			}else{
 				$("#memory-prompt3 .dialog-poppup-content").text("未检测到存储卡，无法开始拍摄！");
@@ -2400,7 +2386,7 @@ $(function(){
 		focusTimeout();
 		if($("#shoot-circle").attr("state")=="recording"){
 			// limit_time = localControl.getValue("limit_time",0);
-			if(limit_time!="1"){//拍摄中点击拍摄按钮弹出暂停或者停止
+			if(limit_time!="1"){//非定时任务点击拍摄按钮弹出暂停和停止选择框
 				$(".dialog-cover").addClass("tp");
 				$(".pauseSelect,.dialog-cover").show();
 				$(".pauseSelect").animate({
@@ -2470,12 +2456,9 @@ $(function(){
 		if(promptCancelTime!="notSet"){
 			console.log("-----------promptCancelTime is"+promptCancelTime+"---------------");
 			if((new Date().getTime()-promptCancelTime)>24*3600*1000){//超过一天没提醒
-			// if((new Date().getTime()-parseInt(promptCancelTime))>20*1000){//超过一天没提醒
-				// $(".manualFocusPrompt").holdShow();
 				setTimeout(function(){$(".manualFocusPrompt").holdShow();},1000)
 			}
 		}else{
-			// $(".manualFocusPrompt").holdShow();
 			setTimeout(function(){$(".manualFocusPrompt").holdShow();},1000)
 		}
 	}
@@ -3637,7 +3620,7 @@ $(function(){
 	});
 	/*hdr点击事件*/
 	$("#hdr").on("click",function(){
-		if(recordStatus!="idle"){
+		if(recordStatus!="idle"){//非空闲时给出提示，不能点击
 			$(".shootingPrompt").show();
 			setTimeout(function(){$(".shootingPrompt").hide();},2000);
 			return false;
