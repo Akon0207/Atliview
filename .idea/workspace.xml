@@ -19,9 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="学习css3动画">
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="修改了当网页去设置相机时间，如果失败5次就跳过错误，正常显示页面">
+      <change afterPath="$PROJECT_DIR$/../learnES6/6_css阴影.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../learnES6/tmall/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../learnES6/tmall/css/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../learnES6/tmall/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../learnES6/tmall/index.html" afterDir="false" />
     </list>
@@ -44,7 +44,7 @@
         <option name="title" value="All" />
       </GitPushTagMode>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../learnES6" />
   </component>
   <component name="GithubPullRequestsUISettings">
     <option name="hiddenUrls">
@@ -92,7 +92,7 @@
       <workItem from="1598493523227" duration="7104000" />
       <workItem from="1598578460580" duration="3494000" />
       <workItem from="1598594983371" duration="1056000" />
-      <workItem from="1598600229935" duration="3281000" />
+      <workItem from="1598600229935" duration="7665000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -136,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598522994819</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="修改了当网页去设置相机时间，如果失败5次就跳过错误，正常显示页面">
+      <created>1598603590551</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1598603590551</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,7 +167,8 @@
     <MESSAGE value="表单里面还有一个reset表单，用来重置所有表单数据" />
     <MESSAGE value="加了一些注释" />
     <MESSAGE value="学习css3动画" />
-    <option name="LAST_COMMIT_MESSAGE" value="学习css3动画" />
+    <MESSAGE value="修改了当网页去设置相机时间，如果失败5次就跳过错误，正常显示页面" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改了当网页去设置相机时间，如果失败5次就跳过错误，正常显示页面" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="85" key="DiffContextDialog" timestamp="1597889985619">
@@ -171,10 +179,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="990" y="303" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1598336541514" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1598523006565">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1598603602103">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598523006565" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598603602103" />
     <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598522222147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
