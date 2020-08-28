@@ -19,9 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="加了一些注释">
-      <change afterPath="$PROJECT_DIR$/../learnES6/5_css3动画.html" afterDir="false" />
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="学习css3动画">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../learnES6/tmall/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/../learnES6/tmall/css/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../learnES6/tmall/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../learnES6/tmall/index.html" afterDir="false" />
     </list>
@@ -44,7 +44,7 @@
         <option name="title" value="All" />
       </GitPushTagMode>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../learnES6" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubPullRequestsUISettings">
     <option name="hiddenUrls">
@@ -89,7 +89,10 @@
       <workItem from="1598341211131" duration="4894000" />
       <workItem from="1598404135202" duration="2258000" />
       <workItem from="1598427571945" duration="4040000" />
-      <workItem from="1598493523227" duration="6968000" />
+      <workItem from="1598493523227" duration="7104000" />
+      <workItem from="1598578460580" duration="3494000" />
+      <workItem from="1598594983371" duration="1056000" />
+      <workItem from="1598600229935" duration="3281000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -126,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598518935683</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="学习css3动画">
+      <created>1598522994819</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1598522994819</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -149,7 +159,8 @@
     <MESSAGE value="zh.json文件少了一个数据，补上了，wlan页面删除wifi的提示文字修复" />
     <MESSAGE value="表单里面还有一个reset表单，用来重置所有表单数据" />
     <MESSAGE value="加了一些注释" />
-    <option name="LAST_COMMIT_MESSAGE" value="加了一些注释" />
+    <MESSAGE value="学习css3动画" />
+    <option name="LAST_COMMIT_MESSAGE" value="学习css3动画" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="85" key="DiffContextDialog" timestamp="1597889985619">
@@ -160,10 +171,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="990" y="303" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1598336541514" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1598518954434">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1598523006565">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598518954434" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598523006565" />
     <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598522222147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

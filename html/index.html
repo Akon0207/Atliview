@@ -5155,6 +5155,7 @@ $(function(){
 			netDisconnected();
 		}
 	}
+	int setTimeCount = 0;
 	function doInit(status, s, xhr) {
 		setOrientation(status.imgArchive,true);
 		localControl.notify(status.imgArchive);
@@ -5168,13 +5169,14 @@ $(function(){
 		var serverTime=d.getTime();
 		d = new Date();
 		var localTime = d.getTime();
-		if(localTime-serverTime > 10*60000){
+		if(localTime-serverTime > 10*60000 || setTimeCount > 5){
+			setTimeCount++;
 			postJSON('/status', {'time': d.toJSON()}, function(){
 				getJSON("/status", doInit);
 			});
 			return;
 		}
-		
+		setTimeCount = 0;
 		getJSON("/setting",function(data,status){
 			//获取版本号
 			if(("sysinfo" in data) && "firmware" in data.sysinfo){ //保存版本号，判断是否有新版本
