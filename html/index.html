@@ -1218,6 +1218,7 @@ $(function(){
         	console.log((jqXHR.status+exception));
 	});
 	var onPageHideTimer=null;
+	var onSetPageWhenHideTimer=null;
 	function setPageWhenHide(){
 		if(sessionType=='video' || app_type=="ios"){
 			if(imgArchive == "horizontal"){
@@ -1226,8 +1227,11 @@ $(function(){
 				$("#preview").attr("src","images/preload_2.jpg");
 			}
 		}else {
-			console.log("set :"+'/preview?sessionId=' + sessionId +"&frameIndex="+nowIndex+ (getAccessToken()?'&access_token='+getAccessToken():''));
-			$("#preview").attr("src", '/preview?sessionId=' + sessionId +"&frameIndex="+nowIndex+ (getAccessToken()?'&access_token='+getAccessToken():''));
+			console.log("now src:"+$("#preview").attr("src"));
+			if(nowIndex > 0) { 
+				console.log("set :"+'/preview?sessionId=' + sessionId +"&frameIndex="+nowIndex+ (getAccessToken()?'&access_token='+getAccessToken():''));
+				$("#preview").attr("src", '/preview?sessionId=' + sessionId +"&frameIndex="+nowIndex+ (getAccessToken()?'&access_token='+getAccessToken():''));
+			}
 		}
 	
 	}
@@ -1243,7 +1247,10 @@ $(function(){
 */
 		// stopFocusEventSource();
 		console.log("onPageHide");
-		setPageWhenHide();
+		clearTimeout(onSetPageWhenHideTimer);
+		onSetPageWhenHideTimer = setTimeout(function(){
+			setPageWhenHide();
+		},50);
 		onPageHideTimer=setTimeout(function(){
 			if(app_type=="android") window.stop();
 			console.log("window");
@@ -4865,6 +4872,7 @@ $(function(){
 				playPage=0;
 			}
 			gotoVisable = true;
+			clearTimeout(onSetPageWhenHideTimer);
 			clearTimeout(onPageHideTimer);
 			toVisible = 1;
 			setOrientation(imgArchive,true);
@@ -5155,7 +5163,7 @@ $(function(){
 			netDisconnected();
 		}
 	}
-	int setTimeCount = 0;
+	var setTimeCount = 0;
 	function doInit(status, s, xhr) {
 		setOrientation(status.imgArchive,true);
 		localControl.notify(status.imgArchive);
