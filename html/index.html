@@ -1127,6 +1127,9 @@ $(function(){
 			}
 		}
 	}
+	$(".menu").on("click",function () {
+		$(this).css("color","#00d2ff");
+	})
 	//安卓字体大小设置14px，苹果设置16px
 	if(app_type=="ios") $(".landscapePrompt").css("font-size","16px");
 	else if(app_type=="android") $(".landscapePrompt").css("font-size","14px");

@@ -19,8 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="学习阴影，继续完善天猫头部制作">
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="解决了一个某些安卓手机网页置后台时画面无法保留最后一帧页面的BUG">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +42,7 @@
         <option name="title" value="All" />
       </GitPushTagMode>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../learnES6" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubPullRequestsUISettings">
     <option name="hiddenUrls">
@@ -92,6 +93,8 @@
       <workItem from="1598600229935" duration="7959000" />
       <workItem from="1598838932546" duration="601000" />
       <workItem from="1598927445189" duration="908000" />
+      <workItem from="1599038538932" duration="677000" />
+      <workItem from="1599188541918" duration="2096000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -149,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598608467718</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="解决了一个某些安卓手机网页置后台时画面无法保留最后一帧页面的BUG">
+      <created>1599038593595</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1599038593595</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,7 +185,8 @@
     <MESSAGE value="学习css3动画" />
     <MESSAGE value="修改了当网页去设置相机时间，如果失败5次就跳过错误，正常显示页面" />
     <MESSAGE value="学习阴影，继续完善天猫头部制作" />
-    <option name="LAST_COMMIT_MESSAGE" value="学习阴影，继续完善天猫头部制作" />
+    <MESSAGE value="解决了一个某些安卓手机网页置后台时画面无法保留最后一帧页面的BUG" />
+    <option name="LAST_COMMIT_MESSAGE" value="解决了一个某些安卓手机网页置后台时画面无法保留最后一帧页面的BUG" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="85" key="DiffContextDialog" timestamp="1597889985619">
@@ -186,10 +197,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="990" y="303" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1598336541514" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1598608489679">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1599038610078">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598608489679" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599038610078" />
     <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598522222147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
