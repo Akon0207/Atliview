@@ -5142,3 +5142,11 @@ fieldset{
     color: #2199e8;
     text-decoration: underline;
 }
+#time-syn .dialog-poppup-content {
+    text-align: left;
+    padding: 15px 25px;
+    line-height: 40px;
+}
+#time-syn {
+    max-width: 380px;
+}

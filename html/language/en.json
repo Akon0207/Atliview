@@ -248,5 +248,10 @@
 	"notKeepCurrent":"Switch to <span style='font-weight:bold;'>Video</span> output",
 	"enableLog":"File Logging",
 	"logContent":"A slight chance of lagging may occur when enable 'File Logging'. Are you sure you want to continue?",
-	"dorText":"What is Power Saving?"
+	"dorText":"What is Power Saving?",
+	"time-syn1": "Local time is different from the camera time:",
+	"time-syn2": "Local Time",
+	"time-syn3": "Camera Time",
+	"time-syn4": "Permission to synchronize local time onto camera?",
+	"syn": "Yes"
 }

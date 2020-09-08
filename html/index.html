@@ -443,6 +443,18 @@
 				<a href="javascript:;" id="memory2Confirm" lan="OK">确定</a>
 			</div>
 		</div>
+		<div class="dialog-poppup" id="time-syn">
+			<div class="dialog-poppup-content">
+				<span lan="time-syn1">相机时间与本地时间差距过大</span><br>
+				<span lan="time-syn2">相机时间</span> <span id="cam-time"></span><br>
+				<span lan="time-syn3">本地时间</span> <span id="local-time"></span><br>
+				<span lan="time-syn4">是否将本地时间同步到相机</span>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="syn-cancel" lan="cancel">取消</a>
+				<a href="javascript:;" id="syn-confirm" lan="syn">同步</a>
+			</div>
+		</div>
 		<div class="dialog-poppup" id="memory-prompt-stop" style="display: none;">
 			<div class="dialog-poppup-content" lan="MPS">因剩余存储空间少于50M，拍摄任务已被强制停止。</div>
 			<div class="dialog-btns flex">
@@ -1037,6 +1049,7 @@ $(function(){
 	var amplifierShowFlag = true;
 	var grid = null;
 	var outPutMode = null;
+	var localTime,serverTime;
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
 		$(".iconfont.menu").attr("href","setting.html?language=en")
@@ -5166,6 +5179,15 @@ $(function(){
 			netDisconnected();
 		}
 	}
+	$("#syn-cancel").on("click",function () {
+		$("#time-syn,.dialog-cover").holdHide();
+	})
+	$("#syn-confirm").on("click",function () {
+		$("#time-syn,.dialog-cover").holdHide();
+		postJSON("/status",{force_time: new Date().getTime()},function () {
+			getJSON("/status", doInit);
+		})
+	})
 	var setTimeCount = 0;
 	function doInit(status, s, xhr) {
 		setOrientation(status.imgArchive,true);
@@ -5177,14 +5199,18 @@ $(function(){
 		}
 		
 		var d=new Date(xhr.getResponseHeader('Date'));                                                                                         
-		var serverTime=d.getTime();
+		serverTime=d.getTime();
 		d = new Date();
-		var localTime = d.getTime();
-		if(localTime-serverTime > 10*60000 || setTimeCount > 5){
+		localTime = d.getTime();
+		if(localTime-serverTime > 10*60000 && firstLoadPage && recordStatus === "idle"){
 			setTimeCount++;
-			postJSON('/status', {'time': d.toJSON()}, function(){
+			$("#time-syn,.dialog-cover").holdShow();
+			return;
+		}else if(((localTime-serverTime < 10*60000 && localTime-serverTime > 60) || setTimeCount>5) && recordStatus === "idle"){
+			setTimeCount++;
+			postJSON("/status",{force_time: d.toJSON()},function () {
 				getJSON("/status", doInit);
-			});
+			})
 			return;
 		}
 		setTimeCount = 0;

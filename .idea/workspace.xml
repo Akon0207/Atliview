@@ -19,9 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="解决了一个某些安卓手机网页置后台时画面无法保留最后一帧页面的BUG">
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="菜单按钮点击时按钮颜色变为蓝色">
+      <change afterPath="$PROJECT_DIR$/html/images/offline.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/language/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/html/language/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/language/zh.json" beforeDir="false" afterPath="$PROJECT_DIR$/html/language/zh.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/style/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/html/style/css/main.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +68,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../learnES6" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -94,7 +98,10 @@
       <workItem from="1598838932546" duration="601000" />
       <workItem from="1598927445189" duration="908000" />
       <workItem from="1599038538932" duration="677000" />
-      <workItem from="1599188541918" duration="2096000" />
+      <workItem from="1599188541918" duration="3435000" />
+      <workItem from="1599440842233" duration="600000" />
+      <workItem from="1599460635780" duration="3411000" />
+      <workItem from="1599527336573" duration="8082000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -159,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599038593595</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="菜单按钮点击时按钮颜色变为蓝色">
+      <created>1599201909387</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1599201909388</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,7 +200,8 @@
     <MESSAGE value="修改了当网页去设置相机时间，如果失败5次就跳过错误，正常显示页面" />
     <MESSAGE value="学习阴影，继续完善天猫头部制作" />
     <MESSAGE value="解决了一个某些安卓手机网页置后台时画面无法保留最后一帧页面的BUG" />
-    <option name="LAST_COMMIT_MESSAGE" value="解决了一个某些安卓手机网页置后台时画面无法保留最后一帧页面的BUG" />
+    <MESSAGE value="菜单按钮点击时按钮颜色变为蓝色" />
+    <option name="LAST_COMMIT_MESSAGE" value="菜单按钮点击时按钮颜色变为蓝色" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="85" key="DiffContextDialog" timestamp="1597889985619">
@@ -197,10 +212,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="990" y="303" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1598336541514" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1599038610078">
+    <state x="691" y="198" key="SettingsEditor" timestamp="1599548009674">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599038610078" />
+    <state x="691" y="198" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1599548009674" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1599201926801">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599201926801" />
     <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598522222147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -209,5 +228,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="780" y="485" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598608387603" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1599559119145">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1599559119145" />
   </component>
 </project>
