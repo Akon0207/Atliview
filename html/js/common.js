@@ -8,6 +8,9 @@ var language = getParameterByName("language");
 var orientationMode = null;
 //本地数据处理
 var app_type=null;
+var netprompt_count = 0;
+var netprompt_interval = null;
+var firstNetdisconnect = true;
 var localControl=new Object();
 if(window.webkit && window.webkit.messageHandlers){ //ios中
 	app_type="ios";
@@ -632,21 +635,31 @@ function netConnected()
 		keepAlive();
 		resetKeepAlive();
 	}
+	clearInterval(netprompt_interval);
+	netprompt_count=0;
 	netStatus=1;
+	firstNetdisconnect=true;
 	$(".disconnected").hide();
 	// $("#netDisconnectedMsg").hide();
 	$(".netprompt-cover").hide();
-	if(orientationMode && orientationMode==1 && ($(".manualFocusPrompt").css("display")=="none" && $(".netprompt-cover").css("display")=="none")){
+	if(orientationMode && orientationMode==1 && ($(".manualFocusPrompt").css("display")=="none" && $("#netprompt-cover").css("display")=="none" && $("#netprompt-cover2").css("display")=="none")){
 		$(".landscapePrompt").holdShow();
-	}else if(orientationMode && orientationMode==2 && ($(".manualFocusPrompt").css("display")=="none" && $(".netprompt-cover").css("display")=="none")){
+	}else if(orientationMode && orientationMode==2 && ($(".manualFocusPrompt").css("display")=="none" && $("#netprompt-cover").css("display")=="none" && $("#netprompt-cover").css("display")=="none")){
 		$(".portraitPrompt").holdShow();
 	}
 	if(netTimer) clearTimeout(netTimer);
 	netTimer=null;
 }
+
 function netDisconnected()
 {
 	if(inUpdatePage == true) return;
+	if(firstNetdisconnect){
+		netprompt_interval = setInterval(function (){
+			netprompt_count+=1;
+		},1000);
+		firstNetdisconnect = false;
+	}
 	netStatus=0;
 	if(netTimer==null) {
 		netTimer=setTimeout(function(){
@@ -655,8 +668,14 @@ function netDisconnected()
 			else {
 				// $("#netDisconnectedMsg").show();
 				// $("#netDisconnectedConfirm").on("click",function(){
-				$(".netprompt-cover").show();
-				if(($(".landscapePrompt").css("display")=="block" || $(".portraitPrompt").css("display")=="block") && ($(".manualFocusPrompt").css("display")=="block" || $(".netprompt-cover").css("display")=="block")){
+				if(netprompt_count<26){
+					$("#netprompt-cover").show();
+				}else{
+					$("#netprompt-cover").hide();
+					$("#netprompt-cover2").show();
+				}
+
+				if(($(".landscapePrompt").css("display")=="block" || $(".portraitPrompt").css("display")=="block") && ($(".manualFocusPrompt").css("display")=="block" || $("#netprompt-cover").css("display")=="block" || $("#netprompt-cover2").css("display")=="block")){
 					$(".landscapePrompt,.portraitPrompt").holdHide();
 				}	
 				$(".netPromptBack").on("click",function(){
@@ -673,7 +692,7 @@ function netDisconnected()
 							localControl.notify("LostConn");
 						},300);
 					}
-					$(".netprompt-cover").hide();
+					$("#netprompt-cover").hide();
 					// $("#netDisconnectedMsg").hide();
 				});
 				
@@ -785,22 +804,36 @@ document.write("<div class='disconnected'><img src='images/wait.gif'/></div>");
 // }
 /* 失去连接弹窗 */
 if(language && language=="en"){
-	document.write("<div class=\"netprompt-cover\">\
+	document.write("<div class=\"netprompt-cover\" id='netprompt-cover'>\
 			<div class=\"netPromptContent\">\
 				<div class=\"netPromptImg\"><img src=\"images/netprompt.gif\" ></div>\
 				<div class=\"netPromptText\">Connection Lost. Trying to reconnect...</div>\
 				<div class=\"netPromptBack\">Cancel</div>\
 			</div>\
 			<div class=\"netPromptCheck\">Please check if the camera is off or in power saving mode.<br><a href=\"javascript:;\" id=\"checkCourse\">How to check？</a></div>\
+		</div>\
+		<div class=\"netprompt-cover\" id='netprompt-cover2'>\
+			<div class=\"netPromptContent\">\
+				<div class=\"netPromptImg\"><img src=\"images/offline.png\" ></div>\
+				<div class=\"netPromptText\">Camera is offline<br>Make sure the camera is on and reconnect it</div>\
+				<div class=\"netPromptBack\">OK</div>\
+			</div>\
 		</div>")
 }else{
-	document.write("<div class=\"netprompt-cover\">\
+	document.write("<div class=\"netprompt-cover\" id='netprompt-cover'>\
 			<div class=\"netPromptContent\">\
 				<div class=\"netPromptImg\"><img src=\"images/netprompt.gif\" ></div>\
 				<div class=\"netPromptText\">已失去连接，正在重连...</div>\
 				<div class=\"netPromptBack\">取消</div>\
 			</div>\
 			<div class=\"netPromptCheck\">请检查相机是否已关机或休眠<br><a href=\"javascript:;\" id=\"checkCourse\">怎么检查？</a></div>\
+		</div>\
+		<div class=\"netprompt-cover\" id='netprompt-cover2'>\
+			<div class=\"netPromptContent\">\
+				<div class=\"netPromptImg\"><img src=\"images/offline.png\" ></div>\
+				<div class=\"netPromptText\">相机已离线<br>请确定相机启动后重新连接</div>\
+				<div class=\"netPromptBack\">好的</div>\
+			</div>\
 		</div>")
 }
 $("#checkCourse").on("click",function(){

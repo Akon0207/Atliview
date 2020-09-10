@@ -868,7 +868,7 @@ body{
     /*-webkit-tap-highlight-color: rgba(0,0,0,.1); */
 }
 .mode-list li p,.customModeList li p{
-    font-size: 12px;
+    font-size: 11px;
     height: 20px;
 }
 .mode-list li i,.customModeList li i{
@@ -1804,6 +1804,7 @@ body{
     text-align: center;
     word-break: keep-all;
     white-space: nowrap;
+    line-height: 25px;
 }
 .netprompt-cover .netPromptBack {
     text-align: center;
@@ -1812,6 +1813,9 @@ body{
     margin: 0 auto;
     border-radius: 15px;
     padding: 5px 0;
+}
+#netprompt-cover2 .netPromptBack {
+    background: #628ccd;
 }
 .netprompt-cover .netPromptCheck {
     color: #d8d8d8;
@@ -5149,4 +5153,9 @@ fieldset{
 }
 #time-syn {
     max-width: 380px;
+}
+.time-syn2 {
+    color: black;
+    display: inline-block;
+    width: 120px;
 }

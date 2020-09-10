@@ -19,12 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="菜单按钮点击时按钮颜色变为蓝色">
-      <change afterPath="$PROJECT_DIR$/html/images/offline.png" afterDir="false" />
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="新增一张断网图片，新增时间同步功能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/language/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/html/language/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/language/zh.json" beforeDir="false" afterPath="$PROJECT_DIR$/html/language/zh.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/js/common.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html/style/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/html/style/css/main.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -101,7 +99,12 @@
       <workItem from="1599188541918" duration="3435000" />
       <workItem from="1599440842233" duration="600000" />
       <workItem from="1599460635780" duration="3411000" />
-      <workItem from="1599527336573" duration="8082000" />
+      <workItem from="1599527336573" duration="8230000" />
+      <workItem from="1599614954872" duration="2741000" />
+      <workItem from="1599634658468" duration="8098000" />
+      <workItem from="1599700957987" duration="2807000" />
+      <workItem from="1599717825168" duration="3416000" />
+      <workItem from="1599724554823" duration="3724000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -173,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599201909388</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="新增一张断网图片，新增时间同步功能">
+      <created>1599559386357</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1599559386357</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,7 +211,8 @@
     <MESSAGE value="学习阴影，继续完善天猫头部制作" />
     <MESSAGE value="解决了一个某些安卓手机网页置后台时画面无法保留最后一帧页面的BUG" />
     <MESSAGE value="菜单按钮点击时按钮颜色变为蓝色" />
-    <option name="LAST_COMMIT_MESSAGE" value="菜单按钮点击时按钮颜色变为蓝色" />
+    <MESSAGE value="新增一张断网图片，新增时间同步功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增一张断网图片，新增时间同步功能" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="85" key="DiffContextDialog" timestamp="1597889985619">
@@ -216,10 +227,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="691" y="198" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1599548009674" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1599201926801">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1599559410368">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599201926801" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599559410368" />
     <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598522222147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

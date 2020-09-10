@@ -446,8 +446,8 @@
 		<div class="dialog-poppup" id="time-syn">
 			<div class="dialog-poppup-content">
 				<span lan="time-syn1">相机时间与本地时间差距过大</span><br>
-				<span lan="time-syn2">相机时间</span> <span id="cam-time"></span><br>
-				<span lan="time-syn3">本地时间</span> <span id="local-time"></span><br>
+				<span lan="time-syn2" class="time-syn2">相机时间</span><span id="cam-time" style="color:#628ccd"></span><br>
+				<span lan="time-syn3" class="time-syn2">本地时间</span><span id="local-time" style="color:#628ccd"></span><br>
 				<span lan="time-syn4">是否将本地时间同步到相机</span>
 			</div>
 			<div class="dialog-btns flex">
@@ -1748,7 +1748,7 @@ $(function(){
 		focusCMD=null;
 		focusTimeout();
 		// $(".mode-list").hide();
-		$(".all-modelist").hide();
+		$(".all-modelist").holdHide();
 		$(".moreMask").hide();
 	});
 	$(".shootModeList li").each(function(index){
@@ -2808,7 +2808,12 @@ $(function(){
 		focusCMD=null;
 		focusTimeout();
 		// $("#modeList").toggle();
-		$(".all-modelist").toggle();
+		// $(".all-modelist").toggle();
+		if($(".all-modelist").css("display")==="block"){
+			$(".all-modelist").holdHide();
+		}else{
+			$(".all-modelist").holdShow();
+		}
 		$("body").toggleClass("mode-opened");
 		$(".shootModeList").hide();
 		$(".moreMask").hide();
@@ -2840,7 +2845,7 @@ $(function(){
 			$(".customModeList li").removeClass("on");
 			$("#mode").attr("data-mode",m);
 			// $("#modeList").hide();
-			$(".all-modelist").hide();
+			$(".all-modelist").holdHide();
 			$(".moreFun").hide();
 			$("body").removeClass("mode-opened");
 			if(e==0){
@@ -3014,7 +3019,7 @@ $(function(){
 		
 		if($("body").hasClass("mode-opened")){
 			// $("#modeList").hide();
-			$(".all-modelist").hide();
+			$(".all-modelist").holdHide();
 			$(".moreFun").hide();
 			$("body").removeClass("mode-opened");
 		}
@@ -3469,7 +3474,7 @@ $(function(){
 						$(".customModeBtn").holdHide();
 						$(".ctrl-icon").holdSlideDown(800);
 						$(".setting-content").holdSlideUp("1000");
-						$(".all-modelist").hide();
+						$(".all-modelist").holdHide();
 						$(".moreFun").hide();
 						$("body").removeClass("mode-opened");
 						var modeName = $(this).find("i").attr("mode-name"),
@@ -5184,8 +5189,8 @@ $(function(){
 	})
 	$("#syn-confirm").on("click",function () {
 		$("#time-syn,.dialog-cover").holdHide();
-		postJSON("/status",{force_time: new Date().getTime()},function () {
-			getJSON("/status", doInit);
+		postJSON("/status",{force_time: new Date().toJSON()},function () {
+			getJSON("/status",doInit)
 		})
 	})
 	var setTimeCount = 0;
@@ -5197,18 +5202,22 @@ $(function(){
 		}else{
 			$("#preview").attr("src","images/preload_2.jpg");
 		}
-		
-		var d=new Date(xhr.getResponseHeader('Date'));                                                                                         
-		serverTime=d.getTime();
-		d = new Date();
-		localTime = d.getTime();
-		if(localTime-serverTime > 10*60000 && firstLoadPage && recordStatus === "idle"){
+
+		var d1=new Date(xhr.getResponseHeader('Date'));
+		serverTime=d1.getTime();
+		console.log("::::::::::::::::::::::::::::::::servertime="+d1.toJSON());
+		var d2 = new Date();
+		localTime = d2.getTime();
+		console.log("::::::::::::::::::::::::::::::::localtime="+d2.toJSON());
+		if(Math.abs(localTime-serverTime) >= 10*60000 && status.recordinfo.status==="idle"){
 			setTimeCount++;
+			$("#local-time").text(transFullTime(d2,language==="en"?"en":"zh"));
+			$("#cam-time").text(transFullTime(d1,language==="en"?"en":"zh"));
 			$("#time-syn,.dialog-cover").holdShow();
 			return;
-		}else if(((localTime-serverTime < 10*60000 && localTime-serverTime > 60) || setTimeCount>5) && recordStatus === "idle"){
+		}else if(((Math.abs(localTime-serverTime) < 10*60000 && Math.abs(localTime-serverTime) > 60*1000) || setTimeCount>5) && status.recordinfo.status==="idle"){
 			setTimeCount++;
-			postJSON("/status",{force_time: d.toJSON()},function () {
+			postJSON("/status",{force_time: d2.toJSON()},function () {
 				getJSON("/status", doInit);
 			})
 			return;
@@ -5280,6 +5289,5 @@ $(function(){
 	getJSON("/status", doInit);
 })
 </script>
-<!-- <script type="text/javascript" src="js/amplifier.js"></script> -->
 </body>
 </html>
