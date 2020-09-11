@@ -12,6 +12,8 @@ var netprompt_count = 0;
 var netprompt_interval = null;
 var firstNetdisconnect = true;
 var localControl=new Object();
+var pagePath = window.location.pathname;
+var postwificonfig = null;
 if(window.webkit && window.webkit.messageHandlers){ //ios中
 	app_type="ios";
 	localControl.getValue=function(k, v){return window.prompt(String(k), v)};
@@ -635,6 +637,9 @@ function netConnected()
 		keepAlive();
 		resetKeepAlive();
 	}
+	if(netprompt_count>6){
+		postwificonfig = null;
+	}
 	clearInterval(netprompt_interval);
 	netprompt_count=0;
 	netStatus=1;
@@ -668,12 +673,36 @@ function netDisconnected()
 			else {
 				// $("#netDisconnectedMsg").show();
 				// $("#netDisconnectedConfirm").on("click",function(){
-				if(netprompt_count<26){
-					$("#netprompt-cover").show();
+				console.log("pagePath="+pagePath);
+				if(pagePath.includes("setting_wlan.html")){
+					if(postwificonfig){
+						if(netprompt_count<30){
+							$("#netprompt-cover3").show();
+							$("#netprompt-cover2,#netprompt-cover").hide();
+						}else{
+							$("#netprompt-cover2").show();
+							$("#netprompt-cover3,#netprompt-cover").hide();
+						}
+					}else{
+						if(netprompt_count<26){
+							$("#netprompt-cover").show();
+							$("#netprompt-cover2,#netprompt-cover3").hide();
+						}else{
+							$("#netprompt-cover2").show();
+							$("#netprompt-cover3,#netprompt-cover").hide();
+						}
+					}
 				}else{
-					$("#netprompt-cover").hide();
-					$("#netprompt-cover2").show();
+					if(netprompt_count<26){
+						$("#netprompt-cover").show();
+						$("#netprompt-cover2,#netprompt-cover3").hide();
+					}else{
+						$("#netprompt-cover,#netprompt-cover3").hide();
+						$("#netprompt-cover2").show();
+					}
 				}
+
+
 
 				if(($(".landscapePrompt").css("display")=="block" || $(".portraitPrompt").css("display")=="block") && ($(".manualFocusPrompt").css("display")=="block" || $("#netprompt-cover").css("display")=="block" || $("#netprompt-cover2").css("display")=="block")){
 					$(".landscapePrompt,.portraitPrompt").holdHide();
@@ -744,7 +773,8 @@ $.fn.extend({
 	holdShow: function() {
 		showList=showList.not($(this)).add($(this));
 		//alert(showList);
-		//console.log(showList);
+		// console.log(showList);
+		// showList=showList.add($(this));
 		if(!hideCTL) $(this).show();
 		else $(this).hide();
 	},
@@ -818,6 +848,13 @@ if(language && language=="en"){
 				<div class=\"netPromptText\">Camera is offline<br>Make sure the camera is on and reconnect it</div>\
 				<div class=\"netPromptBack\">OK</div>\
 			</div>\
+		</div>\
+		<div class=\"netprompt-cover\" id='netprompt-cover3'>\
+			<div class=\"netPromptContent\">\
+				<div class=\"netPromptImg\"><img src=\"images/offline.png\" ></div>\
+				<div class=\"netPromptText\">Camera is offline<br>Connection lost, please reconnect</div>\
+				<div class=\"netPromptBack\">OK</div>\
+			</div>\
 		</div>")
 }else{
 	document.write("<div class=\"netprompt-cover\" id='netprompt-cover'>\
@@ -832,6 +869,13 @@ if(language && language=="en"){
 			<div class=\"netPromptContent\">\
 				<div class=\"netPromptImg\"><img src=\"images/offline.png\" ></div>\
 				<div class=\"netPromptText\">相机已离线<br>请确定相机启动后重新连接</div>\
+				<div class=\"netPromptBack\">好的</div>\
+			</div>\
+		</div>\
+		<div class=\"netprompt-cover\" id='netprompt-cover3'>\
+			<div class=\"netPromptContent\">\
+				<div class=\"netPromptImg\"><img src=\"images/offline.png\" ></div>\
+				<div class=\"netPromptText\">相机已离线<br>连接WIFI时意外掉线了，请重新连接相机</div>\
 				<div class=\"netPromptBack\">好的</div>\
 			</div>\
 		</div>")

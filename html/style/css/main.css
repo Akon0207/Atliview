@@ -1814,7 +1814,7 @@ body{
     border-radius: 15px;
     padding: 5px 0;
 }
-#netprompt-cover2 .netPromptBack {
+#netprompt-cover2 .netPromptBack,#netprompt-cover3 .netPromptBack {
     background: #628ccd;
 }
 .netprompt-cover .netPromptCheck {
@@ -5149,13 +5149,17 @@ fieldset{
 #time-syn .dialog-poppup-content {
     text-align: left;
     padding: 15px 25px;
-    line-height: 40px;
+    line-height: 35px;
+    font-size: 16px;
 }
 #time-syn {
     max-width: 380px;
 }
+#time-syn2 {
+    margin: 15px 0;
+}
 .time-syn2 {
     color: black;
     display: inline-block;
-    width: 120px;
+    width: 100px;
 }

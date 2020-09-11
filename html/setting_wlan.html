@@ -316,6 +316,7 @@ $(function(){
 
 	//连接其他需要密码的wifi
 	$("#confirmConnect").on("click",function(){
+		postwificonfig = true;
 		var infoDivObj = $("#dialog-poppup .dialog-poppup-tit");
 		var ssid=infoDivObj.attr("ssid");
 		var wifiCtrl={"ssid":ssid, "auth": infoDivObj.attr("auth"), "psk":$(".wlan-login-password").val()};
@@ -783,6 +784,7 @@ $(function(){
 				var thisName = $(this).children().children(".setting-item-name");
 				var infoDivObj = $(this);
 				thisName.click(function(){
+					postwificonfig = true;
 					var ssid=thisName.text();
 					var wifiCtrl = {};
 					wifiCtrl.ssid = ssid;
@@ -809,6 +811,7 @@ $(function(){
 				var thisName = $(this).children().children(".setting-item-name");
 				thisName.click(function(){
 					var ssid=thisName.text();
+					postwificonfig = true;
 					postJSON("/wifi_config", { connect: ssid});
 					changeConnect(ssid);
 					interval=5000;
@@ -981,6 +984,7 @@ $(function(){
 					clearTimeout(getListTimer);
 					getListTimer=setTimeout(getWlanList, 5000);
 				}
+				postwificonfig = true;
 			}
 			setTimeout(otherToggle,500);
 		})

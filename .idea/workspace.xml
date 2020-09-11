@@ -19,10 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="新增一张断网图片，新增时间同步功能">
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="设备掉线时提示界面进行优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/setting_wlan.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/setting_wlan.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html/style/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/html/style/css/main.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,6 +63,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -105,6 +107,11 @@
       <workItem from="1599700957987" duration="2807000" />
       <workItem from="1599717825168" duration="3416000" />
       <workItem from="1599724554823" duration="3724000" />
+      <workItem from="1599728758537" duration="142000" />
+      <workItem from="1599729163123" duration="2702000" />
+      <workItem from="1599784665405" duration="1507000" />
+      <workItem from="1599795619897" duration="10000" />
+      <workItem from="1599809946149" duration="3424000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -183,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599559386357</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="设备掉线时提示界面进行优化">
+      <created>1599728854254</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1599728854254</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,7 +226,8 @@
     <MESSAGE value="解决了一个某些安卓手机网页置后台时画面无法保留最后一帧页面的BUG" />
     <MESSAGE value="菜单按钮点击时按钮颜色变为蓝色" />
     <MESSAGE value="新增一张断网图片，新增时间同步功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增一张断网图片，新增时间同步功能" />
+    <MESSAGE value="设备掉线时提示界面进行优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="设备掉线时提示界面进行优化" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="85" key="DiffContextDialog" timestamp="1597889985619">
@@ -227,10 +242,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="691" y="198" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1599548009674" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1599559410368">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1599728874950">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599559410368" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599728874950" />
     <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598522222147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
