@@ -5199,7 +5199,7 @@ $(function(){
 	function doInit(status, s, xhr) {
 		setOrientation(status.imgArchive,true);
 		localControl.notify(status.imgArchive);
-		if(status.imgArchive == "horizontal"){
+		if(status.imgArchive === "horizontal"){
 			$("#preview").attr("src","images/preload_1.jpg");
 		}else{
 			$("#preview").attr("src","images/preload_2.jpg");
@@ -5207,23 +5207,29 @@ $(function(){
 
 		var d1=new Date(xhr.getResponseHeader('Date'));
 		serverTime=d1.getTime();
-		console.log("::::::::::::::::::::::::::::::::servertime="+d1.toJSON());
+
 		var d2 = new Date();
 		localTime = d2.getTime();
-		console.log("::::::::::::::::::::::::::::::::localtime="+d2.toJSON());
-		if(Math.abs(localTime-serverTime) >= 10*60000 && status.recordinfo.status==="idle"){
+		if(Math.abs(localTime-serverTime)>=60000 && status.recordinfo.status==="idle"){
 			setTimeCount++;
-			$("#local-time").text(transFullTime(d2,language==="en"?"en":"zh"));
-			$("#cam-time").text(transFullTime(d1,language==="en"?"en":"zh"));
-			$("#time-syn,.dialog-cover").holdShow();
-			return;
-		}else if(((Math.abs(localTime-serverTime) < 10*60000 && Math.abs(localTime-serverTime) > 60*1000) || setTimeCount>5) && status.recordinfo.status==="idle"){
-			setTimeCount++;
-			postJSON("/status",{force_time: d2.toJSON()},function () {
-				getJSON("/status", doInit);
+			postJSON("/status",{force_time:d2.toJSON()},function () {
+				getJSON("/status",doInit)
 			})
 			return;
 		}
+		// if(Math.abs(localTime-serverTime) >= 10*60000 && status.recordinfo.status==="idle"){
+		// 	setTimeCount++;
+		// 	$("#local-time").text(transFullTime(d2,language==="en"?"en":"zh"));
+		// 	$("#cam-time").text(transFullTime(d1,language==="en"?"en":"zh"));
+		// 	$("#time-syn,.dialog-cover").holdShow();
+		// 	return;
+		// }else if(((Math.abs(localTime-serverTime) < 10*60000 && Math.abs(localTime-serverTime) > 60*1000) || setTimeCount>5) && status.recordinfo.status==="idle"){
+		// 	setTimeCount++;
+		// 	postJSON("/status",{force_time: d2.toJSON()},function () {
+		// 		getJSON("/status", doInit);
+		// 	})
+		// 	return;
+		// }
 		setTimeCount = 0;
 		getJSON("/setting",function(data,status){
 			//获取版本号
