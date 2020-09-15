@@ -14,6 +14,8 @@ var firstNetdisconnect = true;
 var localControl=new Object();
 var pagePath = window.location.pathname;
 var postwificonfig = null;
+var postwificount = 0;
+var wificoutInterval = null;
 if(window.webkit && window.webkit.messageHandlers){ //ios中
 	app_type="ios";
 	localControl.getValue=function(k, v){return window.prompt(String(k), v)};
@@ -637,8 +639,10 @@ function netConnected()
 		keepAlive();
 		resetKeepAlive();
 	}
+
 	if(netprompt_count>6){
 		postwificonfig = null;
+		postwificount = 0;
 	}
 	clearInterval(netprompt_interval);
 	netprompt_count=0;
@@ -675,14 +679,9 @@ function netDisconnected()
 				// $("#netDisconnectedConfirm").on("click",function(){
 				console.log("pagePath="+pagePath);
 				if(pagePath.includes("setting_wlan.html")){
-					if(postwificonfig){
-						if(netprompt_count<30){
-							$("#netprompt-cover3").show();
-							$("#netprompt-cover2,#netprompt-cover").hide();
-						}else{
-							$("#netprompt-cover2").show();
-							$("#netprompt-cover3,#netprompt-cover").hide();
-						}
+					if(postwificonfig && postwificount<30){
+						$("#netprompt-cover3").show();
+						$("#netprompt-cover2,#netprompt-cover").hide();
 					}else{
 						if(netprompt_count<26){
 							$("#netprompt-cover").show();

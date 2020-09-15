@@ -19,10 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="在wifi界面，若因为wifi连接而掉线，界面要跟普通掉线区分，让用户知道为什么掉线">
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="暂时注释时间同步弹窗代码，改为超过一分钟自动同步">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/style/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/html/style/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/js/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/setting_wlan.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/setting_wlan.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +111,9 @@
       <workItem from="1599795619897" duration="10000" />
       <workItem from="1599809946149" duration="4203000" />
       <workItem from="1600046639060" duration="1327000" />
-      <workItem from="1600073552435" duration="401000" />
+      <workItem from="1600073552435" duration="526000" />
+      <workItem from="1600136875061" duration="636000" />
+      <workItem from="1600156046041" duration="695000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -204,7 +206,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599813530099</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="暂时注释时间同步弹窗代码，改为超过一分钟自动同步">
+      <created>1600074042679</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1600074042680</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +244,8 @@
     <MESSAGE value="新增一张断网图片，新增时间同步功能" />
     <MESSAGE value="设备掉线时提示界面进行优化" />
     <MESSAGE value="在wifi界面，若因为wifi连接而掉线，界面要跟普通掉线区分，让用户知道为什么掉线" />
-    <option name="LAST_COMMIT_MESSAGE" value="在wifi界面，若因为wifi连接而掉线，界面要跟普通掉线区分，让用户知道为什么掉线" />
+    <MESSAGE value="暂时注释时间同步弹窗代码，改为超过一分钟自动同步" />
+    <option name="LAST_COMMIT_MESSAGE" value="暂时注释时间同步弹窗代码，改为超过一分钟自动同步" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="85" key="DiffContextDialog" timestamp="1597889985619">
@@ -250,10 +260,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="691" y="198" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1599548009674" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1599813559287">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1600074058925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599813559287" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1600074058925" />
     <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598522222147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
