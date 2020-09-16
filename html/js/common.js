@@ -14,7 +14,6 @@ var firstNetdisconnect = true;
 var localControl=new Object();
 var pagePath = window.location.pathname;
 var postwificonfig = null;
-var postwificount = 0;
 var wificoutInterval = null;
 if(window.webkit && window.webkit.messageHandlers){ //ios中
 	app_type="ios";
@@ -642,7 +641,6 @@ function netConnected()
 
 	if(netprompt_count>6){
 		postwificonfig = null;
-		postwificount = 0;
 		clearInterval(wificoutInterval);
 	}
 	clearInterval(netprompt_interval);
@@ -680,7 +678,7 @@ function netDisconnected()
 				// $("#netDisconnectedConfirm").on("click",function(){
 				console.log("pagePath="+pagePath);
 				if(pagePath.includes("setting_wlan.html")){
-					if(postwificonfig && postwificount<=30){
+					if(postwificonfig){
 						$("#netprompt-cover3").show();
 						$("#netprompt-cover2,#netprompt-cover").hide();
 					}else{

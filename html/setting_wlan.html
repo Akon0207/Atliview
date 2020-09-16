@@ -317,7 +317,6 @@ $(function(){
 	//连接其他需要密码的wifi
 	$("#confirmConnect").on("click",function(){
 		postwificonfig = true;
-		wifiCount();
 		var infoDivObj = $("#dialog-poppup .dialog-poppup-tit");
 		var ssid=infoDivObj.attr("ssid");
 		var wifiCtrl={"ssid":ssid, "auth": infoDivObj.attr("auth"), "psk":$(".wlan-login-password").val()};
@@ -483,14 +482,6 @@ $(function(){
 	$("#wifi-tip-done-cancel").on("click",function(){
 		$(".dialog-cover,#wifi-tip-done").hide();
 	});
-	//计数点击链接wifi之后的时间
-	function wifiCount(){
-		wificoutInterval = setInterval(function (){
-			if(postwificount<30){
-				postwificount++
-			}
-		},1000)
-	}
 	//网络连接失败
 	function netError(){
 		if(wifiConn_tip!=1 || guide!=1) return;
@@ -794,7 +785,6 @@ $(function(){
 				var infoDivObj = $(this);
 				thisName.click(function(){
 					postwificonfig = true;
-					wifiCount();
 					var ssid=thisName.text();
 					var wifiCtrl = {};
 					wifiCtrl.ssid = ssid;
@@ -822,7 +812,6 @@ $(function(){
 				thisName.click(function(){
 					var ssid=thisName.text();
 					postwificonfig = true;
-					wifiCount();
 					postJSON("/wifi_config", { connect: ssid});
 					changeConnect(ssid);
 					interval=5000;
@@ -996,7 +985,6 @@ $(function(){
 					getListTimer=setTimeout(getWlanList, 5000);
 				}
 				postwificonfig = true;
-				wifiCount();
 			}
 			setTimeout(otherToggle,500);
 		})

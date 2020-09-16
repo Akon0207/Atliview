@@ -22,7 +22,7 @@
     <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="暂时注释时间同步弹窗代码，改为超过一分钟自动同步">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/js/common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/setting_wlan.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/setting_wlan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html20200915-2.zip" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +116,7 @@
       <workItem from="1600156046041" duration="1132000" />
       <workItem from="1600159509232" duration="3849000" />
       <workItem from="1600218171959" duration="239000" />
+      <workItem from="1600237897518" duration="496000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
