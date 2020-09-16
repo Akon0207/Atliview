@@ -486,7 +486,9 @@ $(function(){
 	//计数点击链接wifi之后的时间
 	function wifiCount(){
 		wificoutInterval = setInterval(function (){
-			postwificount++
+			if(postwificount<30){
+				postwificount++
+			}
 		},1000)
 	}
 	//网络连接失败

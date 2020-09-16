@@ -643,6 +643,7 @@ function netConnected()
 	if(netprompt_count>6){
 		postwificonfig = null;
 		postwificount = 0;
+		clearInterval(wificoutInterval);
 	}
 	clearInterval(netprompt_interval);
 	netprompt_count=0;
@@ -679,7 +680,7 @@ function netDisconnected()
 				// $("#netDisconnectedConfirm").on("click",function(){
 				console.log("pagePath="+pagePath);
 				if(pagePath.includes("setting_wlan.html")){
-					if(postwificonfig && postwificount<30){
+					if(postwificonfig && postwificount<=30){
 						$("#netprompt-cover3").show();
 						$("#netprompt-cover2,#netprompt-cover").hide();
 					}else{
