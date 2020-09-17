@@ -629,7 +629,7 @@ $(function(){
 	    onChange: function(event, inst){
 	    	var a = event.valueText;
 	    	if(a=='不限' || a=='Infinite'){
-				$(this).parent().removeClass("blue");
+				$(this).parent().addClass("blue");
 	    		$("#loopMode_dummy,#loopMode_val").val(a);
 	    	}else{
 				$(this).parent().addClass("blue");
