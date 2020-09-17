@@ -953,7 +953,7 @@ $(function(){
 			shootInterval:$("#intervalTrigger").attr("second"),
 			//exposureBias:parseInt($("#exposureTrigger").text())
 		};
-		configs["bydayLoop"]=($("#loopMode").mobiscroll("getVal")=="不限" || $("#loopMode").mobiscroll("getVal")=="No limit")?0:parseInt($("#day").val());
+		configs["bydayLoop"]=($("#loopMode").mobiscroll("getVal")=="不限" || $("#loopMode").mobiscroll("getVal")=="Infinite")?0:parseInt($("#day").val());
 		configs["bydayTask"]= new Array();
 		var length=$("#seqList tr").length;
 		for(var i=1;i<=length;i++){
@@ -1207,8 +1207,8 @@ $(function(){
 			if(e.bydayLoop==0) { //不限天数
 				$("#loopMode_val").parent().addClass("blue");
 				if(language && language=="en"){
-					$("#loopMode_dummy,#loopMode_val").val("No limit");
-					$("#loopMode").mobiscroll("setVal", "No limit");
+					$("#loopMode_dummy,#loopMode_val").val("Infinite");
+					$("#loopMode").mobiscroll("setVal", "Infinite");
 				}else{
 					$("#loopMode_dummy,#loopMode_val").val("不限");
 					$("#loopMode").mobiscroll("setVal", "不限");

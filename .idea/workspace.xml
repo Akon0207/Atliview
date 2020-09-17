@@ -19,11 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="取消之前点击wifi之后的计时，因为没有意义">
+    <list default="true" id="bc3185af-d7c5-4820-b703-6ec2f28d6cb9" name="Default Changelist" comment="修复对焦框在录像模式也能点出的bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/js/camera.js" beforeDir="false" afterPath="$PROJECT_DIR$/html/js/camera.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html20200915-2.zip" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +116,7 @@
       <workItem from="1600218171959" duration="239000" />
       <workItem from="1600237897518" duration="1667000" />
       <workItem from="1600250190652" duration="888000" />
-      <workItem from="1600304630330" duration="332000" />
+      <workItem from="1600304630330" duration="818000" />
     </task>
     <task id="LOCAL-00001" summary="第一次把项目提交到github">
       <created>1597889764914</created>
@@ -226,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600238722801</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="修复对焦框在录像模式也能点出的bug">
+      <created>1600305031715</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1600305031715</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,7 +263,8 @@
     <MESSAGE value="在wifi界面，若因为wifi连接而掉线，界面要跟普通掉线区分，让用户知道为什么掉线" />
     <MESSAGE value="暂时注释时间同步弹窗代码，改为超过一分钟自动同步" />
     <MESSAGE value="取消之前点击wifi之后的计时，因为没有意义" />
-    <option name="LAST_COMMIT_MESSAGE" value="取消之前点击wifi之后的计时，因为没有意义" />
+    <MESSAGE value="修复对焦框在录像模式也能点出的bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复对焦框在录像模式也能点出的bug" />
   </component>
   <component name="WindowStateProjectService">
     <state x="184" y="85" key="DiffContextDialog" timestamp="1597889985619">
@@ -274,10 +279,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="691" y="198" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1599548009674" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1600238732061">
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1600305087171">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1600238732061" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1600305087171" />
     <state x="1278" y="218" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598522222147">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
