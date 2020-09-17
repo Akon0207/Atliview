@@ -1430,7 +1430,7 @@ $(function(){
 						}else{$(".gridline").holdHide()}	
 					},500)
 				}
-				hideFocus = true;
+				// hideFocus = true;
 				orientationMode = 1;
 			}else{
 				$(".main-pic").css({
@@ -1448,9 +1448,9 @@ $(function(){
 					$(".portraitPrompt").holdHide();
 				}
 				if(flag){
-					if((recordStatus=="idle" || recordStatus=="waiting" || recordStatus=="pausing") && sessionType!="video"){
-						hideFocus = false;
-					}
+					// if((recordStatus=="idle" || recordStatus=="waiting" || recordStatus=="pausing") && sessionType!="video"){
+					// 	hideFocus = false;
+					// }
 					setTimeout(function(){
 						if(grid && grid==1){
 							$(".gridline").css({
@@ -1496,9 +1496,9 @@ $(function(){
 					$(".landscapePrompt").holdHide();
 				}
 				if(flag){
-					if((recordStatus=="idle" || recordStatus=="waiting" || recordStatus=="pausing") && sessionType!="video"){
-						hideFocus = false;
-					}
+					// if((recordStatus=="idle" || recordStatus=="waiting" || recordStatus=="pausing") && sessionType!="video"){
+					// 	hideFocus = false;
+					// }
 					setTimeout(function(){
 						if(grid && grid==1){
 							$(".gridline").css({
@@ -1550,7 +1550,7 @@ $(function(){
 							
 					},500)
 				}
-				hideFocus = true;
+				// hideFocus = true;
 				orientationMode = 2;	
 			}
 			$(".imgAmplifier").css({
@@ -5062,34 +5062,39 @@ $(function(){
 			setPerview('newSessionId');
 		}
 
-		hideFocus=false;
+		// hideFocus=false;
 		// if( /*enableFocus==1 && */sessionType!='video' && (status.recordinfo.status=="idle" || status.recordinfo.status=="pausing" || status.recordinfo.status=="waiting") && status.sessionType){
-		if( /*enableFocus==1 && */sessionType!='video' && status.sessionType){
-			if((getPortrait() && status.imgArchive == "horizontal") || (!getPortrait() && status.imgArchive == "vertical")){
-				hideFocus = true;
+		// if( /*enableFocus==1 && */sessionType!='video' && status.sessionType){
+			// if((getPortrait() && status.imgArchive == "horizontal") || (!getPortrait() && status.imgArchive == "vertical")){
+				// hideFocus = true;
 				// stopFocusEventSource();
-			}else{
+			// }else{
 				// if(recordStatus && (recordStatus=="idle"|| recordStatus=="waiting")){
-				if(recordStatus){
-					hideFocus = false;
+				// if(recordStatus){
+				// 	hideFocus = false;
 					// if(!focusEventSource && !startFocusTimer) {
 					// 	startFocusTimer=setTimeout(initFocusEventSource, 2000);
 					// }
-				}	
-			}
-		}
+		// 		}
+		// 	}
+		// }
 //		else if(sessionType=='video' || (status.recordinfo.status!="idle" && status.recordinfo.status!="pausing") || status.sessionType==null) {
-		else {
-			hideFocus=true;
+// 		else {
+// 			hideFocus=true;
 			// stopFocusEventSource();
-			setShootMode();
+			// setShootMode();
 			//getJSON("/control", updateControls);
-		}
+		// }
 /* 
 		else if(enableFocus!=1) {
 			stopFocusEventSource();
 		}
 */
+		if(sessionType==="video"){
+			hideFocus = true;
+		}else{
+			hideFocus = false;
+		}
 		if("meteringLock" in status){
 			meteringLock = status.meteringLock;
 			$(".locked").show().siblings(".unlocked").hide();

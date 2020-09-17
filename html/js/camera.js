@@ -157,7 +157,7 @@ $(function(){
     localControl.focus("disabled");
     console.log("canvas click " + e.offsetX + ", " + e.offsetY);
     console.log("orientationMode is "+orientationMode+"++++++++++++++++++++++");
-    // if(hideFocus) return;
+    if(hideFocus) return;
     if(!imgEnableClick) {
       imgEnableClick=true;
       return
