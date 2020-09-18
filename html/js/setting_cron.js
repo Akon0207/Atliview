@@ -5,8 +5,8 @@
 var language = getParameterByName("language");
 var Modezh = '<div class="setting-cron-name fx1">模式选择</div><div class="setting-cron-select"><input type="text" id="cronMode_val"  readonly="readonly" value="普通"/><select id="cronMode"><option value="普通">普通</option><option value="按天循环">按天循环</option></select></div>'
 var Modeen = '<div class="setting-cron-name fx1">Repetition</div><div class="setting-cron-select"><input type="text" id="cronMode_val"  readonly="readonly" value="Once"/><select id="cronMode"><option value="Once">Once</option><option value="Daily">Daily</option></select></div>'
-var loopZh = '<div class="setting-cron-name fx1" lan="loopDays">循环天数</div><div class="setting-cron-select"><input type="text" id="loopMode_val" lan="loopModeV" readonly="readonly" value="不限" /><select id="loopMode"><option value="不限" lan="notLim">不限</option><option value="自定义" lan="custom">自定义</option></select></div>'
-var loopEn = '<div class="setting-cron-name fx1" lan="loopDays">Days</div><div class="setting-cron-select"><input type="text" id="loopMode_val" lan="loopModeV" readonly="readonly" value="Infinite" /><select id="loopMode"><option value="Infinite" lan="notLim">Infinite</option><option value="Customized" lan="custom">Customized</option></select></div>'
+var loopZh = '<div class="setting-cron-name fx1" lan="loopDays">循环天数</div><div class="setting-cron-select blue"><input type="text" id="loopMode_val" lan="loopModeV" readonly="readonly" value="不限" /><select id="loopMode"><option value="不限" lan="notLim">不限</option><option value="自定义" lan="custom">自定义</option></select></div>'
+var loopEn = '<div class="setting-cron-name fx1" lan="loopDays">Days</div><div class="setting-cron-select blue"><input type="text" id="loopMode_val" lan="loopModeV" readonly="readonly" value="Infinite" /><select id="loopMode"><option value="Infinite" lan="notLim">Infinite</option><option value="Customized" lan="custom">Customized</option></select></div>'
 var cronInterval = null;
 var outPutMode = null;
 $(function(){
@@ -640,6 +640,7 @@ $(function(){
 	    	console.log(inst.getVal());
 	    }
 	});
+	$("#loopMode").parent().addClass("blue");
 	//取消天数设置按钮
 	$("#cancelDays").on("click",function(){
 		$(".dialog-cover,#setLoopDays").hide();

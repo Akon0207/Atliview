@@ -4745,9 +4745,7 @@ $(function(){
                 console.log(recCtrl);
 		postJSON("/" + sessionType, recCtrl, function (data) {
 			setRecording(true, interval);
-			setTimeout(function(){
-				$("#shoot-circle").css("pointer-events","auto");
-			},1000);
+			
 			$(".circleChart_canvas").remove(".circleChart_canvas");//先取消之前的绘制
 			$("#shoot-circle").addClass("shoot-percent circleChart");
 			$("#shoot-circle").removeClass("shoot");
@@ -4765,6 +4763,13 @@ $(function(){
 				speed: 0,
 			});
 			console.log("start recording OK");
+			// setTimeout(function(){
+			// 	$("#shoot-circle").css("pointer-events","auto");
+			// },2000);
+			getJSON("/status",function(data){
+				$("#shoot-circle").attr("state",data.recordinfo.status);
+				$("#shoot-circle").css("pointer-events","auto");
+			})
 		}, function (e, status) {
 			setRecording(false);
 			console.log("start recording error " + status);
