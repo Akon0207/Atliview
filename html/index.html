@@ -4518,14 +4518,10 @@ $(function(){
 				//安卓或者电脑端用网页播放器播放
 				window.location.href = $("#videoShow2").attr("href");
 			})
-			/*hdr设置*/
-			if("hdr" in e && e.hdr == 1){
-				$("#hdr").addClass("on");
-			}else{
-				$("#hdr").removeClass("on");
-			}
+			
+
 			if(e.sessionType == "video"){
-				// $("#hdr").holdHide();
+				$("#hdr").holdHide();
 				$(".main-pic").removeAttr("style");
 				// $(".more").holdHide();
 				$(".moreMask li").eq(1).hide();
@@ -4537,6 +4533,16 @@ $(function(){
 				$(".moreMask li").eq(1).show();
 				$(".moreMask li").eq(3).show();
 				// $("#hdr").holdShow();
+				if("hdr" in e){/*hdr设置*/
+					$("#hdr").holdShow();
+					if(e.hdr == 1){
+						$("#hdr").addClass("on");
+					}else{
+						$("#hdr").removeClass("on");
+					}
+				}else{
+					$("#hdr").holdHide();
+				}
 			}
 /*			
 			//设置升级提醒
