@@ -423,10 +423,9 @@
         function update(){
             // if(!updateTimer) updateTimer=setTimeout(timeout, 75000);
             getJSON("/upgrade", function(e, status){
-                if(e.status=="done") return done();
-                else if(e.status=="error") {
-                    return error3(e.errorMsg);
-                }
+                if(e.status=="done") {
+                    if(new Date().getTime()-updateStartTime>10000) return done();
+                }else if(e.status=="error") { return error3(e.errorMsg);}
                 else if(e.status=="rebooting") return reboot();
                 //else if(e.status=="uploading") uploading();
                 // else if(e.status=="downloading") downloading(e.percentage);
