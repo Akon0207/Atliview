@@ -34,6 +34,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.focus=function(key) {if(window.webkit.messageHandlers.focus) return window.webkit.messageHandlers.focus.postMessage(key)};
 	localControl.orientation=function(orientation) {if(window.webkit.messageHandlers.orientation) return window.webkit.messageHandlers.orientation.postMessage(String(orientation))};
 	localControl.keepAlive=function(msg) {if(window.webkit.messageHandlers.keepAlive) return window.webkit.messageHandlers.keepAlive.postMessage("alive");}
+
 }else if(window.atliviewControl){ //安卓中
 	app_type="android";
 	localControl.getValue=function(k, v){return window.atliviewControl.getValue(String(k), v)};
@@ -582,6 +583,7 @@ function keepAlive(){
 		if(netStatus==1) netTimer=setTimeout(function(){
 			netTimer=null;
 			netDisconnected();
+			localControl.notify("rediscover");
 		}, 3000);
 	}
 }
