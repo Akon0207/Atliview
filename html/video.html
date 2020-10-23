@@ -259,7 +259,10 @@ function setItem(mediaInfo)
 	if(mediaInfo) {
 		var date = new Date(mediaInfo.date);
 		mediaInfo.date = date.toLocaleString();
-		console.log(".time"+mediaInfo.id);
+		console.log(".time "+mediaInfo.id+" "+Date.parse(mediaInfo.date));
+		var dateStr = mediaInfo.id.split("_");
+		mediaInfo.date = new Date("20"+dateStr[1].substr(0,2), dateStr[1].substr(2,2)-1, dateStr[1].substr(4,2), dateStr[1].substr(6,2), dateStr[1].substr(8,2), dateStr[1].substr(10,2));
+		console.log(".time "+mediaInfo.id+" "+Date.parse(mediaInfo.date)); 
 		timeArray = formatTime(mediaInfo.duration);
 		mediaInfo.duration = timeArray[0]+':'+timeArray[1]+':'+timeArray[2];
 		var itemStr;

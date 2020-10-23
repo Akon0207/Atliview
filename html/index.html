@@ -4225,6 +4225,7 @@ $(function(){
 			else cron=0;
 			if((e.sessionType == "timelapse") && ("recordinfo" in e) && e.recordinfo.status=="waiting"){
 				var d = new Date(e.recordinfo.cronStartAt);
+				d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
 				// date = d.toLocaleString();
 				if(language && language=="en"){
 					$(".head-info").html("<p>The next schedule will run on "+transFullTime(d,"en")+"</p>");
@@ -4296,6 +4297,7 @@ $(function(){
 					$(".pauseSelect li").eq(1).hide().siblings(".pause").show();
 					var dhms;
 					var date = new Date(e.recordinfo.currentVideo.startAt);
+					date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 					// date = date.toLocaleString();
 					sizeFormt=renderSize(e.recordinfo.currentVideo.size*1024)
 					//console.log(dhms+parseInt(duration/60)+"分");
@@ -4377,6 +4379,7 @@ $(function(){
 					// $("#shoot-circle").removeClass("on");
 					console.log("shoot-circle remove class on pausing ========================");
 					var date = new Date(e.recordinfo.currentVideo.startAt);
+					date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 					// date = date.toLocaleString();
 					sizeFormt=renderSize(e.recordinfo.currentVideo.size*1024)
 					if(language && language=="en"){
@@ -4647,6 +4650,7 @@ $(function(){
 
 			if(e.recordinfo.currentVideo && e.recordinfo.currentVideo.next) {
 				var d = new Date(e.recordinfo.currentVideo.next);
+				d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
 				nextRecordMS=new Date().getTime();
 				next=d.getTime()-nextRecordMS;
 				console.log("next:"+next+"ms");
@@ -5239,6 +5243,7 @@ $(function(){
 		}
 
 		var d1=new Date(xhr.getResponseHeader('Date'));
+		// d1.setMinutes(d1.getMinutes() + d1.getTimezoneOffset());
 		serverTime=d1.getTime();
 
 		var d2 = new Date();
