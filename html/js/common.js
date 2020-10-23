@@ -34,6 +34,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.focus=function(key) {if(window.webkit.messageHandlers.focus) return window.webkit.messageHandlers.focus.postMessage(key)};
 	localControl.orientation=function(orientation) {if(window.webkit.messageHandlers.orientation) return window.webkit.messageHandlers.orientation.postMessage(String(orientation))};
 	localControl.keepAlive=function(msg) {if(window.webkit.messageHandlers.keepAlive) return window.webkit.messageHandlers.keepAlive.postMessage("alive");}
+	localControl.reDiscover=function(msg) {return window.webkit.messageHandlers.reDiscover.postMessage(msg)}
 
 }else if(window.atliviewControl){ //安卓中
 	app_type="android";
@@ -52,6 +53,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.focus=function(key) { return null};
 	localControl.orientation=function(orientation) { return null};
 	localControl.keepAlive=function(msg) {return null}
+	localControl.reDiscover=function(msg) {return window.atliviewControl.reDiscover(msg)}
 }else if(window.localStorage){ //普通浏览器中
 	localControl.getValue=function(k, v){var getVal=window.localStorage.getItem(k);if(getVal){return getVal;}else{return v;}};
 	localControl.putValue=function(k, v){return window.localStorage.setItem(k, v)};
@@ -68,6 +70,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.focus=function(key) { return null};
 	localControl.orientation=function(orientation) { return null};
 	localControl.keepAlive=function(msg) {return null}
+	localControl.reDiscover=function() {return null}
 }else {
 	alert("当前浏览器不支持本地储存！请更换或更新浏览器！");
 	localControl.getValue=function(k, v){return null};
@@ -83,6 +86,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.statusEventSourceError=function() {return null};
 	localControl.updateStartTime=function(datetime) {return null};
 	localControl.keepAlive=function(msg) {return null}
+	localControl.reDiscover=function() {return null}
 }
 
 if(!language) {
@@ -583,13 +587,18 @@ function keepAlive(){
 		if(netStatus==1) netTimer=setTimeout(function(){
 			netTimer=null;
 			netDisconnected();
-			localControl.notify("rediscover");
+			localControl.reDiscover("reDiscover");
 		}, 3000);
 	}
 }
 function resetKeepAlive(second){
 	clearInterval(keepAliveTimer);
 	keepAliveTimer=setInterval(keepAlive, second?(second*1000):15000);
+}
+
+function getPortrait(){//返回是否竖屏
+	if (window.orientation === 180 || window.orientation === 0) return true;
+	else return false
 }
 
 var playPage=0; //是否将进入播放页面

@@ -1112,12 +1112,7 @@ $(function(){
 		$(".foot-bar.flex.flex-middle").holdShow();
 		//$(".ctrl-icon").holdShow();
 	//}
-	function getPortrait(){//返回是否竖屏
-		if (window.orientation === 180 || window.orientation === 0) return true;
-		else return false
-		//var mql = window.matchMedia('(orientation: portrait)');
-		//return mql.matches
-	}
+
 	//如果app版本低于2.2，提醒更新
 	$(".backIndex").on("click",function(){
 		localControl.focus("disabled");
@@ -1822,7 +1817,8 @@ $(function(){
 		hideFocus=true;
 		$("#shoot-circle").css("pointer-events","none");
 		$("#shoot-photo,.modeNow").addClass("shooting-now");
-		postJSON("/image",{sessionId:sessionId, timezone: -(new Date().getTimezoneOffset()/60)},function(){
+		// postJSON("/image",{sessionId:sessionId, timezone: -(new Date().getTimezoneOffset()/60)},function(){
+		postJSON("/image",{sessionId:sessionId, timezone: 0},function(){
 			setTimeout(function(){
 				$(".dialog-cover").toggle();
 				setTimeout(function(){
@@ -2303,7 +2299,8 @@ $(function(){
 	}
 	
 	function videoRun(){
-		var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60)};
+		// var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60)};
+		var recCtrl = { sessionId: sessionId, timezone: 0};
 		console.log(recCtrl);
 		$("#shoot-circle").css("pointer-events","none");
 		postJSON("/video", recCtrl, function (data) {
@@ -4727,7 +4724,8 @@ $(function(){
 		$("#shoot-circle").css("pointer-events","none");
 		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
 		//if(parseInt(interval)>=1) interval=parseInt(interval);
-		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60) };
+		// var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60) };
+		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: 0 };
 		//var recCtrl = { sessionId: sessionId, frameRate: frameRate, starttime:transTimeyMDHIS()};
 		//设置横屏竖屏录制
 		if(imgArchive == "horizontal"){
@@ -4806,7 +4804,8 @@ $(function(){
 		// });
 		$(".continueWait").show();
 		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
-		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60),action:"splice"};
+		// var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60),action:"splice"};
+		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: 0,action:"splice"};
 		if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
 			else recCtrl['schedule'] = 'd'+interval;
 		recordInterval=interval;
@@ -4853,7 +4852,8 @@ $(function(){
 	//开始摄像
 	function startVideo(){
 		//var recCtrl = { sessionId: sessionId, starttime:transTimeyMDHIS() };
-		var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60) };
+		// var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60) };
+		var recCtrl = { sessionId: sessionId, timezone: 0 };
                 console.log(recCtrl);
 		postJSON("/" + sessionType, recCtrl, function (data) {
 			console.log("start video OK");
@@ -4962,6 +4962,7 @@ $(function(){
 
 	var imgSrc=null;
 	var recordPreImg = new Image();
+	var idlePreimg = new Image();
 	function setPerview(PreviewState, index, status){
 		console.log( "setPerview:"+PreviewState+" visibilityState:"+document.visibilityState );
 		if(document.visibilityState!="visible") {
@@ -5011,6 +5012,19 @@ $(function(){
 	
 		}else if((sessionType=="timelapse" && PreviewState=='changedToIdle') || PreviewState=='newSessionId' ){
 			$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
+			$(".main-pic").load(function(){
+				console.log("img load complete++++++++++++++++++++++++++++++");
+				localControl.notify("imageLoaded");
+			})
+			// var idleSrc = $(".main-pic").prop("src");
+			
+			// idlePreimg.onload = function(){
+			// 	idlePreimg.src = idleSrc;
+			// }
+			// $(idlePreimg).load(function(){
+
+			// })
+
 		}
 	}
 	
@@ -5019,6 +5033,7 @@ $(function(){
 		
 		var d = new Date();
 		var t = d.getTime();
+		d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
 		var newSession=0;
 		if(status.sessionId !== sessionId || status.sessionType !== sessionType || status.sessionId === 0) {
 			if(status.sessionId === 0) {
@@ -5207,7 +5222,9 @@ $(function(){
 	})
 	$("#syn-confirm").on("click",function () {
 		$("#time-syn,.dialog-cover").holdHide();
-		postJSON("/status",{force_time: new Date().toJSON()},function () {
+		var timeNow = new Date();
+		timeNow.setMinutes(timeNow.getMinutes()-timeNow.getTimezoneOffset());
+		postJSON("/status",{force_time: timeNow.toJSON()},function () {
 			getJSON("/status",doInit)
 		})
 	})
@@ -5225,6 +5242,7 @@ $(function(){
 		serverTime=d1.getTime();
 
 		var d2 = new Date();
+		d2.setMinutes(d2.getMinutes()-d2.getTimezoneOffset());
 		localTime = d2.getTime();
 		if(Math.abs(localTime-serverTime)>=60000 && status.recordinfo.status==="idle"){
 			setTimeCount++;
@@ -5253,6 +5271,9 @@ $(function(){
 				var v=data.sysinfo.firmware;
 				currentFirmware=v;
 				localControl.putValue("CurrentFirmware", v);
+			}
+			if("reg" in data){
+				localControl.putValue("reg",data.reg);
 			}
 			//设置预览画质状态
 			if(data.imgQuality && (imgQualityArray.indexOf(data.imgQuality) != -1)){
@@ -5284,6 +5305,12 @@ $(function(){
 							$("#updateConfirm").attr("href", "update.html?uploadFlag=1");
 							// $("#update").holdShow();
 							// $(".dialog-cover").holdShow();
+							if(language=="en"){
+								$("#update .dialog-poppup-content").text("New firmware "+lastestfirmware+" available, upgrade now?")
+							}else{
+								$("#update .dialog-poppup-content").text("发现新版本 "+lastestfirmware+" ，是否现在升级？")
+							}
+							
 							$("#update,.dialog-cover").holdShow();
 						}
 					}

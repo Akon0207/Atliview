@@ -770,13 +770,13 @@ $(function(){
 					}
 
 					$("#dialog-cover,#dialog-poppup").show();
-					if(dialogScrollYFlag==true){
-						dialogScrollY = document.getElementById("dialog-poppup").offsetTop;
-						console.log("dialogScrollY:"+dialogScrollY);
-						dialogScrollYFlag = false;
-					}
-					$("#dialog-poppup").css("top",(dialogScrollY+wScrollY));
-					console.log("dialogScrollY:"+dialogScrollY+"\n wScrollY:"+wScrollY);
+					// if(dialogScrollYFlag==true){
+					// 	dialogScrollY = document.getElementById("dialog-poppup").offsetTop;
+					// 	console.log("dialogScrollY:"+dialogScrollY);
+					// 	dialogScrollYFlag = false;
+					// }
+					// $("#dialog-poppup").css("top",(dialogScrollY+wScrollY));
+					// console.log("dialogScrollY:"+dialogScrollY+"\n wScrollY:"+wScrollY);
 				})
 			})
 			//点击wlan列表如果不需要密码则直接连接
@@ -830,29 +830,67 @@ $(function(){
 	getWlanList();
 
 	/*密码弹出框输入时根据聚焦和失焦调整弹出框的位置 -start*/
-	$(window).scroll(function(e){
-		wScrollY = window.scrollY;
-		console.log("window.scrollY:"+wScrollY);
-		$(".dialog-cover").css("top",wScrollY);
-	});
+	// $(window).scroll(function(e){
+	// 	wScrollY = window.scrollY;
+	// 	console.log("window.scrollY:"+wScrollY);
+	// 	$(".dialog-cover").css("top",wScrollY);
+	// });
 
-	if(app_type=="android"){
-		$("#wlanPassword").focus(function(){
-			var positionNow = document.getElementById("dialog-poppup").offsetTop;
-			$("#dialog-poppup").css("top",positionNow-150);
-		});
+	// if(app_type=="android"){
+	// 	$("#wlanPassword").focus(function(){
+	// 		var positionNow = document.getElementById("dialog-poppup").offsetTop;
+	// 		$("#dialog-poppup").css("top",positionNow-150);
+	// 	});
+	// }
+	// if(app_type=="android" || app_type=="ios"){
+	// 	$("#wlanPassword").blur(function(){
+			// setTimeout(function(){
+			// 	var positionNow = document.getElementById("dialog-poppup").offsetTop;
+			// 	$("#dialog-poppup").css("top",positionNow+150);
+			// },250)
+	// 	});
+	// }
+	if(app_type=="ios"){
+		$('body').on('focusout', () => {
+       		window.scrollTo(0, 0);
+	    });
 	}
-	if(app_type=="android" || app_type=="ios"){
-		$("#wlanPassword").blur(function(){
-			setTimeout(function(){
-				var positionNow = document.getElementById("dialog-poppup").offsetTop;
-				$("#dialog-poppup").css("top",positionNow+150);
-			},250)
+	// var dheight =  $(document).height();
+	window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
+	    if (window.orientation === 180 || window.orientation === 0) {//竖屏状态
+	        // alert('竖屏状态！');
+	        console.log("实时监听竖屏||||||");
+	        $("#dialog-poppup").css("top","50%");
+	    }
+	    if (window.orientation === 90 || window.orientation === -90 ){//横屏状态
+	        // alert('横屏状态！');
+	        console.log("实时监听横屏||||||");
+	       	$("#dialog-poppup").css("top","50%");
+	    } 
+	   
+	}, false);
+	var offsetTop = $("#dialog-poppup").offset().top;
+	if(app_type=="android"){
+		$("#wlanPassword").focus(function (){
+			offsetTop = $("#dialog-poppup").offset().top;
+			if(!getPortrait()){
+				$("#dialog-poppup").offset({top:offsetTop-150});
+			}
 		});
+		$("#wlanPassword").blur(function(){
+			offsetTop = $("#dialog-poppup").offset().top;
+			if(!getPortrait()){
+				setTimeout(function(){
+					$("#dialog-poppup").offset({top:offsetTop+150});
+				},250)
+			}
+		});
+		
 	}
 	/*密码弹出框输入时根据聚焦和失焦调整弹出框的位置 -end*/
 	$(".securityMode").on("click",function(){
 		$("#dialog-cover,.securityMode-select").show();
+		$("#dialog-cover").addClass("tp");
 	})
 
 	// $("#securityMode_text").on("click",function(){
@@ -869,7 +907,7 @@ $(function(){
 			$(".securityMode").text($(this).children().text());
 			$(".securityMode").attr("value",$(this).attr("value"));
 			$(this).addClass("on").siblings().removeClass("on");
-
+			$("#dialog-cover").removeClass("tp")
 			if(index==0){
 				$("#wlan-other-user,#wlan-other-password").val("");
 	   			$(".other-user,.other-password").hide();
@@ -896,7 +934,7 @@ $(function(){
 			}
 		})
 	})
-	$("#dialog-cover").on("click",function(){$("#dialog-cover,.securityMode-select").hide();})
+	// $("#dialog-cover").on("click",function(){$("#dialog-cover,.securityMode-select,#dialog-poppup").hide();})
 	//用mobiscroll插件生成模式选择界面
 	var cronMode = mobiscroll.select('#securityMode', {  
 	    theme: 'ios',
@@ -1037,7 +1075,7 @@ $(function(){
 	});
 	$(".dialog-cover.tp").on("click",function(){
 		$(this).removeClass("tp");
-		$(".selector,#dialog-cover").hide();
+		$(".selector,#dialog-cover,.securityMode-select").hide();
 	})
 
 	
