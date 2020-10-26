@@ -15,6 +15,7 @@ var localControl=new Object();
 var pagePath = window.location.pathname;
 var postwificonfig = null;
 var wificoutInterval = null;
+var forAppNetDisCnn = true;
 if(window.webkit && window.webkit.messageHandlers){ //ios中
 	app_type="ios";
 	localControl.getValue=function(k, v){return window.prompt(String(k), v)};
@@ -109,7 +110,7 @@ $(function(){
 			var status = JSON.parse(e.data);
 			if(status.sessionId === 0){
 				var d = new Date();
-				postJSON('/status', {'time': d.toJSON()});
+				postJSON('/status', {time: d.toJSON(),timezone:timezone:-(d2.getTimezoneOffset()/60)});
 			}
 		}
 		keepaliveEventSource.onerror = function() {
@@ -117,7 +118,10 @@ $(function(){
 				console.log("KeepaliveEventSource onerror, 但在升级页面，忽略");
 			}else {
 				netDisconnected();
-				localControl.reDiscover("reDiscover");
+				if(forAppNetDisCnn){
+					localControl.reDiscover("reDiscover");
+					forAppNetDisCnn = false;
+				}
 				console.log("KeepaliveEventSource onerror");
 			}
 			window.setTimeout(function(){
@@ -588,7 +592,10 @@ function keepAlive(){
 		if(netStatus==1) netTimer=setTimeout(function(){
 			netTimer=null;
 			netDisconnected();
-			localControl.reDiscover("reDiscover");
+			if(forAppNetDisCnn){
+				localControl.reDiscover("reDiscover");
+				forAppNetDisCnn = false;
+			}
 		}, 3000);
 	}
 }
@@ -669,6 +676,7 @@ function netConnected()
 	}
 	if(netTimer) clearTimeout(netTimer);
 	netTimer=null;
+	forAppNetDisCnn = true;
 }
 
 function netDisconnected()
@@ -755,7 +763,10 @@ $(document).ajaxError(function(e,xhr,opt){
 		if(inUpdatePage == true) console.log("AJAX "+opt.url+" 超时, 但在升级页面，忽略");
 		else {
 			netDisconnected();
-			localControl.reDiscover("reDiscover");
+			if(forAppNetDisCnn){
+				localControl.reDiscover("reDiscover");
+				forAppNetDisCnn = false;
+			}
 			console.log("AJAX "+opt.url+" 超时");
 		}
 	} else {

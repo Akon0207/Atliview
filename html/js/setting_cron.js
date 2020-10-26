@@ -36,8 +36,8 @@ $(function(){
 	//开始定时计划
 	function startRecording(s) {
 		//var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, starttime:transTimeyMDHIS() };
-		//var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
-		var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: 0 };
+		var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
+		//var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: 0 };
 		if(imgArchive == "horizontal"){
 			orientation = 0;
 		}else if(imgArchive == "vertical"){
@@ -58,8 +58,8 @@ $(function(){
 	function genHMS(src){
 		var timezone=-(new Date().getTimezoneOffset()/60);
 		var strs=src.split(":");
-		//var hh=parseInt(strs[0])-timezone;
-		var hh=parseInt(strs[0]);
+		var hh=parseInt(strs[0])-timezone;
+		//var hh=parseInt(strs[0]);
 		if(hh>=24) hh-=24;
 		if(hh<0) hh+=24;
 		if(hh<10) hh="0"+hh;
