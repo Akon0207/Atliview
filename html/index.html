@@ -1817,8 +1817,8 @@ $(function(){
 		hideFocus=true;
 		$("#shoot-circle").css("pointer-events","none");
 		$("#shoot-photo,.modeNow").addClass("shooting-now");
-		// postJSON("/image",{sessionId:sessionId, timezone: -(new Date().getTimezoneOffset()/60)},function(){
-		postJSON("/image",{sessionId:sessionId, timezone: 0},function(){
+		postJSON("/image",{sessionId:sessionId, timezone: -(new Date().getTimezoneOffset()/60)},function(){
+		// postJSON("/image",{sessionId:sessionId, timezone: 0},function(){
 			setTimeout(function(){
 				$(".dialog-cover").toggle();
 				setTimeout(function(){
@@ -2299,8 +2299,8 @@ $(function(){
 	}
 	
 	function videoRun(){
-		// var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60)};
-		var recCtrl = { sessionId: sessionId, timezone: 0};
+		var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60)};
+		// var recCtrl = { sessionId: sessionId, timezone: 0};
 		console.log(recCtrl);
 		$("#shoot-circle").css("pointer-events","none");
 		postJSON("/video", recCtrl, function (data) {
@@ -4225,7 +4225,7 @@ $(function(){
 			else cron=0;
 			if((e.sessionType == "timelapse") && ("recordinfo" in e) && e.recordinfo.status=="waiting"){
 				var d = new Date(e.recordinfo.cronStartAt);
-				d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
+				// d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
 				// date = d.toLocaleString();
 				if(language && language=="en"){
 					$(".head-info").html("<p>The next schedule will run on "+transFullTime(d,"en")+"</p>");
@@ -4297,7 +4297,7 @@ $(function(){
 					$(".pauseSelect li").eq(1).hide().siblings(".pause").show();
 					var dhms;
 					var date = new Date(e.recordinfo.currentVideo.startAt);
-					date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+					// date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 					// date = date.toLocaleString();
 					sizeFormt=renderSize(e.recordinfo.currentVideo.size*1024)
 					//console.log(dhms+parseInt(duration/60)+"分");
@@ -4379,7 +4379,7 @@ $(function(){
 					// $("#shoot-circle").removeClass("on");
 					console.log("shoot-circle remove class on pausing ========================");
 					var date = new Date(e.recordinfo.currentVideo.startAt);
-					date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+					// date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 					// date = date.toLocaleString();
 					sizeFormt=renderSize(e.recordinfo.currentVideo.size*1024)
 					if(language && language=="en"){
@@ -4650,7 +4650,7 @@ $(function(){
 
 			if(e.recordinfo.currentVideo && e.recordinfo.currentVideo.next) {
 				var d = new Date(e.recordinfo.currentVideo.next);
-				d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
+				// d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
 				nextRecordMS=new Date().getTime();
 				next=d.getTime()-nextRecordMS;
 				console.log("next:"+next+"ms");
@@ -4728,8 +4728,8 @@ $(function(){
 		$("#shoot-circle").css("pointer-events","none");
 		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
 		//if(parseInt(interval)>=1) interval=parseInt(interval);
-		// var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60) };
-		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: 0 };
+		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60) };
+		// var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: 0 };
 		//var recCtrl = { sessionId: sessionId, frameRate: frameRate, starttime:transTimeyMDHIS()};
 		//设置横屏竖屏录制
 		if(imgArchive == "horizontal"){
@@ -4808,8 +4808,8 @@ $(function(){
 		// });
 		$(".continueWait").show();
 		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
-		// var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60),action:"splice"};
-		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: 0,action:"splice"};
+		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60),action:"splice"};
+		// var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: 0,action:"splice"};
 		if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
 			else recCtrl['schedule'] = 'd'+interval;
 		recordInterval=interval;
@@ -4856,8 +4856,8 @@ $(function(){
 	//开始摄像
 	function startVideo(){
 		//var recCtrl = { sessionId: sessionId, starttime:transTimeyMDHIS() };
-		// var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60) };
-		var recCtrl = { sessionId: sessionId, timezone: 0 };
+		var recCtrl = { sessionId: sessionId, timezone: -(new Date().getTimezoneOffset()/60) };
+		// var recCtrl = { sessionId: sessionId, timezone: 0 };
                 console.log(recCtrl);
 		postJSON("/" + sessionType, recCtrl, function (data) {
 			console.log("start video OK");
@@ -5037,7 +5037,7 @@ $(function(){
 		
 		var d = new Date();
 		var t = d.getTime();
-		d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+		// d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
 		var newSession=0;
 		if(status.sessionId !== sessionId || status.sessionType !== sessionType || status.sessionId === 0) {
 			if(status.sessionId === 0) {
@@ -5227,8 +5227,8 @@ $(function(){
 	$("#syn-confirm").on("click",function () {
 		$("#time-syn,.dialog-cover").holdHide();
 		var timeNow = new Date();
-		timeNow.setMinutes(timeNow.getMinutes()-timeNow.getTimezoneOffset());
-		postJSON("/status",{force_time: timeNow.toJSON()},function () {
+		// timeNow.setMinutes(timeNow.getMinutes()-timeNow.getTimezoneOffset());
+		postJSON("/status",{force_time: timeNow.toJSON(),timezone:-(d2.getTimezoneOffset()/60)},function () {
 			getJSON("/status",doInit)
 		})
 	})
@@ -5247,11 +5247,11 @@ $(function(){
 		serverTime=d1.getTime();
 
 		var d2 = new Date();
-		d2.setMinutes(d2.getMinutes()-d2.getTimezoneOffset());
+		// d2.setMinutes(d2.getMinutes()-d2.getTimezoneOffset());
 		localTime = d2.getTime();
 		if(Math.abs(localTime-serverTime)>=60000 && status.recordinfo.status==="idle"){
 			setTimeCount++;
-			postJSON("/status",{force_time:d2.toJSON()},function () {
+			postJSON("/status",{force_time:d2.toJSON(),timezone:-(d2.getTimezoneOffset()/60)},function () {
 				getJSON("/status",doInit)
 			})
 			return;

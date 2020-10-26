@@ -510,7 +510,11 @@ $(function(){
 				
 			}
 			
-			
+			if(ipt.hasClass("hour")){
+				if(val==24){
+					return false;
+				}
+			}
 			if(ipt.hasClass("second") || ipt.hasClass("minute")){
 				if(val==60){
 					return false;

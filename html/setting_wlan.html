@@ -435,11 +435,11 @@ $(function(){
 		//自动连接暂时屏蔽，目前没有效果
 		// if($(".switch-box").is(":checked")) wifiCtrl.autoConnectE=ssid;
 		// else wifiCtrl.autoConnectD=ssid;
-		if($(".select ul li").eq(0).hasClass("on")){
+		if($(".selector ul li").eq(0).hasClass("on")){
 			wifiCtrl.mode = "dhcp";
 			thisobj.attr("mode","dhcp");
 			// return
-		}else if($(".select ul li").eq(1).hasClass("on")){
+		}else if($(".selector ul li").eq(1).hasClass("on")){
 			if($(".wlan-detail-name").attr("active")){
 				wifiCtrl.mode = "static";	
 			}else{

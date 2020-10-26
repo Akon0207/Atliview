@@ -117,6 +117,7 @@ $(function(){
 				console.log("KeepaliveEventSource onerror, 但在升级页面，忽略");
 			}else {
 				netDisconnected();
+				localControl.reDiscover("reDiscover");
 				console.log("KeepaliveEventSource onerror");
 			}
 			window.setTimeout(function(){
@@ -754,6 +755,7 @@ $(document).ajaxError(function(e,xhr,opt){
 		if(inUpdatePage == true) console.log("AJAX "+opt.url+" 超时, 但在升级页面，忽略");
 		else {
 			netDisconnected();
+			localControl.reDiscover("reDiscover");
 			console.log("AJAX "+opt.url+" 超时");
 		}
 	} else {
