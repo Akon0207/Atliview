@@ -5052,7 +5052,7 @@ $(function(){
 			}
 			else sessionType = status.sessionType;
 
-			postJSON('/status', {'time': d.toJSON()});	
+			postJSON('/status', {'time': d.toJSON(),timezone:-(d.getTimezoneOffset()/60)});	
 			setShootMode();
 
 			newSession=1;
