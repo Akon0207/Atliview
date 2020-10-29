@@ -253,5 +253,9 @@
 	"time-syn2": "Local Time",
 	"time-syn3": "Camera Time",
 	"time-syn4": "Permission to synchronize local time onto camera?",
-	"syn": "Yes"
+	"syn": "Yes",
+	"fileSplit":"File Saving Options",
+	"notSplit":"Combined",
+	"byTimeSplit":"Per Time Slot",
+	"byDaySplit":"Per Day"
 }

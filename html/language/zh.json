@@ -253,5 +253,9 @@
 	"time-syn2": "本地时间",
 	"time-syn3": "相机时间",
 	"time-syn4": "是否将本地时间同步到相机？",
-	"syn": "同步"
+	"syn": "同步",
+	"fileSplit":"分段保存",
+	"notSplit":"不分段",
+	"byTimeSplit":"每个时间段",
+	"byDaySplit":"每天"
 }

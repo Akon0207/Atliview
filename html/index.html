@@ -1052,6 +1052,7 @@ $(function(){
 	var grid = null;
 	var outPutMode = null;
 	var localTime,serverTime;
+	var dec_num=/^[0-9]+$/;
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
 		$(".iconfont.menu").attr("href","setting.html?language=en")
@@ -2641,6 +2642,15 @@ $(function(){
 	})
 
 	function updateTimeTotal() {
+		if(!dec_num.test($('#interval-hour').val())){
+			$('#interval-hour').val("00")
+		}
+		if(!dec_num.test($('#interval-minute').val())){
+			$('#interval-minute').val("00")
+		}
+		if(!dec_num.test($('#interval-second').val())){
+			$('#interval-second').val("00")
+		}
 		if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1)$('#interval-second').val(0.5);
 		if(($('#interval-hour').val()!="00" || $('#interval-minute').val()!="00")) {
 			if($('#interval-second').val()=="0.5"){
@@ -2736,6 +2746,17 @@ $(function(){
 		$(this).on("change keyup",function(){
 			var v = $(this).val();
 			//v=v.replace(/\D/g,'');
+			if($(this).val().length==0){
+				return;
+			}
+			if(!dec_num.test(v)){
+				if(isNaN(parseInt(v))){
+					$(this).val("00");
+				}else{
+					$(this).val(parseInt(v));
+				}
+				return;
+			}
 			if(v>59){
 				$(this).val(59);
 			}
@@ -2744,14 +2765,44 @@ $(function(){
 			}
 		})
 	})
-	$(".time-insert input.hour").on("change keyup",function(){
+	// $(".time-insert input.hour").on("change keyup",function(){
+	$(".time-insert input.hour").bind("input propertychange",function(){
 		var v = $(this).val();
 		//v=v.replace(/\D/g,'');
+		if($(this).val().length==0){
+			return;
+		}
+		if(!dec_num.test(v)){
+			if(isNaN(parseInt(v))){
+				$(this).val("00");
+			}else{
+				$(this).val(parseInt(v));
+			}
+			return;
+		}
 		if(v<0){
 			$(this).val("00");
 		}
 	})
-
+	$(".time-insert input.hour").blur(function(){
+		if($(this).val().length==0){
+			$(this).val("00");
+		}
+	})
+	$(".time-insert input.minute").blur(function(){
+		if($(this).val().length==0){
+			$(this).val("00");
+		}
+	})
+	$(".time-insert input.second").blur(function(){
+		if($(this).val().length==0){
+			if($(".time-insert input.hour").val()==0 && $(".time-insert input.minute").val()==0){
+				$(this).val(0.5);
+			}else{
+				$(this).val("00");
+			}
+		}
+	})
 	//if(){  //如果没有存储卡
 	// 	$(".dialog-cover,#noCard").show();
 	// }
@@ -5313,7 +5364,7 @@ $(function(){
 							if(language=="en"){
 								$("#update .dialog-poppup-content").text("New firmware "+lastestfirmware+" available, upgrade now?")
 							}else{
-								$("#update .dialog-poppup-content").text("发现新版本 "+lastestfirmware+" ，是否现在升级？")
+								$("#update .dialog-poppup-content").text("发现新固件版本 "+lastestfirmware+" ，是否现在升级？")
 							}
 							
 							$("#update,.dialog-cover").holdShow();

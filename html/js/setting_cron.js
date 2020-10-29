@@ -44,6 +44,11 @@ $(function(){
 			orientation = 90;
 		}
 		recCtrl["orientation"] = orientation;
+		$(".file-split-type ul li").each(function(index){
+			if($(this).hasClass("on")){
+				recCtrl["cutmode"] = index;
+			}
+		})
 		if(recordWait) recCtrl['wait'] = recordWait;
 		// setTimeout(function(){
 			postJSON("/timelapse" , recCtrl, function (data) {
@@ -509,9 +514,14 @@ $(function(){
 				}
 				
 			}
-			
+			if($(".time-insert input.hour").val()==24){
+				$(".time-insert input.second,.time-insert input.minute").val("00");
+				return false;
+			}
 			if(ipt.hasClass("hour")){
 				if(val==24){
+					$(".time-insert input.second,.time-insert input.minute").val("00");
+				}else if(val>24){
 					return false;
 				}
 			}
@@ -546,13 +556,67 @@ $(function(){
 		ipt.val(x);
 		limitInterval();
 	})
+	var dec_num=/^[0-9]+$/;
 	$(".time-insert input.second,.time-insert input.minute").each(function(){
 		$(this).on("change keyup",function(){
 			var v = $(this).val();
+			if($(this).val().length==0){
+				return;
+			}
+			if(!dec_num.test(v)){
+				if(isNaN(parseInt(v))){
+					$(this).val("00");
+				}else{
+					$(this).val(parseInt(v));
+				}
+				return;
+			}
 			if(v>59){
 				$(this).val(59);
 			}
+			if($(".time-insert input.hour").val()=="24"){
+				$(this).val("00");
+			}
 		})
+	})
+	$(".time-insert input.hour").on("change keyup",function(){
+		var v = $(this).val();
+		if($(this).val().length==0){
+			return;
+		}
+		if(!dec_num.test(v)){
+			if(isNaN(parseInt(v))){
+				$(this).val("00");
+			}else{
+				$(this).val(parseInt(v));
+			}
+			return;
+		}
+		if(v>24){
+			$(this).val(24);
+		}
+		if($(this).val()=="24"){
+			$(".time-insert input.second,.time-insert input.minute").val("00");
+		}
+	})
+	$(".time-insert input.hour").blur(function(){
+		if($(this).val().length==0){
+			$(this).val("00");
+		}
+	})
+	$(".time-insert input.minute").blur(function(){
+		if($(this).val().length==0){
+			$(this).val("00");
+		}
+	})
+	$(".time-insert input.second").blur(function(){
+		if($(this).val().length==0){
+			if($(".time-insert input.hour").val()==0 && $(".time-insert input.minute").val()==0){
+				$(this).val(0.5);
+			}else{
+				$(this).val("00");
+			}
+		}
 	})
 	//取消拍摄间隔设置
 	$("#cancelInterval,#bydayCancelInterval").on("click",function(){
@@ -977,6 +1041,11 @@ $(function(){
 			//td=td.next();
 			//configs["bydayTask"][i-1]["exposureBias"]=parseInt(td.text());
 		}
+		$(".file-split-type ul li").each(function(index){
+			if($(this).hasClass("on")){
+				configs["cutmode"] = index;
+			}
+		})
 		//console.log(configs);
 		return configs;
 	}
@@ -1125,6 +1194,19 @@ $(function(){
 		else {
 			$("#cronTrigger").attr("checked", false);
 		}
+		if("cutmode" in e){
+			$(".file-split-type ul li").each(function(index){
+				if(e.cutmode == index){
+					$(this).addClass("on").siblings().removeClass("on");
+					$("#file-split-name").val($(this).find("i").text());
+					
+				}
+			})
+		}else{
+			$(".file-split-type ul li").eq(0).addClass("on").siblings().removeClass("on");
+			$("#file-split-name").val($(".file-split-type ul li").eq(0).find("i").text());
+		}
+		
 		if(e.cronMode=="byday"){
 			if(language && language=="en"){
 				$("#cronMode_dummy,#cronMode_val").val("Daily");
@@ -1301,6 +1383,22 @@ $(function(){
 			}*/
 		}
 	});
+
+	$("#file-split-name").on("click",function(){
+		$(".file-split-type,.dialog-cover").show();
+		$(".dialog-cover").addClass("tp");
+	});
+	$("body").on("click",".dialog-cover.tp",function(){
+		$(".file-split-type,.dialog-cover").hide();
+		$(".dialog-cover").removeClass("tp");
+	})
+	$(".file-split-type ul li").each(function(index){
+		$(this).on("click",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			$("#file-split-name").val($(this).find("i").text());
+			$(".file-split-type,.dialog-cover").hide();
+		})
+	})
 	
 })
 

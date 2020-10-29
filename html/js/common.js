@@ -110,7 +110,7 @@ $(function(){
 			var status = JSON.parse(e.data);
 			if(status.sessionId === 0){
 				var d = new Date();
-				postJSON('/status', {time: d.toJSON(),timezone:-(d2.getTimezoneOffset()/60)});
+				postJSON('/status', {time: d.toJSON(),timezone:-(d.getTimezoneOffset()/60)});
 			}
 		}
 		keepaliveEventSource.onerror = function() {

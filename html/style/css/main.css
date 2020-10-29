@@ -2694,7 +2694,7 @@ body.setting-index{
 .wlan-detail-set-ip{
     padding: 0.3em 4%;
 }
-.dormantMode,.outPutMode,.cutOffMode,.continueMode,.selector,.securityMode-select {
+.dormantMode,.outPutMode,.cutOffMode,.continueMode,.selector,.securityMode-select,.file-split-type {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -2714,13 +2714,13 @@ body.setting-index{
     display: none;
 
 }
-.cutOffMode,.continueMode,.selector {
+.cutOffMode,.continueMode,.selector,.file-split-type {
     max-width: 200px;
 }
-.dormantMode ul li:not(:last-child),.outPutMode ul li:not(:last-child),.cutOffMode ul li:not(:last-child),.continueMode ul li:not(:last-child),.selector ul li:not(:last-child),.securityMode-select ul li:not(:last-child){
+.dormantMode ul li:not(:last-child),.outPutMode ul li:not(:last-child),.cutOffMode ul li:not(:last-child),.continueMode ul li:not(:last-child),.selector ul li:not(:last-child),.securityMode-select ul li:not(:last-child),.file-split-type ul li:not(:last-child){
     margin-bottom: 20px;
 }
-.dormantMode ul li:before,.outPutMode ul li:before,.cutOffMode ul li:before,.continueMode ul li:before,.selector ul li:before,.securityMode-select ul li:before {
+.dormantMode ul li:before,.outPutMode ul li:before,.cutOffMode ul li:before,.continueMode ul li:before,.selector ul li:before,.securityMode-select ul li:before,.file-split-type ul li:before {
     content: "\a0"; /*不换行空格*/
     display: inline-block;
     vertical-align: middle;
@@ -2737,17 +2737,30 @@ body.setting-index{
     right: 3px;
     padding: 3px;
 }
-.dormantMode ul li.on:before,.outPutMode ul li.on:before,.cutOffMode ul li.on:before,.continueMode ul li.on:before,.selector ul li.on:before,.securityMode-select ul li.on:before {
+.file-split-type ul li:before {
+    font-size: 23px;
+}
+.dormantMode ul li.on:before,.outPutMode ul li.on:before,.cutOffMode ul li.on:before,.continueMode ul li.on:before,.selector ul li.on:before,.securityMode-select ul li.on:before, .file-split-type ul li.on:before{
     background-color: #00cfff;
     background-clip: content-box;
 }
-.dormantMode ul li i,.outPutMode ul li i,.cutOffMode ul li i,.continueMode ul li i,.selector ul li i,.securityMode-select ul li i {
+.dormantMode ul li i,.outPutMode ul li i,.cutOffMode ul li i,.continueMode ul li i,.selector ul li i,.securityMode-select ul li i,.file-split-type ul li i {
     font-style: normal;
 }
 .dormantMode ul li p {
     font-size: 14px;
     padding: 0 0 0 20px;
     color: #999;
+}
+#file-split-name {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.7em;
+    height: 2.85em;
+    padding-right: 2em;
+    text-align: right;
+    width: 136px;
 }
 .outPutMode .outPutDiscript {
     margin: 18px 8px 0;

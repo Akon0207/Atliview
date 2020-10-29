@@ -44,11 +44,13 @@
 		<div class="dialog-poppup" id="dialog-poppup">
 			<div class="dialog-poppup-tit"></div>
 			<form class="wlan-login">
-				<label class="flex flex-middle">
+				<!-- <label class="flex flex-middle"> -->
+				<div class="flex flex-middle">
 					<div class="wlan-login-tit" lan="pass">&nbsp;&nbsp;&nbsp;&nbsp;</div>
 					<input type="password" id="wlanPassword" class="fx1 wlan-login-ipt wlan-login-password" />
 					<div class="wlan-show-password iconfont">&#xe635;</div>
-				</label>
+				</div>
+				<!-- </label> -->
 			</form>
 			<div class="dialog-btns flex">
 				<a href="javascript:;" id="cancelConnect" lan="cancel">&nbsp;&nbsp;&nbsp;&nbsp;</a>
@@ -297,7 +299,8 @@ $(function(){
 
 	//点击显示密码
 	$("body").on("click",".wlan-show-password",function(e){
-		e.stopPropagation();
+		// e.stopPropagation();
+		e.preventDefault();
 		var ipt = $(this).siblings("input");
 		var state = ipt.attr("type");
 		if(state=="text"){
@@ -307,6 +310,7 @@ $(function(){
 			ipt.attr("type","text");
 			$(this).html("&#xe65f;");
 		}
+		// ipt.blur();
 	})
 	//点击取消隐藏wlan登陆框
 	$("#cancelConnect").on("click",function(){
@@ -844,10 +848,10 @@ $(function(){
 	// }
 	// if(app_type=="android" || app_type=="ios"){
 	// 	$("#wlanPassword").blur(function(){
-			// setTimeout(function(){
-			// 	var positionNow = document.getElementById("dialog-poppup").offsetTop;
-			// 	$("#dialog-poppup").css("top",positionNow+150);
-			// },250)
+	// 		setTimeout(function(){
+	// 			var positionNow = document.getElementById("dialog-poppup").offsetTop;
+	// 			$("#dialog-poppup").css("top",positionNow+150);
+	// 		},250)
 	// 	});
 	// }
 	if(app_type=="ios"){
@@ -855,7 +859,7 @@ $(function(){
        		window.scrollTo(0, 0);
 	    });
 	}
-	// var dheight =  $(document).height();
+	var dheight =  $(document).height();
 	window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
 	    if (window.orientation === 180 || window.orientation === 0) {//竖屏状态
 	        // alert('竖屏状态！');
@@ -874,14 +878,14 @@ $(function(){
 		$("#wlanPassword").focus(function (){
 			offsetTop = $("#dialog-poppup").offset().top;
 			if(!getPortrait()){
-				$("#dialog-poppup").offset({top:offsetTop-150});
+				$("#dialog-poppup").offset({top:offsetTop-120});
 			}
 		});
 		$("#wlanPassword").blur(function(){
 			offsetTop = $("#dialog-poppup").offset().top;
 			if(!getPortrait()){
 				setTimeout(function(){
-					$("#dialog-poppup").offset({top:offsetTop+150});
+					$("#dialog-poppup").offset({top:offsetTop+120});
 				},250)
 			}
 		});

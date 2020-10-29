@@ -120,6 +120,10 @@
 					</select>
 				</div>
 			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1" lan="fileSplit"></div>
+				<div class="setting-cron-select blue" ><input type="text" readonly="readonly" id="file-split-name"></div>
+			</div>
 			<div class="setting-cron-table">
 				<table>
 					<tbody>
@@ -140,11 +144,25 @@
 				<a href="javascript:;" id="addPeriod" lan="addPer">添加时段</a>
 			</div>
 		</div>
+	
 	<div class="cron-btns">
 		<a href="javascript:;" class="cron-btns-confirm post" lan="startCro">开始任务</a>
 	</div>
 	
 	</section>
+	<div class="file-split-type">
+		<ul>
+			<li class="on">
+				<i lan="notSplit"></i>
+			</li>
+			<li>
+				<i lan="byTimeSplit"></i>
+			</li>
+			<li>
+				<i lan="byDaySplit"></i>
+			</li>
+		</ul>
+	</div>
 	<div class="cronPrompt" lan="cronP1">正在拍摄中，无法设置定时任务</div>
 	<div class="cronPrompt2" lan="cronP2">录像或拍照模式下，无法设置定时任务。<br>开始任务将自动为您切换到<span style="color: #337fe5;">延时摄影</span>模式。</div>
 	</div>
