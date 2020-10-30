@@ -2742,48 +2742,51 @@ $(function(){
 	})
 
 	
-	$(".time-insert input.second,.time-insert input.minute").each(function(){
+	$(".time-insert input.hour,.time-insert input.second,.time-insert input.minute").each(function(){
 		$(this).on("change keyup",function(){
 			var v = $(this).val();
-			//v=v.replace(/\D/g,'');
+			v=v.replace(/\D/g,'');
 			if($(this).val().length==0){
 				return;
 			}
-			if(!dec_num.test(v)){
-				if(isNaN(parseInt(v))){
-					$(this).val("00");
-				}else{
-					$(this).val(parseInt(v));
+			
+			if($(this).hasClass("hour")){
+				if(v>24){
+					$(this).val(24);
 				}
+			}
+			if($(this).hasClass("minute") || $(this).hasClass("second")){
+				if(v>59){
+					$(this).val(59);
+				}
+			}
+			if(v<0){
+				$(this).val("00");
+			}
+		});
+		$(this).bind("input propertychange",function(){
+			var v = $(this).val();
+			v=v.replace(/\D/g,'');
+			if($(this).val().length==0){
 				return;
 			}
-			if(v>59){
-				$(this).val(59);
+			
+			if($(this).hasClass("hour")){
+				if(v>24){
+					$(this).val(24);
+				}
+			}
+			if($(this).hasClass("minute") || $(this).hasClass("second")){
+				if(v>59){
+					$(this).val(59);
+				}
 			}
 			if(v<0){
 				$(this).val("00");
 			}
 		})
 	})
-	// $(".time-insert input.hour").on("change keyup",function(){
-	$(".time-insert input.hour").bind("input propertychange",function(){
-		var v = $(this).val();
-		//v=v.replace(/\D/g,'');
-		if($(this).val().length==0){
-			return;
-		}
-		if(!dec_num.test(v)){
-			if(isNaN(parseInt(v))){
-				$(this).val("00");
-			}else{
-				$(this).val(parseInt(v));
-			}
-			return;
-		}
-		if(v<0){
-			$(this).val("00");
-		}
-	})
+	
 	$(".time-insert input.hour").blur(function(){
 		if($(this).val().length==0){
 			$(this).val("00");
