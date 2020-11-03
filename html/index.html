@@ -2745,14 +2745,22 @@ $(function(){
 	$(".time-insert input.hour,.time-insert input.second,.time-insert input.minute").each(function(){
 		$(this).on("change keyup",function(){
 			var v = $(this).val();
-			v=v.replace(/\D/g,'');
+			// v=v.replace(/\D/g,'');
 			if($(this).val().length==0){
 				return;
 			}
-			
+			if(!dec_num.test(v)){
+				if(isNaN(parseInt(v))){
+					$(this).val("00");
+				}else{
+					$(this).val(parseInt(v));
+				}
+				return;
+			}
 			if($(this).hasClass("hour")){
-				if(v>24){
+				if(v>=24){
 					$(this).val(24);
+					$(".time-insert input.second,.time-insert input.minute").val("00");
 				}
 			}
 			if($(this).hasClass("minute") || $(this).hasClass("second")){
@@ -2766,14 +2774,22 @@ $(function(){
 		});
 		$(this).bind("input propertychange",function(){
 			var v = $(this).val();
-			v=v.replace(/\D/g,'');
+			// v=v.replace(/\D/g,'');
 			if($(this).val().length==0){
 				return;
 			}
-			
+			if(!dec_num.test(v)){
+				if(isNaN(parseInt(v))){
+					$(this).val("00");
+				}else{
+					$(this).val(parseInt(v));
+				}
+				return;
+			}
 			if($(this).hasClass("hour")){
-				if(v>24){
+				if(v>=24){
 					$(this).val(24);
+					$(".time-insert input.second,.time-insert input.minute").val("00");
 				}
 			}
 			if($(this).hasClass("minute") || $(this).hasClass("second")){
@@ -4938,13 +4954,16 @@ $(function(){
 	function fixPreviewCss(){
 
 		var width = $(".main-pic").css("width");
+		var height = $(".main-pic").css("height");
+		$(".main-pic").css("width", "99%");
 		$(".main-pic").css("width", "99%");
 		//$(".main-pic").css("width", width);
 
 		if(!fixPreviewCssTimer){
 		    fixPreviewCssTimer = setTimeout(function(){
 			$(".main-pic").css("width", width);
-			console.log("css:"+width);
+			$(".main-pic").css("height", height);
+			console.log("css:"+width+" "+height);
 			fixPreviewCssTimer=null;
 			setOrientation(imgArchive,true);
 			//positionFixed();
@@ -5344,9 +5363,9 @@ $(function(){
 		initStatusEventSource();
 		$("#preview").load(function(){ //加载完图片后关闭app的"正在加载"提醒
 			if(toVisible){
-				fixPreviewCss();
 				toVisible = 0;
 			}
+			fixPreviewCss();
 			localControl.notify("IndexLoaded");
 			window.setTimeout(function(){
 				var lastestfirmware = localControl.getValue("LatestFirmware", null);
