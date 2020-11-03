@@ -2745,18 +2745,11 @@ $(function(){
 	$(".time-insert input.hour,.time-insert input.second,.time-insert input.minute").each(function(){
 		$(this).on("change keyup",function(){
 			var v = $(this).val();
-			// v=v.replace(/\D/g,'');
+			v=v.replace(/\D/g,'');
 			if($(this).val().length==0){
 				return;
 			}
-			if(!dec_num.test(v)){
-				if(isNaN(parseInt(v))){
-					$(this).val("00");
-				}else{
-					$(this).val(parseInt(v));
-				}
-				return;
-			}
+			
 			if($(this).hasClass("hour")){
 				if(v>=24){
 					$(this).val(24);
@@ -2766,6 +2759,9 @@ $(function(){
 			if($(this).hasClass("minute") || $(this).hasClass("second")){
 				if(v>59){
 					$(this).val(59);
+				}
+				if($(".time-insert input.hour").val()==24){
+					$(this).val("00");
 				}
 			}
 			if(v<0){
@@ -2774,27 +2770,24 @@ $(function(){
 		});
 		$(this).bind("input propertychange",function(){
 			var v = $(this).val();
-			// v=v.replace(/\D/g,'');
+			v=v.replace(/\D/g,'');
 			if($(this).val().length==0){
 				return;
 			}
-			if(!dec_num.test(v)){
-				if(isNaN(parseInt(v))){
-					$(this).val("00");
-				}else{
-					$(this).val(parseInt(v));
-				}
-				return;
-			}
+			
 			if($(this).hasClass("hour")){
 				if(v>=24){
 					$(this).val(24);
 					$(".time-insert input.second,.time-insert input.minute").val("00");
+
 				}
 			}
 			if($(this).hasClass("minute") || $(this).hasClass("second")){
 				if(v>59){
 					$(this).val(59);
+				}
+				if($(".time-insert input.hour").val()==24){
+					$(this).val("00");
 				}
 			}
 			if(v<0){
@@ -4962,7 +4955,7 @@ $(function(){
 		if(!fixPreviewCssTimer){
 		    fixPreviewCssTimer = setTimeout(function(){
 			$(".main-pic").css("width", width);
-			$(".main-pic").css("height", height);
+			//$(".main-pic").css("height", height);
 			console.log("css:"+width+" "+height);
 			fixPreviewCssTimer=null;
 			setOrientation(imgArchive,true);
