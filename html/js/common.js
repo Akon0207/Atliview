@@ -118,10 +118,11 @@ $(function(){
 				console.log("KeepaliveEventSource onerror, 但在升级页面，忽略");
 			}else {
 				netDisconnected();
-				if(forAppNetDisCnn){
-					localControl.reDiscover("reDiscover");
-					forAppNetDisCnn = false;
-				}
+				// if(forAppNetDisCnn){
+				// 	$("#testAA").show();
+				// 	localControl.reDiscover("reDiscover");
+				// 	forAppNetDisCnn = false;
+				// }
 				console.log("KeepaliveEventSource onerror");
 			}
 			window.setTimeout(function(){
@@ -592,10 +593,6 @@ function keepAlive(){
 		if(netStatus==1) netTimer=setTimeout(function(){
 			netTimer=null;
 			netDisconnected();
-			if(forAppNetDisCnn){
-				localControl.reDiscover("reDiscover");
-				forAppNetDisCnn = false;
-			}
 		}, 3000);
 	}
 }

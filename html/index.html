@@ -1053,6 +1053,7 @@ $(function(){
 	var outPutMode = null;
 	var localTime,serverTime;
 	var dec_num=/^[0-9]+$/;
+	var imgLoadck = true;
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
 		$(".iconfont.menu").attr("href","setting.html?language=en")
@@ -5084,7 +5085,11 @@ $(function(){
 			$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
 			$(".main-pic").load(function(){
 				console.log("img load complete++++++++++++++++++++++++++++++");
-				localControl.notify("imageLoaded");
+				if(imgLoadck){
+					localControl.notify("imageLoaded");
+					imgLoadck = false;
+				}
+				
 			})
 			// var idleSrc = $(".main-pic").prop("src");
 			
@@ -5263,6 +5268,7 @@ $(function(){
 			}, 3000);
 		}
 		statusError=1;
+		toVisible=1;  //需要刷新图像
 	}
 	function initStatusEventSource() {
 		console.log("initStatusEventSource");
@@ -5357,8 +5363,8 @@ $(function(){
 		$("#preview").load(function(){ //加载完图片后关闭app的"正在加载"提醒
 			if(toVisible){
 				toVisible = 0;
+				fixPreviewCss();
 			}
-			fixPreviewCss();
 			localControl.notify("IndexLoaded");
 			window.setTimeout(function(){
 				var lastestfirmware = localControl.getValue("LatestFirmware", null);
