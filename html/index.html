@@ -2643,15 +2643,6 @@ $(function(){
 	})
 
 	function updateTimeTotal() {
-		if(!dec_num.test($('#interval-hour').val())){
-			$('#interval-hour').val("00")
-		}
-		if(!dec_num.test($('#interval-minute').val())){
-			$('#interval-minute').val("00")
-		}
-		if(!dec_num.test($('#interval-second').val())){
-			$('#interval-second').val("00")
-		}
 		if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1)$('#interval-second').val(0.5);
 		if(($('#interval-hour').val()!="00" || $('#interval-minute').val()!="00")) {
 			if($('#interval-second').val()=="0.5"){
@@ -4984,6 +4975,10 @@ $(function(){
 			fixPreviewCss();
 			//statusEventSourceOnerror();
 
+			if(statusEventSource == null) {
+				console.log("restart statusEventSource!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				return statusEventSourceOnerror();
+			}
 			console.log("try to get status")
 			//getStatusTimer=window.setTimeout(function(){
 				getJSON("/status", function(e, statue){
@@ -5288,6 +5283,7 @@ $(function(){
 
 		statusEventSource.onerror = function() {
 			console.log("statusEventSource.onerror!!statusError:"+statusError);
+			console.log("try to get status")
 			statusEventSourceOnerror();
 			sessionId=null;
 			netDisconnected();
