@@ -46,8 +46,7 @@ $(function(){
 		recCtrl["orientation"] = orientation;
 		$(".file-split-type ul li").each(function(index){
 			if($(this).hasClass("on")){
-				// recCtrl["cutmode"] = index;
-				// recCtrl["cutmode"] = 0;
+				recCtrl["cutmode"] = index;
 			}
 		})
 		if(recordWait) recCtrl['wait'] = recordWait;
