@@ -691,13 +691,15 @@ $(function(){
 		})
 
 	}
+	var interval = 1000;
 	function getWlanList(){
-		if(freshCount == 1 || freshCount == 2){
-			var interval=10000;
-			freshCount++;
-		}else{
-			var interval=15000;
-		}
+		// if(freshCount == 1 || freshCount == 2){
+		// 	var interval=10000;
+		// 	freshCount++;
+		// }else{
+		// 	var interval=15000;
+		// }
+		
 		if(flag == true){
 			$(".searching-now").show();
 		}
@@ -807,7 +809,7 @@ $(function(){
 					wifiSetTimer=setTimeout(netError, 15000);
 					pwd=null;
 					changeConnect(ssid);
-					interval=5000;
+					// interval=5000;
 				})
 			})
 			//击wlan列表如果以保存信息则直接切换
@@ -818,14 +820,14 @@ $(function(){
 					postwificonfig = true;
 					postJSON("/wifi_config", { connect: ssid});
 					changeConnect(ssid);
-					interval=5000;
+					// interval=5000;
 				})
 			})
-			if(getListTimer=null) interval=5000;
+			// if(getListTimer=null) interval=5000;
 			getListTimer=setTimeout(getWlanList, interval);
 		}, function (jqXHR, exception) {
-			if(getListTimer=null) interval=5000;
-			else interval=10000;
+			// if(getListTimer=null) interval=5000;
+			// else interval=10000;
 			getListTimer=setTimeout(getWlanList, interval);
 			console.log((jqXHR.status+exception));
 		});
@@ -1006,7 +1008,9 @@ $(function(){
 					wifiSetTimer=setTimeout(netError, 15000);
 					pwd=null;
 					changeConnect(ssid);
-					interval=5000;
+					clearTimeout(getListTimer);
+					// getListTimer=setTimeout(getWlanList, 5000);
+					getListTimer=setTimeout(getWlanList, 1000);
 				}else if(auth == "psk"){
 					var wifiCtrl={"ssid":ssid, "auth":auth, "psk":password };
 					postJSON("/wifi_config", wifiCtrl);
@@ -1015,7 +1019,8 @@ $(function(){
 					pwd=password;
 					changeConnect(ssid);
 					clearTimeout(getListTimer);
-					getListTimer=setTimeout(getWlanList, 5000);
+					// getListTimer=setTimeout(getWlanList, 5000);
+					getListTimer=setTimeout(getWlanList, 1000);
 				}else if(auth == "eap"){
 					var wifiCtrl={"ssid":ssid, "auth":auth, "user":user,"passwd":password};
 					postJSON("/wifi_config", wifiCtrl);
@@ -1024,7 +1029,8 @@ $(function(){
 					pwd=password;
 					changeConnect(ssid);
 					clearTimeout(getListTimer);
-					getListTimer=setTimeout(getWlanList, 5000);
+					// getListTimer=setTimeout(getWlanList, 5000);
+					getListTimer=setTimeout(getWlanList, 1000);
 				}
 				postwificonfig = true;
 			}
