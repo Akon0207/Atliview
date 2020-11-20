@@ -2389,10 +2389,13 @@ body.setting-index{
     color: #4c4c4c;
     position: relative;
 }
-.setting-item-name .wifi-tip{
+.setting-item-name .wifi-tip,.setting-item-name .wrong-key{
     margin-left: 5px;
     font-size: 0.65em;
     margin-left: 10px;
+}
+.setting-item-name .wrong-key {
+    color: #f00;
 }
 .setting-item-name:before{
     font-family: 'iconfont';

@@ -505,6 +505,13 @@ $(function(){
 		$(".setting-item[ssid='"+ssid+"']").remove();
 		$(".setting-list.wlan-list").prepend(thisWifi);
 	}
+	function showErrorKey(ssid,status){
+		if(language && language=="en"){
+			$(".setting-item[ssid='"+ssid+"'] .setting-item-name").html(ssid+"<span class='wrong-key'>"+(status=="wrong key"?"Wrong Password":"Connection failed!")+"</span>");
+		}else{
+			$(".setting-item[ssid='"+ssid+"'] .setting-item-name").html(ssid+"<span class='wrong-key'>"+(status=="wrong key"?"密码错误":"连接失败！")+"</span>");
+		}
+	}
 	function addWlanList(i, wifi){
 		// if(wifi.signal >= -65) wclass="wifi1";  //信号强度
 		// else if(wifi.signal < -65 && wifi.signal >= -73) wclass="wifi2";
@@ -601,24 +608,26 @@ $(function(){
 			$(".setting-list.wlan-list").prepend(thiswifi);
 			connectingSSID=wifi.ssid;
 		}else if(("status" in wifi) && wifi.status=="wrong key"){ //密码错误的wifi
-			if(connectingSSID==wifi.ssid){
-				if(language && language=="en"){
-					$("#dialog-poppup  .dialog-poppup-tit").text(wifi.ssid+"Password error!").attr("auth", wifi.auth).attr("ssid", wifi.ssid);
-				}else{
-					$("#dialog-poppup  .dialog-poppup-tit").text(wifi.ssid+"密码错误！").attr("auth", wifi.auth).attr("ssid", wifi.ssid);
-				}
-				$("#dialog-cover,#dialog-poppup").show();
-			}
+			// if(connectingSSID==wifi.ssid){
+			// 	if(language && language=="en"){
+			// 		$("#dialog-poppup  .dialog-poppup-tit").text(wifi.ssid+" Password error!").attr("auth", wifi.auth).attr("ssid", wifi.ssid);
+			// 	}else{
+			// 		$("#dialog-poppup  .dialog-poppup-tit").text(wifi.ssid+"密码错误！").attr("auth", wifi.auth).attr("ssid", wifi.ssid);
+			// 	}
+			// 	$("#dialog-cover,#dialog-poppup").show();
+			// }
+			showErrorKey(wifi.ssid,wifi.status);
 		}else if(("status" in wifi) && wifi.status=="conn failed"){ //连接失败的wifi
-			if(connectingSSID==wifi.ssid){
-				//$("#dialog-poppup-connect-fail  .dialog-poppup-tit").text(wifi.ssid+"连接失败").attr("auth", wifi.auth).attr("ssid", wifi.ssid);
-				if(language && language=="en"){
-					$("#dialog-poppup-connect-fail  .warning").text(wifi.ssid+"Connection failed!");
-				}else{
-					$("#dialog-poppup-connect-fail  .warning").text(wifi.ssid+"连接失败!");
-				}
-				$("#dialog-cover-connect-fail,#dialog-poppup-connect-fail").show();
-			}
+			// if(connectingSSID==wifi.ssid){
+			// 	//$("#dialog-poppup-connect-fail  .dialog-poppup-tit").text(wifi.ssid+"连接失败").attr("auth", wifi.auth).attr("ssid", wifi.ssid);
+			// 	if(language && language=="en"){
+			// 		$("#dialog-poppup-connect-fail  .warning").text(wifi.ssid+"Connection failed!");
+			// 	}else{
+			// 		$("#dialog-poppup-connect-fail  .warning").text(wifi.ssid+"连接失败!");
+			// 	}
+			// 	$("#dialog-cover-connect-fail,#dialog-poppup-connect-fail").show();
+			// }
+			showErrorKey(wifi.ssid,wifi.status);
 		}
 		if(connectingSSID==wifi.ssid && (!("status" in wifi) || wifi.status!="connect")) connectingSSID=null; //不处于验证状态
 		//点击显示wifi详情页
@@ -755,9 +764,11 @@ $(function(){
 			//点击wlan列表如果需要密码则弹出输入密码
 			$(".wlan-list .setting-item").not(".connected").not(".id").not(".none").each(function(){
 				var thisName = $(this).children().children(".setting-item-name");
+				var fatherDivObj = $(this);
 				thisName.click(function(){
-					var tit = $(this).text();
-					var fatherDivObj = $(this).parents(".setting-item");
+					// var tit = $(this).text();
+					var tit = fatherDivObj.attr("ssid");
+					// var fatherDivObj = $(this).parents(".setting-item");
 					$("#dialog-poppup  .dialog-poppup-tit").text(tit).attr("auth", fatherDivObj.attr("auth")).attr("ssid", tit);
 					if(fatherDivObj.attr("mode") && fatherDivObj.attr("mode") == "static"){
 						$("#dialog-poppup  .dialog-poppup-tit").attr("mode","static");

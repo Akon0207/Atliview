@@ -89,9 +89,14 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.keepAlive=function(msg) {return null}
 	localControl.reDiscover=function() {return null}
 }
-
+var browserLang = navigator.language||navigator.userLanguage;//常规浏览器语言和IE浏览器
+browserLang = browserLang.substr(0, 2);
 if(!language) {
-	language=localControl.getValue("language", "zh");
+	if(!app_type){
+		language = browserLang;
+	}else{
+		language=localControl.getValue("language", "zh");
+	}
 }else {
 	localControl.putValue("language", language);
 }
@@ -556,7 +561,12 @@ var browser_key_try_count=3;
 function browser_key(){
     if(!app_type && browser_key_try_count>0){
 	browser_key_try_count=0;
-	var key=prompt("请输入安全认证码");
+	if(language && language == "en"){
+		var key=prompt("Please enter Authentication Code");
+	}else{
+		var key=prompt("请输入安全认证码");
+	}
+	
 	localControl.putValue("KEY", key);
 	location.reload();
 	//location.href="index.html";
