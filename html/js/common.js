@@ -16,6 +16,17 @@ var pagePath = window.location.pathname;
 var postwificonfig = null;
 var wificoutInterval = null;
 var forAppNetDisCnn = true;
+var reDiscoverTimeout = null;
+var inAP=0;
+function isAP(){
+        getJSON("/sysinfo?wlan1_ip=1", function(e, status){
+                if("wlan1_ip" in e ){
+                        if(e.wlan1_ip==document.domain) {
+                                inAP=1;
+                        }
+                }
+        })
+}
 if(window.webkit && window.webkit.messageHandlers){ //ios中
 	app_type="ios";
 	localControl.getValue=function(k, v){return window.prompt(String(k), v)};
@@ -683,6 +694,7 @@ function netConnected()
 	}
 	if(netTimer) clearTimeout(netTimer);
 	netTimer=null;
+	clearTimeout(reDiscoverTimeout);
 	forAppNetDisCnn = true;
 }
 
@@ -771,8 +783,10 @@ $(document).ajaxError(function(e,xhr,opt){
 		else {
 			netDisconnected();
 			if(forAppNetDisCnn){
-				localControl.reDiscover("reDiscover");
-				forAppNetDisCnn = false;
+				reDiscoverTimeout = setTimeout(function(){
+					localControl.reDiscover("reDiscover");
+					forAppNetDisCnn = false;
+				},(inAP==0?5000:2000))
 			}
 			console.log("AJAX "+opt.url+" 超时");
 		}
@@ -827,16 +841,7 @@ $.fn.extend({
 		else $(this).hide();
 	}
 });
-var inAP=0
-function isAP(){
-        getJSON("/sysinfo?wlan1_ip=1", function(e, status){
-                if("wlan1_ip" in e ){
-                        if(e.wlan1_ip==document.domain) {
-                                inAP=1;
-                        }
-                }
-        })
-}
+
 function isWebAlive(){
 	localControl.keepAlive("alive");
 }

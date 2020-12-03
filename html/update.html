@@ -44,7 +44,7 @@
     		<div class="updateTitle" lan="uploadN">相机升级</div>
     		<div class="updateProgress">
     			<div class="update-progress-text">
-                	<div class="loading">
+                	<!-- <div class="loading">
 	                	<div id="loading1">
 					        <div class="demo1"></div>
 					        <div class="demo1"></div>
@@ -59,7 +59,11 @@
 					        <div class="demo1"></div>
 						</div>
 	                </div>
-                    <div class="updateText" lan="updatePre">正在准备...</div>
+                    <div class="updateText" lan="updatePre">正在准备...</div> -->
+                    <div class="update-progress-ui">
+                        <span style="width: 0%;"></span>
+                    </div>
+                    <div class="updateText" lan="uploading"></div>
                 </div>
     		</div>
 
@@ -325,9 +329,14 @@
                     if(language && language=="en"){error("EON not responsive!");}else{error("相机没有回应！")}
                     console.log(jqXHR.status+exception);
                 },"text")
-            }else{
+            }else if(flag==1){
                 if(language && language=="en"){error("Upload firmware to camera failed !")}else{error("上传固件失败，退出升级程序 ！")}
+            }else if(flag==2){
+                if(language && language=="en"){error("Firmware package lost,please restart the App in order to redownload")}else{error("固件包已丢失，重启APP即可重新下载")}
             }
+        }
+        function uploadProgress(int) {
+            $("#uploading .update-progress-ui span").css("width",String(int)+"%");
         }
         function uploading(){
             updateStatus = "uploading";
@@ -436,7 +445,6 @@
                         if(e.currentVersion==updatingVersion || updatingVersion=='' || updatingVersion==null) return done();
                         else return error("版本不一致。升级:"+updatingVersion+",结果:"+e.currentVersion+" ");
                     }
-                    
                 }
                 // $("#newversion").text(e.version);
                 if(e.version) updatingVersion=e.version;

@@ -257,5 +257,6 @@
 	"fileSplit":"分段保存",
 	"notSplit":"不分段",
 	"byTimeSplit":"每个时间段",
-	"byDaySplit":"每天"
+	"byDaySplit":"每天",
+	"uploading":"正在上传..."
 }

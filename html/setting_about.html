@@ -907,11 +907,11 @@ $(function(){
             else if(e.status=="checking") {downloading(0)}
 			else if(e.status=="writing") {
 				writing(e.percentage);
-				// setUpdateStartTime();
-				// apUpdate();
-				// return
+
 			}else if("currentVersion" in e){
-                return done();
+                if(new Date().getTime()-upgradeStartTime>10000){
+                    return done();
+                }
             }
 			// $("#newversion").text(e.version);
 			upgradeTimeout=setTimeout(update, 400);

@@ -519,7 +519,7 @@ $(function(){
 		// else return;
 		if(wifi.signal >= -52) wclass="wifi1";  //信号强度
 		else if(wifi.signal < -52 && wifi.signal >= -59) wclass="wifi2";
-		else if(wifi.signal < -60 && wifi.signal > -66) wclass="wifi3";
+		else if(wifi.signal <= -60 && wifi.signal > -66) wclass="wifi3";
 		else return;
 
 		$(".setting-list.wlan-list").append("<div id=wlan"+i+"/>");

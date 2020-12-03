@@ -257,5 +257,6 @@
 	"fileSplit":"File Saving Options",
 	"notSplit":"Combined",
 	"byTimeSplit":"Per Time Slot",
-	"byDaySplit":"Per Day"
+	"byDaySplit":"Per Day",
+	"uploading":"Uploading..."
 }
