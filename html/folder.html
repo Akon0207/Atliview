@@ -49,6 +49,10 @@ body.video-index .setting-head.head-msg{
 }
 .folder-slice{
 	right: 90px;
+    top: 26px;
+}
+.folder-slice img {
+    width: 100%;
 }
 .folder-download{
 	right: 50px;
@@ -253,8 +257,8 @@ input:-ms-input-placeholder {
 <body class="video-index">
 	<section class="setting-head">
 		<a href="video.html" class="iconfont goback">&#xe6ea;</a>
-		<p>图片文件夹</p>
-		<a href="javascript:;" class="iconfont folder-slice">&#xe630;</a>
+		<p lan="photoFolder">图片文件夹</p>
+		<a href="javascript:;" class="iconfont folder-slice"><img src="images/timeslice_icon.png"></a>
 		<a href="javascript:;" class="iconfont folder-download">&#xe644;</a>
 		<a href="javascript:;" class="iconfont folder-delete">&#xe634;</a>
 	<!--	<div class="video-style" id="firmware"></div> -->
@@ -347,7 +351,7 @@ input:-ms-input-placeholder {
     <div class="dialog-cover"></div>
 
     <div class="dialog-poppup" id="deleteFolder" style="display: none;">
-     <div class="dialog-poppup-content">是否要删除文件夹?</div>
+     <div class="dialog-poppup-content" lan="msdelFolder">是否要删除文件夹?</div>
      <div class="dialog-btns flex">
        <a href="javascript:;" class="downloadCancel" lan="cancel">取消</a>
        <a href="javascript:;" id="deleteFolderConfirm" lan="OK">确定</a>
@@ -356,7 +360,7 @@ input:-ms-input-placeholder {
 
     <div class="dialog-poppup" id="downloadPack" style="display: none;">
 
-     <div class="dialog-poppup-content" >是否要下载该文件夹中的图片?</div>
+     <div class="dialog-poppup-content" lan="dlFolderPicture">是否要下载该文件夹中的图片?</div>
      <div class="dialog-btns flex">
        <a href="javascript:;" class="downloadCancel" lan="cancel">取消</a>
        <a href="javascript:;" id="downloadConfirm" lan="OK">确定</a>
@@ -494,7 +498,12 @@ function checkPack()
 {
 	if(packSec > packMacSec) return timeout();
 	getJSON("/tgz", function(e, status){
-		$("#packSecMsg").html("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒"+e.tgz);
+        if(language=="en"){
+            $("#packSecMsg").html("Compressing "+packMacSec+" Photos，about "+packSec+" seconds"+e.tgz);
+        }else{
+            $("#packSecMsg").html("正在压缩"+packMacSec+"张照片，已用时"+packSec+"秒"+e.tgz);
+        }
+		
 		console.log("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒");
 		packSec++;
 		if(e.tgz != packID ) {
@@ -685,8 +694,12 @@ function setItems(data)
 					$(this).css("width", this.naturalWidth/(this.naturalHeight/0.5625)*100+"%");
 				}
 			});
-
-			$("p[lan='foladr-head-msg']").text("总数量"+maxItems+"帧，抽样显示"+showItems+"帧");
+            if(language=="en"){
+                $("p[lan='foladr-head-msg']").text(maxItems+" in Total,"+showItems+" For Display");
+            }else{
+                $("p[lan='foladr-head-msg']").text("总数量"+maxItems+"帧，抽样显示"+showItems+"帧");
+            }
+			
 			$("li[v]").each(function(){
 				var v = parseInt(($(this).attr("v")));
 				$(this).children(".show-count").text("可展示"+Math.ceil(maxItems/v)+"帧");

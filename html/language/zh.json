@@ -147,7 +147,7 @@
 	"phoAlb":"相册",
 	"byDate":"按日期",
 	"byMonth":"按月份",
-	"Tiled":"平铺",
+	"byTiled":"平铺",
 	"modeNow":"延时摄影",
 	"eleTor":"手电筒",
 	"inputCode":"输入验证码",
@@ -258,5 +258,8 @@
 	"notSplit":"不分段",
 	"byTimeSplit":"每个时间段",
 	"byDaySplit":"每天",
-	"uploading":"正在上传..."
+	"uploading":"正在上传...",
+	"photoFolder":"图片文件夹",
+	"msdelFolder":"是否要删除文件夹？",
+	"dlFolderPicture":"是否要下载该文件夹中的图片?"
 }

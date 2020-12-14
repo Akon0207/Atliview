@@ -44,7 +44,7 @@
     		<div class="updateTitle" lan="uploadN">相机升级</div>
     		<div class="updateProgress">
     			<div class="update-progress-text">
-                	<!-- <div class="loading">
+                	<div class="loading">
 	                	<div id="loading1">
 					        <div class="demo1"></div>
 					        <div class="demo1"></div>
@@ -59,8 +59,8 @@
 					        <div class="demo1"></div>
 						</div>
 	                </div>
-                    <div class="updateText" lan="updatePre">正在准备...</div> -->
-                    <div class="update-progress-ui">
+                    <!-- <div class="updateText" lan="updatePre">正在准备...</div> -->
+                    <div class="update-progress-ui" style="display: none;">
                         <span style="width: 0%;"></span>
                     </div>
                     <div class="updateText" lan="uploading"></div>
@@ -336,7 +336,10 @@
             }
         }
         function uploadProgress(int) {
-            $("#uploading .update-progress-ui span").css("width",String(int)+"%");
+            $("#uploading .update-progress-ui").show();
+            $("#uploading .loading").hide();
+            $("#uploading .update-progress-ui span").css("width",int.toString()+"%");
+            console.log("uploading "+int.toString()+"%");
         }
         function uploading(){
             updateStatus = "uploading";

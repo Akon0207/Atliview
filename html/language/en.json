@@ -143,10 +143,10 @@
 	"haode":"OK",
 	"msdel":"Delete it?",
 	"del":"Delete",
-	"phoAlb":"Photo",
-	"byDate":"按日期",
-	"byMonth":"按月份",
-	"Tiled":"Tiled",
+	"phoAlb":"Album",
+	"byDate":"Date",
+	"byMonth":"Month",
+	"byTiled":"Tiled",
 	"modeNow":"Time-lapse",
 	"eleTor":"Electric torch",
 	"inputCode":"Enter authentication code",
@@ -258,5 +258,8 @@
 	"notSplit":"Combined",
 	"byTimeSplit":"Per Time Slot",
 	"byDaySplit":"Per Day",
-	"uploading":"Uploading..."
+	"uploading":"Uploading...",
+	"photoFolder":"Photo Sequence",
+	"msdelFolder":"Are you sure you want to delete?",
+	"dlFolderPicture":"Are you sure you want to download this Photo Sequence?"
 }

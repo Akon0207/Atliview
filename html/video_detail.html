@@ -35,15 +35,15 @@
 	<div class="dialog-poppup format-steps" id="deleteMedia">
 		<div class="format-step1">
 			<div class="dialog-poppup-main">
-				<p class="warning" lan="msdel">确认删除？</p>
+				<p class="warning" lan="msdel"></p>
 			</div>
 			<div class="dialog-btns flex">
-				<a href="javascript:;" id="cancel" lan="cancel">取消</a>
-				<a href="javascript:;" id="confirm" lan="del">删除</a>
+				<a href="javascript:;" id="cancel" lan="cancel"></a>
+				<a href="javascript:;" id="confirm" lan="del"></a>
 			</div>
 		</div>
 	</div>
-
+<script type="text/javascript" src="js/language.js"></script>
 <script type="text/javascript">
 if(language && language=="en"){
 	$(".iconfont.goback").attr("href","video.html?language=en")
@@ -84,7 +84,7 @@ function deleteMedia()
 		//window.history.back(-1);
 	},function(jqXHR, exception){
 		console.log((jqXHR.status+exception));
-		alert("删除失败！("+jqXHR.status+exception+")");
+		alert((language=="en"?"Delete failed!":"删除失败！(")+jqXHR.status+exception+")");
 		//window.history.back(-1);
 	}, "text");
 }

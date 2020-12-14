@@ -31,19 +31,31 @@
 <body class="video-index">
 	<section class="setting-head">
 		<a href="index.html" class="iconfont goback">&#xe6ea;</a>
-		<p>相册</p>
+		<p lan="phoAlb"></p>
 
 		<label class="video-style iconfont">
-			<select id="videoStyle">
+			<!-- <select id="videoStyle">
 				<option value="0">按日期</option>
 				<option value="1">按月份</option>
 				<option value="2">平铺</option>
-			</select>
+			</select> -->
 		</label>
 
 	</section>
 
-	
+	<div class="selector" id="videoStyle">
+		<ul>
+			<li class="on">
+				<i lan="byDate"></i>
+			</li>
+			<li>
+				<i lan="byMonth"></i>
+			</li>
+			<li>
+				<i lan="byTiled"></i>
+			</li>
+		</ul>
+	</div>
 
 
 	<section class="video-list" id="byDate" style="display: block;">
@@ -96,15 +108,37 @@ $(function(){
 			$(this).hide();
 		}
 	})
-	var videoStyle = mobiscroll.select('#videoStyle', { 
-	    theme: 'ios',
-	    lang: 'zh',
-	    display: 'bottom',
-	    onBeforeShow: function(event, inst) {	    	
-			$(".mbsc-fr-btn-cont").hide();
-			arrangeMode = localControl.getValue("arrangeMode",0);
-			inst.setVal(arrangeMode);
-	    },
+	$("#videoStyle li").each(function (index){
+		if(arrangeMode==index){
+			$(this).addClass("on").siblings().removeClass("on");
+		}
+	})
+	$(".video-style").on("click",function(){
+		$("#videoStyle,.dialog-cover").show();
+		$(".dialog-cover").addClass("tp");
+	})
+	$(document).on("click",".dialog-cover.tp",function(){
+		$("#videoStyle,.dialog-cover").hide();
+		$(".dialog-cover").removeClass("tp");
+	})
+	$("#videoStyle li").each(function(index){
+		$(this).on("click",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			$(".video-list").hide();
+			$(".video-list").eq(index).show();
+			$("#videoStyle,.dialog-cover").hide();
+			$(".dialog-cover").removeClass("tp");
+		})
+	})
+	// var videoStyle = mobiscroll.select('#videoStyle', { 
+	//     theme: 'ios',
+	//     lang: 'zh',
+	//     display: 'bottom',
+	//     onBeforeShow: function(event, inst) {	    	
+	// 		$(".mbsc-fr-btn-cont").hide();
+	// 		arrangeMode = localControl.getValue("arrangeMode",0);
+	// 		inst.setVal(arrangeMode);
+	//     },
 	    /*
 	    onSet: function(event, inst){
 	    	if(inst.getVal()==0){
@@ -119,28 +153,28 @@ $(function(){
 			}
 	    }
 	    */
-	    onChange:function(event,inst){
-	    	var a = event.valueText;
-	    	// alert(a);
-	    	if(a == "按日期"){
-	    		$(".video-list").hide();
-	    		$("#byDate").show();
-	    		inst.setVal(0);
-	    		localControl.putValue("arrangeMode",0);
-	    	}else if(a == "按月份"){
-	    		$(".video-list").hide();
-	    		$("#byMonth").show();
-	    		inst.setVal(1);
-	    		localControl.putValue("arrangeMode",1);
-	    	}else if(a == "平铺"){
-	    		$(".video-list").hide();
-	    		$("#mediaList").show();
-	    		inst.setVal(2);
-	    		localControl.putValue("arrangeMode",2);
-			}
-			inst.hide();
-	    }
-	});
+	//     onChange:function(event,inst){
+	//     	var a = event.valueText;
+	//     	// alert(a);
+	//     	if(a == "按日期"){
+	//     		$(".video-list").hide();
+	//     		$("#byDate").show();
+	//     		inst.setVal(0);
+	//     		localControl.putValue("arrangeMode",0);
+	//     	}else if(a == "按月份"){
+	//     		$(".video-list").hide();
+	//     		$("#byMonth").show();
+	//     		inst.setVal(1);
+	//     		localControl.putValue("arrangeMode",1);
+	//     	}else if(a == "平铺"){
+	//     		$(".video-list").hide();
+	//     		$("#mediaList").show();
+	//     		inst.setVal(2);
+	//     		localControl.putValue("arrangeMode",2);
+	// 		}
+	// 		inst.hide();
+	//     }
+	// });
 })
 
 
@@ -278,8 +312,10 @@ function setItem(mediaInfo)
 		itemStr += '</li>';
 		$('#mediaList ul').append(itemStr);
 		console.log(mediaInfo.type==='video'?mediaInfo.cover:mediaInfo.url);
-		var monthStr = date.getFullYear()+'年'+transformTime(date.getMonth()+1)+'月';
-		var dateStr = date.getFullYear()+'年'+transformTime(date.getMonth()+1)+"月"+transformTime(date.getDate())+'日';
+		// var monthStr = date.getFullYear()+'年'+transformTime(date.getMonth()+1)+'月';
+		// var dateStr = date.getFullYear()+'年'+transformTime(date.getMonth()+1)+"月"+transformTime(date.getDate())+'日';
+		var monthStr = date.getFullYear()+'-'+transformTime(date.getMonth()+1);
+		var dateStr = date.getFullYear()+'-'+transformTime(date.getMonth()+1)+"-"+transformTime(date.getDate());
 		createList(byMonthObj,monthStr,'byMonth',mediaInfo,itemStr);
 		createList(byDateObj,dateStr,'byDate',mediaInfo,itemStr);
 
