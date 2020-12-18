@@ -261,5 +261,8 @@
 	"uploading":"Uploading...",
 	"photoFolder":"Photo Sequence",
 	"msdelFolder":"Are you sure you want to delete?",
-	"dlFolderPicture":"Are you sure you want to download this Photo Sequence?"
+	"dlFolderPicture":"Are you sure you want to download this Photo Sequence?",
+	"linkUpdate":"Upgrade Via URL",
+	"upgrade":"Upgrade",
+	"developeTools":"Development Tools"
 }

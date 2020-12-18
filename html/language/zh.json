@@ -261,5 +261,8 @@
 	"uploading":"正在上传...",
 	"photoFolder":"图片文件夹",
 	"msdelFolder":"是否要删除文件夹？",
-	"dlFolderPicture":"是否要下载该文件夹中的图片?"
+	"dlFolderPicture":"是否要下载该文件夹中的图片?",
+	"linkUpdate":"通过链接升级",
+	"upgrade":"升级",
+	"developeTools":"开发者工具"
 }

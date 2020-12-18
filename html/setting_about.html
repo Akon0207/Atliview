@@ -274,65 +274,86 @@
     </div>
     <!-- alpha升级 -->
 	<div class="alpha-upgrade" style="display: none;">
-		<div><span class="alpha-title">Alpha测试</span></div>
+		<!-- <div><span class="alpha-title">Alpha测试</span></div> -->
 		<!-- <div class="direct-upgrade">
 			有更新，点击升级
 		</div> -->
-        <div class="setting-cron-item bottom-line flex flex-middle">
-            <div class="fx1"><span id="cronReboot" class="test-button">定时重启:</span><input id="rebootTime" type="text" placeholder="HH:MM" style="width: 100px; height:26px; text-align: center;margin-left: 50px;"><span class="test-button" id="rebootNow" style="float:right;">立即重启</span></div>
+        <div>
+            <span lan="linkUpdate" style="font-size: 18px">通过链接升级</span>
+            <p><input type="text" class="upgrade-url"><input type="button" value="升级" class="upgrade-btn"></p>
         </div>
-		<div>
-			<p>通过链接升级</p>
-			<p><input type="text" class="upgrade-url"><input type="button" value="升级" class="upgrade-btn"></p>
-		</div>
-		<div class="upgrade_dialog_ctrl">
-            <div class="SDUpgradeDialog">关闭App升级通道</div>
-            <input type="checkbox" class="switch-box" id="SDUpgradeDialog"></input>
-		</div>
-		<div class="upgrade_dialog_ctrl">
-            <div class="enableFocus">对焦辅助</div>
-            <input type="checkbox" class="switch-box" id="enableFocus"></input>
-		</div>
-		<div class="setting-cron-item bottom-line flex flex-middle" id="setRemote">
-		    <div class="fx1"><span id="doSetRemote" class="test-button">设置远程:</span>IP<input type="text" style="width: 100px; height:26px;">端口<input type="text" style="width: 40px; height:26px;">ID<input type="text" style="width: 70px; height:26px;"></div>
-		</div>
+        <div class="tool-title" lan="developeTools">开发者工具</div>
+        <div class="developeTools">
+            <div class="tool-item">
+                <span class="test-button" id="cronReboot">定时重启：</span><input type="text" name="" placeholder="HH:MM"><span class="test-button" id="rebootNow">立即重启</span>
+            </div>
+            <div class="tool-item">
+                <span class="test-button long">关闭App升级通道</span><input type="checkbox" class="switch-box" id="SDUpgradeDialog">
+            </div>
+            <div class="tool-item">
+                <span class="test-button">对焦辅助</span><input type="checkbox" class="switch-box" id="enableFocus">
+            </div>
+            <div class="tool-item">
+                <div class="test-button" id="doSetRemote">设置远程</div>
+                <div class="tool-inner" id="setRemote">
+                    <p>IP <input type="text"></p>
+                    <p>端口 <input type="text"></p>
+                    <p>ID <input type="text"></p>
+                </div>
+            </div>
+            <div class="tool-item">
+                <div id="dotestNewWifi" class="test-button">新连接WIFI</div>
+                <div class="tool-inner" id="testNewWifi">
+                    <input type="text"><input type="text">
+                </div>
+            </div>
 
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testNewWifi">
-                   <div class="fx1"><span id="dotestNewWifi" class="test-button">新连接WIFI:</span><input type="text" style="width: 89px; height:26px;"><input type="text" style="width: 80px; height:26px;"></div>
-		</div>
-<!--
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testCron">
-		   <div class="fx1"><span id="send" class="test-button">发送定时任务:</span><input type="text" id="schedule" style="width: 240px; height:26px;"></div>
-		</div>
--->
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testPut">
-		   <div class="fx1"><span id="dotestPut" class="test-button">测试PUT(k,v):</span><input type="text" style="width: 80px; height:26px;"><input type="text" style="width: 80px; height:26px;"></div>
-		</div>
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testGet">
-		    <div class="fx1"><span id="dotestGet" class="test-button">测试GET(k):</span><input type="text" style="width: 80px; height:26px;"></div>
-		</div>
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testUpdate">
-		    <div class="fx1"><span id="dotestUpdate" class="test-button">测试UPDATE:</span><input type="text" style="width: 80px; height:26px;"><input type="text" style="width: 80px; height:26px;"><input type="text" style="width: 80px; height:26px;"></div>
-		</div>
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testDel">
-		    <div class="fx1"><span id="dotestDel" class="test-button">测试删除设备:</span><input type="text" style="width: 240px; height:26px;"></div>
-		</div>
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testPage">
-		    <div class="fx1"><span id="dotestPage" class="test-button">测试跳回APP:</span><input type="text" style="width: 240px; height:26px;"></div>
-		</div>
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testWifi">
-		    <div class="fx1"><span id="dotestWifi" class="test-button">测试连接WIFI:</span><input type="text" style="width: 89px; height:26px;"><input type="text" style="width: 80px; height:26px;"></div>
-		</div>
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testUpFirmware">
-		    <div class="fx1"><span id="dotestUpFirmware" class="test-button">测试上传文件:</span></div>
-		</div>
-		<div class="setting-cron-item bottom-line flex flex-middle" id="testVideo">
-		    <div class="fx1"><span id="dotestVideo" class="test-button">测试播放器:</span><input type="text" style="width: 240px; height:26px;"></div>
-		</div>
+            <div class="tool-item">
+                <div id="dotestPut" class="test-button">测试PUT(k,v)</div>
+                <div class="tool-inner" id="testPut">
+                    <input type="text"><input type="text">
+                </div>
+            </div>
 
-		<div class="alpha-hide">
+            <div class="tool-item">
+                <span id="dotestGet" class="test-button">测试GET(k):</span><input type="text">
+            </div>
+            
+            <div class="tool-item">
+                <div id="dotestUpdate" class="test-button">测试UPDATE</div>
+                <div class="tool-inner" id="testUpdate">
+                    <input type="text"><input type="text"><input type="text">
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <span id="dotestDel" class="test-button">测试删除设备:</span><input type="text">
+            </div>
+            
+            <div class="tool-item">
+                <span id="dotestPage" class="test-button">测试跳回APP:</span><input type="text">
+            </div>
+            
+            <div class="tool-item">
+                <div id="dotestWifi" class="test-button">测试连接WIFI</div>
+                <div class="tool-inner" id="testWifi">
+                    <input type="text"><input type="text">
+                </div>
+            </div>
+
+            <div class="tool-item">
+                <span id="dotestUpFirmware" class="test-button">测试上传文件:</span>
+            </div>
+            
+            <div class="tool-item">
+                <span id="dotestVideo" class="test-button">测试播放器:</span><input type="text">
+            </div>
+            
+        </div>
+
+		<!-- <div class="alpha-hide">
 			点击隐藏
-		</div>
+		</div> -->
 	</div>
 	<div class="dialog-poppup" id="testAlert">
 		<div class="dialog-poppup-content">测试反馈文字</div>
@@ -470,6 +491,7 @@ $(function(){
     isAP();
 	inUpdatePage=true;
     var urlSplit,newVersion;
+    if(language=="en"){$(".upgrade-btn").val("Upgrade")}
 	function setuptime(t){
 		if(language && language=="en"){
 			$("#uptime").text(secondtoHIS(t,"en"));
@@ -588,9 +610,12 @@ $(function(){
     })
 	//获取远程参数
 	getJSON("/radm", function(e, status){
-		$("#doSetRemote").nextAll("input:eq(0)").val(e.server);
-		$("#doSetRemote").nextAll("input:eq(1)").val(e.port);
-		$("#doSetRemote").nextAll("input:eq(2)").val(e.id);
+		// $("#doSetRemote").nextAll("input:eq(0)").val(e.server);
+		// $("#doSetRemote").nextAll("input:eq(1)").val(e.port);
+		// $("#doSetRemote").nextAll("input:eq(2)").val(e.id);
+        $("#setRemote input").eq(0).val(e.server);
+        $("#setRemote input").eq(1).val(e.port);
+        $("#setRemote input").eq(2).val(e.id);
 	})
     //定时重启
     getJSON("/webctl?query=rebootTime",function(e,status){
@@ -1072,8 +1097,8 @@ $(function(){
 
 	/* 测试用start*/
         $("#dotestNewWifi").on("click", function(){
-                var v1=$(this).nextAll("input:eq(0)").val();
-                var v2=$(this).nextAll("input:eq(1)").val();
+                var v1=$("#testNewWifi input").eq(0).val();
+                var v2=$("#testNewWifi input").eq(1).val();
 		var srcs = CryptoJS.enc.Utf8.parse(v2);                                                                       
 		var key = CryptoJS.enc.Utf8.parse(getAccessKey());  
 		var password = CryptoJS.RC4.encrypt(srcs, key);
@@ -1091,9 +1116,9 @@ $(function(){
 		if($("#schedule").val()) startRecording($("#schedule").val());
 	});
 	$("#doSetRemote").on("click", function(){ // 远程控制
-		var ip=$(this).nextAll("input:eq(0)").val();
-		var port=$(this).nextAll("input:eq(1)").val();
-		var id=$(this).nextAll("input:eq(2)").val();
+		var ip=$("#setRemote input").eq(0).val();
+		var port=$("#setRemote input").eq(1).val();
+		var id=$("#setRemote input").eq(2).val();
 		postJSON("/radm" , {server:ip,port:port,id:id}, function (data) {
 			$("#testAlert .dialog-poppup-content").text("设置远程控制成功！ID:"+id);
 			$("#testAlert").show();
@@ -1102,8 +1127,8 @@ $(function(){
 		}, "text")
 	})
 	$("#dotestPut").on("click", function(){
-		var k=$(this).nextAll("input:eq(0)").val();
-		var v=$(this).nextAll("input:eq(1)").val();
+		var k=$("#testPut input").eq(0).val();
+		var v=$("#testPut input").eq(1).val();
 		if(k) {
 			localControl.putValue(k, v);
 			$("#testAlert .dialog-poppup-content").text("已设置"+k+":"+v+",请用GET测试是否成功");
@@ -1132,9 +1157,9 @@ $(function(){
 		}
 	});
 	$("#dotestUpdate").on("click", function(){
-		var v1=$(this).nextAll("input:eq(0)").val();
-		var v2=$(this).nextAll("input:eq(1)").val();
-		var v3=$(this).nextAll("input:eq(2)").val();
+		var v1=$("#testUpdate input").eq(0).val();
+		var v2=$("#testUpdate input").eq(1).val();
+		var v3=$("#testUpdate input").eq(2).val();
 		if(v1 && v2 && v3) {
 			localControl.updatePwd(v1, v2, v3);
 			// alert("已设置SSID:"+v1+",PASSWORD:"+v2+",KEY:"+v3+",请用GET测试是否成功");
@@ -1162,8 +1187,8 @@ $(function(){
 		}
 	});
 	$("#dotestWifi").on("click", function(){
-		var k=$(this).nextAll("input:eq(0)").val();
-		var v=$(this).nextAll("input:eq(1)").val();
+		var k=$("#testWifi input").eq(0).val();
+		var v=$("#testWifi input").eq(1).val();
 		if(k && v) {
 			//alert("手机即将连接wifi:"+k+"， 密码:"+v+"，请检查是否成功");
 			localControl.connectWifi(k, v);
@@ -1176,6 +1201,10 @@ $(function(){
 		var v=$(this).nextAll("input:eq(0)").val();
 		if(v) location.href = v+".html";
 	});
+
+    $(".tool-title").on("click",function(){
+        $(".developeTools").toggle();
+    })
 
 	/* 测试用end */
 })

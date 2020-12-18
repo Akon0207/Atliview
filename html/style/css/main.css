@@ -1685,9 +1685,7 @@ body{
     color: #a9a9a9;
     margin: 20px;
 }
-#rebootNow {
-    float: right;
-}
+
 .testExposurebias {
     position: absolute;
     top:50%;
@@ -4351,6 +4349,44 @@ fieldset{
     font-size: 14px;
     color: #444;
 }
+.tool-title {
+    width: 120px;
+    padding: 5px;
+    background: #fff;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 20px;
+    border: 1px solid #cccccc;
+    margin: 10px 0;
+}
+.developeTools {
+    display: none;
+    border: 1px dotted;
+}
+.alpha-upgrade .developeTools input[type=text] {
+    height: 26px;
+    font-size: 20px;
+    padding: 5px 10px;
+    margin: 0 5px ;
+    background: #fff;
+    width: 100px;
+    text-align: center;
+}
+.alpha-upgrade .developeTools > div {
+    padding: 5px;
+    width: 100%;
+}
+.tool-item .tool-inner {
+    padding: 5px 10px;
+    border: 1px dotted;
+    margin: 3px 5px;
+}
+.tool-inner p {
+    margin: 5px 0;
+}
+.alpha-upgrade .developeTools .tool-inner input {
+    height: 20px;
+}
 .alpha-upgrade .setting-cron-item {
     margin: 10px;
 }
@@ -4359,9 +4395,10 @@ fieldset{
 }*/
 .upgrade-btn {
     margin-left: 10px;
-    width: 40px;
-    height: 20px;
-    border-radius: 5px;
+    width: 93px;
+    height: 40px;
+    border-radius: 13px;
+    font-size: 18px;
 }
 .upgrade_dialog_ctrl {
     height: 30px;
@@ -4380,10 +4417,7 @@ fieldset{
     width: 30px;
     height: 30px;
 }
-.SDUpgradeDialog, .enableFocus {
-    position: relative;
-    float: left;
-}
+
 #SDUpgradeDialog, #enableFocus {
     position: relative;
     float: right;
@@ -4400,7 +4434,12 @@ fieldset{
     display: none;
 }
 .upgrade-url {
-    width: 60%;
+    width: 55%;
+    height: 26px;
+    font-size: 20px;
+    padding: 5px 10px;
+    margin: 5px 0;
+    background-color: #fff;
 }
 .alpha-title {
     font-size: 18px;
@@ -4417,12 +4456,16 @@ fieldset{
 }
 .test-button {
     width: 100px;
-    height: 20px;
-    line-height: 20px;
+    height: 30px;
+    line-height: 30px;
     text-align: center;
     border: 1px solid #444;
     border-radius: 5px;
-    margin: 20px 0 0 0;
+    /* margin: 20px 0 0 0; */
+    display: inline-block;;
+}
+.test-button.long {
+    width: 120px;
 }
 .shooting-tips {
     font-size: 12px;
