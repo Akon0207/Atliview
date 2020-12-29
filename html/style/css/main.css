@@ -2176,11 +2176,19 @@ body{
     color: #00d2ff;
     margin-right: 5px;
 }
-.time-btns a{
+/*.time-btns a{
     display: block;
     background: #f0f0f0;
     font-size: 16px;
     color: #0090ff;
+    text-align: center;
+    line-height: 2.7;
+}*/
+.time-btns a{
+    display: block;
+    background: #1a9fe0;
+    font-size: 18px;
+    color: #ffffff;
     text-align: center;
     line-height: 2.7;
 }
@@ -4396,9 +4404,11 @@ fieldset{
 .upgrade-btn {
     margin-left: 10px;
     width: 93px;
-    height: 40px;
+    height: 30px;
     border-radius: 13px;
     font-size: 18px;
+    color: #555;
+    border: 1px solid #444;
 }
 .upgrade_dialog_ctrl {
     height: 30px;
@@ -4435,11 +4445,12 @@ fieldset{
 }
 .upgrade-url {
     width: 55%;
-    height: 26px;
-    font-size: 20px;
+    height: 22px;
+    font-size: 17px;
     padding: 5px 10px;
     margin: 5px 0;
     background-color: #fff;
+    color: #777;
 }
 .alpha-title {
     font-size: 18px;
@@ -4852,7 +4863,7 @@ fieldset{
     padding: 10px 0;
     height: 30px;
 }
-.interval-prompt {
+.interval-prompt,.fix-prompt {
     position: absolute;
     display: none;
     top: 20%;
@@ -4862,6 +4873,14 @@ fieldset{
     -o-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
     z-index: 99;
+}
+.fix-prompt {
+    color: #fff;
+    /*text-align: center;*/
+    line-height: 22px;
+    background: rgba(0,0,0,.5);
+    padding: 10px;
+    border-radius: 10px;
 }
 .interval-text{
     padding: 3px;

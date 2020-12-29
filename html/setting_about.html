@@ -279,7 +279,7 @@
 			有更新，点击升级
 		</div> -->
         <div>
-            <span lan="linkUpdate" style="font-size: 18px">通过链接升级</span>
+            <span lan="linkUpdate" style="font-size: 17px">通过链接升级</span>
             <p><input type="text" class="upgrade-url"><input type="button" value="升级" class="upgrade-btn"></p>
         </div>
         <div class="tool-title" lan="developeTools">开发者工具</div>
@@ -1011,16 +1011,16 @@ $(function(){
 		$("#update-prompt").attr("type","direct");
 		
 	})
-	$(".upgrade-btn").on("click",function(event){//链接升级
-		if($(".upgrade-url").val() == ""){
-			return error("请输入升级链接");
-		}else{
-			$("#update-prompt,.dialog-cover").show();
-			$("#update-prompt").attr("type","url");
-		}
-	});
-
-	$("#updateConfirm2").on("click",function(){
+	// $(".upgrade-btn").on("click",function(event){//链接升级
+	// 	if($(".upgrade-url").val() == ""){
+	// 		return error("请输入升级链接");
+	// 	}else{
+	// 		$("#update-prompt,.dialog-cover").show();
+	// 		$("#update-prompt").attr("type","url");
+	// 	}
+	// });
+    // $("#updateConfirm2").on("click",function(){
+	$(".upgrade-btn").on("click",function(){
 		$("#update-prompt,.dialog-cover").hide();
         $(".forUpdate").show().siblings().hide();
         setUpdateStartTime();

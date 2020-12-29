@@ -882,6 +882,10 @@
 		<div class="interval-prompt">
 			<div class="interval-text" lan="intervalPro">拍摄间隔必须大于快门时长</div>
 		</div>
+		<div class="fix-prompt">
+			已开启HDR，根据当前快门时<br>长，拍摄间隔不能小于N秒
+		</div>
+		
 		<!-- <div class="horizontalPrompt" lan="horPro">当前图像为横向<br>请横屏操作</div> -->
 		<!-- <div class="verticalPrompt" lan="verPro">当前图像为竖向<br>请竖屏操作</div> -->
 		<!-- 定时任务 start -->
@@ -1037,23 +1041,27 @@ $(function(){
 	var rotate180 = false;
 	var cronFlag = getParameterByName("cron");
 	var cronInterval = localControl.getValue("cronInterval");
-	var changeFlag = true;
+	var changeFlag = true;//根据status数据设置方向只在第一次load网页的时候这么做，后面根据用户设置实时改变
 	var switchSessionFlag = true;
-	var orientationFlag = true;
+	var orientationFlag = true;//用于给app发送方向的代号，只能在第一次load网页的时候发送，后面根据用户设置实时改变
 	var firstLoadPage2 = true;
-	var exposureBias_now = null;
+	var exposureBias_now = null;//曝光补偿
 	var setPortraitInterval = null;
 	var setLandscapeInterval = null;
-	var setPorInterFlag = true;
-	var setLanInterFlag = true;
+	var setPorInterFlag = true;//竖屏提醒
+	var setLanInterFlag = true;//横屏提醒
 	var cutAudio = null;
 	var focusNotPrompt = null;
-	var amplifierShowFlag = true;
-	var grid = null;
+	var amplifierShowFlag = true;//控制放大镜显示或隐藏
+	var grid = null;//网格控制
 	var outPutMode = null;
 	var localTime,serverTime;
 	var dec_num=/^[0-9]+$/;
-	var imgLoadck = true;
+	var imgLoadck = true;//用于控制发送imgload，每次刷新页面只发送一次
+	var conErrTimeout = null;
+	var currentExposure = null;
+	var autoGetExposure = null;
+	var hdr = null;
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
 		$(".iconfont.menu").attr("href","setting.html?language=en")
@@ -1223,6 +1231,14 @@ $(function(){
 			grid = data.grid;
 		}
 	});
+
+	//1秒获取一次快门时长
+	function getExposure(){
+		getJSON("/control",function(data){
+			currentExposure = data.exposure;
+		})
+		autoGetExposure = setTimeout(getExposure,1000);
+	}
 	//获取录像设置数据
 	getJSON("/REC",function(data,status){
 		/*静音 1是关闭静音，0是开启静音*/
@@ -1720,7 +1736,10 @@ $(function(){
 				$(".time-poppup .time-tab-cron").hide();
 				$("#start-shooting").hide();
 				$("#continue-shooting").show();
-				$(".time-poppup").show();
+				$(".time-poppup").show(function(){
+					$("#shoot-circle").hide();
+					getExposure();
+				});
 				// continueRecording();
 			}else if(index==2){
 				$(".dialog-cover").hide().removeClass("tp");;
@@ -2292,7 +2311,7 @@ $(function(){
 				}else{
 					if(shootType=="video") videoRun();
 					else if(shootType=="timelapse") {
-						$(".time-poppup,.dialog-cover").show();
+						$(".time-poppup,.dialog-cover").show(function(){$("#shoot-circle").hide();getExposure();});
 						$(".dialog-cover").addClass("tp");
 					}else takePicture();
 				}
@@ -2527,7 +2546,7 @@ $(function(){
 		}else if($(this).attr("type")=="timelapse"){//延时摄影模式
 			$("#memory-prompt2").hide();
 			// $(".time-poppup,.dialog-cover").show();
-			$(".time-poppup,.dialog-cover").show();
+			$(".time-poppup,.dialog-cover").show(function(){$("#shoot-circle").hide();getExposure();});
 			$(".dialog-cover").addClass("tp");
 		}else{
 			takePicture();
@@ -2550,7 +2569,10 @@ $(function(){
 		// $("#saveCustomMode").hide();
 		// $(".time-poppup").hide();
 		$("#saveCustomMode").hide();
-		$(".time-poppup").hide();
+		$(".time-poppup").hide(function(){
+			$("#shoot-circle").show();
+			clearTimeout(autoGetExposure);
+		});
 		$(".pauseSelect").animate({
 			top:"100%",
 			width:"20px",
@@ -2633,13 +2655,13 @@ $(function(){
 	//点击隐藏定时设置
 	$(".time-btns a").on("click",function(event){
 	    event.stopPropagation();
-		$(".time-poppup,.dialog-cover").hide();
+		$(".time-poppup,.dialog-cover").hide(function(){$("#shoot-circle").show();clearTimeout(autoGetExposure)});
 		$(".dialog-cover").removeClass("tp");
 	})
 
 	//点击弹出定时设置
 	$("#time").on("click",function(){
-		$(".time-poppup,.dialog-cover").show();
+		$(".time-poppup,.dialog-cover").show(function(){$("#shoot-circle").hide();getExposure()});
 	})
 
 	function updateTimeTotal() {
@@ -2665,30 +2687,50 @@ $(function(){
 			$('#interval-minute').val("00");
 			$('#interval-hour').val("24");
 		}
-		$(".parameter-exprosure .swiper-slide").each(function(index){
-			if($(this).hasClass("on")){
-				if(!($(".mode-list li").eq(0).hasClass("on"))){
-					if(index==14){//拍摄间隔限制，跟快门时长对应，互相限制
-						if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1){
-							$('#interval-second').val("01");
-							$(".interval-prompt").slideDown(1000);
-							setTimeout(function(){
-								$(".interval-prompt").slideUp(1000);
-							},2000);
-						}
+		if(hdr==0 || !hdr){
+			$(".parameter-exprosure .swiper-slide").each(function(index){
+				if($(this).hasClass("on")){
+					if(!($(".mode-list li").eq(0).hasClass("on"))){
+						if(index==14){//拍摄间隔限制，跟快门时长对应，互相限制
+							if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1){
+								$('#interval-second').val("01");
+								$(".interval-prompt").slideDown(1000);
+								setTimeout(function(){
+									$(".interval-prompt").slideUp(1000);
+								},2000);
+							}
 
-					}else if(index>14){
-						if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<=1){
-							$('#interval-second').val("02");
-							$(".interval-prompt").slideDown(1000);
-							setTimeout(function(){
-								$(".interval-prompt").slideUp(1000);
-							},2000);
+						}else if(index>14){
+							if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<=1){
+								$('#interval-second').val("02");
+								$(".interval-prompt").slideDown(1000);
+								setTimeout(function(){
+									$(".interval-prompt").slideUp(1000);
+								},2000);
+							}
 						}
 					}
 				}
+			})
+		}else if(hdr==1){
+			var foreCast = currentExposure/765384*4;
+			if(foreCast>=0.5 && foreCast<1){
+				exposurePrompt(1);
+			}else if(foreCast>=1 && foreCast<1.5){
+				exposurePrompt(1.5);
+			}else if(foreCast>=1.5 && foreCast<2){
+				exposurePrompt(2);
+			}else if(foreCast>=2 && foreCast<3){
+				exposurePrompt(3);
+			}else if(foreCast>=3 && foreCast<4){
+				exposurePrompt(4);
+			}else if(foreCast>=4 && foreCast<5){
+				exposurePrompt(5);
+			}else if(foreCast>=5){
+				exposurePrompt(6);
 			}
-		})
+		}
+			
 		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
 		var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
 
@@ -2712,6 +2754,28 @@ $(function(){
 			$('#time-total-hour').text(hr<10?"0"+hr:hr);
 		}
 
+	}
+	function exposurePrompt(num){
+		if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseFloat($('#interval-second').val(),10)<num){
+			$('#interval-second').val(num);
+			if(language=="en"){
+				if($(".parameter-exprosure .swiper-slide").eq(0).hasClass("on")){
+					$(".fix-prompt").html("Based on current lighting conditions,interval must be set above "+num+" seconds when HDR is on.");
+				}else{
+					$(".fix-prompt").html("Based on current shutter speed,interval must be set above "+num+" seconds when HDR is on.");
+				}
+			}else{
+				if($(".parameter-exprosure .swiper-slide").eq(0).hasClass("on")){
+					$(".fix-prompt").html("已开启HDR，根据当前光线环境，拍摄间隔不能小于"+num+"秒"。);
+				}else{
+					$(".fix-prompt").html("已开启HDR，根据当前快门时长，拍摄间隔不能小于"+num+"秒"。);
+				}
+			}
+			$(".fix-prompt").slideDown(1000);
+			setTimeout(function(){
+				$(".fix-prompt").slideUp(1000);
+			},2000);
+		}
 	}
 
 	$('#interval-hour').change(updateTimeTotal);
@@ -3025,7 +3089,7 @@ $(function(){
 //		}
 		//console.log(flag);
 	});
-    <!--模式和主体点击事件 end-->
+    /*模式和主体点击事件 end*/
 
 
 	//曝光补偿+ -点击事件
@@ -4356,16 +4420,14 @@ $(function(){
 					// date = date.toLocaleString();
 					sizeFormt=renderSize(e.recordinfo.currentVideo.size*1024)
 					//console.log(dhms+parseInt(duration/60)+"分");
-					if(language && language=="en"){
-						dhms=secondtoHIS(e.recordinfo.currentVideo.duration, "en");
-						var recordinfo="<p>Start Time: "+transFullTime(date,"en")+"</p>"+
-						"<p>Video Length: "+dhms+"</p>";
-					}else{
-						dhms=secondtoHIS(e.recordinfo.currentVideo.duration);
-						var recordinfo="<p>拍摄始于 "+transFullTime(date,"zh")+"</p>"+
-						"<p>生成视频 "+dhms+"</p>";
-					}
 					
+					dhms=language=="en"?secondtoHIS(e.recordinfo.currentVideo.duration, "en"):secondtoHIS(e.recordinfo.currentVideo.duration);
+					if("endAt" in e.recordinfo.currentVideo){
+						var endTime = new Date(e.recordinfo.currentVideo.endAt);
+						var recordinfo=(language=="en"?"<p>Start Time: ":"<p>拍摄始于 ")+transFullTime(date,language=="en"?"en":"zh")+(language=="en"?"</p><p>End Time ":"</p><p>拍摄结束于 ")+transFullTime(endTime,language=="en"?"en":"zh")+"</p>"+(language=="en"?"<p>Video Length: ":"<p>生成视频 ")+dhms+"</p>";
+					}else{
+						var recordinfo=(language=="en"?"<p>Start Time: ":"<p>拍摄始于 ")+transFullTime(date,language=="en"?"en":"zh")+"</p>"+(language=="en"?"<p>Video Length: ":"<p>生成视频 ")+dhms+"</p>";
+					}
 					if(e.recordinfo.status!="video") {
 						if("interval" in e.recordinfo.currentVideo) {
 							recordInterval=e.recordinfo.currentVideo.interval;
@@ -4590,6 +4652,7 @@ $(function(){
 				// $("#hdr").holdShow();
 				if("hdr" in e){/*hdr设置*/
 					$("#hdr").holdShow();
+					hdr = e.hdr
 					if(e.hdr == 1){
 						$("#hdr").addClass("on");
 					}else{
@@ -5084,7 +5147,9 @@ $(function(){
 					localControl.notify("imageLoaded");
 					imgLoadck = false;
 				}
-				
+			})
+			$(".main-pic").error(function(){
+				retryTimelapse();
 			})
 			// var idleSrc = $(".main-pic").prop("src");
 			
@@ -5098,6 +5163,14 @@ $(function(){
 		}
 	}
 	
+	function retryTimelapse() {
+		$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
+		$(".main-pic").load(function(){
+			clearTimeout(conErrTimeout);
+			return;
+		})
+		conErrTimeout = setTimeout(retryTimelapse,500);
+	}
 	function updateStatus(status) {
 		console.log(status);
 		
