@@ -280,9 +280,9 @@
 		</div> -->
         <div>
             <span lan="linkUpdate" style="font-size: 17px">通过链接升级</span>
-            <p><input type="text" class="upgrade-url"><input type="button" value="升级" class="upgrade-btn"></p>
+            <p><input type="text" class="upgrade-url"><input type="button" value="升级" class="upgrade-btn" placeholder=""></p>
         </div>
-        <div class="tool-title" lan="developeTools">开发者工具</div>
+        <div class="tool-title" lan="developeTools">开发者工具<span id="forRight" style="display: inline-block;">>></span><span id="forLeft" style="display: none;"><<</span></div>
         <div class="developeTools">
             <div class="tool-item">
                 <span class="test-button" id="cronReboot">定时重启：</span><input type="text" name="" placeholder="HH:MM"><span class="test-button" id="rebootNow">立即重启</span>
@@ -477,10 +477,12 @@
 $(function(){
 	if(language && language=="en"){
 		$(".iconfont.goback").attr("href","setting.html?language=en")
-        if(!app_type) $(".resPrm").css("text-align","center")
+        if(!app_type) $(".resPrm").css("text-align","center");
+        $(".upgrade-url").attr("placeholder","Enter upgrade url");
 	}else{
 		$(".iconfont.goback").attr("href","setting.html?language=zh")
-        $(".resPrm").css("text-align","center")
+        $(".resPrm").css("text-align","center");
+        $(".upgrade-url").attr("placeholder","输入升级链接");
 	}
 	var apSecond = 0;
     var connect = false;
@@ -1031,7 +1033,7 @@ $(function(){
 			if(e.recordinfo.status!="idle") {error("有拍摄任务或定时任务，无法升级；停止任务后即可升级");return false} 
 			if(e.battery.status == "no_battery") {error("未安装电池，无法升级；请安装电池后重试");return false}
 			if(e.battery.status=="discharging" && e.battery.capacity<20) {error("电量过低，无法升级；请连接充电电源后重试 ");return false}
-			if($("#update-prompt").attr("type")=="url"){
+			// if($("#update-prompt").attr("type")=="url"){
                 urlSplit =  $.trim($(".upgrade-url").val()).split("/");
                 if(!urlSplit[3]) {return error("无效链接！")}
                 else{newVersion = urlSplit[3];console.log("the new version is "+newVersion)}
@@ -1045,16 +1047,17 @@ $(function(){
 					error("相机没有回应！");
 					console.log(XHR.status+"-"+XHR.statusText);
 				},"text")
-			}else{
-				postJSON("/upgrade", {upgrade:1}, function(e, status){
-					downloading(0);
-					setTimeout(update, 400);	
-					// apUpdate();
-				}, function (jqXHR, exception) {
-					error("相机没有回应！");
-					console.log((jqXHR.status+exception));
-				}, "text");
-			}
+			// }
+   //          else{
+			// 	postJSON("/upgrade", {upgrade:1}, function(e, status){
+			// 		downloading(0);
+			// 		setTimeout(update, 400);	
+			// 		// apUpdate();
+			// 	}, function (jqXHR, exception) {
+			// 		error("相机没有回应！");
+			// 		console.log((jqXHR.status+exception));
+			// 	}, "text");
+			// }
 		})
 		
 		
@@ -1204,6 +1207,7 @@ $(function(){
 
     $(".tool-title").on("click",function(){
         $(".developeTools").toggle();
+        $("#forRight,#forLeft").toggle();
     })
 
 	/* 测试用end */

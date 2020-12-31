@@ -264,5 +264,5 @@
 	"dlFolderPicture":"Are you sure you want to download this Photo Sequence?",
 	"linkUpdate":"Upgrade Via URL",
 	"upgrade":"Upgrade",
-	"developeTools":"Development Tools"
+	"developeTools":"Development Tools<span id=\"forRight\" style=\"display: inline-block;\">>></span><span id=\"forLeft\" style=\"display: none;\"><<</span>"
 }

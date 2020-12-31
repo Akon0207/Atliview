@@ -4353,19 +4353,17 @@ fieldset{
     margin: 20px auto;
 }
 .alpha-upgrade{
-    padding: 10px 4%;
+    padding: 25px 4%;
     font-size: 14px;
     color: #444;
 }
 .tool-title {
-    width: 120px;
-    padding: 5px;
-    background: #fff;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 20px;
-    border: 1px solid #cccccc;
+    padding: 5px 0;
+    font-size: 16px;
     margin: 10px 0;
+    display: inline-block;
+    color: #0f72a5;
+    border-bottom: 1px solid;
 }
 .developeTools {
     display: none;
@@ -4405,10 +4403,10 @@ fieldset{
     margin-left: 10px;
     width: 93px;
     height: 30px;
-    border-radius: 13px;
+    border-radius: 4px;
     font-size: 18px;
-    color: #555;
-    border: 1px solid #444;
+    color: #757575;
+    border: 1px solid #ccc;
 }
 .upgrade_dialog_ctrl {
     height: 30px;
@@ -4448,9 +4446,11 @@ fieldset{
     height: 22px;
     font-size: 17px;
     padding: 5px 10px;
-    margin: 5px 0;
-    background-color: #fff;
+    margin: 5px 15px;
     color: #777;
+    border-color: #CCC;
+    border-style: solid;
+    border-width: 1px;
 }
 .alpha-title {
     font-size: 18px;

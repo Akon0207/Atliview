@@ -1237,7 +1237,13 @@ $(function(){
 		getJSON("/control",function(data){
 			currentExposure = data.exposure;
 		})
-		autoGetExposure = setTimeout(getExposure,1000);
+		if($(".time-poppup").css("display")=="block"){
+			autoGetExposure = setTimeout(getExposure,1000);
+		}else{
+			clearTimeout(autoGetExposure);
+			return;
+		}
+		
 	}
 	//获取录像设置数据
 	getJSON("/REC",function(data,status){
@@ -2311,7 +2317,9 @@ $(function(){
 				}else{
 					if(shootType=="video") videoRun();
 					else if(shootType=="timelapse") {
-						$(".time-poppup,.dialog-cover").show(function(){$("#shoot-circle").hide();getExposure();});
+						$(".time-poppup,.dialog-cover").show();
+						$("#shoot-circle").hide();
+						getExposure();
 						$(".dialog-cover").addClass("tp");
 					}else takePicture();
 				}
@@ -2546,7 +2554,9 @@ $(function(){
 		}else if($(this).attr("type")=="timelapse"){//延时摄影模式
 			$("#memory-prompt2").hide();
 			// $(".time-poppup,.dialog-cover").show();
-			$(".time-poppup,.dialog-cover").show(function(){$("#shoot-circle").hide();getExposure();});
+			$(".time-poppup,.dialog-cover").show();
+			$("#shoot-circle").hide();
+			getExposure();
 			$(".dialog-cover").addClass("tp");
 		}else{
 			takePicture();
@@ -2569,10 +2579,9 @@ $(function(){
 		// $("#saveCustomMode").hide();
 		// $(".time-poppup").hide();
 		$("#saveCustomMode").hide();
-		$(".time-poppup").hide(function(){
-			$("#shoot-circle").show();
-			clearTimeout(autoGetExposure);
-		});
+		$(".time-poppup").hide();
+		$("#shoot-circle").show();
+		clearTimeout(autoGetExposure);
 		$(".pauseSelect").animate({
 			top:"100%",
 			width:"20px",
@@ -2655,13 +2664,15 @@ $(function(){
 	//点击隐藏定时设置
 	$(".time-btns a").on("click",function(event){
 	    event.stopPropagation();
-		$(".time-poppup,.dialog-cover").hide(function(){$("#shoot-circle").show();clearTimeout(autoGetExposure)});
+		$(".time-poppup,.dialog-cover").hide();
+		$("#shoot-circle").show();
+		clearTimeout(autoGetExposure);
 		$(".dialog-cover").removeClass("tp");
 	})
 
 	//点击弹出定时设置
 	$("#time").on("click",function(){
-		$(".time-poppup,.dialog-cover").show(function(){$("#shoot-circle").hide();getExposure()});
+		$(".time-poppup,.dialog-cover").show();
 	})
 
 	function updateTimeTotal() {
@@ -2766,9 +2777,9 @@ $(function(){
 				}
 			}else{
 				if($(".parameter-exprosure .swiper-slide").eq(0).hasClass("on")){
-					$(".fix-prompt").html("已开启HDR，根据当前光线环境，拍摄间隔不能小于"+num+"秒"。);
+					$(".fix-prompt").html("已开启HDR，根据当前光线环境，拍摄间隔不能小于"+num+"秒。");
 				}else{
-					$(".fix-prompt").html("已开启HDR，根据当前快门时长，拍摄间隔不能小于"+num+"秒"。);
+					$(".fix-prompt").html("已开启HDR，根据当前快门时长，拍摄间隔不能小于"+num+"秒。");
 				}
 			}
 			$(".fix-prompt").slideDown(1000);
