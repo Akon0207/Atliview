@@ -62,6 +62,10 @@
             <div class="setting-cron-name fx1" lan="enableLog"></div>
             <input type="checkbox" id="enableLog" class="switch-box" style="margin-right: 4%">
         </div>
+        <div class="setting-cron-item bottom-line flex flex-middle">
+            <div class="setting-cron-name fx1" lan="remoteCtl"></div>
+            <input type="checkbox" id="remoteCtl" class="switch-box" style="margin-right: 4%">
+        </div>
 	</section>
 	<!-- 升级界面 -->
     <div class="forUpdate">
@@ -398,14 +402,23 @@
 		</div>
 	<div class="dialog-cover"></div>
     <div class="dialog-poppup" id="logTip" >
-            <div class="dialog-poppup-tit" lan="enableLog"></div>
-            <div class="dialog-poppup-content" lan="logContent" style="text-align: left;"></div>
-            <div class="dialog-btns flex">
-                <a href="javascript:;" id="logCancel" lan="cancel"></a>
-                <a href="javascript:;" id="logEnable" lan="enable"></a>
-            </div>
-            <!-- <a href="javascript:;" class="wifi-tip-delete" id="wifiTipDelete">不再提醒</a> -->
+        <div class="dialog-poppup-tit" lan="enableLog"></div>
+        <div class="dialog-poppup-content" lan="logContent" style="text-align: left;"></div>
+        <div class="dialog-btns flex">
+            <a href="javascript:;" id="logCancel" lan="cancel"></a>
+            <a href="javascript:;" id="logEnable" lan="enable"></a>
         </div>
+        <!-- <a href="javascript:;" class="wifi-tip-delete" id="wifiTipDelete">不再提醒</a> -->
+    </div>
+    <div class="dialog-poppup" id="remoteTip" >
+        <div class="dialog-poppup-tit" lan="remoteCtl"></div>
+        <div class="dialog-poppup-content" lan="remoteContent" style="text-align: left;"></div>
+        <div class="dialog-btns flex">
+            <a href="javascript:;" id="remoteCancel" lan="cancel"></a>
+            <a href="javascript:;" id="remoteEnable" lan="enable"></a>
+        </div>
+        <!-- <a href="javascript:;" class="wifi-tip-delete" id="wifiTipDelete">不再提醒</a> -->
+    </div>
     <div class="forReset">
         <div class="forTitle" lan="facRes"></div>
         <div class="forRuning">
@@ -582,10 +595,17 @@ $(function(){
 				$(".direct-upgrade").show().text("未发现更新").addClass("shooting-now");
 
 			}
+            //日志
             if("enableLog" in e && e.enableLog == 1){
                 $("#enableLog").prop("checked",true);
             }else{
                 $("#enableLog").prop("checked",false);
+            }
+            //远程协助
+            if("rdmAssis" in e && e.rdmAssis == 1){
+                $("#remoteCtl").prop("checked",true);
+            }else{
+                $("#remoteCtl").prop("checked",false);
             }
 			
 
@@ -601,7 +621,7 @@ $(function(){
         }else{
             postJSON("/setting",{enableLog:0})
         }
-    })
+    });
     $("#logCancel").on("click",function(){
         $("#logTip,.dialog-cover").hide();
     });
@@ -609,6 +629,23 @@ $(function(){
         postJSON("/setting",{enableLog:1});
         $("#logTip,.dialog-cover").hide();
         $("#enableLog").prop("checked",true);
+    })
+    //远程协助
+    $("#remoteCtl").on("click",function(){
+        if($(this).prop("checked")){
+            $("#remoteTip,.dialog-cover").show();
+            return false;
+        }else{
+            postJSON("/setting",{rdmAssis:0})
+        }
+    })
+    $("#remoteCancel").on("click",function(){
+        $("#remoteTip,.dialog-cover").hide();
+    })
+    $("#remoteEnable").on("click",function(){
+        postJSON("/setting",{rdmAssis:1});
+        $("#remoteTip,.dialog-cover").hide();
+        $("#remoteCtl").prop("checked",true);
     })
 	//获取远程参数
 	getJSON("/radm", function(e, status){

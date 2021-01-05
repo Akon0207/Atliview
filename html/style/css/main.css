@@ -4365,6 +4365,9 @@ fieldset{
     color: #0f72a5;
     border-bottom: 1px solid;
 }
+#packing {
+    max-width: 500px;
+}
 .developeTools {
     display: none;
     border: 1px dotted;

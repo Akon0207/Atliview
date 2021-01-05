@@ -264,5 +264,8 @@
 	"dlFolderPicture":"Are you sure you want to download this Photo Sequence?",
 	"linkUpdate":"Upgrade Via URL",
 	"upgrade":"Upgrade",
-	"developeTools":"Development Tools<span id=\"forRight\" style=\"display: inline-block;\">>></span><span id=\"forLeft\" style=\"display: none;\"><<</span>"
+	"developeTools":"Development Tools<span id=\"forRight\" style=\"display: inline-block;\">>></span><span id=\"forLeft\" style=\"display: none;\"><<</span>",
+	"remoteCtl":"Remote Support",
+	"remoteContent":"Remote Support gives our tech team the ability to remotely login the camera and identify potencial malfunctions.This feature requires an Internet connection, please make sure the camera is connected to local Wi-Fi.",
+	"delsuc":"Deleted successfully"
 }

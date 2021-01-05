@@ -264,5 +264,8 @@
 	"dlFolderPicture":"是否要下载该文件夹中的图片?",
 	"linkUpdate":"通过链接升级",
 	"upgrade":"升级",
-	"developeTools":"开发者工具<span id=\"forRight\" style=\"display: inline-block;\">>></span><span id=\"forLeft\" style=\"display: none;\"><<</span>"
+	"developeTools":"开发者工具<span id=\"forRight\" style=\"display: inline-block;\">>></span><span id=\"forLeft\" style=\"display: none;\"><<</span>",
+	"remoteCtl":"远程协助",
+	"remoteContent":"远程协助可方便工程师远程登入相机检查和分析问题。要求相机连接互联网，请确保相机WLAN已连接到Wi-Fi网络。",
+	"delsuc":"删除文件夹成功"
 }

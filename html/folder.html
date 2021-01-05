@@ -367,7 +367,7 @@ input:-ms-input-placeholder {
      </div>
     </div>
 	<div class="dialog-poppup" id="showMsg" style="display: none;">
-		<div class="dialog-poppup-content"></div>
+		<div class="dialog-poppup-content" lan="delsuc"></div>
 		<div class="dialog-btns flex">
 		 <a href="javascript:;" id="showMsgConfirm" lan="OK">确定</a>
 		</div>
@@ -499,12 +499,12 @@ function checkPack()
 	if(packSec > packMacSec) return timeout();
 	getJSON("/tgz", function(e, status){
         if(language=="en"){
-            $("#packSecMsg").html("Compressing "+packMacSec+" Photos，about "+packSec+" seconds"+e.tgz);
+            $("#packSecMsg").html("Compressing "+packMacSec+" Photos，about "+packSec+" seconds");
         }else{
-            $("#packSecMsg").html("正在压缩"+packMacSec+"张照片，已用时"+packSec+"秒"+e.tgz);
+            $("#packSecMsg").html("正在压缩"+packMacSec+"张照片，已用时"+packSec+"秒");
         }
 		
-		console.log("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒");
+		console.log("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒 "+e.tgz);
 		packSec++;
 		if(e.tgz != packID ) {
 			setMiddle("#downloadError");
