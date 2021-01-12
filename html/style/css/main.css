@@ -493,6 +493,21 @@ body{
 .top-bar .HDRcss.on:after {
     color: #00d2ff;
 }
+.top-bar .HDRcss img {
+    width: 19px;
+    position: absolute;
+    right: -3px;
+    bottom: 1px;
+}
+.hdrBeta {
+    color: #EFA233;
+    font-size: 20px;
+    position: absolute;
+    bottom: -2px;
+    right: -1px;
+    text-shadow: 0 1px 2px rgba(0,0,0,.6);
+    z-index: 2;
+}
 @keyframes fade {
     from {
         opacity: 1.0;
@@ -4866,7 +4881,7 @@ fieldset{
     padding: 10px 0;
     height: 30px;
 }
-.interval-prompt,.fix-prompt {
+.interval-prompt,.fix-prompt,.hdr-prompt {
     position: absolute;
     display: none;
     top: 20%;
@@ -4877,18 +4892,18 @@ fieldset{
     transform: translate(-50%,-50%);
     z-index: 99;
 }
-.fix-prompt {
+.fix-prompt,.hdr-prompt {
     color: #fff;
     /*text-align: center;*/
     line-height: 22px;
-    background: rgba(0,0,0,.5);
+    background: rgba(0,0,0,.7);
     padding: 10px;
     border-radius: 10px;
 }
 .interval-text{
     padding: 3px;
     border-radius: 12px;
-    background: rgba(0,0,0,.5);
+    background: rgba(0,0,0,.7);
     color: #fff;
     text-align: center;
     width: 200px;
@@ -4897,7 +4912,7 @@ fieldset{
 .exp-prompt {
     padding: 3px;
     border-radius: 12px;
-    background: rgba(0,0,0,.5);
+    background: rgba(0,0,0,.7);
     color: #fff;
     text-align: center;
     width: 200px;
@@ -4910,7 +4925,7 @@ fieldset{
 .video-prompt {
     padding: 3px;
     border-radius: 12px;
-    background: rgba(0,0,0,.5);
+    background: rgba(0,0,0,.7);
     color: #fff;
     text-align: center;
     width: 200px;

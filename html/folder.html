@@ -380,7 +380,7 @@ input:-ms-input-placeholder {
 		</div>
 	</div>
 	<div class="dialog-poppup" id="packing" style="display: none;">
-		<div class="dialog-poppup-content" id="packSecMsg">开始图片压缩</div>
+		<div class="dialog-poppup-content" id="packSecMsg"></div>
 		<div class="dialog-btns flex">
 		</div>
 	</div>
@@ -526,7 +526,12 @@ function packImages()
 {
 	postJSON("/tgz", {tgz:packID}, function(e, status){
 		packSec=0;
-		$("#packSecMsg").html("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒");
+        if(language=="en"){
+            $("#packSecMsg").html("Compressing "+packMacSec+" Photos，about "+packSec+" seconds");
+        }else{
+            $("#packSecMsg").html("正在压缩"+packMacSec+"张照片，已用时"+packSec+"秒");
+        }
+		
 		setMiddle("#packing");
 		setTimeout(checkPack, 1000);
 	}, function (jqXHR, exception) {

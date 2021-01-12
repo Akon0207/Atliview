@@ -267,5 +267,7 @@
 	"developeTools":"开发者工具<span id=\"forRight\" style=\"display: inline-block;\">>></span><span id=\"forLeft\" style=\"display: none;\"><<</span>",
 	"remoteCtl":"远程协助",
 	"remoteContent":"远程协助可方便工程师远程登入相机检查和分析问题。要求相机连接互联网，请确保相机WLAN已连接到Wi-Fi网络。",
-	"delsuc":"删除文件夹成功"
+	"delsuc":"删除文件夹成功",
+	"downloadLogs":"下载日志",
+	"logsPromptContent":"确定要下载日志？"
 }

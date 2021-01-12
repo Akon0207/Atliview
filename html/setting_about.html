@@ -58,10 +58,10 @@
 			<div class="setting-cron-name fx1" lan="upTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 			<div class="setting-aobut-right" id="uptime"></div>
 		</div>
-        <div class="setting-cron-item bottom-line flex flex-middle">
+        <!-- <div class="setting-cron-item bottom-line flex flex-middle">
             <div class="setting-cron-name fx1" lan="enableLog"></div>
             <input type="checkbox" id="enableLog" class="switch-box" style="margin-right: 4%">
-        </div>
+        </div> -->
         <div class="setting-cron-item bottom-line flex flex-middle">
             <div class="setting-cron-name fx1" lan="remoteCtl"></div>
             <input type="checkbox" id="remoteCtl" class="switch-box" style="margin-right: 4%">
@@ -289,6 +289,9 @@
         <div class="tool-title" lan="developeTools">开发者工具<span id="forRight" style="display: inline-block;">>></span><span id="forLeft" style="display: none;"><<</span></div>
         <div class="developeTools">
             <div class="tool-item">
+                <span class="test-button" id="downloadLogs" lan="downloadLogs"></span>
+            </div>
+            <div class="tool-item">
                 <span class="test-button" id="cronReboot">定时重启：</span><input type="text" name="" placeholder="HH:MM"><span class="test-button" id="rebootNow">立即重启</span>
             </div>
             <div class="tool-item">
@@ -365,6 +368,17 @@
 			<a href="javascript:;" id="testConfirm">我知道了</a>
 		</div>
 	</div>
+    <div class="dialog-poppup" id="logsPrompt">
+        <div class="dialog-poppup-tit" lan="downloadLogs"></div>
+        <div class="dialog-poppup-content" lan="logsPromptContent"></div>
+        <div class="dialog-btns flex">
+            <a href="javascript:;" id="logsCancel" lan="cancel"></a>
+            <a href="javascript:;" id="logsConfirm" lan="confirm"></a>
+        </div>
+    </div>
+    <div class="dialog-poppup" id="logsShow">
+        <div class="dialog-poppup-content"></div>
+    </div>
     <div class="dialog-poppup" id="sureReboot">
         <div class="dialog-poppup-content">确定重启？</div>
         <div class="dialog-btns flex">
@@ -401,15 +415,14 @@
 			</div>
 		</div>
 	<div class="dialog-cover"></div>
-    <div class="dialog-poppup" id="logTip" >
+<!--     <div class="dialog-poppup" id="logTip" >
         <div class="dialog-poppup-tit" lan="enableLog"></div>
         <div class="dialog-poppup-content" lan="logContent" style="text-align: left;"></div>
         <div class="dialog-btns flex">
             <a href="javascript:;" id="logCancel" lan="cancel"></a>
             <a href="javascript:;" id="logEnable" lan="enable"></a>
         </div>
-        <!-- <a href="javascript:;" class="wifi-tip-delete" id="wifiTipDelete">不再提醒</a> -->
-    </div>
+    </div> -->
     <div class="dialog-poppup" id="remoteTip" >
         <div class="dialog-poppup-tit" lan="remoteCtl"></div>
         <div class="dialog-poppup-content" lan="remoteContent" style="text-align: left;"></div>
@@ -596,11 +609,11 @@ $(function(){
 
 			}
             //日志
-            if("enableLog" in e && e.enableLog == 1){
-                $("#enableLog").prop("checked",true);
-            }else{
-                $("#enableLog").prop("checked",false);
-            }
+            // if("enableLog" in e && e.enableLog == 1){
+            //     $("#enableLog").prop("checked",true);
+            // }else{
+            //     $("#enableLog").prop("checked",false);
+            // }
             //远程协助
             if("rdmAssis" in e && e.rdmAssis == 1){
                 $("#remoteCtl").prop("checked",true);
@@ -614,22 +627,22 @@ $(function(){
 		console.log((jqXHR.status+exception));
 	});
     //日志功能
-    $("#enableLog").on("click",function(){
-        if($(this).prop("checked")){
-            $("#logTip,.dialog-cover").show();
-            return false;
-        }else{
-            postJSON("/setting",{enableLog:0})
-        }
-    });
-    $("#logCancel").on("click",function(){
-        $("#logTip,.dialog-cover").hide();
-    });
-    $("#logEnable").on("click",function(){
-        postJSON("/setting",{enableLog:1});
-        $("#logTip,.dialog-cover").hide();
-        $("#enableLog").prop("checked",true);
-    })
+    // $("#enableLog").on("click",function(){
+    //     if($(this).prop("checked")){
+    //         $("#logTip,.dialog-cover").show();
+    //         return false;
+    //     }else{
+    //         postJSON("/setting",{enableLog:0})
+    //     }
+    // });
+    // $("#logCancel").on("click",function(){
+    //     $("#logTip,.dialog-cover").hide();
+    // });
+    // $("#logEnable").on("click",function(){
+    //     postJSON("/setting",{enableLog:1});
+    //     $("#logTip,.dialog-cover").hide();
+    //     $("#enableLog").prop("checked",true);
+    // })
     //远程协助
     $("#remoteCtl").on("click",function(){
         if($(this).prop("checked")){
@@ -1064,12 +1077,12 @@ $(function(){
         $(".forUpdate").show().siblings().hide();
         setUpdateStartTime();
 		getJSON("/status",function(e,status){
-			if(e.wlan.status == "unconnected"){error("未检测到网络，请先连接Wlan再尝试！"); return false}
-			if(e.sdcard == "UNPLUG") {error("未检测到存储卡，请插入存储卡后重试！"); return false}
-			if(e.available < 1024*50) {error("存储空间不足，至少需要50M空间！"); return false} 
-			if(e.recordinfo.status!="idle") {error("有拍摄任务或定时任务，无法升级；停止任务后即可升级");return false} 
-			if(e.battery.status == "no_battery") {error("未安装电池，无法升级；请安装电池后重试");return false}
-			if(e.battery.status=="discharging" && e.battery.capacity<20) {error("电量过低，无法升级；请连接充电电源后重试 ");return false}
+			if(e.wlan.status == "unconnected"){error(language=="en"?"No internet! Please connect WLAN and try again.":"未检测到网络，请先连接Wlan再尝试！"); return false}
+			if(e.sdcard == "UNPLUG") {error(language=="en"?"Micro SD card not detected!  Please insert the card, then retry!":"未检测到存储卡，请插入存储卡后重试！"); return false}
+			if(e.available < 1024*50) {error(language=="en"?"Not enough storage space (50MB free space minimum)":"存储空间不足，至少需要50M空间！"); return false} 
+			if(e.recordinfo.status!="idle") {error(language=="en"?"Unable to upgrade due to shooting in progress and/or an active shooting schedule!Please terminate all and then retry!":"有拍摄任务或定时任务，无法升级；停止任务后即可升级");return false} 
+			if(e.battery.status == "no_battery") {error(language=="en"?"Unable to upgrade due to battery not installed! Please install battery and then retry.":"未安装电池，无法升级；请安装电池后重试");return false}
+			if(e.battery.status=="discharging" && e.battery.capacity<20) {error(language=="en"?"Unable to upgrade due to low battery! Please connect external power source and then retry.":"电量过低，无法升级；请连接充电电源后重试 ");return false}
 			// if($("#update-prompt").attr("type")=="url"){
                 urlSplit =  $.trim($(".upgrade-url").val()).split("/");
                 if(!urlSplit[3]) {return error("无效链接！")}
@@ -1248,6 +1261,45 @@ $(function(){
     })
 
 	/* 测试用end */
+    $("#downloadLogs").on("click",function(){
+        $("#logsPrompt,.dialog-cover").show();
+    });
+    $("#logsCancel").on("click",function(){
+        $("#logsPrompt,.dialog-cover").hide();
+    });
+    $("#logsConfirm").on("click",function(){
+        $("#logsPrompt,.dialog-cover").hide();
+        postJSON("/tgz",{tgz:"logs"},function(){
+            getLogStatus();
+        },function(){
+            $("#logsShow .dialog-poppup-content").html(language=="en"?"No logs file yet":"暂无日志文件");
+            $("#logsShow").show();
+            setTimeout(function(){
+                $("#logsShow").hide();
+            },2000);
+        },"text")
+    });
+    function getLogStatus(){
+        getJSON("/tgz",function(data){
+            if(data.status=="doing"){
+                $("#logsShow .dialog-poppup-content").html(language=="en"?"Compressing...":"正在压缩文件...");
+                $("#logsShow").show();
+                setTimeout(getLogStatus,1000);
+            }else if(data.status=="done"){
+                $("#logsShow .dialog-poppup-content").html(language=="en"?"Done":"压缩完毕");
+                downloadLogs();
+            }
+        })
+        
+    }
+    function downloadLogs() {
+        $("#logsShow").hide();
+        var link = document.createElement('a');
+        link.setAttribute("download", "logs.tgz");
+        link.href = "/logs.tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
+        link.click();
+        // setTimeout(function(){postJSON("/tgz", {rm:"logs.tgz"})}, 1000);
+    }
 })
 
 </script>
