@@ -4618,7 +4618,7 @@ fieldset{
     /*border-radius: 25px;*/
 }
 .shoot-prompt,.mode-prompt {
-    background: rgba(0,0,0,.5);
+    background: rgba(0,0,0,.7);
     position: absolute;
     padding: 5px 15px;
     border-radius: 10px;

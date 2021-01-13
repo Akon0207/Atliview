@@ -1295,10 +1295,10 @@ $(function(){
     function downloadLogs() {
         $("#logsShow").hide();
         var link = document.createElement('a');
-        link.setAttribute("download", "logs.tgz");
-        link.href = "/logs.tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
+        link.setAttribute("download", "");
+        link.href = "/media/logs.tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
         link.click();
-        // setTimeout(function(){postJSON("/tgz", {rm:"logs.tgz"})}, 1000);
+        setTimeout(function(){postJSON("/tgz", {rm:"logs.tgz"})}, 1000);
     }
 })
 

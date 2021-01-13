@@ -64,7 +64,7 @@
 	"days":" Days",
 	"timTot":"Estimating Video Length: <span id=\"time-total-hour\">00</span>Hr <span id=\"time-total-minute\">00</span>Min <span id=\"time-total-second\">00</span>Sec</span>",
 	"startSht":"Start",
-	"st":"Setting",
+	"st":"Settings",
 	"lmtTxt":"Storage space is less than 100MB! Shooting schedule terminates when storage space is exhausted.",
 	"shtTxt":"Shooting in progress!  Some functions are prohibited!",
 	"supTip":"<a href=\"update.html?uploadFlag=1&language=en\" >Found new firmware version <span class=\"newversion\"></span>. Click to upgrade...</a>",
@@ -266,7 +266,7 @@
 	"upgrade":"Upgrade",
 	"developeTools":"Development Tools<span id=\"forRight\" style=\"display: inline-block;\">>></span><span id=\"forLeft\" style=\"display: none;\"><<</span>",
 	"remoteCtl":"Remote Support",
-	"remoteContent":"Remote Support gives our tech team the ability to remotely login the camera and identify potencial malfunctions.This feature requires an Internet connection, please make sure the camera is connected to local Wi-Fi.",
+	"remoteContent":"Remote Support gives our tech team the ability to remotely login the camera and identify potencial malfunctions.This feature requires an Internet connection, please make sure the camera is connected to local Wi-Fi.<br><br><span style=\"color: #848484;\">Tip: Remote Support will be turned off automatically when camera restart</span>",
 	"delsuc":"Deleted successfully",
 	"downloadLogs":"Download Logs",
 	"logsPromptContent":"Are you sure you want to download log file?"
