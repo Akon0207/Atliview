@@ -2724,19 +2724,19 @@ $(function(){
 		}else if(hdr==1){
 			var foreCast = currentExposure/765384*4;
 			if(foreCast>=0.5 && foreCast<1){
-				exposurePrompt(1);
+				exposurePrompt("01",1);
 			}else if(foreCast>=1 && foreCast<1.5){
-				exposurePrompt(1.5);
+				exposurePrompt(1.5,1);
 			}else if(foreCast>=1.5 && foreCast<2){
-				exposurePrompt(2);
+				exposurePrompt("02",1);
 			}else if(foreCast>=2 && foreCast<3){
-				exposurePrompt(3);
+				exposurePrompt("03",1);
 			}else if(foreCast>=3 && foreCast<4){
-				exposurePrompt(4);
+				exposurePrompt("04",1);
 			}else if(foreCast>=4 && foreCast<5){
-				exposurePrompt(5);
+				exposurePrompt("05",1);
 			}else if(foreCast>=5){
-				exposurePrompt(6);
+				exposurePrompt("06",1);
 			}
 		}
 			
@@ -2764,7 +2764,7 @@ $(function(){
 		}
 
 	}
-	function exposurePrompt(num){
+	function exposurePrompt(num,type){
 		if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseFloat($('#interval-second').val(),10)<num){
 			$('#interval-second').val(num);
 			if(language=="en"){
@@ -2780,11 +2780,14 @@ $(function(){
 					$(".fix-prompt").html("已开启HDR，根据当前快门时长，拍摄间隔不能小于"+num+"秒。");
 				}
 			}
-			$(".fix-prompt").slideDown(1000);
-			setTimeout(function(){
-				$(".fix-prompt").slideUp(1000);
-			},2000);
+			if(type==1){
+				$(".fix-prompt").show();
+				setTimeout(function(){
+					$(".fix-prompt").hide();
+				},2000);
+			}
 		}
+
 	}
 
 	$('#interval-hour').change(updateTimeTotal);
@@ -3240,12 +3243,14 @@ $(function(){
 	//点击设置快门时间
 	$(".parameter-exprosure .swiper-slide").each(function(e){
 		$(this).click(function(){
+			var foreCast = exposureArray[e]/765384*4;
+			
 			if(e==14){//快门时长的限制，跟拍摄间隔相对应，互相限制
 				if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1){
 					if($(this).hasClass("greyColor")){
-						$(".exp-prompt").slideDown(1000);
+						$(".exp-prompt").show();
 						setTimeout(function(){
-							$(".exp-prompt").slideUp(1000);
+							$(".exp-prompt").hide();
 						},2000);
 						return false
 					}
@@ -3254,13 +3259,31 @@ $(function(){
 			}else if(e>14){
 				if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<2){
 					if($(this).hasClass("greyColor")){
-						$(".exp-prompt").slideDown(1000);
+						$(".exp-prompt").show();
 						setTimeout(function(){
-							$(".exp-prompt").slideUp(1000);
+							$(".exp-prompt").hide();
 						},2000);
 						return false
 					}
 					$('#interval-second').val("02");
+				}
+			}
+
+			if(hdr==1){
+				if(foreCast>=0.5 && foreCast<1){
+					exposurePrompt("01",2);
+				}else if(foreCast>=1 && foreCast<1.5){
+					exposurePrompt(1.5,2);
+				}else if(foreCast>=1.5 && foreCast<2){
+					exposurePrompt("02",2);
+				}else if(foreCast>=2 && foreCast<3){
+					exposurePrompt("03",2);
+				}else if(foreCast>=3 && foreCast<4){
+					exposurePrompt("04",2);
+				}else if(foreCast>=4 && foreCast<5){
+					exposurePrompt("05",2);
+				}else if(foreCast>=5){
+					exposurePrompt("06",2);
 				}
 			}
 			exprosureSwiper.slideTo(e);
@@ -3459,9 +3482,9 @@ $(function(){
 		var top = $(".customModeBtn").offset().top;
 		$(".customModePro").offset({top:top-39});
 		if($(".customModeList li").length==10){
-			$(".customModePro").slideDown(1000);
+			$(".customModePro").show();
 			setTimeout(function(){
-				$(".customModePro").slideUp(1000);
+				$(".customModePro").hide();
 			},2000);
 			return false;
 		}
@@ -3774,6 +3797,7 @@ $(function(){
 		$("#update,.dialog-cover").holdHide();
 	});
 	/*hdr点击事件*/
+	var hdrTimeoutClear=null;
 	$("#hdr").on("click",function(){
 		if(recordStatus!="idle"){//非空闲时给出提示，不能点击
 			$(".shootingPrompt").show();
@@ -3784,12 +3808,14 @@ $(function(){
 			postJSON("/imgCtl",{hdr:0});
 			$(".hdr-prompt").text(language=="en"?"HDR(beta) is off.":"已关闭HDR(尝鲜版)")
 			$(".hdr-prompt").show();
-			setTimeout(function(){$(".hdr-prompt").hide()},2000);
+			clearTimeout(hdrTimeoutClear);
+			hdrTimeoutClear=setTimeout(function(){$(".hdr-prompt").hide()},2000);
 		}else{
 			postJSON("/imgCtl",{hdr:1});
 			$(".hdr-prompt").text(language=="en"?"HDR(beta) is on.":"已开启HDR(尝鲜版)")
 			$(".hdr-prompt").show();
-			setTimeout(function(){$(".hdr-prompt").hide()},2000);
+			clearTimeout(hdrTimeoutClear);
+			hdrTimeoutClear=setTimeout(function(){$(".hdr-prompt").hide()},2000);
 		}
 		$(this).toggleClass("on");
 	})

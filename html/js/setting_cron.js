@@ -44,12 +44,15 @@ $(function(){
 			orientation = 90;
 		}
 		recCtrl["orientation"] = orientation;
-		$(".file-split-type ul li").each(function(index){
-			if($(this).hasClass("on")){
-				recCtrl["cutmode"] = index;
-				// recCtrl["cutmode"] = 0;
-			}
-		})
+		if($("#cronMode_dummy").val()!="普通" && $("#cronMode_dummy").val()!="Once"){
+			$(".file-split-type ul li").each(function(index){
+				if($(this).hasClass("on")){
+					recCtrl["cutmode"] = index;
+					// recCtrl["cutmode"] = 0;
+				}
+			})
+		}
+			
 		if(recordWait) recCtrl['wait'] = recordWait;
 		// setTimeout(function(){
 			postJSON("/timelapse" , recCtrl, function (data) {
