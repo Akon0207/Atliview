@@ -269,5 +269,20 @@
 	"remoteContent":"Remote Support gives our tech team the ability to remotely login the camera and identify potencial malfunctions.This feature requires an Internet connection, please make sure the camera is connected to local Wi-Fi.<br><br><span style=\"color: #848484;\">Tip: Remote Support will be turned off automatically when camera restart</span>",
 	"delsuc":"Deleted successfully",
 	"downloadLogs":"Download Logs",
-	"logsPromptContent":"Are you sure you want to download log file?"
+	"logsPromptContent":"Are you sure you want to download log file?",
+	"FailedToCompressFolder":"Failed to compress folder!",
+	"TimeSliceProcessing":"TimeSlice Processing...",
+	"CreatingTimeSlicePhoto":"Time Slice",
+        "ImageSetRange":"Time Range",
+        "SlicingSamples":"Number of Slices",
+        "SlicingOrder":"Direction",
+        "Forward":"Forward",
+        "Style":"Style",
+        "Start":"Start",
+        "Reverse":"Reverse",
+        "LeftToRing":"Slicing from left to right, or from top to bottom in chronological order",
+        "RightToLeft":"Slicing from right to left, or from bottom to top in chronological order",
+        "TimeSliceFailed":"Time Slice Failed!",
+	"total":"Select All",
+	"Display":"Display"
 }

@@ -269,5 +269,20 @@
 	"remoteContent":"远程协助可方便工程师远程登入相机检查和分析问题。要求相机连接互联网，请确保相机WLAN已连接到Wi-Fi网络。<br><br><span style=\"color: #848484;\">提醒： 此功能将在相机重启后自动关闭</span>",
 	"delsuc":"删除文件夹成功",
 	"downloadLogs":"下载日志",
-	"logsPromptContent":"确定要下载日志？"
+	"logsPromptContent":"确定要下载日志？",
+	"FailedToCompressFolder":"压缩文件夹失败!",
+	"TimeSliceProcessing":"正在处理...",
+	"CreatingTimeSlicePhoto":"渐现",
+	"ImageSetRange":"范围",
+	"SlicingSamples":"数量",
+	"SlicingOrder":"顺序",
+	"Forward":"默认",
+	"Style":"风格",
+	"Start":"生成",
+	"Reverse":"倒序",
+	"LeftToRing":"根据素材照片的先后时间，从左至右排列",
+	"RightToLeft":"根据素材照片的先后时间，从右至左排列",
+	"TimeSliceFailed":"渐现生成失败!",
+	"total":"全部",
+	"Display":"显示"
 }

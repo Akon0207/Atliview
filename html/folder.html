@@ -60,7 +60,7 @@ body.video-index .setting-head.head-msg{
 .folder-setting{
 	font-size: 0.6em;
 }
-.settings,.slice{
+.settings,.slice,.order{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -68,7 +68,7 @@ body.video-index .setting-head.head-msg{
     color: #666;
     width: 100%;
     height: 100%;
-    border: 1px solid #666;
+    border: 0px solid #666;
     font-size: 20px;
     max-width: none;
     border-radius: unset;
@@ -123,7 +123,7 @@ li.on{
     /*height:6px;*/
     
     padding-right: 30%;
-    background-color: #bfbfbf;
+    /*background-color: #bfbfbf;*/
     box-sizing: border-box;
 }
 .slider.focusable {
@@ -131,18 +131,36 @@ li.on{
 }
 .thumb {
     cursor: pointer;
-    border-color: #00d2ff;
+/*
+    border-color: #628ccd;
     border-style: solid;
-    background-color: #00d2ff;
-    border-radius: 50%;
+    background-color: #628ccd;
+*/
+    /*border-radius: 50%;*/
     /*top:-6px;left:50px;*/
     
     position: absolute;
 }
+.thumb div{
+    cursor: pointer;
+    border-color: #FFFF00;
+    border-style: solid;
+    background-color: #FFFF00;
+    /* border-radius: 50%; */
+    position: absolute;
+    width: 3px;
+    height: 50px;
+    border-width: 2px;
+    top: -10px;
+    margin: auto;
+    position: relative;
+    /* left: 122.496px; */
+    /* padding: 10px;
+}
 .track {
     pointer-events: none;
     height: 100%;
-    background-color: #4c4c4c;
+    /*background-color: #4c4c4c;*/
 }
 .container {
     position: relative;
@@ -150,6 +168,7 @@ li.on{
     margin-top: 40px;
     height: 30px;
     width: 80%;
+	margin-bottom: 40px;
 }
 .output {
     margin: 0;
@@ -181,8 +200,9 @@ li.on{
     transform: rotate(-45deg);
 }
 .choose-pics{
+    margin-top: 10px;
     margin-left: 100px;
-    width:80%;
+    width:90%;
 }
 
 .choose-pics .swiper-container .swiper-slide {
@@ -197,14 +217,26 @@ li.on{
 }
 .choose-style{
     margin-left: 100px;
-    width:60%;
+    width:90%;
+	background:#FFFFFF;
 }
-.choose-style .swiper-container .swiper-slide {
-    width:33.33%;
+.swiper-slide2 .horizontal{
+    position: absolute;
+    width: 20%;
+}
+.choose-style .swiper-container .swiper-slide2 {
+    width:25%;
+	height:130px;
+}
+.select{
+    position: absolute;
+    width: 40px;
+    margin-left: 15%;
+	display:none;
 }
 .choose-btn {
     width: 50%;
-    background: #00d2ff;
+    background: #628ccd;
     line-height: 40px;
     height: 40px;
     border-radius: 18px;
@@ -252,6 +284,88 @@ input:-ms-input-placeholder {
   color: #fff;
   font-size: 20px;
 }
+
+#slice_count{
+  -webkit-appearance: none;
+  width:80%;
+  color: #fff;
+  background: #bfbfbf;
+}
+input[type="range"] {
+    width: 80%;
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    background: -webkit-linear-gradient(#ffa200, #ffa200) no-repeat white;
+    background-size: 50% 100%; /* 因为周期默认value=0.50正好占50% */
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #FFFFFF;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border-color: #666666;
+    border-style: solid;
+}
+#speed {
+    background: #000;
+    background-size: 100% 100%;
+}
+.plusMinus {
+    margin: auto;
+    width: 40px;
+    margin:0px 0px 0px 20px;
+}
+.outputRange{
+    position:absolute;
+    text-align: center;
+    width:30px;
+    left:100px;
+    top:250px;
+}
+.longImg{
+	height: 100%;
+    width: 100%;
+}
+.orderText{
+	float:right;
+	margin-right: 10%;
+	color: #999999;
+}
+.orderText img {
+    width: 20px;
+	margin-left:20px;
+}
+.orderNmae {
+	display: inline-table;
+}
+.order-line{
+	border-block-end: 5px solid #f3f3f3;
+}
+.order-name{
+    padding-top: 20px;
+    padding-left: 5%;
+    padding-bottom: 10px;
+    color: #333333;
+}
+.tick{
+	float: right;
+    width: 40px;
+    margin-right: 20%;
+}
+.order-info{
+    /* padding-top: 20px; */
+    padding-left: 5%;
+    padding-bottom: 10px;
+    /* border-block-end: 2px solid #f3f3f3; */
+    color: #999999;
+	font-size: 0.7em;
+}
+.wlan-detail-tit{
+	border-block-start: 8px solid #f3f3f3;
+}
 </style>
 </head>
 <body class="video-index">
@@ -262,7 +376,7 @@ input:-ms-input-placeholder {
 		<a href="javascript:;" class="iconfont folder-download">&#xe644;</a>
 		<a href="javascript:;" class="iconfont folder-delete">&#xe634;</a>
 	<!--	<div class="video-style" id="firmware"></div> -->
-	</section>
+</section>
 	<section class="setting-head head-msg">
 		<p lan="foladr-head-msg">总数量0帧，抽样显示0帧</p>
 		<a href="javascript:;" class="iconfont folder-setting">&#xe6e9;</a>
@@ -276,19 +390,25 @@ input:-ms-input-placeholder {
 	<div class="outPutMode slice">
         <section class="wlan-detail">
                 <a href="javascript:;" class="iconfont cancel">&#xe6ea;</a>
-                <div class="wlan-detail-name bottom-line">渐现</div>
-		<div class="wlan-detail-tit" id="range-msg">取样范围(1~2000)</div>
+                <div class="wlan-detail-name bottom-line" lan="CreatingTimeSlicePhoto">渐现</div>
+		<div class="wlan-detail-tit" id="range-msg" lan="ImageSetRange">范围</div>
 <div class="container">
+	<img class="longImg" src="images/horizontal_2.png">
 	<div class="slider">
         <div class="track"></div>
     </div>
     <div class="output o0"><input type="number" id="range-start"></div>
-    <div class="thumb t0"></div>
+    <div class="thumb t0"><div></div></div>
 
     <div class="output o1"><input type="number" id="range-end"></div>
-    <div class="thumb t1"></div>
+    <div class="thumb t1"><div></div></div>
 </div>
 
+		<div class="wlan-detail-tit" lan="SlicingSamples">数量</div>
+		<div class="choose-pics">
+		<span class="outputRange">12</span><input type="range" id="slice_count" value="12" min="8" max="200" step="1"><img class="plusMinus plus" src="images/plus.png "><img class="plusMinus minus" src="images/minus.png ">
+		</div>
+		<!--
                 <div class="wlan-detail-tit" >切片数量</div>
                                 <div class="setting-current choose-pics">
                                         <div class="swiper-container">
@@ -299,11 +419,13 @@ input:-ms-input-placeholder {
                                                         <div class="swiper-slide">36</div>
                                                         <div class="swiper-slide">48</div>
                                                         <div class="swiper-slide">60</div>
-                                                        <div class="swiper-slide"><input type="number" class="count" placeholder="自定义" onfocus="this.placeholder=''" onblur="this.placeholder='自定义'" min="1"></div>
+                                                        <div class="swiper-slide"><input type="number" class="count" placeholder="自定义" onFocus="this.placeholder=''" onBlur="this.placeholder='自定义'" min="1"></div>
                                                 </div>
                                         </div>
                                 </div>  
-                <div class="wlan-detail-tit" >切片顺序</div>
+								-->
+                <div class="wlan-detail-tit" ><div class="orderNmae" lan="SlicingOrder">顺序</div><div class="orderText"><span lan="Forward">默认</span><img src="images/arrow_more.png"></div></div>
+				<!--
                                 <div class="setting-current choose-order">
                                         <div class="swiper-container">
                                                 <div class="swiper-wrapper">
@@ -312,39 +434,52 @@ input:-ms-input-placeholder {
                                                 </div>
                                         </div>
                                 </div>  
+								-->
 
-                <div class="wlan-detail-tit" >切片风格</div>
+                <div class="wlan-detail-tit" lan="Style">风格</div>
                                 <div class="setting-current choose-style">
                                         <div class="swiper-container">
                                                 <div class="swiper-wrapper">
-                                                        <div class="swiper-slide on">竖</span></div>
-                                                        <div class="swiper-slide">横</span></div>
-                                                        <div class="swiper-slide">斜</span></div>
-                                                        <div class="swiper-slide">扇形</span></div>
+                                                        <div class="swiper-slide2 on"><img class="horizontal" src="images/horizontal_0.png"><img class="select" src="images/select_style.png"></div>
+                                                        <div class="swiper-slide2"><img class="horizontal" src="images/horizontal_1.png"><img class="select" src="images/select_style.png"></div>
+                                                        <div class="swiper-slide2"><img class="horizontal" src="images/horizontal_2.png"><img class="select" src="images/select_style.png"></div>
+                                                        <div class="swiper-slide2"><img class="horizontal" src="images/horizontal_3.png"><img class="select" src="images/select_style.png"></div>
                                                 </div>
                                         </div>
                                 </div>  
 
 
-                <div class="choose-btn">执  行</div>
-        </section>
+                <div class="choose-btn" lan="Start">生成</div>
+      </section>
 	</div>
 
 	<div class="outPutMode settings">
 		<section class="setting-head">
 		<a href="javascript:;" class="iconfont goback setting-goback">&#xe6ea;</a>
-		<p>照片展示比例</p>
+		<p lan="Display">显示比例</p>
 		
-		</section>
+	  </section>
 		<ul>
-			<li v=1><i  lan="aaa">全部</i><i  class="show-count">可展示0帧</i></li>
-			<li v=2><i  lan="aaa">1/2抽样</i><i  class="show-count">可展示0帧</i></li>
-			<li v=5><i  lan="aaa">1/5抽样</i><i  class="show-count">可展示0帧</i></li>
-			<li class="on" v=10><i  lan="aaa">1/10抽样</i><i  class="show-count">可展示0帧</i></li>
-			<li v=25><i  lan="aaa">1/25抽样</i><i  class="show-count">可展示0帧</i></li>
-			<li v=50><i  lan="aaa">1/50抽样</i><i  class="show-count">可展示0帧</i></li>
-			<li v=100><i  lan="aaa">1/100抽样</i><i  class="show-count">可展示0帧</i></li>
-			<li v=200><i  lan="aaa">1/200抽样</i><i  class="show-count">可展示0帧</i></li>
+			<li v=1><i lan="total">全部</i><i class="show-count">可展示0帧</i></li>
+			<li v=2><i>1/2抽样</i><i class="show-count">可展示0帧</i></li>
+			<li v=5><i>1/5抽样</i><i class="show-count">可展示0帧</i></li>
+			<li class="on" v=10><i>1/10抽样</i><i class="show-count">可展示0帧</i></li>
+			<li v=25><i>1/25抽样</i><i class="show-count">可展示0帧</i></li>
+			<li v=50><i>1/50抽样</i><i class="show-count">可展示0帧</i></li>
+			<li v=100><i>1/100抽样</i><i class="show-count">可展示0帧</i></li>
+			<li v=200><i>1/200抽样</i><i class="show-count">可展示0帧</i></li>
+		</ul>
+	</div>
+
+	<div class="outPutMode order">
+		<section class="setting-head">
+		<a href="javascript:;" class="iconfont goback order-goback">&#xe6ea;</a>
+		<p lan="SlicingOrder">顺序</p>
+		
+	  </section>
+		<ul>
+			<div v=0 class="order-line"><div class="order-name"><p lan="Forward">默认</p><img v=0 class="tick on" src="images/tick.png"></div><div  class="order-info" lan="LeftToRing">根据素材照片的先后时间，从左至右排列</div></div>
+			<div v=1 class="order-line"><div class="order-name"><p lan="Reverse">倒序</p><img v=1 class="tick" src="images/tick.png"></div><div  class="order-info" lan="RightToLeft">根据素材照片的先后时间，从右至左排列</div></div>
 		</ul>
 	</div>
 
@@ -374,7 +509,7 @@ input:-ms-input-placeholder {
 	</div>
 
 	<div class="dialog-poppup" id="downloadError" style="display: none;">
-		<div class="dialog-poppup-content">压缩文件夹失败!</div>
+		<div class="dialog-poppup-content" lan="FailedToCompressFolder">压缩文件夹失败!</div>
 		<div class="dialog-btns flex">
 		 <a href="javascript:;" id="downloadErrorConfirm" lan="OK">确定</a>
 		</div>
@@ -385,19 +520,16 @@ input:-ms-input-placeholder {
 		</div>
 	</div>
 	<div class="dialog-poppup" id="slicing" style="display: none;">
-		<div class="dialog-poppup-content" id="sliceSecMsg">开始切片</div>
+		<div class="dialog-poppup-content" id="sliceSecMsg" lan="TimeSliceProcessing">正在处理...</div>
 		<div class="dialog-btns flex">
 		</div>
 	</div>
 	<div class="dialog-poppup" id="sliceResult" style="display: none;">
-		<div class="dialog-poppup-content" id="sliceResultMsg">切片失败!</div>
+		<div class="dialog-poppup-content" id="sliceResultMsg" lan="TimeSliceFailed">切片失败!</div>
 		<div class="dialog-btns flex">
 		 <a href="javascript:;" id="sliceResultConfirm" lan="OK">确定</a>
 		</div>
 	</div>
-
-
-
 
 <script type="text/javascript" src="js/language.js"></script>
 <script type="text/javascript">
@@ -409,11 +541,31 @@ $(function(){
 		$(".iconfont.goback").attr("href","video.html?language=zh")
 	}
 	$(".folder-setting").on('click', function(){
-		$(".outPutMode").show();
+		$(".outPutMode.settings").show();
 	})
 	$(".setting-goback, .iconfont.cancel").on('click', function(){
 		$(".outPutMode").hide();
 		return false;
+	})
+	$(".order-goback").on("click", function(){  //设定顺序页面
+		$(".outPutMode.order").hide();
+		return false;
+	})
+	$(".orderText").on("click", function(){  //设定顺序页面
+		$(".outPutMode.order").show();
+	})
+	$(".order-line").on("click", function(){  //点击设定顺序
+		var v = $(this).attr("v");
+		$(".tick").hide();
+		$(".tick[v="+v+"]").show().addClass("on").siblings().removeClass("on");
+		if(v==0){
+			if(language=="en") $(".orderText span").html("Forward");
+			else $(".orderText span").html("默认");
+		}else {
+			if(language=="en") $(".orderText span").html("Reverse");
+			else $(".orderText span").html("倒序");
+		}
+		setTimeout(function (){$(".outPutMode.order").hide();}, 200);
 	})
 	$(".outPutMode li").each(function(index){
 		$(this).on("click",function(e){
@@ -421,20 +573,30 @@ $(function(){
 			else {
 				$(this).addClass("on").siblings().removeClass("on");
 				localControl.putValue("folderShowItems", $(this).attr("v"));
-				location.href = "/folder.html?id="+id+"&c="+$(this).attr("v")+(getAccessToken()?'&access_token='+getAccessToken():'');
+				location.href = "/folder.html?id="+id+"&language="+language+"&c="+$(this).attr("v")+(getAccessToken()?'&access_token='+getAccessToken():'');
 				//location.reload();
 			}
 		})
 	})
-	$(" .swiper-slide").each(function(e){
+	$(".swiper-slide").each(function(e){
 		$(this).click(function(){
 			$(this).addClass("on").siblings().removeClass("on");
 		});
 	});
-})
+	$(".swiper-slide2").each(function(e){
+		$(this).click(function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			$(this).children(".select").show();
+			$(this).siblings().children(".select").hide();
+			
+		});
+	});
+	$(".swiper-slide2.on").children(".select").show();
+	$(".longImg").attr("src", '/media/'+id+'/thumbnail/slider.jpg' + (getAccessToken()?'?access_token='+getAccessToken():''));
+	$(".tick[v=1]").hide();
 
 var id = getParameterByName('id');
-//var folderShowItems = parseInt(localControl.getValue("folderShowItems", 10));
+var folderShowItems = parseInt(localControl.getValue("folderShowItems", 10));
 //$("li[v="+folderShowItems+"]").addClass("on").siblings().removeClass("on");
 var url=false;
 var maxItems = 0;
@@ -460,11 +622,11 @@ function setMiddle(id, v)
 function deleteFolder()
 {
 	putJSON("/webctl", {"deleteFolder" : id}, function(e){
-		setMiddle("#showMsg", "删除文件夹成功");
+		setMiddle("#showMsg", "Delete folder successfully");
 		$("#showMsgConfirm").one("click", function(){location.href = "video.html"});
 		//setTimeout(function(){location.href = "video.html"}, 1000);
 	},function(jqXHR, exception){
-		setMiddle("#showMsg", "删除文件夹失败,HTTP返回:"+jqXHR.status);
+		setMiddle("#showMsg", "Failed to delete folder, HTTP return:"+jqXHR.status);
 		console.log((jqXHR.status+exception));
 	}, "text");
 }
@@ -570,21 +732,32 @@ function askPack(id, amount)
 function checkSlice()
 {
 	if(packSec > packMacSec) {
-		setMiddle("#sliceResult", "切片超时！");
+		setMiddle("#sliceResult", "Time Slice Timeout!");
 		return;
 	}
 	getJSON("/timeslice", function(e, status){
 		packSec++;
-		$("#sliceSecMsg").html("开始切片 "+e.progress+"%, 已用时"+packSec+"秒");
+		if(language=="en"){
+			$("#sliceSecMsg").html("TimeSlice Processing "+e.progress+"%, about "+packSec+" seconds");
+		}else{
+			$("#sliceSecMsg").html("正在处理 "+e.progress+"%, 已用时"+packSec+"秒");
+		}
+
 		console.log("开始切片 "+e.progress+"%, 已用时"+packSec+"秒");
 		if(e.folderID != packID ) {
-			setMiddle("#sliceResult", "切片失败！");
+			if(language=="en") setMiddle("#sliceResult", "Time Slice Failed!");
+			else setMiddle("#sliceResult", "渐现生成失败!");
 			console.log("切片ID错误 "+e.folderID+" "+packID);
 		}
 		else if(e.status == "done") {
 			console.log("切片成功");
-			setMiddle("#sliceResult", "切片成功!");
-			$("#sliceResultMsg").html("切片成功！<br>"+"<a href='"+e.url+(getAccessToken()?'?access_token='+getAccessToken():'')+"' target='_blank'>打开"+id+"</a>");
+			if(language=="en"){
+				setMiddle("#sliceResult", "Time Slice success!");
+				$("#sliceResultMsg").html("Time Slice success! <br>"+"<a href='"+e.url+(getAccessToken()?'?access_token='+getAccessToken():'')+"' target='_blank'>Open "+id+"</a>");
+			}else {
+				setMiddle("#sliceResult", "切片成功!");
+				$("#sliceResultMsg").html("切片成功！<br>"+"<a href='"+e.url+(getAccessToken()?'?access_token='+getAccessToken():'')+"' target='_blank'>打开"+id+"</a>");
+			}
 		}
 		else setTimeout(checkSlice, 1000);
 	} , function (XHR, e) {
@@ -596,9 +769,17 @@ function checkSlice()
 function timeslice(id, range, frame, seq, style)
 {
 	packID = id;
+	//alert("folderID"+id+" style"+style+" frame"+frame+" range"+range+" seq"+seq);
+	//return;
 	postJSON("/timeslice", {"folderID":id, "style":style, "frame":frame, "range":range,"seq":seq}, function(e, status){
 		packSec=0;
-		setMiddle("#slicing", "开始切片 0%, 已用时"+packSec+"秒");
+		if(language=="en"){
+			setMiddle("#slicing", "TimeSlice Processing 0%, about "+packSec+" seconds");
+		}else{
+			setMiddle("#slicing", "正在处理 0%, 已用时"+packSec+"秒");
+		}
+
+		//setMiddle("#slicing", "开始切片 0%, 已用时"+packSec+"秒");
 		setTimeout(checkSlice, 1000);
 	}, function (jqXHR, exception) {
 		//error("EON not responsive!");
@@ -614,19 +795,38 @@ $(".folder-download").on("click", function(){
 });
 $(".folder-slice").on("click", function(){
 	$(".slice").show();
+	setInputsRy();
+	updatePlusMinus();
 });
+function change_choose_pics(nums)
+{
+	if(nums>150) nums=150;
+	$("#slice_count").attr("max", nums);
+	console.log("slice_count:"+$("#slice_count").val()+" max:"+nums);
+	if(parseInt($("#slice_count").val())>nums) $("#slice_count").val(nums);
+	updatePlusMinus();
+}
+function updatePlusMinus()
+{
+	var rangeK = parseInt($("#slice_count").css("width")) / (parseInt($("#slice_count").attr("max"))-parseInt($("#slice_count").attr("min")));
+	//alert($("#slice_count").css("width")+" "+(100+rangeK*$("#slice_count").val())+"px");
+        $(".outputRange ").css("left", (100+rangeK*0.96*(parseInt($("#slice_count").val())-parseInt($("#slice_count").attr("min"))))+"px");
+	$(".outputRange ").html($("#slice_count").val());
+}
 $(".choose-btn").on("click", function(){
 	if(!id) return;
 	var range = $("#range-start").val() +"-"+ $("#range-end").val();
-	var seq = $(".choose-order .on").index();
+	var seq = $(".tick.on").attr("v");
 	var style = $(".choose-style .on").index();
-	var frame = $(".choose-pics .on").text();
+	var frame = $("#slice_count").val();
 	if(isNaN(parseInt(frame))){
 		frame = $(".count").val();
 		if(isNaN(parseInt(frame))) frame = 24;
 	}
 	timeslice(id, range, frame, seq, style);
 })
+
+
   var mediaList = $('#mediaList');
 
   mediaList.empty();
@@ -707,7 +907,13 @@ function setItems(data)
 			
 			$("li[v]").each(function(){
 				var v = parseInt(($(this).attr("v")));
-				$(this).children(".show-count").text("可展示"+Math.ceil(maxItems/v)+"帧");
+				if(language=="en") {
+					if(v!=1)  $(this).children("i").first().text("Select 1/"+v);
+					$(this).children(".show-count").text("Display "+Math.ceil(maxItems/v)+"");
+				}else {
+					if(v!=1)  $(this).children("i").first().text("1/"+v+"抽样");
+					$(this).children(".show-count").text("可展示"+Math.ceil(maxItems/v)+"帧");
+				}
 			})
 			break;
 		}
@@ -730,7 +936,8 @@ getJSON('/media2/', function(data) {
 
 function setInputsRy(){
 if(!maxItems || maxItems<1) maxItems = 80000;
-$("#range-msg").text("取样范围(1~"+maxItems+")");
+//$("#range-msg").text("范围(1~"+maxItems+")");
+$("#slice_count").attr("max", maxItems);
 var inputsRy = {
     sliderWidth: 400,
     minRange: 1,
@@ -738,7 +945,7 @@ var inputsRy = {
     outputWidth: 30, // output width
     thumbWidth: 30, // thumb width
     thumbBorderWidth: 4,
-    trackHeight: 4,
+    trackHeight: 40,
     theValue: [1, maxItems] // theValue[0] < theValue[1]
 };
 var isDragging0 = false;
@@ -781,6 +988,7 @@ $("#range-start, #range-end, .count").on("keyup", function(event){
 function updateValue()
 {
 inputsRy.sliderWidth = document.body.clientWidth * 0.8;
+console.log("inputsRy.sliderWidth:"+inputsRy.sliderWidth);
 range = inputsRy.maxRange - inputsRy.minRange;
 rangeK = inputsRy.sliderWidth / range;
 container = document.querySelector(".container");
@@ -802,17 +1010,21 @@ track.style.width = inputsRy.theValue[1] * rangeK - inputsRy.theValue[0] * range
 
 for (var i = 0; i < thumbs.length; i++) {
     thumbs[i].style.width = thumbs[i].style.height = inputsRy.thumbWidth + "px";
+    //thumbs[i].style.width = inputsRy.thumbWidth + "px";
+    //thumbs[i].style.height = 30 + "px";
     //console.log(inputsRy.thumbWidth + "px");
     thumbs[i].style.borderWidth = inputsRy.thumbBorderWidth + "px";
     thumbs[i].style.top = -(inputsRy.thumbWidth / 2 + inputsRy.thumbBorderWidth - inputsRy.trackHeight / 2) + "px";
-    thumbs[i].style.left = (inputsRy.theValue[i] - inputsRy.minRange) * rangeK - (thumbRealWidth / 2) + "px";
+    //thumbs[i].style.top = 0;
+    console.log("inputsRy.theValue[i]:"+inputsRy.theValue[i]+" inputsRy.minRange:"+inputsRy.minRange+" rangeK:"+rangeK+" thumbRealWidth:"+thumbRealWidth);
+    thumbs[i].style.left = (inputsRy.theValue[i] - inputsRy.minRange) * rangeK - (thumbRealWidth / 2 -2) + "px";
 
 }
 for (var i = 0; i < outputs.length; i++) {
     outputs[i].style.width = outputs[i].style.height = outputs[i].style.lineHeight = outputs[i].style.left = inputsRy.outputWidth + "px";
     outputs[i].style.width = 3*inputsRy.outputWidth + "px";
     outputs[i].style.top = -(Math.sqrt(2 * inputsRy.outputWidth * inputsRy.outputWidth) + inputsRy.thumbWidth / 2 - inputsRy.trackHeight / 2) + "px";
-    outputs[i].style.left = (inputsRy.theValue[i] - inputsRy.minRange) * rangeK - 1.5*inputsRy.outputWidth  + "px";
+    outputs[i].style.left = (inputsRy.theValue[i] - inputsRy.minRange) * rangeK - 1.5*inputsRy.outputWidth +5 + "px";
     //outputs[i].innerHTML = "<p>" + inputsRy.theValue[i] + "</p>";
 }
 	$("#range-start").val(inputsRy.theValue[0])
@@ -821,7 +1033,8 @@ for (var i = 0; i < outputs.length; i++) {
 	$("#range-end").val(inputsRy.theValue[1]);
 	$("#range-end").css("width", $("#range-end").val().length*12+15+"px");
 	
-	$("#range-msg").text("取样范围("+inputsRy.theValue[0]+"~"+inputsRy.theValue[1]+")");
+	//$("#range-msg").text("范围("+inputsRy.theValue[0]+"~"+inputsRy.theValue[1]+")");
+	change_choose_pics(inputsRy.theValue[1]-inputsRy.theValue[0]+1);
 }
 
 //events
@@ -886,6 +1099,19 @@ function setValue(theValue0, theValue1)
 	if(theVale0 > theValue1 - 12 ) theVale0=inputsRy.minRang;
 	if(theVale0 < inputsRy.minRange) theVale0=inputsRy.minRange;
 }
+
+$("#slice_count").on("input propertychange", function(){
+	updatePlusMinus();
+})
+$(".plus").on("click", function(){
+	$("#slice_count").val(parseInt($("#slice_count").val())+1);
+	updatePlusMinus();
+});
+$(".minus").on("click", function(){
+	$("#slice_count").val(parseInt($("#slice_count").val())-1);
+	updatePlusMinus();
+});
+
 // helpers
 /*
 function oMousePos(elmt, evt) {
@@ -897,6 +1123,7 @@ function oMousePos(elmt, evt) {
 }
 */
 }
+})
 </script>
 </body>
 </html>
