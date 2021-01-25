@@ -4428,6 +4428,9 @@ $(function(){
 				$(".video-shooting").holdHide();
 				$(".video").holdShow();
 				if(("recordinfo" in e) && (e.recordinfo.status=="recording")){
+					if(videoStartAt && videoStartAt != Date.parse(e.recordinfo.currentVideo.startAt)/1000){
+						$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
+					}
 					var videoStartAt = Date.parse(e.recordinfo.currentVideo.startAt)/1000;
 					// var currentTime = Date.parse(new Date())/1000;
 					var currentTime = Date.parse(e.devTime)/1000;
@@ -5041,18 +5044,27 @@ $(function(){
 	var fixPreviewCssTimer=null;
 	var toVisible=1;
 	function fixPreviewCss(){
-
 		var width = $(".main-pic").css("width");
 		var height = $(".main-pic").css("height");
+		var img=document.getElementById('preview');
+		if(width==height){ //解决正方形问题
+			if(img.naturalWidth > img.naturalHeight){
+				height=width * img.naturalHeight / img.naturalWidth;
+				$(".main-pic").css("height", height);
+			}else {
+				width=height * img.naturalWidth / img.naturalHeight;
+				$(".main-pic").css("width", width);
+			}
+		}
 		$(".main-pic").css("width", "99%");
-		$(".main-pic").css("width", "99%");
+		//$(".main-pic").css("height", "99%");
 		//$(".main-pic").css("width", width);
 
 		if(!fixPreviewCssTimer){
 		    fixPreviewCssTimer = setTimeout(function(){
 			$(".main-pic").css("width", width);
 			//$(".main-pic").css("height", height);
-			console.log("css:"+width+" "+height);
+			console.log("css:"+width+" "+height+" naturalWidth:"+img.naturalWidth+" naturalHeight:"+img.naturalHeight);
 			fixPreviewCssTimer=null;
 			setOrientation(imgArchive,true);
 			//positionFixed();
