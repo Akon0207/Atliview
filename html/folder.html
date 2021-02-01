@@ -366,6 +366,10 @@ input[type="range"]::-webkit-slider-thumb {
 .wlan-detail-tit{
 	border-block-start: 8px solid #f3f3f3;
 }
+#packSecMsg img {
+    width: 21px;
+    margin: 0 10px;
+}
 </style>
 </head>
 <body class="video-index">
@@ -516,6 +520,7 @@ input[type="range"]::-webkit-slider-thumb {
 	</div>
 	<div class="dialog-poppup" id="packing" style="display: none;">
 		<div class="dialog-poppup-content" id="packSecMsg"></div>
+        <div style="font-size: 16px;color: #999;text-align: center;margin: 0px 0 15px 0;" lan="packPro"></div>
 		<div class="dialog-btns flex">
 		</div>
 	</div>
@@ -660,12 +665,16 @@ function checkPack()
 {
 	if(packSec > packMacSec) return timeout();
 	getJSON("/tgz", function(e, status){
-        if(language=="en"){
-            $("#packSecMsg").html("Compressing "+packMacSec+" Photos，about "+packSec+" seconds");
+        // if(language=="en"){
+        //     $("#packSecMsg").html("Compressing "+packMacSec+" Photos，about "+packSec+" seconds");
+        // }else{
+        //     $("#packSecMsg").html("正在压缩"+packMacSec+"张照片，已用时"+packSec+"秒");
+        // }
+		if(language=="en"){
+            $("#packSecMsg").html("<img src=\"images/netprompt.gif\">Compressing files...");
         }else{
-            $("#packSecMsg").html("正在压缩"+packMacSec+"张照片，已用时"+packSec+"秒");
+            $("#packSecMsg").html("<img src=\"images/netprompt.gif\">正在压缩文件...");
         }
-		
 		console.log("总计"+packMacSec+"张图片压缩中，已用时"+packSec+"秒 "+e.tgz);
 		packSec++;
 		if(e.tgz != packID ) {
@@ -688,12 +697,16 @@ function packImages()
 {
 	postJSON("/tgz", {tgz:packID}, function(e, status){
 		packSec=0;
-        if(language=="en"){
-            $("#packSecMsg").html("Compressing "+packMacSec+" Photos，about "+packSec+" seconds");
+        // if(language=="en"){
+        //     $("#packSecMsg").html("Compressing "+packMacSec+" Photos，about "+packSec+" seconds");
+        // }else{
+        //     $("#packSecMsg").html("正在压缩"+packMacSec+"张照片，已用时"+packSec+"秒");
+        // }
+		if(language=="en"){
+            $("#packSecMsg").html("<img src=\"images/netprompt.gif\">Compressing files...");
         }else{
-            $("#packSecMsg").html("正在压缩"+packMacSec+"张照片，已用时"+packSec+"秒");
+            $("#packSecMsg").html("<img src=\"images/netprompt.gif\">正在压缩文件...");
         }
-		
 		setMiddle("#packing");
 		setTimeout(checkPack, 1000);
 	}, function (jqXHR, exception) {

@@ -284,5 +284,6 @@
 	"RightToLeft":"根据素材照片的先后时间，从右至左排列",
 	"TimeSliceFailed":"渐现生成失败!",
 	"total":"全部",
-	"Display":"显示"
+	"Display":"显示",
+	"packPro":"此过程耗时较长，请耐心等待"
 }

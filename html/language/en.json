@@ -284,5 +284,6 @@
         "RightToLeft":"Slicing from right to left, or from bottom to top in chronological order",
         "TimeSliceFailed":"Time Slice Failed!",
 	"total":"Select All",
-	"Display":"Display"
+	"Display":"Display",
+	"packPro":"This process may take some time."
 }

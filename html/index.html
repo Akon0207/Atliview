@@ -1061,6 +1061,7 @@ $(function(){
 	var currentExposure = null;
 	var autoGetExposure = null;
 	var hdr = null;
+	var videoInterval = null;
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
 		$(".iconfont.menu").attr("href","setting.html?language=en")
@@ -4428,9 +4429,9 @@ $(function(){
 				$(".video-shooting").holdHide();
 				$(".video").holdShow();
 				if(("recordinfo" in e) && (e.recordinfo.status=="recording")){
-					if(videoStartAt && videoStartAt != Date.parse(e.recordinfo.currentVideo.startAt)/1000){
-						$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
-					}
+					// if(videoStartAt && videoStartAt != Date.parse(e.recordinfo.currentVideo.startAt)/1000){
+					// 	$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
+					// }
 					var videoStartAt = Date.parse(e.recordinfo.currentVideo.startAt)/1000;
 					// var currentTime = Date.parse(new Date())/1000;
 					var currentTime = Date.parse(e.devTime)/1000;
@@ -4689,6 +4690,12 @@ $(function(){
 				$(".moreMask li").eq(3).hide();
 				$(".horizontalPrompt").holdHide();
 				$(".verticalPrompt").holdHide();
+				if(!videoInterval){
+					videoInterval = setInterval(function(){
+						statusEventSourceOnerror();
+						$('.main-pic,.imgAmplifier').attr('src', '/' + sessionType + '?sessionId=' + sessionId + (getAccessToken()?'&access_token='+getAccessToken():''));
+					},10000);
+				}
 			}else{
 				// $(".more").holdShow();
 				$(".moreMask li").eq(1).show();
@@ -4705,6 +4712,8 @@ $(function(){
 				}else{
 					$("#hdr").holdHide();
 				}
+				clearInterval(videoInterval);
+				videoInterval = null;
 			}
 /*			
 			//设置升级提醒
@@ -4885,7 +4894,36 @@ $(function(){
 		}
 		else clearCircle();
 	}
-
+	function calculateTime(currentTime) {
+		var years = currentTime.getFullYear();
+		var months = currentTime.getMonth()+1;
+		var days = currentTime.getDate();
+		var hours = currentTime.getHours();
+		var minutes = currentTime.getMinutes();
+		var seconds = currentTime.getSeconds();
+		var inputHours = parseInt($('#duration-hour').val(), 10);
+		var inputDays = parseInt($('#duration-day').val(), 10);
+		var inputMinutes = parseInt($('#duration-minute').val(), 10);
+		minutes = minutes + inputMinutes;
+		hours = hours + inputHours;
+		// days = days + inputDays;
+		if(minutes>60){
+			minutes = minutes - 60;
+			hours = hours + 1;
+		}
+		if(hours>24){
+			hours = hours - 24;
+			inputDays = inputDays+1;
+		}
+		currentTime.setDate(days+inputDays);
+		years = currentTime.getFullYear();
+		months = transformTime(currentTime.getMonth()+1);
+		days = transformTime(currentTime.getDate());
+		hours = transformTime(currentTime.getHours());
+		minutes = transformTime(currentTime.getMinutes());
+		seconds = transformTime(currentTime.getSeconds());
+		return years.toString()+months.toString()+days.toString()+hours.toString()+minutes.toString()+seconds.toString();
+	}
 	function startRecording() {
 		$("#shoot-circle").css("pointer-events","none");
 		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
@@ -4901,11 +4939,15 @@ $(function(){
 		}
 		if($(".time-poppup .switch-box").attr('checked')){
 			// localControl.putValue("limit_time",1);
+			// var endTime = calculateTime(currentTime);
 			var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
 			var maxFrames = Math.floor(duration/interval);
 			//recCtrl['maxFrames'] = maxFrames;
 			if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames;
 			else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames;
+			// if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames+'E'+endTime;
+			// else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames+'E'+endTime;
+			// recCtrl["endAt"] = endTime;
 		}
 		else {
 			if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
@@ -5047,12 +5089,14 @@ $(function(){
 		var width = $(".main-pic").css("width");
 		var height = $(".main-pic").css("height");
 		var img=document.getElementById('preview');
-		if(width==height){ //解决正方形问题
+		
+		console.log("width:"+$(".main-pic").css("width")+","+width+" height:"+$(".main-pic").css("height")+","+height);
+		if(parseInt(width)==parseInt(height)){ //解决正方形问题
 			if(img.naturalWidth > img.naturalHeight){
-				height=width * img.naturalHeight / img.naturalWidth;
+				height=parseInt(width) * img.naturalHeight / img.naturalWidth+"px";
 				$(".main-pic").css("height", height);
 			}else {
-				width=height * img.naturalWidth / img.naturalHeight;
+				width=parseInt(height) * img.naturalWidth / img.naturalHeight+"px";
 				$(".main-pic").css("width", width);
 			}
 		}
@@ -5072,6 +5116,9 @@ $(function(){
 		}
 
 	};
+	$(window).resize(function(){
+		$(".main-pic").css("height", "auto");
+	})
 	//ios检查网页切换，解决黑屏问题
 	var getStatusTimer=null;
 	var gotoVisable = false;
