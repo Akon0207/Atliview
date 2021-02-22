@@ -40,7 +40,7 @@ $(function(){
 		if(s[1]=="Infinite"){
 			var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
 		}else{
-			var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], endTime: s[1][1], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
+			var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], endAt: s[1][1], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
 		}
 		
 		// var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: 0 };
