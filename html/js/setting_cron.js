@@ -36,14 +36,14 @@ $(function(){
 	//开始定时计划
 	function startRecording(s) {
 		//var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, starttime:transTimeyMDHIS() };
-		var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
-		// if(s[1]=="Infinite"){
-		// 	var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
-		// }else{
-		// 	var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], endTime: s[1], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
-		// }
+		// var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
+		if(s[1]=="Infinite"){
+			var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
+		}else{
+			var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], endTime: s[1][1], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
+		}
 		
-		//var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: 0 };
+		// var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: 0 };
 		if(imgArchive == "horizontal"){
 			orientation = 0;
 		}else if(imgArchive == "vertical"){
@@ -80,18 +80,23 @@ $(function(){
 		if(hh<10) hh="0"+hh;
 		return hh+strs[1]+strs[2];
 	}
-	function calculateTime(end,type){
-		if(type=="normal"){
-			var year = end.getFullYear();
-			var month = end.getMonth()+1;
+	function calculateTime(end){
+			var timezone=-(new Date().getTimezoneOffset()/60);
 			var day = end.getDate();
 			var hours = end.getHours();
 			var minutes = end.getMinutes();
 			var seconds = end.getSeconds();
-			return year.toString()+transformTime(month).toString()+transformTime(day).toString()+transformTime(hours).toString()+transformTime(minutes).toString()+transformTime(seconds).toString();
-		}else{
-
-		}
+			hours = hours - timezone;
+			if(hours>24){
+				hours = hours-24;
+				end.setDate(day+1);
+			}else if(hours<0){
+				hours = hours + 24;
+				end.setDate(day-1);
+			}
+			var year = end.getFullYear();
+			var month = end.getMonth()+1;
+			return [year.toString()+transformTime(month).toString()+transformTime(day).toString()+transformTime(hours).toString()+transformTime(minutes).toString()+transformTime(seconds).toString(),year.toString()+"-"+transformTime(month).toString()+"-"+transformTime(day).toString()+"T"+transformTime(hours).toString()+":"+transformTime(minutes).toString()+":"+transformTime(seconds).toString()+"Z"];
 	}
 	//生成schdule字符串
 	function genSchedule(configs){
@@ -109,7 +114,7 @@ $(function(){
 			start=new Date(Date.parse(configs["normalTask"]["startAt"].replace(/-/g,"/")));
 			end=new Date(Date.parse(configs["normalTask"]["endAt"].replace(/-/g,"/")));
 			console.log("interval:"+interval+"\nnow:"+now+"\nstart:"+start+"\nend:"+end);
-			// var endTime = calculateTime(end,"normal");
+			var endTime = calculateTime(end);
 			if(now>=end || start>=end) {
 				return null; //已经结束
 			}
@@ -118,14 +123,14 @@ $(function(){
 				//var S=parseInt(Date.now()/1000);
 				//var E=S+interval*r;
 				if(interval=="0.5" || interval==1.5){
-					var s="D"+interval*1000+"r"+r;
-					// var s="D"+interval*1000+"r"+r+"E"+endTime;
+					// var s="D"+interval*1000+"r"+r;
+					var s="D"+interval*1000+"r"+r+"E"+endTime[0];
 				}else{
-					var s="d"+interval+"r"+r;
-					// var s="d"+interval+"r"+r+"E"+endTime;
+					// var s="d"+interval+"r"+r;
+					var s="d"+interval+"r"+r+"E"+endTime[0];
 				}
-				return s;
-				// return [s,endTime];
+				// return s;
+				return [s,endTime];
 			}
 			else if(now<start) {//等待开始
 				var r=parseInt((end-start)/1000/interval)+1;
@@ -133,14 +138,14 @@ $(function(){
 				//var S=parseInt(Date.now()/1000)+recordWait;
 				//var E=S+interval*r;
 				if(interval=="0.5" || interval==1.5){
-					var s="d"+0+"s(D"+interval*1000+"r"+r+")r1";
-					// var s="d"+0+"s(D"+interval*1000+"r"+r+"E"+endTime+")r1";
+					// var s="d"+0+"s(D"+interval*1000+"r"+r+")r1";
+					var s="d"+0+"s(D"+interval*1000+"r"+r+"E"+endTime[0]+")r1";
 				}else{
-					var s="d"+0+"s(d"+interval+"r"+r+")r1";
-					// var s="d"+0+"s(d"+interval+"r"+r+"E"+endTime+")r1";
+					// var s="d"+0+"s(d"+interval+"r"+r+")r1";
+					var s="d"+0+"s(d"+interval+"r"+r+"E"+endTime[0]+")r1";
 				}
-				return s;
-				// return [s,endTime];
+				// return s;
+				return [s,endTime];
 			}
 		}
 		else { //按天模式
@@ -248,17 +253,19 @@ $(function(){
 				if(configs["bydayLoop"]!=0) s+="r"+(configs["bydayLoop"]-1);
 			}
 		}
-		// if(configs["bydayLoop"]==0){
-		// 	endTime = "Infinite";
-		// }else{
-		// 	var endT=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][length-1]["endAt"]));
-		// 	if(configs["bydayLoop"]>1){
-		// 		endT.setDate(endT.getDate()+configs["bydayLoop"]-1);
-		// 	}
-		// 	endTime = endT.getFullYear().toString()+transformTime(endT.getMonth()+1).toString()+transformTime(endT.getDate()).toString()+transformTime(endT.getHours()).toString()+transformTime(endT.getMinutes()).toString()+transformTime(endT.getSeconds()).toString()
-		// }
-		return s;
-		// return [s,endTime];
+		if(configs["bydayLoop"]==0){
+			endTime = "Infinite";
+		}else{
+
+			var endT=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][length-1]["endAt"]));
+			if(configs["bydayLoop"]>1){
+				endT.setDate(endT.getDate()+configs["bydayLoop"]-1);
+			}
+			endTime = calculateTime(endT);
+			// endTime = endT.getFullYear().toString()+transformTime(endT.getMonth()+1).toString()+transformTime(endT.getDate()).toString()+transformTime(endT.getHours()).toString()+transformTime(endT.getMinutes()).toString()+transformTime(endT.getSeconds()).toString()
+		}
+		// return s;
+		return [s,endTime];
 	}
 	//测试用
 	$("#send").on("click", function(){
