@@ -4890,7 +4890,7 @@ fieldset{
     -ms-transform: translate(-50%,-50%);
     -o-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
-    z-index: 99;
+    z-index: 9999;
 }
 .fix-prompt,.hdr-prompt {
     color: #fff;
@@ -4899,6 +4899,7 @@ fieldset{
     background: rgba(0,0,0,.7);
     padding: 10px;
     border-radius: 10px;
+    
 }
 .interval-text{
     padding: 3px;

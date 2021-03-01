@@ -404,10 +404,13 @@ $(function(){
 			var wifiCtrl={"delete":ssid};
 			$(".dialog-cover,.dialog-poppup").hide();
 			postJSON("/wifi_config", wifiCtrl);
-			localControl.startPage("CameraManager");
-			setTimeout(function(){
-				localControl.notify("LostConn");
-			},300);
+			if($(".wlan-detail .wlan-detail-name").attr("active")){
+				localControl.startPage("CameraManager");
+				setTimeout(function(){
+					localControl.notify("LostConn");
+				},300);
+			}
+			
 	
 		}
 		

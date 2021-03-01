@@ -2765,7 +2765,9 @@ $(function(){
 		}
 
 	}
+	var fixPromptTimeout = null;
 	function exposurePrompt(num,type){
+		clearTimeout(fixPromptTimeout);
 		if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseFloat($('#interval-second').val(),10)<num){
 			$('#interval-second').val(num);
 			if(language=="en"){
@@ -2783,7 +2785,7 @@ $(function(){
 			}
 			if(type==1){
 				$(".fix-prompt").show();
-				setTimeout(function(){
+				fixPromptTimeout = setTimeout(function(){
 					$(".fix-prompt").hide();
 				},2000);
 			}
@@ -4469,7 +4471,7 @@ $(function(){
 					dhms=language=="en"?secondtoHIS(e.recordinfo.currentVideo.duration, "en"):secondtoHIS(e.recordinfo.currentVideo.duration);
 					if("endAt" in e.recordinfo.currentVideo){
 						var endTime = new Date(e.recordinfo.currentVideo.endAt);
-						var recordinfo=(language=="en"?"<p>Start Time: ":"<p>拍摄始于 ")+transFullTime(date,language=="en"?"en":"zh")+(language=="en"?"</p><p>End Time ":"</p><p>拍摄结束 ")+transFullTime(endTime,language=="en"?"en":"zh")+"</p>"+(language=="en"?"<p>Video Length: ":"<p>生成视频 ")+dhms+"</p>";
+						var recordinfo=(language=="en"?"<p>Start Time: ":"<p>拍摄始于 ")+transFullTime(date,language=="en"?"en":"zh")+(language=="en"?"</p><p>End Time: ":"</p><p>拍摄结束 ")+transFullTime(endTime,language=="en"?"en":"zh")+"</p>"+(language=="en"?"<p>Video Length: ":"<p>生成视频 ")+dhms+"</p>";
 					}else{
 						var recordinfo=(language=="en"?"<p>Start Time: ":"<p>拍摄始于 ")+transFullTime(date,language=="en"?"en":"zh")+"</p>"+(language=="en"?"<p>Video Length: ":"<p>生成视频 ")+dhms+"</p>";
 					}
