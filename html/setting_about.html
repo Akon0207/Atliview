@@ -23,15 +23,16 @@
 <script type="text/javascript" src="js/hmac-sha256.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/camera.js"></script>
+<script type="text/javascript" src="js/rolldate.min.js"></script>
 </head>
 <body class="setting-index">
-	<section class="setting-head">
+	<section class="setting-head" id="setting-head">
 		<!-- <a href="javascript:;" class="iconfont goback" onclick="javascript:window.history.back(-1);">&#xe6ea;</a> -->
 		<a href="setting.html" class="iconfont goback">&#xe6ea;</a>
 		<p lan="about">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
 	</section>
 
-	<section class="setting-cron top-line">
+	<section class="setting-cron top-line" id="setting-cron">
 		
 		<div class="setting-cron-item bottom-line flex flex-middle fw on">
 			<div class="setting-cron-name fx1" lan="firVer">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -151,7 +152,7 @@
                 </div>
             </div>
         </div>
-        <div class="updatePrompt">
+        <div class="updatPrompte">
             <div lan="updatePro"></div>
         </div>
         <div class="updateBack">
@@ -286,7 +287,7 @@
             <span lan="linkUpdate" style="font-size: 17px">通过链接升级</span>
             <p><input type="text" class="upgrade-url"><input type="button" value="升级" class="upgrade-btn" placeholder=""></p>
         </div>
-        <div class="tool-title" lan="developeTools">开发者工具<span id="forRight" style="display: inline-block;">>></span><span id="forLeft" style="display: none;"><<</span></div>
+        <div class="tool-title" id="devToolTitle" lan="developeTools">开发者工具<span id="forRight" style="display: inline-block;">>></span><span id="forLeft" style="display: none;"><<</span></div>
         <div class="developeTools">
             <div class="tool-item">
                 <span class="test-button" id="downloadLogs" lan="downloadLogs"></span>
@@ -357,11 +358,68 @@
             </div>
             
         </div>
-
+        <br>
+        <div class="tool-title" id="videoCron">录像定时任务<span id="cronforRight" style="display: inline-block;">>></span><span id="cronforLeft" style="display: none;"><<</span></div>
+        <div id="loopTime" style="display: none;">
+            <div class="setting-cron-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="bottom-line" lan="period">时段</th>
+                            <th class="bottom-line" lan="startT">开始时间</th>
+                            <th class="bottom-line" lan="endT">结束时间</th>
+                            <!--<th class="bottom-line">预设场景</th>-->
+                            <!-- <th class="bottom-line" lan="shtInt">拍摄间隔</th> -->
+                            <!--<th class="bottom-line">曝光补偿</th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="periodList">
+                    </tbody>
+                </table>
+            </div>
+            <div class="add-cron-time">
+                <a href="javascript:;" id="addPeriod" lan="addPer">添加时段</a>
+            </div>
+            <div class="videoButton">
+                开始任务
+            </div>
+        </div>
 		<!-- <div class="alpha-hide">
 			点击隐藏
 		</div> -->
 	</div>
+    <div id="forPeriodSet" style="display: none;">
+        <section class="setting-head">
+            <a href="javascript:;" class="iconfont cancel">&#xe63b;</a>
+            <p lan="addPer">添加时段</p>
+            <a href="javascript:;" class="iconfont confirm">&#xe60b;</a>
+        </section>
+
+        <section class="setting-cron top-line">
+            <div class="setting-cron-item bottom-line flex flex-middle">
+                <div class="setting-cron-name fx1" lan="startT">开始时间</div>
+                <div class="setting-cron-select">
+                    <input id="bydayStartTime" type="text" readonly class="setting-cron-time" />
+                </div>
+            </div>
+            <div class="setting-cron-item bottom-line flex flex-middle">
+                <div class="setting-cron-name fx1" lan="endT">结束时间</div>
+                <div class="setting-cron-select">
+                    <input id="bydayEndTime" type="text" readonly class="setting-cron-time"/>
+                </div>
+            </div>
+            <!-- <div class="setting-cron-item bottom-line flex flex-middle">
+                <div class="setting-cron-name fx1" lan="shtInt">拍摄间隔</div>
+                <div class="setting-cron-select">
+                    <a href="javascript:;" class="trigger" id="bydayIntervalTrigger" second="10">10<span lan="second"></span></a>
+                </div>
+            </div> -->
+        </section>
+        <div class="cron-btns">
+            <a href="javascript:;" class="cron-btns-del" lan="del">删除</a>
+            <!-- <a href="javascript:;" class="cron-btns-confirm peroid" lan="confirm">确认</a> -->
+        </div>
+    </div>
 	<div class="dialog-poppup" id="testAlert">
 		<div class="dialog-poppup-content">测试反馈文字</div>
 		<div class="dialog-btns flex">
@@ -498,6 +556,8 @@
             </div>
         </div>
 	</div>
+    <div class="periodPrompt" id="periodPrompt"></div>
+    <div class="statusPrompt" id="statusPrompt">当前正在拍摄，请停止拍摄后提交任务</div>
 	<script type="text/javascript" src="js/language.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -516,6 +576,9 @@ $(function(){
     var upgradeTimeout=null;
     var upgradeStartTime=null;
     var upgardeBackTime=null;
+    var sessionType = null;
+    var videoCronNum = null;
+    var status = null;
     isAP();
 	inUpdatePage=true;
     var urlSplit,newVersion;
@@ -527,7 +590,46 @@ $(function(){
 		
 		$("#uptime").attr("second", t);
 	}
+    getJSON("/status",function(data){
+        sessionType = data.sessionType;
+        status = data.recordinfo.status;
+        console.log("status:========="+status)
+    });
+    getJSON("/setting",function(data){
+        if("videoCronSwitch" in data){
+            videoCronNum = data.videoCronSwitch;
+            console.log(data.videoCronSwitch);
+        }
+        if(videoCronNum == 0 || !videoCronNum){
+            $(".videoButton").text("提交任务");
+        }else{
+            $(".videoButton").text("停止任务");
+        }
+    });
 
+    getJSON("/videoCron",function(data){
+        $("#periodList").empty();
+        console.log("empty the periodList+++++++++++++++++++")
+        if(data.length>0){
+            for(var i=0;i<data.length;i++){
+                var tr = document.createElement("tr");
+                tr.id = "seq"+(i+1);
+                $("#periodList").append(tr);
+                updateSeq(data[i].seq,data[i].startAt,data[i].endAt);
+            }
+
+        }
+    })
+    function genHMS(src){
+        var timezone=-(new Date().getTimezoneOffset()/60);
+        var strs=src.split(":");
+        var hh=parseInt(strs[0])-timezone;
+        //var hh=parseInt(strs[0]);
+        if(hh>=24) hh-=24;
+        if(hh<0) hh+=24;
+        if(hh<10) hh="0"+hh;
+        return hh+strs[1]+strs[2];
+    }
 	//3次点击事件
 	function nclickEvent(n,dom,fn) {
         dom.removeEventListener('dblclick',null);
@@ -803,6 +905,18 @@ $(function(){
 			// $("#update-downloading .update-progress-text span").text(v+"%");
 		}
 	}
+    function verifying(){
+        $("#uploading").show().siblings().hide();
+        if(language=="en"){$("#uploading .updateText").text("Verifying...")}
+        else{$("#uploading .updateText").text("正在校验...")}
+        $(".updatePrompt").show();
+    }
+    function fixing(){
+        $("#uploading").show().siblings().hide();
+        if(language=="en"){$("#uploading .updateText").text("Error detected.Restoring...")}
+        else{$("#uploading .updateText").text("发现错误，正在修复...")}
+        $(".updatePrompt").show();
+    }
 	function writing(v){
 		// $(".dialog-cover").show();
 		// $(".update-steps").show();
@@ -985,7 +1099,9 @@ $(function(){
 			else if(e.status=="writing") {
 				writing(e.percentage);
 
-			}else if("currentVersion" in e){
+			}else if(e.status=="verifying"){verifying();
+            }else if(e.status=="fixing"){fixing();
+            }else if("currentVersion" in e){
                 if(new Date().getTime()-upgradeStartTime>10000){
                     return done();
                 }
@@ -1255,9 +1371,13 @@ $(function(){
 		if(v) location.href = v+".html";
 	});
 
-    $(".tool-title").on("click",function(){
+    $("#devToolTitle").on("click",function(){
         $(".developeTools").toggle();
         $("#forRight,#forLeft").toggle();
+    });
+    $("#videoCron").on("click",function(){
+        $("#loopTime").toggle();
+        $("#cronforRight,#cronforLeft").toggle();
     })
 
 	/* 测试用end */
@@ -1300,8 +1420,275 @@ $(function(){
         link.click();
         setTimeout(function(){postJSON("/tgz", {rm:"logs.tgz"})}, 1000);
     }
-})
 
+
+    var now = new Date();  //获取当前时间
+//      now = now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+' '+now.getHours()+':'+(now.getMinutes()+1)+':'+'0';
+//      now = new Date(now);
+        now = new Date(now.getTime()+60000-now.getTime()%60000);
+        maxDate = new Date(now.getFullYear() + 50, now.getMonth(), now.getDate());  //最大时间设置为两年后
+    $("#bydayEndTime,#bydayStartTime").val(transTimeHIS(now, "en"));
+    function genRolldate(objStr, format){
+        var title;
+        if(objStr.indexOf("tart") > 0){
+            title=language=='en'?'Start Time':'开始时间';
+        }else {
+            title=language=='en'?'End Time':'结束时间';
+        }
+
+       new Rolldate({
+        el: '#'+objStr,
+        format: format,
+        beginYear: now.getFullYear(),
+        endYear: now.getFullYear()+50,
+        lang:language=='en'?{title:title,cancel:'Cancel',confirm:'Confirm',year:'&nbsp;',month:'&nbsp;',day:'&nbsp;',hour:'&nbsp;',min:'&nbsp;',sec:'&nbsp;'}:{title:title,year:'年',month:'月',day:'日',hour:'时',min:'分',sec:'秒'},
+        init: function() {
+            if(objStr.indexOf("byday") >= 0){
+                document.getElementById(objStr).bindDate = 
+                new Date(now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate()+' '+$("#"+objStr).val());
+            }
+            else {
+                var d=new Date($("#"+objStr).val().replace(/-/g, "/"));
+                console.log("last:"+$("#"+objStr).val()+" "+d);
+                console.log("now:"+now);
+                if(d.getTime() < now.getTime()) d = now;   //旧时间比当前时间小，用当前时间代替
+                document.getElementById(objStr).bindDate = d;
+            }
+        }
+       })
+    }
+    genRolldate("bydayStartTime", "hh:mm:ss");
+    genRolldate("bydayEndTime", "hh:mm:ss");
+    $("#addPeriod").on("click",function(){
+        $(".iconfont.confirm").siblings("p").text(language=="en"?"Add a time slot":"添加时段")
+        $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").toggle();
+        $("#forPeriodSet").toggle();
+        $(".cron-btns-del").hide();
+    });
+    $(".iconfont.cancel").on("click",function(){
+        $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").toggle();
+        $("#forPeriodSet").toggle();
+    })
+    function HMScmp(hms1, hms2)
+    {
+        var now=new Date();
+        var t1=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+(now.getDate())+" "+hms1));
+        var t2=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+(now.getDate())+" "+hms2));
+        if(t1>t2) return 1;
+        else if(t1<t2) return -1;
+        else return 0;
+    }
+    // function genHMS(time){
+    //     var timeSplit = time.split(":");
+    //     return timeSplit[0]+timeSplit[1]+timeSplit[2];
+    // }
+    //保存时段
+    $(".iconfont.confirm").on("click",function(){
+        console.log($("#bydayStartTime").val()+" "+$("#bydayEndTime").val());
+        if(HMScmp($("#bydayStartTime").val(), $("#bydayEndTime").val())>=0) {
+            if(language && language=="en"){
+                $("#periodPrompt").html("Start time must be earlier than the End time.");
+            }else{
+                $("#periodPrompt").html("结束时间不能早于开始时间");
+            }
+            
+            $("#periodPrompt").show();
+            setTimeout(function(){
+                $("#periodPrompt").hide();
+            },2000)
+            // alert("结束时间不能早于开始时间");
+            return;
+        }
+        if($(".iconfont.confirm").siblings("p").text()=="添加时段" || $(".iconfont.confirm").siblings("p").text()=="Add a time slot"){ //添加一个时段
+            var index=$("#periodList").children().size()+1;
+            var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
+            if(HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<0){
+                if(language && language=="en"){
+                    $("#periodPrompt").html("The beginning time cannot be earlier than <br>the end time of the last Time Slot "+lastPeriodEndTime);
+                }else{
+                    $("#periodPrompt").html("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+                }
+                
+                $("#periodPrompt").show();
+                setTimeout(function(){
+                    $("#periodPrompt").hide();
+                },2000)
+                // alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+                return;
+            }
+            $("#periodList").append("<tr id='seq"+index+"'/>");
+            updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val());
+        } else { //修改时段
+            var index=parseInt($(".iconfont.confirm").siblings("p").attr("seq"));
+            var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
+            var nextPeriodStartTime=$("#seq"+(index+1)+" td:eq(1)").text();
+            if(lastPeriodEndTime && HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<0){
+                if(language && language=="en"){
+                    $("#periodPrompt").html("The beginning time cannot be earlier than <br>the end time of the last Time Slot"+lastPeriodEndTime);
+                }else{
+                    $("#periodPrompt").html("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+                }
+                $("#periodPrompt").show();
+                // alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+                return;
+            }
+            if(nextPeriodStartTime && HMScmp($("#bydayEndTime").val(), nextPeriodStartTime)>0){
+                if(language && language=="en"){
+                    $("#periodPrompt").html("The end time cannot be later than <br>the beginning time of the next Time Slot"+nextPeriodStartTime);
+                }else{
+                    $("#periodPrompt").html("结束时间不能晚于下个时段的开始时间"+nextPeriodStartTime);
+                }
+                
+                $("#periodPrompt").show();
+                // alert("结束时间不能晚于下个时段的开始时间"+nextPeriodStartTime);
+                return;
+            }
+            updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val());
+            
+        }
+        $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").toggle();
+        $("#forPeriodSet").toggle();
+        // mode="common";
+    })
+    //页面更新某个时段信息
+    function updateSeq(index, startAt, endAt){
+        var seqtr="#seq"+index;
+        if(language && language=="en"){
+            $(seqtr).html("<td class=\"bottom-line\"><a href=\"javascript:;\" class=\"cron-time-enter\" seq=\""+index+"\">Time Slot"+index+"</a></td>"
+            +"<td>"+startAt+"</td>"
+            +"<td>"+endAt+"</td>"
+            );
+        }else{
+            $(seqtr).html("<td class=\"bottom-line\"><a href=\"javascript:;\" class=\"cron-time-enter\" seq=\""+index+"\">时间段"+index+"</a></td>"
+            +"<td>"+startAt+"</td>"
+            +"<td>"+endAt+"</td>"
+            );
+        }
+        
+        $(".cron-time-enter").each(function(e){ //修改时间段窗口
+            
+            $(this).on("click",function(){
+                console.log("this seq = "+$(this).attr("seq"))
+                $(".cron-btns-del").show();
+                $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").hide();
+                $("#forPeriodSet").show();
+                var index=$(this).attr("seq");
+                if(language && language=="en"){
+                    $(".iconfont.confirm").siblings("p").text("Modify Time Slot"+index).attr("seq", index);
+                }else{
+                    $(".iconfont.confirm").siblings("p").text("修改时段"+index).attr("seq", index);
+                }
+                
+                // mode="period";
+                //载入选中的时间段信息
+                var td=$(this).parent().next();
+                $("#bydayStartTime").val(td.text());
+                td=td.next();
+                $("#bydayEndTime").val(td.text());
+                td=td.next();
+            })
+        })
+
+    }
+    //删除时间段
+    $(".cron-btns-del").on("click",function(){
+        $(".reset-btn,.alpha-upgrade,#setting-head,#setting-cron").toggle();
+        $("#forPeriodSet").toggle();
+        // mode="common";
+        index=$("#forPeriodSet p").attr("seq");
+        $("#periodList tr").eq(index-1).remove();
+        //列表重新排序
+        var length=$("#periodList tr").length;
+        for(var i=1;i<=length;i++){
+            $("#periodList tr").eq(i-1).attr("id","seq"+i);
+            if(language && language=="en"){
+                $("#periodList .cron-time-enter").eq(i-1).attr("seq",i).text("Time Slot"+i);
+            }else{
+                $("#periodList .cron-time-enter").eq(i-1).attr("seq",i).text("时段"+i);
+            }
+            
+        }   
+    });
+
+    //录像定时任务开启停止
+    $(".videoButton").on("click",function(){
+        if(videoCronNum==1){
+            postJSON("/setting",{videoCronSwitch:0},function(){
+                $(".videoButton").text("提交任务");
+                videoCronNum=0;
+            },function(){
+                console.log("post setting error");
+            },"text")
+            
+            return;
+        }
+        if(status!="idle" && (videoCronNum==0 || !videoCronNum)){
+            console.log(status+"===="+videoCronNum)
+            $(".statusPrompt").text("当前正在拍摄，请停止拍摄后提交任务");
+            $(".statusPrompt").show();
+            setTimeout(function(){
+                $(".statusPrompt").hide();
+            },2000);
+            return;
+        }
+        
+        var periodList = $("#periodList tr");
+        var cronList = new Array();
+        var cronStr = "";
+        if(periodList.length==0){return}
+        for(var i=0; i<periodList.length; i++){
+            var td1 = $("#seq"+(i+1)+" td:eq(1)").text();
+            var td2 = $("#seq"+(i+1)+" td:eq(2)").text();
+            // console.log("td1:"+td1+"\n"+"td2:"+td2);
+            cronList[i] = {
+                seq: i+1,
+                startAt: td1,
+                endAt: td2
+            }
+            // var td1list = td1.split(":");
+            // var td2list = td2.split(":");
+            if(i<periodList.length-1){
+                cronStr+="S"+genHMS(td1)+"E"+genHMS(td2)+","
+            }else{
+                cronStr+="S"+genHMS(td1)+"E"+genHMS(td2)
+            }
+        }
+        // if(sessionType!="video"){
+        //     postJSON("/switch_session", { type: "video" }, function(e, status){
+        //         console.log("switch_session video ok");
+        //         postJSON("/videoCron",cronList);
+        //         postJSON("/videoCron",{videoCronText:cronStr},function(){
+        //             // if(language && language=="en"){
+        //             //     location.href="index.html?language=en";
+        //             // }else{
+        //             //     location.href="index.html?language=zh";
+        //             // }
+        //         },function(){
+        //             console.log("post videoCron error videoCronText");
+        //         },"text");
+        //     }, function () {
+        //         console.log("switch_session video error");
+        //     }, "text");
+        //     return;
+        // }
+        postJSON("/videoCron",cronList);
+        postJSON("/videoCron",{videoCronText:cronStr},function(){
+            
+            $(".statusPrompt").text("定时任务开启").show();
+            setTimeout(function(){
+                $(".statusPrompt").hide();
+                if(language && language=="en"){
+                    location.href="index.html?language=en";
+                }else{
+                    location.href="index.html?language=zh";
+                }
+            },2000)
+        },function(){
+            console.log("switch_session video error");
+        },"text");
+        
+    })
+})
 </script>
 </body>
 </html>

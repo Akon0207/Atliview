@@ -347,6 +347,22 @@
             $("#uploading").show().siblings().hide();
             $(".updatePrompt").show();
         }
+        function verifying(){
+            $("#uploading .update-progress-ui").hide();
+            $("#uploading .loading").show();
+            $("#uploading").show().siblings().hide();
+            if(language=="en"){$("#uploading .updateText").text("Verifying...")}
+            else{$("#uploading .updateText").text("正在校验...")}
+            $(".updatePrompt").show();
+        }
+        function fixing(){
+            $("#uploading .update-progress-ui").hide();
+            $("#uploading .loading").show();
+            $("#uploading").show().siblings().hide();
+            if(language=="en"){$("#uploading .updateText").text("Error detected.Restoring...")}
+            else{$("#uploading .updateText").text("发现错误，正在修复...")}
+            $(".updatePrompt").show();
+        }
         function writing(v){
             updateStatus = "writing";
             $("#writing").show().siblings().hide();
@@ -440,8 +456,8 @@
                     if(new Date().getTime()-updateStartTime>10000) return done();
                 }else if(e.status=="error") { return error3(e.errorMsg);}
                 else if(e.status=="rebooting") return reboot();
-                //else if(e.status=="uploading") uploading();
-                // else if(e.status=="downloading") downloading(e.percentage);
+                else if(e.status=="verifying"){verifying();}
+                else if(e.status=="fixing"){fixing();}
                 else if(e.status=="writing") writing(e.percentage);
                 else if(e.status=="checking") writing(0);
                 if("currentVersion" in e && updateStatus!="uploading"){

@@ -285,5 +285,6 @@
 	"TimeSliceFailed":"渐现生成失败!",
 	"total":"全部",
 	"Display":"显示",
-	"packPro":"此过程耗时较长，请耐心等待"
+	"packPro":"此过程耗时较长，请耐心等待",
+	"period":"时段"
 }

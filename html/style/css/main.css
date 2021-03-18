@@ -73,6 +73,14 @@ input,textarea,select,button{
     padding: 0;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
+.videoButton {
+    display: inline-block;
+    padding: 5px;
+    background: #fff;
+    border-radius: 5px;
+    color: #00BCD4;
+    font-weight: bold;
+}
 label{
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
@@ -757,6 +765,23 @@ body{
     border: 1px solid #fff;
     border-radius: 100%;
     pointer-events: auto;
+}
+.foot-bar .shootV[data-waiting]:after {
+    color: #838383;
+    font-size: 24px;
+    line-height: 38px;
+    text-align: center;
+    z-index: 2;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 100%;
+    content: '';
+    width: 38px;
+    height: 38px;
+    border-radius: 100%;
+    background: url(../images/loading.gif) no-repeat center;
+    background-size: 29px;
 }
 .foot-bar .shootV:before{
     content: '';
@@ -3292,7 +3317,8 @@ body.setting-index{
     padding: 0 5px;
     height: 3em;
     text-align: center;
-    color: #444;
+    color: #00BCD4;
+    font-weight: bold;
 }
 .setting-cron-table table td{
     height: 2.8em;
@@ -4379,6 +4405,7 @@ fieldset{
     display: inline-block;
     color: #0f72a5;
     border-bottom: 1px solid;
+    width: auto!important;
 }
 #packing {
     max-width: 500px;
@@ -4617,9 +4644,9 @@ fieldset{
     padding: 10px 20px;
     /*border-radius: 25px;*/
 }
-.shoot-prompt,.mode-prompt {
+.shoot-prompt,.mode-prompt,.periodPrompt,.statusPrompt {
     background: rgba(0,0,0,.7);
-    position: absolute;
+    position: fixed;
     padding: 5px 15px;
     border-radius: 10px;
     color: #fff;

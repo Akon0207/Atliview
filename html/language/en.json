@@ -285,5 +285,6 @@
         "TimeSliceFailed":"Time Slice Failed!",
 	"total":"Select All",
 	"Display":"Display",
-	"packPro":"This process may take some time."
+	"packPro":"This process may take some time.",
+	"period":"Period"
 }

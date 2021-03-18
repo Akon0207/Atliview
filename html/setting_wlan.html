@@ -403,6 +403,7 @@ $(function(){
 			var ssid=$(".wlan-detail-name").attr("ssid");
 			var wifiCtrl={"delete":ssid};
 			$(".dialog-cover,.dialog-poppup").hide();
+			showList();
 			postJSON("/wifi_config", wifiCtrl);
 			if($(".wlan-detail .wlan-detail-name").attr("active")){
 				localControl.startPage("CameraManager");

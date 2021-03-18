@@ -1062,6 +1062,7 @@ $(function(){
 	var autoGetExposure = null;
 	var hdr = null;
 	var videoInterval = null;
+	var videoCronSwitch = null;
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
 		$(".iconfont.menu").attr("href","setting.html?language=en")
@@ -1229,6 +1230,12 @@ $(function(){
 		}
 		if("grid" in data){
 			grid = data.grid;
+		}
+		if("videoCronSwitch" in data && data.videoCronSwitch == 1){
+			console.log("videoCronSwitch is 1 ++++++++++++++++++++++++++");
+			videoCronSwitch = data.videoCronSwitch;
+			$(".head-info").html("<p>定时录像任务已开启</p>");
+			$(".head-info").holdShow();
 		}
 	});
 
@@ -1872,6 +1879,13 @@ $(function(){
 			$(".modeNow").addClass("shooting-now");
 			//$(".effect-now").holdHide();
 			// $(".videoSign").show();	
+		}else if(status=="waiting"){
+			$(".shootV").attr("data-waiting",true);
+			$(".shootV").removeClass("shootV-running");
+			$(".shootV").removeClass("run");
+			$(".modeNow").removeClass("shooting-now");
+			$(".videoSign").holdHide();
+			$(".durationForVideo").text("00:00:00");
 		}else {
 			$(".shootV").removeClass("shootV-running");
 			$(".shootV").removeClass("run");
@@ -1886,6 +1900,12 @@ $(function(){
 		if($(this).hasClass("shootV-running")){
 			$("#turnoffVideo").show();
 			if(language && language=="en"){
+				$("#turnoffVideoYes").text("End The Shooting");
+				$("#turnoffVideoNo").text("No");
+			}
+		}else if($(this).attr("data-waiting")){
+			$("#turnoffVideo").show();
+			if(language=="en"){
 				$("#turnoffVideoYes").text("End The Shooting");
 				$("#turnoffVideoNo").text("No");
 			}
@@ -1906,8 +1926,10 @@ $(function(){
 	});
 	$("#turnoffVideoYes").on("click",function(){
 		$("#turnoffVideo").hide();
+		// postJSON("/setting",{videoCronSwitch: 0})
 		putJSON("/video", { sessionId: sessionId }, function(e, status){
 			console.log("stop video ok");
+			videoCronSwitch = 0;
 			setVideoStatus("idle");
 		}, function () {
 			console.log("stop video error");
@@ -4445,13 +4467,24 @@ $(function(){
 					// $(".video-shooting").holdHide();
 					// $(".theSpace").holdShow();
 					$("#mode").holdHide();
+					// $(".head-info").holdHide();
 					setVideoStatus("video");
+				}else if(e.recordinfo.status=="waiting"){
+					if(language && language=="en"){
+						$(".head-info").html("<p>Scheduled task waiting</p>");
+					}else{
+						$(".head-info").html("<p>定时录像任务已开启</p>");
+					}
+					$(".head-info").holdShow();
+					setVideoStatus("waiting");
 				}else{
 					// $(".theSpace").holdHide();
 					// $(".video-shooting").holdHide();
 					// $(".video").holdShow();
 					setVideoStatus("idle");
+					// $(".head-info").holdHide();
 				}
+				
 			}else if(e.sessionType == "timelapse"){
 				$(".head-info").holdShow();
 				$(".videoSign").holdHide();
@@ -4716,6 +4749,11 @@ $(function(){
 				}
 				clearInterval(videoInterval);
 				videoInterval = null;
+			}
+			if(videoCronSwitch == 1){
+				console.log("videoCronSwitch is 1 ++++++++++++++++++++++++++");
+				$(".head-info").html("<p>定时录像任务已开启</p>");
+				$(".head-info").holdShow();
 			}
 /*			
 			//设置升级提醒
