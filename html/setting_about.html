@@ -941,9 +941,13 @@ $(function(){
 	}
     $("#upgradeBack").on("click",function(){
         if($("#upgradeBack").attr("type")=="done"){
-            if(connect){
-                location.href = "index.html";
-            }else{
+            // if(connect){
+            //     location.href = "index.html";
+            // }else{
+                if(!app_type && connect){
+                    location.href = "index.html";
+                    return
+                }
                 if(app_type && localControl.getValue("appVer", 0)>=2) {
                     localControl.notify("UpgradeDone");
                     localControl.startPage("CameraManager");
@@ -953,7 +957,7 @@ $(function(){
                     window.history.back(-1);
                 }
                 
-            }
+            // }
         }else if($("#upgradeBack").attr("type")=="error"){
             window.history.back(-1);
         }
@@ -1524,7 +1528,7 @@ $(function(){
             var nextPeriodStartTime=$("#seq"+(index+1)+" td:eq(1)").text();
             if(lastPeriodEndTime && HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<0){
                 if(language && language=="en"){
-                    $("#periodPrompt").html("The beginning time cannot be earlier than <br>the end time of the last Time Slot"+lastPeriodEndTime);
+                    $("#periodPrompt").html("The Start time cannot be earlier than <br>The End Time of the last Time Slot "+lastPeriodEndTime);
                 }else{
                     $("#periodPrompt").html("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
                 }
@@ -1534,7 +1538,7 @@ $(function(){
             }
             if(nextPeriodStartTime && HMScmp($("#bydayEndTime").val(), nextPeriodStartTime)>0){
                 if(language && language=="en"){
-                    $("#periodPrompt").html("The end time cannot be later than <br>the beginning time of the next Time Slot"+nextPeriodStartTime);
+                    $("#periodPrompt").html("The End Time must be earlier than <br>The Start Time of the next Time Slot "+nextPeriodStartTime);
                 }else{
                     $("#periodPrompt").html("结束时间不能晚于下个时段的开始时间"+nextPeriodStartTime);
                 }

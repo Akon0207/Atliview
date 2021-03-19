@@ -5252,13 +5252,13 @@ $(function(){
 			console.log((new Date()).toLocaleString()+" img cpmplete:"+recordPreImg.complete);
 			//if(("interval" in status.recordinfo.currentVideo) || document.getElementById("preview").complete){
 			if(recordPreImg.complete){
-				recordPreImg.src='/preview?sessionId=' + sessionId + '&frameIndex='+ index + (getAccessToken()?'&access_token='+getAccessToken():'');
+				recordPreImg.src=window.location.protocol+"//"+window.location.host+'/preview?sessionId=' + sessionId + '&frameIndex='+ index + (getAccessToken()?'&access_token='+getAccessToken():'');
 			
 				//$('.main-pic,.imgAmplifier').attr('src', '/preview?sessionId=' + sessionId + '&frameIndex='+ index + (getAccessToken()?'&access_token='+getAccessToken():''));
 			}
 			else { //还没加载完上一帧图片时，等待加载完再加载下一帧
 				console.log((new Date()).toLocaleString()+" delay set preview");
-				imgSrc = '/preview?sessionId=' + sessionId + '&frameIndex='+ index + (getAccessToken()?'&access_token='+getAccessToken():'');
+				imgSrc = window.location.protocol+"//"+window.location.host+'/preview?sessionId=' + sessionId + '&frameIndex='+ index + (getAccessToken()?'&access_token='+getAccessToken():'');
 /*
 				$('.main-pic').one("load error", function(){
 					console.log((new Date()).toLocaleString()+" set preview");
