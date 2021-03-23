@@ -617,6 +617,13 @@ $(function(){
 	/*视频分段*/
 	var timeArray = new Array(0,5,10);
 	$("#cutOff").on("click",function(){
+		if(shootStatus=="cronRunning" || shootStatus=="recording"){
+			$(".shoot-prompt").show();
+			setTimeout(function(){
+				$(".shoot-prompt").hide();
+			},2000);
+			return false;
+		}
 		$(".cutOffMode,.dialog-cover").show();
 	});
 	$(".cutOffMode li").each(function(index){
@@ -641,6 +648,13 @@ $(function(){
 	})
 	/*静音*/
 	$("#audio").on("click", function(){
+		if(shootStatus=="cronRunning" || shootStatus=="recording"){
+			$(".shoot-prompt").show();
+			setTimeout(function(){
+				$(".shoot-prompt").hide();
+			},2000);
+			return false;
+		}
 		var v=1;
 		if($(this).prop("checked")) v=0;
 		postJSON("/REC", {audio:v});

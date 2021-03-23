@@ -1018,7 +1018,7 @@ $(function(){
 			var nextPeriodStartTime=$("#seq"+(index+1)+" td:eq(1)").text();
 			if(lastPeriodEndTime && HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<0){
 				if(language && language=="en"){
-					$("#setTimeWarning .warning").text("The beginning time cannot be earlier then the end time of the last Time Slot"+lastPeriodEndTime);
+					$("#setTimeWarning .warning").text("The Start time cannot be earlier than <br>The End Time of the last Time Slot "+lastPeriodEndTime);
 				}else{
 					$("#setTimeWarning .warning").text("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
 				}
@@ -1028,7 +1028,7 @@ $(function(){
 			}
 			if(nextPeriodStartTime && HMScmp($("#bydayEndTime").val(), nextPeriodStartTime)>0){
 				if(language && language=="en"){
-					$("#setTimeWarning .warning").text("The end time cannot be later then the beginning time of the next Time Slot"+nextPeriodStartTime);
+					$("#setTimeWarning .warning").text("The End Time must be earlier than <br>The Start Time of the next Time Slot "+nextPeriodStartTime);
 				}else{
 					$("#setTimeWarning .warning").text("结束时间不能晚于下个时段的开始时间"+nextPeriodStartTime);
 				}
