@@ -36,7 +36,7 @@
         <div class="log-content">
         </div>
     </section>
-    <div class="update-btn" lan="upgrade">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div class="update-btn" lan="upgrade" style="display: none;">&nbsp;&nbsp;&nbsp;&nbsp;</div>
 
     <div class="dialog-cover"></div>
     <div class="forUpdate">
@@ -420,14 +420,14 @@
             $(".updatePrompt").show();
             count++;
             getJSON("/setting", function(e, status){
-            
-                if(e.sysinfo.firmware==$("#newversion").text() && count>8) {
+                console.log("e.sysinfo.firmware="+e.sysinfo.firmware+"\n#newversion text:"+$("#newversion").text()+"\ncount="+count)
+                if(e.sysinfo.firmware && count>8) {
                     $("#rebooting .update-progress-ui span").css("width","100%");
                     connect = true;
                     clearTimeout(upgradeTimeout);
                     return done();
                 }
-                else error("版本不一致");
+                // else error("版本不一致");
             } , function (XHR, e) {
                 console.log((XHR.status+e));
                 connect = false;
@@ -438,7 +438,9 @@
             localControl.updateStartTime("updateEnd");
             localControl.notify("networkMonitorOn");
             setTimeout(function(){
-                localControl.notify("LostConn");
+                if(app_type=="android"){
+                    localControl.notify("LostConn");
+                }
             },300);
         }
         function setUpdateStartTime(){
@@ -594,9 +596,11 @@
                     if(app_type && localControl.getValue("appVer",0)>=2){
                         localControl.notify("UpgradeDone");
                         localControl.startPage("CameraManager");
+                        localControl.notify("LostConn");
                     }else{
                         localControl.notify("UpgradeDone");
                         localControl.startPage("DeviceListPage");
+                        localControl.notify("LostConn");
                         window.history.back(-1);
                     }
                 // }

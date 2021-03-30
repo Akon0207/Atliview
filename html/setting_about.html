@@ -1082,9 +1082,9 @@ $(function(){
 		console.log("setUpdateEnd");
 		localControl.updateStartTime("updateEnd");
 		localControl.notify("networkMonitorOn");
-		setTimeout(function(){
-			localControl.notify("LostConn");
-		},300);
+		// setTimeout(function(){
+		// 	localControl.notify("LostConn");
+		// },300);
 	}
 	function setUpdateStartTime(){
 		console.log("setUpdateStartTime");
@@ -1506,7 +1506,7 @@ $(function(){
         if($(".iconfont.confirm").siblings("p").text()=="添加时段" || $(".iconfont.confirm").siblings("p").text()=="Add a time slot"){ //添加一个时段
             var index=$("#periodList").children().size()+1;
             var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
-            if(HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<0){
+            if(HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<=0){
                 if(language && language=="en"){
                     $("#periodPrompt").html("The beginning time cannot be earlier than <br>the end time of the last Time Slot "+lastPeriodEndTime);
                 }else{
@@ -1526,7 +1526,7 @@ $(function(){
             var index=parseInt($(".iconfont.confirm").siblings("p").attr("seq"));
             var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
             var nextPeriodStartTime=$("#seq"+(index+1)+" td:eq(1)").text();
-            if(lastPeriodEndTime && HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<0){
+            if(lastPeriodEndTime && HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<=0){
                 if(language && language=="en"){
                     $("#periodPrompt").html("The Start time cannot be earlier than <br>The End Time of the last Time Slot "+lastPeriodEndTime);
                 }else{
@@ -1536,7 +1536,7 @@ $(function(){
                 // alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
                 return;
             }
-            if(nextPeriodStartTime && HMScmp($("#bydayEndTime").val(), nextPeriodStartTime)>0){
+            if(nextPeriodStartTime && HMScmp($("#bydayEndTime").val(), nextPeriodStartTime)>=0){
                 if(language && language=="en"){
                     $("#periodPrompt").html("The End Time must be earlier than <br>The Start Time of the next Time Slot "+nextPeriodStartTime);
                 }else{

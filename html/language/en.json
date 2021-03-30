@@ -286,5 +286,6 @@
 	"total":"Select All",
 	"Display":"Display",
 	"packPro":"This process may take some time.",
-	"period":"Period"
+	"period":"Period",
+	"lengthPrompt":"You can schedule a maximum of 6 Time Slots."
 }

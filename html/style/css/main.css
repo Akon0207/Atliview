@@ -4644,7 +4644,7 @@ fieldset{
     padding: 10px 20px;
     /*border-radius: 25px;*/
 }
-.shoot-prompt,.mode-prompt,.periodPrompt,.statusPrompt {
+.shoot-prompt,.mode-prompt,.periodPrompt,.statusPrompt,.lengthPrompt {
     background: rgba(0,0,0,.7);
     position: fixed;
     padding: 5px 15px;

@@ -286,5 +286,6 @@
 	"total":"全部",
 	"Display":"显示",
 	"packPro":"此过程耗时较长，请耐心等待",
-	"period":"时段"
+	"period":"时段",
+	"lengthPrompt":"最多设置6个时间段"
 }
