@@ -9,6 +9,7 @@ var loopZh = '<div class="setting-cron-name fx1" lan="loopDays">循环天数</di
 var loopEn = '<div class="setting-cron-name fx1" lan="loopDays">Days</div><div class="setting-cron-select blue"><input type="text" id="loopMode_val" lan="loopModeV" readonly="readonly" value="Infinite" /><select id="loopMode"><option value="Infinite" lan="notLim">Infinite</option><option value="Customized" lan="custom">Customized</option></select></div>'
 var cronInterval = null;
 var outPutMode = null;
+var lenProTimeout = null;
 $(function(){
 	if(language && language=="en"){
 		$("#modeSelect").html(Modeen);
@@ -920,7 +921,8 @@ $(function(){
 	$("#addPeriod").on("click",function(){
 		if($("#seqList tr").length==6){
 			$("#lengthPrompt").show();
-			setTimeout(function(){
+			clearTimeout(lengthPrompt);
+			lenProTimeout = setTimeout(function(){
 				$("#lengthPrompt").hide();
 			},2000);
 			return;
