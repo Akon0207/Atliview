@@ -951,9 +951,11 @@ $(function(){
                 if(app_type && localControl.getValue("appVer", 0)>=2) {
                     localControl.notify("UpgradeDone");
                     localControl.startPage("CameraManager");
+                    localControl.notify("LostConn");
                 }else {
                     localControl.notify("UpgradeDone");
                     localControl.startPage("DeviceListPage");
+                    localControl.notify("LostConn");
                     window.history.back(-1);
                 }
                 
