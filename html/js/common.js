@@ -47,6 +47,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.orientation=function(orientation) {if(window.webkit.messageHandlers.orientation) return window.webkit.messageHandlers.orientation.postMessage(String(orientation))};
 	localControl.keepAlive=function(msg) {if(window.webkit.messageHandlers.keepAlive) return window.webkit.messageHandlers.keepAlive.postMessage("alive");}
 	localControl.reDiscover=function(msg) {return window.webkit.messageHandlers.reDiscover.postMessage(msg)}
+	localControl.zoomActivated=function(num) {return window.webkit.messageHandlers.zoomActivated.postMessage(num)}
 
 }else if(window.atliviewControl){ //安卓中
 	app_type="android";
@@ -66,6 +67,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.orientation=function(orientation) { return null};
 	localControl.keepAlive=function(msg) {return null}
 	localControl.reDiscover=function(msg) {return window.atliviewControl.reDiscover(msg)}
+	localControl.zoomActivated=function(num) {return window.atliviewControl.zoomActivated(num)}
 }else if(window.localStorage){ //普通浏览器中
 	localControl.getValue=function(k, v){var getVal=window.localStorage.getItem(k);if(getVal){return getVal;}else{return v;}};
 	localControl.putValue=function(k, v){return window.localStorage.setItem(k, v)};
@@ -83,6 +85,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.orientation=function(orientation) { return null};
 	localControl.keepAlive=function(msg) {return null}
 	localControl.reDiscover=function() {return null}
+	localControl.zoomActivated=function(num) {return null}
 }else {
 	alert("当前浏览器不支持本地储存！请更换或更新浏览器！");
 	localControl.getValue=function(k, v){return null};

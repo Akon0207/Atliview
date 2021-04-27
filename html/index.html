@@ -1210,15 +1210,11 @@ $(function(){
 	    //     }
 	    // } 
 	    // setOrientation(imgArchive,true);
-	    if($(".amplifier").css("display")=="block"){
-			$(".amplifier").hide();
-			putJSON("/webctl",{previewZoom:0});
-		}
+	    hideAmplifier();
 	    $(".moreFun").hide();
 	    if($(".focus-area").css("display")=="block"){
 	    	$(".focus-area,.sun-container,.exposureBiasShow").hide();
 	    }
-	    putJSON("/webctl",{previewZoom:0});
 	    $(".gridline").holdHide();
 	    setOrientation(imgArchive,true);
 	}, false);
@@ -1305,6 +1301,7 @@ $(function(){
 	//跳转相册
 	$(".video").on("click", function(e){
 		console.log("appVer:"+appVer);
+		hideAmplifier();
 		/*
 		if(recordStatus != "idle" && recordStatus != "waiting"){
 			e.stopPropagation();
@@ -1593,6 +1590,13 @@ $(function(){
 			return false
 		}
 	}
+	function hideAmplifier(){
+		if($(".amplifier").css("display")=="block"){
+			$(".amplifier").hide();
+			putJSON("/webctl",{previewZoom:0});
+			localControl.zoomActivated(0);
+		}
+	}
 	/* 更多功能点击事件 start*/
 	$(".more").on("click",function(){
 		if(recordStatus!="idle"){
@@ -1600,10 +1604,7 @@ $(function(){
 			setTimeout(function(){$(".shootingPrompt").hide();},2000);
 			return false;
 		}
-		if($(".amplifier").css("display")=="block"){
-			$(".amplifier").hide();
-			putJSON("/webctl",{previewZoom:0});
-		}
+		hideAmplifier();
 		localControl.focus("disabled");
 		clearTimeout(clearAreaTimer);
 		focusCMD=null;
@@ -1772,6 +1773,7 @@ $(function(){
 	//拍摄模式点击事件
 	$(".shootMode .modeNow").on("click",function(e){
 		e.stopPropagation();
+		hideAmplifier();
 		$(".shootModeList").toggle();
 		localControl.focus("disabled");
 		clearTimeout(clearAreaTimer);
@@ -2083,6 +2085,7 @@ $(function(){
 			if(amplifierShowFlag){
 				localControl.focus("disabled");
 				$(".amplifier").show();
+				localControl.zoomActivated(1);
 				putJSON("/webctl",{previewZoom:1});
 				$(".amplifier").offset({//设置放大镜出现位置
 					top:distance.pointY-$(".amplifier").width()/2,
@@ -2101,11 +2104,7 @@ $(function(){
 		if((touchStopTime-touchStartTime)<750){
 			clearTimeout(longTouch);
 			// $(".amplifier").hide();
-			if($(".amplifier").css("display")=="block"){
-				imgEnableClick=false;
-				$(".amplifier").hide();
-				putJSON("/webctl",{previewZoom:0});
-			}
+			hideAmplifier();
 		}
 	})
 	/*放大镜--end*/
@@ -2456,6 +2455,7 @@ $(function(){
 		clearTimeout(clearAreaTimer);
 		focusCMD=null;
 		focusTimeout();
+		hideAmplifier();
 		if($("#shoot-circle").attr("state")=="recording"){
 			// limit_time = localControl.getValue("limit_time",0);
 			if(limit_time!="1"){//非定时任务点击拍摄按钮弹出暂停和停止选择框
@@ -2958,6 +2958,7 @@ $(function(){
 	//场景的展开和切换
 	$("#mode").on("click",function(e){
 		e.stopPropagation();
+		hideAmplifier();
 		localControl.focus("disabled");
 		clearTimeout(clearAreaTimer);
 		focusCMD=null;
@@ -3829,6 +3830,7 @@ $(function(){
 			setTimeout(function(){$(".shootingPrompt").hide();},2000);
 			return false;
 		}
+		hideAmplifier();
 		if($(this).hasClass("on")){
 			postJSON("/imgCtl",{hdr:0});
 			$(".hdr-prompt").text(language=="en"?"HDR(beta) is off.":"已关闭HDR(尝鲜版)")
@@ -5227,10 +5229,12 @@ $(function(){
 			}, 1000);
 */
 		else if(app_type=="ios" && document.visibilityState=="hidden"){
+			hideAmplifier();
 			if(getStatusTimer) clearTimeout(getStatusTimer);
 			getStatusTimer=null;
 			onPageHide();
 		}else if(app_type=="android" && document.visibilityState=="hidden"){ //安卓切到回台后关闭图像和长连接
+			hideAmplifier();
 			if(getStatusTimer) clearTimeout(getStatusTimer);
 			getStatusTimer=null;
 			onPageHide();
