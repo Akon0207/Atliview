@@ -97,6 +97,7 @@ $(function(){
 			}
 			var year = end.getFullYear();
 			var month = end.getMonth()+1;
+			day = end.getDate();
 			return [year.toString()+transformTime(month).toString()+transformTime(day).toString()+transformTime(hours).toString()+transformTime(minutes).toString()+transformTime(seconds).toString(),year.toString()+"-"+transformTime(month).toString()+"-"+transformTime(day).toString()+"T"+transformTime(hours).toString()+":"+transformTime(minutes).toString()+":"+transformTime(seconds).toString()+"Z"];
 	}
 	//生成schdule字符串
@@ -115,12 +116,13 @@ $(function(){
 			start=new Date(Date.parse(configs["normalTask"]["startAt"].replace(/-/g,"/")));
 			end=new Date(Date.parse(configs["normalTask"]["endAt"].replace(/-/g,"/")));
 			console.log("interval:"+interval+"\nnow:"+now+"\nstart:"+start+"\nend:"+end);
-			var endTime = calculateTime(end);
-			if(now>=end || start>=end) {
+			var endTime = calculateTime(new Date(Date.parse(configs["normalTask"]["endAt"].replace(/-/g,"/"))));
+			if(now.getTime()>=end.getTime() || start.getTime()>=end.getTime()) {
+				console.log("now:"+now.getTime()+"\nstart:"+start.getTime()+"\nend:"+end.getTime())
 				return null; //已经结束
 			}
-			else if(now>=start && now<end) { //立即开始
-				var r=parseInt((end-now)/1000/interval)+1;
+			else if(now.getTime()>=start.getTime() && now.getTime()<end.getTime()) { //立即开始
+				var r=parseInt((end.getTime()-now.getTime())/1000/interval)+1;
 				//var S=parseInt(Date.now()/1000);
 				//var E=S+interval*r;
 				if(interval=="0.5" || interval==1.5){
@@ -131,11 +133,11 @@ $(function(){
 					var s="d"+interval+"r"+r+"E"+endTime[0];
 				}
 				// return s;
-				return [s,endTime];
+				// return [s,endTime];
 			}
-			else if(now<start) {//等待开始
-				var r=parseInt((end-start)/1000/interval)+1;
-				recordWait=parseInt((start-now)/1000);
+			else if(now.getTime()<start.getTime()) {//等待开始
+				var r=parseInt((end.getTime()-start.getTime())/1000/interval)+1;
+				recordWait=parseInt((start.getTime()-now.getTime())/1000);
 				//var S=parseInt(Date.now()/1000)+recordWait;
 				//var E=S+interval*r;
 				if(interval=="0.5" || interval==1.5){
@@ -146,8 +148,10 @@ $(function(){
 					var s="d"+0+"s(d"+interval+"r"+r+"E"+endTime[0]+")r1";
 				}
 				// return s;
-				return [s,endTime];
+				// return [s,endTime];
 			}
+			
+			return [s,endTime];
 		}
 		else { //按天模式
 		//计算第一个周期
@@ -172,14 +176,14 @@ $(function(){
 				start=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][i-1]["startAt"]));
 				end=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][i-1]["endAt"]));
 				var interval=configs["bydayTask"][i-1]["shootInterval"];
-				var r=parseInt((end-start)/1000/interval)+1;
+				var r=parseInt((end.getTime()-start.getTime())/1000/interval)+1;
 				if(i!=1) {
-					wait=parseInt((start-last)/1000);
+					wait=parseInt((start.getTime()-last.getTime())/1000);
 				}
 				if(i==length){
-					remainWait[0]=parseInt((end-start)/1000)-interval*(r-1); //第一次时段前的休息时间需要加上最后一次时段除不尽的秒数
+					remainWait[0]=parseInt((end.getTime()-start.getTime())/1000)-interval*(r-1); //第一次时段前的休息时间需要加上最后一次时段除不尽的秒数
 				}
-				remainWait[i]=parseInt((end-start)/1000)-interval*(r-1);
+				remainWait[i]=parseInt((end.getTime()-start.getTime())/1000)-interval*(r-1);
 				seqsWait[i-1]=wait;
 				if(interval=="0.5" || interval==1.5){
 					seqs[i-1]="s(D"+interval*1000+"r"+r+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+")r1";
@@ -188,28 +192,28 @@ $(function(){
 				}
 				
 				last=end;
-				if(now<end) { //找到当前结束的时段
+				if(now.getTime()<end.getTime()) { //找到当前结束的时段
 					if(endindex==0)endindex=i;
 				}
-				if(now>start) { //找到当前开始的时段
+				if(now.getTime()>start.getTime()) { //找到当前开始的时段
 					startindex=i;
 				}
 			}
 			//计算最开始的等待时间
 			if(startindex==0){ //比第一个时段开始时间还早
 				start=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][0]["startAt"]));
-				wait=parseInt((start-now)/1000);
+				wait=parseInt((start.getTime()-now.getTime())/1000);
 				startindex=1; //从第一时段开始
 			} else if(endindex==0) { //比最后一个时段结束时间还晚,就等待第二天的第一个时段
 				start=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+(now.getDate())+" "+configs["bydayTask"][0]["startAt"]));
 				start.setDate(start.getDate()+1);
-				wait=parseInt((start-now)/1000);
+				wait=parseInt((start.getTime()-now.getTime())/1000);
 				startindex=1;
 			} else if(startindex==endindex){ //已经开始，无需等待
 				wait=0;
 			} else { //中间时段等待
 				start=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][startindex]["startAt"]));
-				wait=parseInt((start-now)/1000);
+				wait=parseInt((start.getTime()-now.getTime())/1000);
 				startindex++;
 			}
 			console.log(seqs);
@@ -218,14 +222,14 @@ $(function(){
 				//start=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][startindex-1]["startAt"]));
 				end=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][startindex-1]["endAt"]));
 				interval=configs["bydayTask"][startindex-1]["shootInterval"];
-				var r=parseInt((end-now)/1000/interval)+1;
+				var r=parseInt((end.getTime()-now.getTime())/1000/interval)+1;
 				if(interval == "0.5" || interval==1.5){
 					s="D"+interval*1000+"r"+r+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
 				}else{
 					s="d"+interval+"r"+r+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
 				}
 				
-				firstWait=parseInt((end-now)/1000)-interval*(r-1);
+				firstWait=parseInt((end.getTime()-now.getTime())/1000)-interval*(r-1);
 				//alert(parseInt((end-now)/1000)+" "+interval*(r-1)+" "+firstWait);
 			} else {
 				recordWait=wait; //等待时间
