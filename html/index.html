@@ -1590,13 +1590,7 @@ $(function(){
 			return false
 		}
 	}
-	function hideAmplifier(){
-		if($(".amplifier").css("display")=="block"){
-			$(".amplifier").hide();
-			putJSON("/webctl",{previewZoom:0});
-			localControl.zoomActivated(0);
-		}
-	}
+	
 	/* 更多功能点击事件 start*/
 	$(".more").on("click",function(){
 		if(recordStatus!="idle"){
@@ -2107,6 +2101,13 @@ $(function(){
 			hideAmplifier();
 		}
 	})
+	function hideAmplifier(){
+		if($(".amplifier").css("display")=="block"){
+			$(".amplifier").hide();
+			putJSON("/webctl",{previewZoom:0});
+			localControl.zoomActivated(0);
+		}
+	}
 	/*放大镜--end*/
 	/*曝光补偿滑条--start*/
 
