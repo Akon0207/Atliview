@@ -882,6 +882,7 @@
 		<div class="interval-prompt">
 			<div class="interval-text" lan="intervalPro">拍摄间隔必须大于快门时长</div>
 		</div>
+		<div id="toast-duration" lan="toastDuration"></div>
 		<div class="fix-prompt"></div>
 		<div class="hdr-prompt"></div>
 		
@@ -2686,6 +2687,10 @@ $(function(){
 	//点击隐藏定时设置
 	$(".time-btns a").on("click",function(event){
 	    event.stopPropagation();
+		var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
+		if($(".time-poppup .switch-box").attr('checked') && duration==0){
+			return;
+		}
 		$(".time-poppup,.dialog-cover").hide();
 		$("#shoot-circle").addClass("on");
 		clearTimeout(autoGetExposure);
@@ -4976,7 +4981,8 @@ $(function(){
 		return [years.toString()+months.toString()+days.toString()+hours.toString()+minutes.toString()+seconds.toString(),years.toString()+"-"+months.toString()+"-"+days.toString()+"T"+hours.toString()+":"+minutes.toString()+":"+seconds.toString()+"Z"];
 	}
 	function startRecording() {
-		$("#shoot-circle").css("pointer-events","none");
+
+		
 		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
 		//if(parseInt(interval)>=1) interval=parseInt(interval);
 		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60) };
@@ -4993,6 +4999,13 @@ $(function(){
 			var currentTime = new Date();
 			var endTime = calculateTime(currentTime);
 			var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
+			if(duration==0){
+				$("#toast-duration").show();
+				setTimeout(function(){
+					$("#toast-duration").hide();
+				},2000)
+				return
+			}
 			var maxFrames = Math.floor(duration/interval);
 			//recCtrl['maxFrames'] = maxFrames;
 			// if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames;
@@ -5005,6 +5018,7 @@ $(function(){
 			if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
 			else recCtrl['schedule'] = 'd'+interval;
 		}
+		$("#shoot-circle").css("pointer-events","none");
 		recordInterval=interval;
                 console.log(recCtrl);
 		postJSON("/" + sessionType, recCtrl, function (data) {

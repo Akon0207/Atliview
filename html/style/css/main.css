@@ -4908,7 +4908,7 @@ fieldset{
     padding: 10px 0;
     height: 30px;
 }
-.interval-prompt,.fix-prompt,.hdr-prompt {
+.interval-prompt,.fix-prompt,.hdr-prompt,#toast-duration {
     position: absolute;
     display: none;
     top: 20%;
@@ -4919,7 +4919,7 @@ fieldset{
     transform: translate(-50%,-50%);
     z-index: 9999;
 }
-.fix-prompt,.hdr-prompt {
+.fix-prompt,.hdr-prompt,#toast-duration {
     color: #fff;
     /*text-align: center;*/
     line-height: 22px;
