@@ -2688,8 +2688,8 @@ $(function(){
 	$(".time-btns a").on("click",function(event){
 	    event.stopPropagation();
 		var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
-		if($(".time-poppup .switch-box").attr('checked') && duration==0){
-			return;
+		if($(".time-poppup .switch-box").prop('checked') && duration==0){
+			return false;
 		}
 		$(".time-poppup,.dialog-cover").hide();
 		$("#shoot-circle").addClass("on");
