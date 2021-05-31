@@ -1036,7 +1036,6 @@ $(function(){
 	var intervalFlag = 0;
 	var imgArchiveArray = new Array("horizontal","vertical");
 	var imgArchive = null;
-	var pauseStatus = 0;
 	var livePreviewUrl = null;
 	var rotate180 = false;
 	var cronFlag = getParameterByName("cron");
@@ -1045,6 +1044,7 @@ $(function(){
 	var switchSessionFlag = true;
 	var orientationFlag = true;//用于给app发送方向的代号，只能在第一次load网页的时候发送，后面根据用户设置实时改变
 	var firstLoadPage2 = true;
+	var firstLoadPage3 = true;
 	var exposureBias_now = null;//曝光补偿
 	var setPortraitInterval = null;
 	var setLandscapeInterval = null;
@@ -1721,6 +1721,7 @@ $(function(){
 				$(this).hide();
 			});
 			if(index==0){
+				pauseStatus = 1;
 				localControl.putValue("pauseStatus",1);
 				$(".dialog-cover").hide().removeClass("tp");
 				$(".pauseSelect li").eq(0).hide().siblings(".continue").show();
@@ -1750,6 +1751,8 @@ $(function(){
 				getExposure();
 				// continueRecording();
 			}else if(index==2){
+				pauseStatus = 0;
+				localControl.putValue("pauseStatus",0);
 				$(".dialog-cover").hide().removeClass("tp");;
 				$("#shoot-circle").removeClass("pause");
 				// $("#shoot-pause").hide();
@@ -4652,7 +4655,10 @@ $(function(){
 					// setTimeout(function(){$("#shoot-pause").show();},400);
 				}else {
 					$(".outPutPrompt").show();
-					pauseStatus = localControl.getValue("pauseStatus",0);
+					if(firstLoadPage3){
+						pauseStatus = localControl.getValue("pauseStatus",0);
+						firstLoadPage3 = false;
+					}
 					console.log("pauseStatus:++++++++++++++++++++"+pauseStatus);
 					if(pauseStatus==0){
 						$("shoot-circle").removeClass("pause");
@@ -4980,6 +4986,7 @@ $(function(){
 
 		return [years.toString()+months.toString()+days.toString()+hours.toString()+minutes.toString()+seconds.toString(),years.toString()+"-"+months.toString()+"-"+days.toString()+"T"+hours.toString()+":"+minutes.toString()+":"+seconds.toString()+"Z"];
 	}
+	let toastTimeOut = null;
 	function startRecording() {
 
 		
@@ -5000,8 +5007,9 @@ $(function(){
 			var endTime = calculateTime(currentTime);
 			var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
 			if(duration==0){
+				clearTimeout(toastTimeOut);
 				$("#toast-duration").show();
-				setTimeout(function(){
+				toastTimeOut = setTimeout(function(){
 					$("#toast-duration").hide();
 				},2000)
 				return
@@ -5057,6 +5065,8 @@ $(function(){
 	$('#start-shooting').on('click', startRecording);
 
 	function continueRecording(){
+		pauseStatus = 0;
+		localControl.putValue("pauseStatus",0);
 		$("#shoot-pause").hide();
 		$("#shoot-circle").css("pointer-events","none");
 		// $("#shoot-circle").attr("state","recording");
