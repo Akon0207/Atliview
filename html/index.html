@@ -706,7 +706,7 @@
 					<div class="parameter-slider parameter-constrastSlider">
 						<div class="flex">
 							<div class="slider-minus"></div>
-							<input id="s1" data-slider-id='constrastSlider' type="text" data-slider-min="-16" data-slider-max="16" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+							<input id="s1" data-slider-id='constrastSlider' type="text" data-slider-min="-5" data-slider-max="5" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
 							<div class="slider-plus"></div>
 						</div>
 					</div>
@@ -716,7 +716,7 @@
 					<div class="parameter-slider parameter-gacutanceSlider">
 						<div class="flex">
 							<div class="slider-minus"></div>
-							<input id="s3" data-slider-id='acutanceSlider' type="text" data-slider-min="-30" data-slider-max="30" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+							<input id="s3" data-slider-id='acutanceSlider' type="text" data-slider-min="-10" data-slider-max="10" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
 							<div class="slider-plus"></div>
 						</div>
 					</div>
@@ -1036,6 +1036,7 @@ $(function(){
 	var intervalFlag = 0;
 	var imgArchiveArray = new Array("horizontal","vertical");
 	var imgArchive = null;
+	var pauseStatus = localControl.getValue("pauseStatus",0);
 	var livePreviewUrl = null;
 	var rotate180 = false;
 	var cronFlag = getParameterByName("cron");
