@@ -5132,6 +5132,7 @@ $(function(){
 			$("#shoot-circle").css("pointer-events","auto");
 		}, "text");
 		$(".dialog-cover,#turnoffCron").holdHide();
+		getJSON("/status",doInit);
 	}
 
 	//开始摄像
