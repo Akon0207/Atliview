@@ -1065,6 +1065,8 @@ $(function(){
 	var hdr = null;
 	var videoInterval = null;
 	var videoCronSwitch = null;
+	var autoExposure = null;
+	var autoGain = null;
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
 		$(".iconfont.menu").attr("href","setting.html?language=en")
@@ -1125,7 +1127,11 @@ $(function(){
 		$(".foot-bar.flex.flex-middle").holdShow();
 		//$(".ctrl-icon").holdShow();
 	//}
-
+	//获取快门和感光度状态
+	getJSON("/control",function(data){
+		autoExposure = data.autoExposure;
+		autoGain = data.autoGain;
+	})
 	//如果app版本低于2.2，提醒更新
 	$(".backIndex").on("click",function(){
 		localControl.focus("disabled");
@@ -2934,12 +2940,14 @@ $(function(){
 	function setAutoGain(b) {
 		console.log("setAutoGain: "  + b);
 		controlPostJSON("/control", { autoGain: b?1:0 }, updateControls);
+		autoGain = 1;
 	}
 
 	function setGain(g) {
 		// g=Math.round(g/100*16);
 		console.log("setGain: " + g);
 		controlPostJSON("/control", { autoGain: 0, gain: gainObjR[g] }, updateControls);
+		autoGain = 0;
 	}
 
 	function setExposure(e) {
@@ -2947,9 +2955,11 @@ $(function(){
 		if(e > 0){
 			//var expo = Math.round((1048576 - 1024)/12*e);
 			controlPostJSON("/control", { autoExposure: 0, exposure: exposureArray[e] }, updateControls);
+			autoExposure = 0
 		}
 		else {
 			controlPostJSON("/control", { autoExposure: e+1 }, updateControls);
+			autoExposure = 1;
 		}
 	}
 
@@ -3922,6 +3932,9 @@ $(function(){
 		e.text(v);
 		if(v==0) e.parent().hide(); 
 		else e.parent().show();
+		if(autoExposure==0 && autoGain==0){
+			$("#exposureBias-now").parent().hide();
+		}
 	}
 
 
