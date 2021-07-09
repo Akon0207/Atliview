@@ -1268,7 +1268,7 @@ $(function(){
 	var onPageHideTimer=null;
 	var onSetPageWhenHideTimer=null;
 	function setPageWhenHide(){
-		if(sessionType=='video' || app_type=="ios"){
+		if(sessionType=='video'){
 			if(imgArchive == "horizontal"){
 				$("#preview").attr("src","images/preload_1.jpg");
 			}else{
@@ -5220,6 +5220,7 @@ $(function(){
 				console.log("goback from CameraAlbum");
 				CameraAlbumPage=0;
 				playPage=0;
+				if(app_type=="ios") statusEventSourceOnerror();
 			}
 			gotoVisable = true;
 			clearTimeout(onSetPageWhenHideTimer);
