@@ -314,6 +314,7 @@
         var updateStartTime = null;
         var stopTime,startTime,updateFlag = false,stopFlag=true;
         var uploadFlag=getParameterByName("uploadFlag");
+        var skip_bat_chk = null;
         uploadFlag=1;
         isAP();
         function uploadDone(flag){
@@ -484,8 +485,11 @@
                     if(e.sdcard == "UNPLUG") return error2("Micro SD card not detected!  Please insert the card, then retry!");
                     if(e.available < 1024*50) return error("Not enough storage space (50MB free space minimum)");
                     if(e.recordinfo.status!="idle") return error("Unable to upgrade due to shooting in progress and/or an active shooting schedule!Please terminate all and then retry!");
-                    if(e.battery.status == "no_battery") return error2("Unable to upgrade due to battery not installed! Please install battery and then retry.");
-                    if(e.battery.status=="discharging" && e.battery.capacity<20) return error2("Unable to upgrade due to low battery! Please connect external power source and then retry.");
+                    if(skip_bat_chk!=1){
+                        if(e.battery.status == "no_battery") return error2("Unable to upgrade due to battery not installed! Please install battery and then retry.");
+                        if(e.battery.status=="discharging" && e.battery.capacity<20) return error2("Unable to upgrade due to low battery! Please connect external power source and then retry.");
+                    }
+                    
                     if(uploadFlag) {
                         var newV=localControl.getValue("LatestFirmware", data.sysinfo.firmware);
                         $("#newversion").text(newV);
@@ -510,8 +514,11 @@
                     if(e.sdcard == "UNPLUG") return error2("未检测到存储卡，请插入存储卡后重试！");
                     if(e.available < 1024*50) return error("存储空间不足，至少需要50M空间！");
                     if(e.recordinfo.status!="idle") return error("有拍摄任务或定时任务，无法升级；停止任务后即可升级");
-                    if(e.battery.status == "no_battery") return error2("未安装电池，无法升级；请安装电池后重试");
-                    if(e.battery.status=="discharging" && e.battery.capacity<20) return error2("电量过低，无法升级；请连接充电电源后重试 ");
+                    if(skip_bat_chk!=1){
+                        if(e.battery.status == "no_battery") return error2("未安装电池，无法升级；请安装电池后重试");
+                        if(e.battery.status=="discharging" && e.battery.capacity<20) return error2("电量过低，无法升级；请连接充电电源后重试 ");
+                    }
+                    
                     if(uploadFlag) {
                         var newV=localControl.getValue("LatestFirmware", data.sysinfo.firmware);
                         $("#newversion").text(newV);
@@ -618,6 +625,9 @@
                 console.log("get setting 1")
                 var v=data.sysinfo.firmware;
                 $("#currentversion").text(v);
+                if("skip_bat_chk" in data){
+                    skip_bat_chk = data.skip_bat_chk;
+                }
                 if(uploadFlag){
                     $("section").hide();
                     $(".update-btn").hide();

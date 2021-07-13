@@ -579,6 +579,7 @@ $(function(){
     var sessionType = null;
     var videoCronNum = null;
     var status = null;
+    var skip_bat_chk = null;
     isAP();
 	inUpdatePage=true;
     var urlSplit,newVersion;
@@ -599,6 +600,9 @@ $(function(){
         if("videoCronSwitch" in data){
             videoCronNum = data.videoCronSwitch;
             console.log(data.videoCronSwitch);
+        }
+        if("skip_bat_chk" in data){
+            skip_bat_chk = data.skip_bat_chk;
         }
         if(videoCronNum == 0 || !videoCronNum){
             $(".videoButton").text("提交任务");
@@ -1203,8 +1207,11 @@ $(function(){
 			if(e.sdcard == "UNPLUG") {error(language=="en"?"Micro SD card not detected!  Please insert the card, then retry!":"未检测到存储卡，请插入存储卡后重试！"); return false}
 			if(e.available < 1024*50) {error(language=="en"?"Not enough storage space (50MB free space minimum)":"存储空间不足，至少需要50M空间！"); return false} 
 			if(e.recordinfo.status!="idle") {error(language=="en"?"Unable to upgrade due to shooting in progress and/or an active shooting schedule!Please terminate all and then retry!":"有拍摄任务或定时任务，无法升级；停止任务后即可升级");return false} 
-			if(e.battery.status == "no_battery") {error(language=="en"?"Unable to upgrade due to battery not installed! Please install battery and then retry.":"未安装电池，无法升级；请安装电池后重试");return false}
-			if(e.battery.status=="discharging" && e.battery.capacity<20) {error(language=="en"?"Unable to upgrade due to low battery! Please connect external power source and then retry.":"电量过低，无法升级；请连接充电电源后重试 ");return false}
+            if(skip_bat_chk!=1){
+                if(e.battery.status == "no_battery") {error(language=="en"?"Unable to upgrade due to battery not installed! Please install battery and then retry.":"未安装电池，无法升级；请安装电池后重试");return false}
+                if(e.battery.status=="discharging" && e.battery.capacity<20) {error(language=="en"?"Unable to upgrade due to low battery! Please connect external power source and then retry.":"电量过低，无法升级；请连接充电电源后重试 ");return false}
+            }
+			
 			// if($("#update-prompt").attr("type")=="url"){
                 urlSplit =  $.trim($(".upgrade-url").val()).split("/");
                 if(!urlSplit[3]) {return error("无效链接！")}

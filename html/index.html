@@ -1067,6 +1067,7 @@ $(function(){
 	var videoCronSwitch = null;
 	var autoExposure = null;
 	var autoGain = null;
+	var skip_bat_chk = null;
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
 		$(".iconfont.menu").attr("href","setting.html?language=en")
@@ -5617,6 +5618,9 @@ $(function(){
 			if("reg" in data){
 				localControl.putValue("reg",data.reg);
 			}
+			if("skip_bat_chk" in data){
+				skip_bat_chk = data.skip_bat_chk;
+			}
 			//设置预览画质状态
 			if(data.imgQuality && (imgQualityArray.indexOf(data.imgQuality) != -1)){
 				$(".imgQuality .inner-content li").eq(imgQualityArray.indexOf(data.imgQuality)).addClass("on").siblings().removeClass("on");
@@ -5643,7 +5647,7 @@ $(function(){
 					console.log(updateCancelTime+" "+(!updateCancelTime)+" "+ (new Date().getTime())+" " );
 					if($("#shoot-circle").attr("state")==null || $("#shoot-circle").attr("state")=="idle"){ //空闲状态才会有红点提示
 						// $(".update-icon").holdShow();
-						if((updateCancelTime==0 ||(((new Date().getTime()) - updateCancelTime) > 24*3600*1000)) && SDUpgradeDialog == 0 && (SDavailable > 100*1024) && batteryStatus!="no_battery" && !(batteryNow<20 && batteryStatus == "discharging")){//1天
+						if((updateCancelTime==0 ||(((new Date().getTime()) - updateCancelTime) > 24*3600*1000)) && SDUpgradeDialog == 0 && (SDavailable > 100*1024) && (skip_bat_chk==1 || (batteryStatus!="no_battery" && !(batteryNow<20 && batteryStatus == "discharging")))){//1天
 							$("#updateConfirm").attr("href", "update.html?uploadFlag=1");
 							// $("#update").holdShow();
 							// $(".dialog-cover").holdShow();
