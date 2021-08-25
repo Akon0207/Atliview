@@ -5146,7 +5146,7 @@ $(function(){
 			$("#shoot-circle").css("pointer-events","auto");
 		}, "text");
 		$(".dialog-cover,#turnoffCron").holdHide();
-		getJSON("/status",doInit);
+		// getJSON("/status",doInit);
 	}
 
 	//开始摄像
@@ -5346,7 +5346,7 @@ $(function(){
 			})
 			$(".main-pic").error(function(){
 				clearTimeout(conErrTimeout);
-				retryTimelapse();
+				conErrTimeout = setTimeout(retryTimelapse,500);
 			})
 			// var idleSrc = $(".main-pic").prop("src");
 			
@@ -5365,8 +5365,10 @@ $(function(){
 		$(".main-pic").load(function(){
 			clearTimeout(conErrTimeout);
 			return;
+		});
+		$(".main-pic").error(function(){
+			conErrTimeout = setTimeout(retryTimelapse,500);
 		})
-		conErrTimeout = setTimeout(retryTimelapse,500);
 	}
 	function updateStatus(status) {
 		console.log(status);
@@ -5567,18 +5569,21 @@ $(function(){
 		var timeNow = new Date();
 		// timeNow.setMinutes(timeNow.getMinutes()-timeNow.getTimezoneOffset());
 		postJSON("/status",{force_time: timeNow.toJSON(),timezone:-(d2.getTimezoneOffset()/60)},function () {
-			getJSON("/status",doInit)
+			// getJSON("/status",doInit)
 		})
 	})
 	var setTimeCount = 0;
 	function doInit(status, s, xhr) {
 		setOrientation(status.imgArchive,true);
 		localControl.notify(status.imgArchive);
-		if(status.imgArchive === "horizontal"){
-			$("#preview").attr("src","images/preload_1.jpg");
-		}else{
-			$("#preview").attr("src","images/preload_2.jpg");
+		if(firstLoadPage){
+			if(status.imgArchive === "horizontal"){
+				$("#preview").attr("src","images/preload_1.jpg");
+			}else{
+				$("#preview").attr("src","images/preload_2.jpg");
+			}
 		}
+		
 
 		var d1=new Date(xhr.getResponseHeader('Date'));
 		// d1.setMinutes(d1.getMinutes() + d1.getTimezoneOffset());
