@@ -22,6 +22,7 @@
 <script type="text/javascript" src="js/enc-base64.min.js"></script>
 <script type="text/javascript" src="js/hmac-sha256.min.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/rolldate.min.js"></script>
 </head> 
 <body class="setting-index">
 	<section class="setting-head">
@@ -121,7 +122,13 @@
 	            <input type="checkbox"  class="switch-box" id="audio"></input>
 	        </a>
 	    </div>
-	    
+	    <div class="setting-item">
+	    	<a href="javascript:;" class="flex flex-middle" id="frame_rate_a">
+	            <div class="setting-item-name fx1 frame_rate" lan="frame_rate">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	            <!-- <input type="checkbox" class="switch-box" id="autoDormant"></input> -->
+	            <div class="setting-item-info" id="frame_rate">25 fps</div>
+	        </a>
+	    </div>
 		<!--  <div class="setting-item">行车记录仪暂不开放
 	        <a href="javascript:;" class="flex flex-middle">
 	            <div class="setting-item-name fx1 tripREC" lan="tripREC">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
@@ -260,7 +267,7 @@ $(function(){
 		}, false);
 	}
 	
-
+	
 	function updateErr(msg){
 		$("#upWarning p").text(msg);
 		$("#upWarning,.dialog-cover").show();
@@ -306,6 +313,9 @@ $(function(){
 			$("#timelapseMode .title,#timelapseMode .setting-item-name,#timelapseMode .setting-item-info").css("color","#a7a7a7");
 			// $("#timelapseMode .setting-item-name,#timelapseMode .setting-item-info,#timelapseMode input").addClass("shooting-now");
 			$("#timelapseMode a").addClass("shooting-now");
+			if(shootStatus=="recording"){
+				$("#frame_rate").addClass("shooting-now");
+			}
 			$("#timelapseMode").on("click",function(e){
 				if(language=="en"){
 					$(".mode-prompt").html("Current Shooting Mode: Video<br>Unable to change this setting");
@@ -429,6 +439,11 @@ $(function(){
 		}else {
 			$("#autoDormant").prop("checked",false);
 		}*/
+		if("video_fps" in e){
+			$("#frame_rate").html(e["video_fps"]+" fps");
+		}else {
+			$("#frame_rate").html("25 fps");
+		}
 		if("autoDormant" in e){
 			// $("input[name=dormantMode]").each(function(index){
 			// 	if(e.autoDormant == index){
@@ -558,6 +573,15 @@ $(function(){
 		if($(this).prop("checked")) v=1;
 		postJSON("/setting", {"autoDormant":v});
 	});*/
+	//帧率
+	$("#frame_rate_a").on("click",function(){
+		if(shootStatus=="recording"){
+			$(".shoot-prompt").show();
+			setTimeout(function(){
+				$(".shoot-prompt").hide();
+			},2000);
+		}
+	})
 	/*输出*/
 	$("#outPut").on("click",function(){
 		if(shootStatus=="cronRunning" || shootStatus=="recording"){
@@ -733,6 +757,17 @@ $(function(){
 	$(".dorText a").on("click",function(){
 		localControl.startPage("nodisplay_whatispowersaving");
 	})
+	new Rolldate({
+		el: '#frame_rate',
+		format: "fps",
+		beginYear: new Date().getFullYear(),
+		endYear: new Date().getFullYear()+50,
+		lang:language=='en'?{title:"FPS",fps:'',cancel:'Cancel',confirm:'Confirm',year:'&nbsp;',month:'&nbsp;',day:'&nbsp;',hour:'&nbsp;',min:'&nbsp;',sec:'&nbsp;'}:{title:"帧率",fps:'',year:'年',month:'月',day:'日',hour:'时',min:'分',sec:'秒'},
+		confirm: function(date) {
+			$("#frame_rate").html(date+" fps");
+			postJSON("/setting",{video_fps:date});
+		}
+	   })
 })
 </script>
 </body>

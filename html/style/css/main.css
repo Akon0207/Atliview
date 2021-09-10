@@ -2519,6 +2519,9 @@ body.setting-index{
 .setting-item-name.audio:before{
     content: '\e611';
 }
+.setting-item-name.frame_rate:before{
+    content: '\e67c';
+}
 .setting-item-name.tripREC:before{
     content: '\e687';
 }

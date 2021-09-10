@@ -288,5 +288,6 @@
 	"packPro":"此过程耗时较长，请耐心等待",
 	"period":"时段",
 	"lengthPrompt":"最多设置6个时间段",
-	"toastDuration":"请设置拍摄时长"
+	"toastDuration":"请设置拍摄时长",
+	"frame_rate":"帧率"
 }
