@@ -173,7 +173,7 @@
 	"imgCtlPro":"Can't change this while shooting is in progress",
 	"default":"Default",
 	"defPrompt":"Power Saving is activated on battery power.",
-	"off":"Off",
+	"off":"OFF",
 	"offPrompt":"Power Saving is deactivated.",
 	"common":"On (Common)",
 	"mandatory":"On (Mandatory)",
@@ -289,5 +289,12 @@
 	"period":"Period",
 	"lengthPrompt":"You can schedule a maximum of 6 Time Slots.",
 	"toastDuration":"Please set duration",
-	"frame_rate":"Frame Rate"
+	"frame_rate":"Frame Rate",
+	"common2":"Common",
+	"fantasy1":"Fantasy1",
+	"fantasy2":"Fantasy2",
+	"fantasy3":"Fantasy3",
+	"infrared":"Infrared",
+	"b_bias":"b_bias",
+	"r_bias":"r_bias"
 }

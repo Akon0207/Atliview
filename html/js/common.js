@@ -210,13 +210,21 @@ function setSliderEvent(a,b,c,f){
 		val = b.attr("data-slider-value"),
 		min = b.attr("data-slider-min"),
 		max = b.attr("data-slider-max");
+		if(c.attr("id")=="r_bias"){
+			var nocb = "r_bias";
+		}else if(c.attr("id")=="b_bias"){
+			var nocb = "b_bias";
+		}else{
+			var nocb = 0
+		}
 	b.siblings(".slider-plus").on("click",function(e){
 		e.stopPropagation();
+		
 		var v = a.slider('getValue');
 		var x = parseInt(v) + parseInt(step);
 		if(v<max){
 			a.slider('setValue', x);
-			if(f)f(x, 0, "delay");
+			if(f)f(x, nocb, "delay");
 			if(x>0 && b.attr("id")!="s0"){
 				x = "+" + x;
 			}
@@ -231,7 +239,7 @@ function setSliderEvent(a,b,c,f){
 		var y = parseInt(v) - parseInt(step);
 		if(v>min){
 			a.slider('setValue', y);
-			if(f)f(y, 0, "delay");
+			if(f)f(y, nocb, "delay");
 			if(y>0 && b.attr("id")!="s0"){
 				y = "+" + y;
 			}
@@ -244,7 +252,7 @@ function setSliderEvent(a,b,c,f){
 		var v = a.slider('getValue');
 		//console.log(f);
 		if(f) {
-			f(v, 0, "delay");
+			f(v, nocb, "delay");
 		}
 		if(v>0 && b.attr("id")!="s0"){
 			v = "+" + v;

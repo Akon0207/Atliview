@@ -289,5 +289,12 @@
 	"period":"时段",
 	"lengthPrompt":"最多设置6个时间段",
 	"toastDuration":"请设置拍摄时长",
-	"frame_rate":"帧率"
+	"frame_rate":"帧率",
+	"common2":"常规",
+	"fantasy1":"梦幻1",
+	"fantasy2":"梦幻2",
+	"fantasy3":"梦幻3",
+	"infrared":"红外",
+	"b_bias":"蓝色偏移",
+	"r_bias":"红色偏移"
 }

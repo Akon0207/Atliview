@@ -175,6 +175,10 @@
 						<i class="iconfont" mode-name="sun">&#xe643;</i>
 						<p lan="sun">&nbsp;&nbsp;&nbsp;&nbsp;</p>
 					</li>
+					<li>
+						<i class="iconfont" mode-name="ir-fantasy">&#xe67d;</i>
+						<p lan="infrared">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+					</li>
 					<li id="manual">
 						<i class="iconfont" mode-name="manual">&#xe61c;</i>
 						<p lan="manual">&nbsp;&nbsp;&nbsp;&nbsp;</p>
@@ -754,7 +758,7 @@
 				</div>
 				<!-- 效果 -->
 				<!-- 高级 -->
-				<div class="parameter-advance">
+				<!-- <div class="parameter-infrared">
 					<div class="advance-outer">
 						<div class="infrared-setting">
 							<span class="inner-text" lan="infShoot">红外成像</span><span class="inner-content"><input type="checkbox" class="infrared-box"></span>
@@ -770,8 +774,43 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<!-- 高级 -->
+
+				<!-- 红外 -->
+				<div class="parameter-infrared">
+					<div class="container-slider">
+						<div class="parameter-slider parameter-infrared-b-bias" style="display: none;">
+							<span class="bias-title" lan="b_bias">蓝色偏移</span>
+							<div class="flex">
+								<div class="slider-minus"></div>
+								<input id="infrared-b" data-slider-id='infrared-b-bias' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+								<div class="slider-plus"></div>
+							</div>
+							<span id="b_bias" style="display:none;"></span>
+						</div>
+						<div class="parameter-slider parameter-infrared-r-bias" style="display: none;">
+							<span class="bias-title" lan="r_bias">红色偏移</span>
+							<div class="flex">
+								<div class="slider-minus"></div>
+								<input id="infrared-r" data-slider-id='infrared-r-bias' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+								<div class="slider-plus"></div>
+							</div>
+							<span id="r_bias" style="display:none;"></span>
+						</div>
+					</div>
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<!-- <div class="swiper-slide on" lan="off"></div> -->
+							<div class="swiper-slide" lan="common2"></div>
+							<div class="swiper-slide" lan="fantasy1"></div>
+							<div class="swiper-slide" lan="fantasy2"></div>
+							<div class="swiper-slide" lan="fantasy3"></div>
+							<div class="swiper-slide" lan="custom"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 红外 -->
 			</div>
 			
 			<div class="setting-current">
@@ -798,9 +837,9 @@
 							<p lan="effect">图像</p>
 							<span id="effect">&nbsp</span>
 						</div>
-						<div class="swiper-slide" setting-type="advance">
-							<p lan="advance">高级</p>
-							<span id="advance">&nbsp</span>
+						<div class="swiper-slide" setting-type="infrared" style="display:none;">
+							<p lan="infrared">红外</p>
+							<span id="infrared">&nbsp</span>
 						</div>
 					</div>
 				</div>
@@ -1046,6 +1085,7 @@ $(function(){
 	var orientationFlag = true;//用于给app发送方向的代号，只能在第一次load网页的时候发送，后面根据用户设置实时改变
 	var firstLoadPage2 = true;
 	var firstLoadPage3 = true;
+	var firstLoadPage4 = true;
 	var exposureBias_now = null;//曝光补偿
 	var setPortraitInterval = null;
 	var setLandscapeInterval = null;
@@ -1101,6 +1141,8 @@ $(function(){
 	"241":"3800","242":"3800","243":"3800","244":"3800","245":"3800","246":"3800","247":"3900","248":"3900","249":"3900","250":"3900",
 	"251":"3900","252":"4000","253":"4000","254":"4000","255":"4000"};
 	var gainObjR = {"100":"16","200":"22","300":"28","400":"34","500":"40","600":"46","700":"52","800":"58","900":"64","1000":"71","1100":"77","1200":"83","1300":"89","1400":"95","1500":"101","1600":"107","1700":"114","1800":"120","1900":"126","2000":"132","2100":"138","2200":"144","2300":"150","2400":"157","2500":"163","2600":"169","2700":"175","2800":"181","2900":"187","3000":"193","3100":"200","3200":"206","3300":"212","3400":"218","3500":"224","3600":"230","3700":"237","3800":"243","3900":"249","4000":"255"};
+	var infraredArray = language=="en"?["Common","Fantasy1","Fantasy2","Fantasy3"]:["常规","梦幻1","梦幻2","梦幻3"];
+
 	//白平衡数值说明：0-自动，3500-城市夜景，3000-夜晚，3200-白炽灯，2000-彩霞，4000-荧光灯，5200-日光，7500-阴天
 	// var whiteBalanceArray=new Array(0,3500,3000,3200,2000,4000,5200,7500);
 	var whiteBalanceArray = new Array(0,5200,7500,4000,3200);
@@ -1226,6 +1268,7 @@ $(function(){
 	    }
 	    $(".gridline").holdHide();
 	    setOrientation(imgArchive,true);
+	    $(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px");
 	}, false);
 	//timelaspe输出方式提示
 	getJSON("/setting",function(data){
@@ -1810,6 +1853,7 @@ $(function(){
 						moreRestore("horizontal");
 					});
 				}
+				$("#modeList li").eq(0).click();
 			}
 			
 			postJSON("/switch_session", { type:sType }, function(e, status){
@@ -2377,54 +2421,84 @@ $(function(){
 	/*录像 --end*/
 
 	//红外成像点击事件
-	
-	$(".infrared-box").on("click",function(){
-		var infraredTip = localControl.getValue("infraredTip",0);
-		if(infraredTip!=1 && $(".infrared-box").get(0).checked){
-			$(".dialog-cover,#infraredTip").show();
-			return false;
-		}
-		var v = 0;
-		if($(".infrared-box").prop("checked")){v = 1}
+	var infraredSwiper = new Swiper('.parameter-infrared .swiper-container',{
+		freeMode : true,
+		slidesPerView :'auto',
+		on: {
+			resize: function(){
+				this.update();
+			}, 
+		},
+	});
+	$(".parameter-infrared .swiper-slide").each(function(index){
+		$(this).on("click",function(){
+			infraredSwiper.slideTo(index);
+			$("#infrared").text($(this).text());
+			$(this).addClass("on").siblings().removeClass("on");
+			if(index==4){
+				controlPostJSON("/control",{infrared:99},updateControls);
+				$(".parameter-infrared-r-bias,.parameter-infrared-b-bias").toggle();
+				setTimeout(function(){
+					$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px");
+				},200);
+			}else{
+				controlPostJSON("/control",{infrared:index+1},updateControls);
+				$(".parameter-infrared-r-bias,.parameter-infrared-b-bias").hide();
+			}
+			
+		})
+	})
+	var infrared_b = $("#infrared-b").slider({tooltip:"hide"});
+	var infrared_r = $("#infrared-r").slider({tooltip:"hide"});
+	setSliderEvent(infrared_r,$("#infrared-r"),$("#r_bias"),updateValue);
+	setSliderEvent(infrared_b,$("#infrared-b"),$("#b_bias"),updateValue);
+	// $(".infrared-box").on("click",function(){
+	// 	var infraredTip = localControl.getValue("infraredTip",0);
+	// 	if(infraredTip!=1 && $(".infrared-box").get(0).checked){
+	// 		$(".dialog-cover,#infraredTip").show();
+	// 		return false;
+	// 	}
+	// 	var v = 0;
+	// 	if($(".infrared-box").prop("checked")){v = 1}
 
-		controlPostJSON("/control", {"infrared":v},updateControls);
-		if(v==1){
-			$(".infrared-up").holdShow();
-		}else{
-			$(".infrared-up").holdHide();
-			$(".infrared-box").prop("checked",false);
-		}
-	});
+	// 	controlPostJSON("/control", {"infrared":v},updateControls);
+	// 	if(v==1){
+	// 		$(".infrared-up").holdShow();
+	// 	}else{
+	// 		$(".infrared-up").holdHide();
+	// 		$(".infrared-box").prop("checked",false);
+	// 	}
+	// });
 
 	
-	$("#infraredCancel").on("click",function(){
-		$(".dialog-cover,#infraredTip").hide();
-		$(".infrared-box").get(0).checked = false;
-		if($("#infraredCheckbox").get(0).checked){
-			localControl.putValue("infraredTip",1);	
-		}
-	});
-	$("#infraredConfirm").on("click",function(){
-		$(".dialog-cover,#infraredTip").hide();
-		$(".infrared-box").get(0).checked = true;
-		controlPostJSON("/control", {"infrared":1},updateControls);
-		$(".infrared-up").holdShow();
-		if($("#infraredCheckbox").get(0).checked){
-			localControl.putValue("infraredTip",1);
-		}
-	});
-	$("#infraredUpCancel").on("click",function(){
-		$(".dialog-cover,#infrared-up").hide();
-	});
-	$("#infraredUpConfirm").on("click",function(){
-		$(".dialog-cover,#infrared-up").hide();
-		controlPostJSON("/control",{"infrared":0},updateControls);
-		$(".infrared-up").holdHide();
-		$(".infrared-box").prop("checked",false);
-	});
-	$(".infrared-up").on("click",function(){
-		$("#infrared-up,.dialog-cover").show();
-	});
+	// $("#infraredCancel").on("click",function(){
+	// 	$(".dialog-cover,#infraredTip").hide();
+	// 	$(".infrared-box").get(0).checked = false;
+	// 	if($("#infraredCheckbox").get(0).checked){
+	// 		localControl.putValue("infraredTip",1);	
+	// 	}
+	// });
+	// $("#infraredConfirm").on("click",function(){
+	// 	$(".dialog-cover,#infraredTip").hide();
+	// 	$(".infrared-box").get(0).checked = true;
+	// 	controlPostJSON("/control", {"infrared":1},updateControls);
+	// 	$(".infrared-up").holdShow();
+	// 	if($("#infraredCheckbox").get(0).checked){
+	// 		localControl.putValue("infraredTip",1);
+	// 	}
+	// });
+	// $("#infraredUpCancel").on("click",function(){
+	// 	$(".dialog-cover,#infrared-up").hide();
+	// });
+	// $("#infraredUpConfirm").on("click",function(){
+	// 	$(".dialog-cover,#infrared-up").hide();
+	// 	controlPostJSON("/control",{"infrared":0},updateControls);
+	// 	$(".infrared-up").holdHide();
+	// 	$(".infrared-box").prop("checked",false);
+	// });
+	// $(".infrared-up").on("click",function(){
+	// 	$("#infrared-up,.dialog-cover").show();
+	// });
 	//预览画质点击事件
 	$(".imgQuality .inner-content li").each(function(index){
 		$(this).on("click",function(e){
@@ -3025,10 +3099,29 @@ $(function(){
 			$(".all-modelist").holdHide();
 			$(".moreFun").hide();
 			$("body").removeClass("mode-opened");
+			$(".setting-bar>div").hide();
 			if(e==0){
 				$(".ctrl-icon").holdHide();
 				$(".customModeBtn").holdHide();
+				controlPostJSON("/control",{infrared:0},updateControls);
+				$(".setting-current .swiper-slide").eq(5).hide();
 			}else if(e==6){
+				$(".setting-content").holdShow();
+				$(".ctrl-icon").holdHide();
+				setTimeout(function(){
+					$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
+				},200);
+				currentSwiper.update();
+				$(".setting-current .swiper-slide").eq(5).show().click();
+				$(".setting-bar>div").hide();
+				$(".setting-bar>div").eq(5).show(); 
+				infraredSwiper.update();
+				$(".parameter-infrared .swiper-slide").eq(1).click();
+				// var m = $(".parameter-infrared .swiper-slide.on").index();
+				infraredSwiper.slideTo(1);
+				controlPostJSON("/control",{infrared:2},updateControls);
+			}else if(e==7){
+				controlPostJSON("/control",{infrared:0},updateControls);
 				$(".setting-content").holdShow();
 				$(".ctrl-icon").holdHide();
 				setTimeout(function(){
@@ -3041,9 +3134,12 @@ $(function(){
 				exprosureSwiper.update();
 				var m = $(".parameter-exprosure .swiper-slide.on").index();
 				exprosureSwiper.slideTo(m);
+				$(".setting-current .swiper-slide").eq(5).hide();
 			}else{
+				controlPostJSON("/control",{infrared:0},updateControls);
 				$(".ctrl-icon").holdSlideDown(800);
 				$(".customModeBtn").holdHide();
+				$(".setting-current .swiper-slide").eq(5).hide();
 			}
 		})
 	})
@@ -3266,6 +3362,11 @@ $(function(){
 						}
         			});
 				}
+				if(e==5){
+					infraredSwiper.update();
+					var m = $(".parameter-infrared .swiper-slide.on").index();
+					infraredSwiper.slideTo(m);
+				}
 			}
 			$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px");
 			
@@ -3365,6 +3466,11 @@ $(function(){
 		clearTimeout(sendControlTimer);
 		console.log("updateValue: " + type + '=' + v);
 		if(type=="gain") v=gainObjR[v];
+		if(noCallback=="r_bias"){
+			type = "r_bias";
+		}else if(noCallback=="b_bias"){
+			type = "b_bias";
+		}
 		ctrldata = {};
 		ctrldata[type] = v;
 		if(delay=="delay") delayMS=300;
@@ -4007,19 +4113,48 @@ $(function(){
 				//console.log(thisi.html());
 				$("#mode").attr("data-mode",thisi.html());
 				currentMode=e.recordMode;
+				if(currentMode=="ir-fantasy"){
+					if(firstLoadPage4){
+						$(".setting-current .swiper-slide").eq(5).addClass("on").siblings().removeClass("on");
+						$(".setting-bar>div").hide().siblings(".parameter-infrared").show();
+						firstLoadPage4 = false;
+					}
+					$(".setting-current .swiper-slide").eq(5).show();
+				}else{
+					$(".setting-current .swiper-slide").eq(5).hide();
+				}
 				setEffectNow();
 			}
 
 			/*设置红外infrared*/
 			
-			if(e.infrared == 1){
-				$(".infrared-box").prop("checked",true);
-				$(".infrared-up").holdShow();
-			}else {
-				$(".infrared-box").prop("checked",false);
-				$(".infrared-up").holdHide();
+			// if(e.infrared == 1){
+			// 	$(".infrared-box").prop("checked",true);
+			// 	$(".infrared-up").holdShow();
+			// }else {
+			// 	$(".infrared-box").prop("checked",false);
+			// 	$(".infrared-up").holdHide();
+			// }
+			if(e.infrared == 99){
+				$(".parameter-infrared .swiper-slide").eq(4).addClass("on").siblings().removeClass("on");
+				$("#infrared").text(language=="en"?"Customized":"自定义");
+			}else if(e.infrared > 0){
+				$(".parameter-infrared .swiper-slide").eq(parseInt(e.infrared)-1).addClass("on").siblings().removeClass("on");
+				$("#infrared").text(infraredArray[parseInt(e.infrared)-1]);
 			}
 			
+			if(e.r_bias){
+				v = e.r_bias;
+				$("#infrared-r").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v})
+				$("#infrared-r").slider('setValue', v);
+				$("#infrared-r").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v>0?"+"+v:v);
+			}
+			if(e.b_bias){
+				v = e.b_bias;
+				$("#infrared-b").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v})
+				$("#infrared-b").slider('setValue', v);
+				$("#infrared-b").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v>0?"+"+v:v);
+			}
 			// if(e.recordMode == "auto") {
 			if($(".mode-list li").eq(0).hasClass("on")){
 				$(".ctrl-icon").holdHide(); //隐藏上拉图标
