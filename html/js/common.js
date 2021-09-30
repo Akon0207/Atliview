@@ -18,6 +18,9 @@ var wificoutInterval = null;
 var forAppNetDisCnn = true;
 var reDiscoverTimeout = null;
 var inAP=0;
+var autoAuth_token=null; //proxy远程使用
+var autoAuth=false; //在首页判断是不是proxy远程
+
 function isAP(){
         getJSON("/sysinfo?wlan1_ip=1", function(e, status){
                 if("wlan1_ip" in e ){
@@ -335,7 +338,7 @@ function postJSON(url, obj, successCallback, errorCallback, dataType, completeCa
 	console.log("postJSON /"+url+" type:"+(dataType?dataType:'json')+" "+JSON.stringify(obj));
 	$.ajax({ type: "POST", url: url, contentType:'application/json', data: JSON.stringify(obj), dataType: dataType?dataType:'json', beforeSend: addAuthHeader, success: successCallback, error: function(xhr, status, ex) {
     if(xhr.status === 401){
-      doAuth(getAccessKey(), function(token) {
+      doAuthNew(getAccessKey(), function(token) {
         setAccessToken(token);
         $.ajax({ type: "POST", url: url, contentType:'application/json', data: JSON.stringify(obj), dataType: dataType?dataType:'json', beforeSend: addAuthHeader, success: successCallback, error: errorCallback});
       }, function() {
@@ -352,7 +355,7 @@ function postJSON(url, obj, successCallback, errorCallback, dataType, completeCa
 function putJSON(url, obj, successCallback, errorCallback, dataType) {
 	$.ajax({ type: "PUT", url: url, contentType:'application/json', data: JSON.stringify(obj), dataType: dataType?dataType:'json', beforeSend: addAuthHeader, success: successCallback, error: function(xhr, status, ex) {
 		if(xhr.status === 401){
-			doAuth(getAccessKey(), function(token) {
+			doAuthNew(getAccessKey(), function(token) {
 				setAccessToken(token);
 				$.ajax({ type: "PUT", url: url, contentType:'application/json', data: JSON.stringify(obj), dataType: dataType?dataType:'json', beforeSend: addAuthHeader, success: successCallback, error: errorCallback});
 			}, function() {
@@ -367,7 +370,7 @@ function putJSON(url, obj, successCallback, errorCallback, dataType) {
 function getJSON(url, successCallback, errorCallback, dataType, completeCallback) {
 	$.ajax({ type: "GET", url: url, dataType: dataType?dataType:'json', beforeSend: addAuthHeader, success: successCallback, error: function(xhr, status, ex) {
       if(xhr.status === 401){
-        doAuth(getAccessKey(), function(token) {
+        doAuthNew(getAccessKey(), function(token) {
           setAccessToken(token); 
           $.ajax({ type: "GET", url: url, dataType: dataType?dataType:'json', beforeSend: addAuthHeader, success: successCallback, error: errorCallback,timeout:3000});
         }, function() {
@@ -417,7 +420,7 @@ function doAuth(accessKey, successCallback, errorCallback) {
 		}
 		$("#forAuth").show();
 	}
-	browser_key();
+	if(!autoAuth) browser_key();
         if(errorCallback)errorCallback();
       }
     }, function(xhr, status, ex) {
@@ -442,7 +445,7 @@ function doAuth(accessKey, successCallback, errorCallback) {
 			$("#forAuth").show();
 		}
 	}
-	browser_key();
+	if(!autoAuth) browser_key();
       if(errorCallback)errorCallback();
     });
 
@@ -455,9 +458,29 @@ function doAuth(accessKey, successCallback, errorCallback) {
 		}
 		$("#forAuth").show();
 	}
-	browser_key();
+	if(!autoAuth) browser_key();
     if(errorCallback)errorCallback();
   });
+}
+
+function doAuthNew(accessKey, successCallback, errorCallback){
+	autoAuth=localControl.getValue("autoAuth", 0);
+	if(autoAuth=="0") autoAuth=false;
+	if(autoAuth){
+		var sn=location.hostname.slice(0,location.hostname.indexOf('.'));
+		var path=location.hostname.slice(location.hostname.indexOf('.')+1);
+		autoAuth_token=localControl.getValue("autoAuth_token", "1234");
+		getJSON('https://'+path+'/api/getkey?sn='+sn+'&token='+autoAuth_token, function(resp){
+			accessKey=resp.key;
+			console.log("getkey:"+accessKey);
+			doAuth(accessKey, successCallback, errorCallback);
+		}, function (jqXHR, exception) {
+                        console.log((jqXHR.status+exception));
+			$("#forAuth .dialog-poppup-content").text("get key failed!"+"(GET Error:"+jqXHR.status+")");
+                });
+	}else {
+		doAuth(accessKey, successCallback, errorCallback);
+	}
 }
 
 function getParameterByName(name, url) {

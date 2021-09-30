@@ -639,9 +639,9 @@
 				<!-- 感光度 -->		
 				<div class="parameter-slider parameter-gian">
 					<div class="flex">
-						<div class="slider-minus"></div>
+						<div class="slider-minus iconfont">&#xe67e;</div>
 						<input id="s0" data-slider-id='gianSlider' type="text" data-slider-min="100" data-slider-max="4000" data-slider-step="100" data-slider-value="1600" data-slider-default="1600" />
-						<div class="slider-plus"></div>
+						<div class="slider-plus iconfont">&#xe67f;</div>
 						<div class="slider-manual on" lan="manual">手动</div>
 						<div class="slider-auto" lan="auto">自动</div>
 					</div>
@@ -651,8 +651,8 @@
 				<!-- 曝光补偿 -->
 				<div class="parameter-exposurebiasSlider">
 					<div class="exposurebias-inner">
-						<div class="slider-minus"></div>
-						<div class="slider-plus"></div>
+						<div class="slider-minus iconfont">&#xe67e;</div>
+						<div class="slider-plus iconfont">&#xe67f;</div>
 					</div>
 					<div class="exposurebias-div">EV<span id="exposurebias-span">0</span></div>
 					<input type="hidden" value="0" id="exposurebias-input">
@@ -663,9 +663,9 @@
 				<div class="parameter-whiteBalance">
 					<div class="parameter-slider parameter-whiteBalance-manual" style="display: none;">
 						<div class="flex">
-							<div class="slider-minus"></div>
+							<div class="slider-minus iconfont">&#xe67e;</div>
 							<input id="s5" data-slider-id='saturationSlider' type="text" data-slider-min="2500" data-slider-max="10000" data-slider-step="100" data-slider-value="5000" data-slider-default="5000" />
-							<div class="slider-plus"></div>
+							<div class="slider-plus iconfont">&#xe67f;</div>
 						</div>
 					</div>		
 					<div class="swiper-container">
@@ -689,9 +689,9 @@
 					<!-- 亮度 -->
 					<div class="parameter-slider parameter-brightnessSlider">
 						<div class="flex">
-							<div class="slider-minus"></div>
+							<div class="slider-minus iconfont">&#xe67e;</div>
 							<input id="s6" data-slider-id='brightnessSlider' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
-							<div class="slider-plus"></div>
+							<div class="slider-plus iconfont">&#xe67f;</div>
 						</div>
 					</div>
 					<!-- 亮度 -->
@@ -699,9 +699,9 @@
 					<!-- 饱和度 -->
 					<div class="parameter-slider parameter-saturationSlider">
 						<div class="flex">
-							<div class="slider-minus"></div>
+							<div class="slider-minus iconfont">&#xe67e;</div>
 							<input id="s2" data-slider-id='saturationSlider' type="text" data-slider-min="-30" data-slider-max="30" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
-							<div class="slider-plus"></div>
+							<div class="slider-plus iconfont">&#xe67f;</div>
 						</div>
 					</div>
 					<!-- 饱和度 -->
@@ -709,9 +709,9 @@
 					<!-- 对比度 -->
 					<div class="parameter-slider parameter-constrastSlider">
 						<div class="flex">
-							<div class="slider-minus"></div>
+							<div class="slider-minus iconfont">&#xe67e;</div>
 							<input id="s1" data-slider-id='constrastSlider' type="text" data-slider-min="-5" data-slider-max="5" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
-							<div class="slider-plus"></div>
+							<div class="slider-plus iconfont">&#xe67f;</div>
 						</div>
 					</div>
 					<!-- 对比度 -->
@@ -719,9 +719,9 @@
 					<!-- 锐度 -->
 					<div class="parameter-slider parameter-gacutanceSlider">
 						<div class="flex">
-							<div class="slider-minus"></div>
+							<div class="slider-minus iconfont">&#xe67e;</div>
 							<input id="s3" data-slider-id='acutanceSlider' type="text" data-slider-min="-10" data-slider-max="10" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
-							<div class="slider-plus"></div>
+							<div class="slider-plus iconfont">&#xe67f;</div>
 						</div>
 					</div>
 					<!-- 锐度 -->
@@ -729,9 +729,9 @@
 					<!-- 色相 -->
 					<div class="parameter-slider parameter-hueSlider">
 						<div class="flex">
-							<div class="slider-minus"></div>
+							<div class="slider-minus iconfont">&#xe67e;</div>
 							<input id="s4" data-slider-id='hueSlider' type="text" data-slider-min="-20" data-slider-max="20" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
-							<div class="slider-plus"></div>
+							<div class="slider-plus iconfont">&#xe67f;</div>
 						</div>
 					</div>
 					<!-- 色相 -->
@@ -777,40 +777,7 @@
 				</div> -->
 				<!-- 高级 -->
 
-				<!-- 红外 -->
-				<div class="parameter-infrared">
-					<div class="container-slider">
-						<div class="parameter-slider parameter-infrared-b-bias" style="display: none;">
-							<span class="bias-title" lan="b_bias">蓝色偏移</span>
-							<div class="flex">
-								<div class="slider-minus"></div>
-								<input id="infrared-b" data-slider-id='infrared-b-bias' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
-								<div class="slider-plus"></div>
-							</div>
-							<span id="b_bias" style="display:none;"></span>
-						</div>
-						<div class="parameter-slider parameter-infrared-r-bias" style="display: none;">
-							<span class="bias-title" lan="r_bias">红色偏移</span>
-							<div class="flex">
-								<div class="slider-minus"></div>
-								<input id="infrared-r" data-slider-id='infrared-r-bias' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
-								<div class="slider-plus"></div>
-							</div>
-							<span id="r_bias" style="display:none;"></span>
-						</div>
-					</div>
-					<div class="swiper-container">
-						<div class="swiper-wrapper">
-							<!-- <div class="swiper-slide on" lan="off"></div> -->
-							<div class="swiper-slide" lan="common2"></div>
-							<div class="swiper-slide" lan="fantasy1"></div>
-							<div class="swiper-slide" lan="fantasy2"></div>
-							<div class="swiper-slide" lan="fantasy3"></div>
-							<div class="swiper-slide" lan="custom"></div>
-						</div>
-					</div>
-				</div>
-				<!-- 红外 -->
+				
 			</div>
 			
 			<div class="setting-current">
@@ -837,14 +804,15 @@
 							<p lan="effect">图像</p>
 							<span id="effect">&nbsp</span>
 						</div>
-						<div class="swiper-slide" setting-type="infrared" style="display:none;">
+						<!-- <div class="swiper-slide" setting-type="infrared" style="display:none;">
 							<p lan="infrared">红外</p>
 							<span id="infrared">&nbsp</span>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
 		</div>
+		
 		<!-- 参数设置 end -->
 
 		<!-- 亮度调节 start -->
@@ -1004,6 +972,41 @@
 			</div>
 		</div>
 		<!-- 定时任务 end -->
+		<!-- 红外 -->
+		<div class="parameter-infrared">
+			<div class="swiper-select" lan="common2"></div>
+			<div class="swiper-select" lan="fantasy1"></div>
+			<div class="swiper-select" lan="fantasy2"></div>
+			<div class="swiper-select" lan="fantasy3"></div>
+			<div class="swiper-select" lan="custom2"></div>
+		</div>
+		<div class="wbPrompt" lan="wbPrompt">
+			
+		</div>
+		
+		<div class="infrared-slider forblue">
+			<div class="parameter-infrared-b-bias infrared-container">
+				<div class="flex column">
+					<div class="slider-minus iconfont">&#xe67e;</div>
+					<input id="infrared-b" data-slider-id='infrared-b-bias' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+					<div class="slider-plus iconfont">&#xe67f;</div>
+				</div>
+				<span id="b_bias" style="display:none;"></span>
+			</div>
+			
+		</div>
+
+		<div class="infrared-slider forred">
+			<div class="parameter-infrared-r-bias infrared-container">
+				<div class="flex column">
+					<div class="slider-minus iconfont">&#xe67e;</div>
+					<input id="infrared-r" data-slider-id='infrared-r-bias' type="text" data-slider-min="-100" data-slider-max="100" data-slider-step="1" data-slider-value="0" data-slider-default="0" />
+					<div class="slider-plus iconfont">&#xe67f;</div>
+				</div>
+				<span id="r_bias" style="display:none;"></span>
+			</div>
+		</div>
+		<!-- 红外 -->
 	</section>
 <script type="text/javascript" src="js/language.js"></script>
 <script type="text/javascript">
@@ -1108,6 +1111,18 @@ $(function(){
 	var autoExposure = null;
 	var autoGain = null;
 	var skip_bat_chk = null;
+
+	if(getParameterByName("tag")=="autoAuth"){ //是远程管理页面
+		autoAuth_token=getParameterByName("token");
+		autoAuth=1;
+		localControl.putValue("autoAuth", 1);
+		localControl.putValue("autoAuth_token", autoAuth_token);
+		console.log("autoAuth:"+getParameterByName("tag")+" token"+autoAuth_token);
+	}else {
+		console.log("no remote tag");
+		localControl.putValue("autoAuth", 0);
+		localControl.putValue("autoAuth_token", null);
+	}
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
 		$(".iconfont.menu").attr("href","setting.html?language=en")
@@ -1784,6 +1799,8 @@ $(function(){
 					livePreviewUrl = data.url;
 					localControl.putValue("livePreviewUrl",livePreviewUrl);
 					$("#shoot-circle").css("pointer-events","auto");
+				},function(){
+					$("#shoot-circle").css("pointer-events","auto");
 				});
 				$("#modeNow").addClass("shooting-now");
 				$(".circleChart_canvas").remove(".circleChart_canvas");
@@ -2421,35 +2438,45 @@ $(function(){
 	/*录像 --end*/
 
 	//红外成像点击事件
-	var infraredSwiper = new Swiper('.parameter-infrared .swiper-container',{
-		freeMode : true,
-		slidesPerView :'auto',
-		on: {
-			resize: function(){
-				this.update();
-			}, 
-		},
-	});
-	$(".parameter-infrared .swiper-slide").each(function(index){
+	// var infraredSwiper = new Swiper('.parameter-infrared .swiper-container',{
+	// 	freeMode : true,
+	// 	slidesPerView :'auto',
+	// 	on: {
+	// 		resize: function(){
+	// 			this.update();
+	// 		}, 
+	// 	},
+	// });
+	$(".parameter-infrared .swiper-select").each(function(index){
 		$(this).on("click",function(){
-			infraredSwiper.slideTo(index);
-			$("#infrared").text($(this).text());
+			// infraredSwiper.slideTo(index);
+			// $("#infrared").text($(this).text());
 			$(this).addClass("on").siblings().removeClass("on");
 			if(index==4){
 				controlPostJSON("/control",{infrared:99},updateControls);
-				$(".parameter-infrared-r-bias,.parameter-infrared-b-bias").toggle();
+				$(".infrared-slider").holdShow();
 				setTimeout(function(){
 					$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px");
 				},200);
 			}else{
 				controlPostJSON("/control",{infrared:index+1},updateControls);
-				$(".parameter-infrared-r-bias,.parameter-infrared-b-bias").hide();
+				$(".infrared-slider").holdHide();
 			}
 			
 		})
 	})
-	var infrared_b = $("#infrared-b").slider({tooltip:"hide"});
-	var infrared_r = $("#infrared-r").slider({tooltip:"hide"});
+	var infrared_b = $("#infrared-b").slider({
+		tooltip:"always",
+		orientation: "vertical",
+		tooltip_position: "left",
+		reversed: true
+	});
+	var infrared_r = $("#infrared-r").slider({
+		tooltip:"always",
+		orientation: "vertical",
+		tooltip_position: "right",
+		reversed: true
+	});
 	setSliderEvent(infrared_r,$("#infrared-r"),$("#r_bias"),updateValue);
 	setSliderEvent(infrared_b,$("#infrared-b"),$("#b_bias"),updateValue);
 	// $(".infrared-box").on("click",function(){
@@ -3100,25 +3127,23 @@ $(function(){
 			$(".moreFun").hide();
 			$("body").removeClass("mode-opened");
 			$(".setting-bar>div").hide();
+			$(".parameter-infrared").holdHide();
+			$(".infrared-slider").holdHide();
 			if(e==0){
 				$(".ctrl-icon").holdHide();
 				$(".customModeBtn").holdHide();
 				controlPostJSON("/control",{infrared:0},updateControls);
-				$(".setting-current .swiper-slide").eq(5).hide();
 			}else if(e==6){
-				$(".setting-content").holdShow();
-				$(".ctrl-icon").holdHide();
-				setTimeout(function(){
-					$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
-				},200);
+				$(".ctrl-icon").holdSlideDown(800);
+				$(".customModeBtn").holdHide();
 				currentSwiper.update();
-				$(".setting-current .swiper-slide").eq(5).show().click();
-				$(".setting-bar>div").hide();
-				$(".setting-bar>div").eq(5).show(); 
-				infraredSwiper.update();
-				$(".parameter-infrared .swiper-slide").eq(1).click();
+				// $(".setting-bar>div").hide();
+				// $(".setting-bar>div").eq(5).show(); 
+				// infraredSwiper.update();
+				$(".parameter-infrared").holdShow();
+				$(".parameter-infrared .swiper-select").eq(1).click();
 				// var m = $(".parameter-infrared .swiper-slide.on").index();
-				infraredSwiper.slideTo(1);
+				// infraredSwiper.slideTo(1);
 				controlPostJSON("/control",{infrared:2},updateControls);
 			}else if(e==7){
 				controlPostJSON("/control",{infrared:0},updateControls);
@@ -3134,12 +3159,11 @@ $(function(){
 				exprosureSwiper.update();
 				var m = $(".parameter-exprosure .swiper-slide.on").index();
 				exprosureSwiper.slideTo(m);
-				$(".setting-current .swiper-slide").eq(5).hide();
+
 			}else{
 				controlPostJSON("/control",{infrared:0},updateControls);
 				$(".ctrl-icon").holdSlideDown(800);
 				$(".customModeBtn").holdHide();
-				$(".setting-current .swiper-slide").eq(5).hide();
 			}
 		})
 	})
@@ -3164,7 +3188,9 @@ $(function(){
 //		$(".setting-content").show();
 		$(".setting-content").holdSlideDown(1000);
 		setTimeout(function(){
-			$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
+			if(!$("#modeList li").eq(6).hasClass("on")){
+				$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
+			}
 		},1000);
 		exprosureSwiper.update();
 		var m = $(".parameter-exprosure .swiper-slide.on").index();
@@ -3328,8 +3354,17 @@ $(function(){
             }
 		}
 	});
+	var wbPromptTimeout = null;
 	$(".setting-current .swiper-slide").each(function(e){
 		$(this).click(function(event){
+			if($("#modeList li").eq(6).hasClass("on") && e == 3){
+				clearTimeout(wbPromptTimeout);
+				$(".wbPrompt").show();
+				wbPromptTimeout = setTimeout(function(){
+					$(".wbPrompt").hide();
+				},2000);
+				return
+			}
 			if($(this).hasClass("on")){
 				$(".setting-bar>div").eq(e).toggle(); 
 			}else{
@@ -3362,11 +3397,11 @@ $(function(){
 						}
         			});
 				}
-				if(e==5){
-					infraredSwiper.update();
-					var m = $(".parameter-infrared .swiper-slide.on").index();
-					infraredSwiper.slideTo(m);
-				}
+				// if(e==5){
+					// infraredSwiper.update();
+					// var m = $(".parameter-infrared .swiper-slide.on").index();
+					// infraredSwiper.slideTo(m);
+				// }
 			}
 			$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px");
 			
@@ -3465,11 +3500,13 @@ $(function(){
 		if(type=="effect") type=$(".parameter-effect .swiper-slide.on").attr('setting-type');
 		clearTimeout(sendControlTimer);
 		console.log("updateValue: " + type + '=' + v);
-		if(type=="gain") v=gainObjR[v];
+		if(type=="gain" && noCallback == 0) v=gainObjR[v];
 		if(noCallback=="r_bias"){
 			type = "r_bias";
+			v = v>0?"-"+v:Math.abs(v);
 		}else if(noCallback=="b_bias"){
 			type = "b_bias";
+			v = v>0?"-"+v:Math.abs(v);
 		}
 		ctrldata = {};
 		ctrldata[type] = v;
@@ -3773,6 +3810,8 @@ $(function(){
 					if(duration<750){
 						clearTimeout(longTouch);
 						$(this).addClass("on").siblings().removeClass("on");
+						$(".infrared-slider").holdHide();
+						$(".parameter-infrared").holdHide();
 						$("#modeList li").removeClass("on");
 						$(".customModeBtn").holdHide();
 						$(".ctrl-icon").holdSlideDown(800);
@@ -4114,14 +4153,18 @@ $(function(){
 				$("#mode").attr("data-mode",thisi.html());
 				currentMode=e.recordMode;
 				if(currentMode=="ir-fantasy"){
-					if(firstLoadPage4){
-						$(".setting-current .swiper-slide").eq(5).addClass("on").siblings().removeClass("on");
-						$(".setting-bar>div").hide().siblings(".parameter-infrared").show();
-						firstLoadPage4 = false;
-					}
-					$(".setting-current .swiper-slide").eq(5).show();
+					$(".parameter-infrared").holdShow();
+					$(".setting-current .swiper-slide").eq(3).addClass("greyColor");
+					$("#whiteBalance").hide();
+					// if(firstLoadPage4){
+						// $(".setting-current .swiper-slide").eq(5).addClass("on").siblings().removeClass("on");
+						// $(".setting-bar>div").hide().siblings(".parameter-infrared").show();
+						// firstLoadPage4 = false;
+					// }
+					// $(".setting-current .swiper-slide").eq(5).show();
 				}else{
-					$(".setting-current .swiper-slide").eq(5).hide();
+					$(".setting-current .swiper-slide").eq(3).removeClass("greyColor");
+					$("#whiteBalance").show();
 				}
 				setEffectNow();
 			}
@@ -4136,21 +4179,33 @@ $(function(){
 			// 	$(".infrared-up").holdHide();
 			// }
 			if(e.infrared == 99){
-				$(".parameter-infrared .swiper-slide").eq(4).addClass("on").siblings().removeClass("on");
+				$(".parameter-infrared .swiper-select").eq(4).addClass("on").siblings().removeClass("on");
+				$(".infrared-slider").holdShow();
 				$("#infrared").text(language=="en"?"Customized":"自定义");
 			}else if(e.infrared > 0){
-				$(".parameter-infrared .swiper-slide").eq(parseInt(e.infrared)-1).addClass("on").siblings().removeClass("on");
+				$(".infrared-slider").holdHide();
+				$(".parameter-infrared .swiper-select").eq(parseInt(e.infrared)-1).addClass("on").siblings().removeClass("on");
 				$("#infrared").text(infraredArray[parseInt(e.infrared)-1]);
 			}
 			
 			if(e.r_bias){
 				v = e.r_bias;
+				if(v>0){
+					v = "-"+v
+				}else if(v<0){
+					v = Math.abs(v);
+				}
 				$("#infrared-r").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v})
 				$("#infrared-r").slider('setValue', v);
 				$("#infrared-r").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v>0?"+"+v:v);
 			}
 			if(e.b_bias){
 				v = e.b_bias;
+				if(v>0){
+					v = "-"+v
+				}else if(v<0){
+					v = Math.abs(v);
+				}
 				$("#infrared-b").attr({"data-slider-value":v, "data-slider-default":v, "data-value":v, "value":v})
 				$("#infrared-b").slider('setValue', v);
 				$("#infrared-b").siblings(".slider").find(".tooltip-main .tooltip-inner1").text(v>0?"+"+v:v);
@@ -4933,6 +4988,21 @@ $(function(){
 				// $(".update-icon").hide();
 			}
 */
+			//拍摄进行时，禁用红外设置
+			if(e.recordinfo.status!="idle"){
+				$("#infrared-b").slider("disable");
+				$("#infrared-r").slider("disable");
+				$(".infrared-slider .slider-minus,.infrared-slider .slider-plus").addClass("disable");
+				$(".infrared-slider .slider.slider-vertical .slider-track").addClass("greyColor");
+				$(".parameter-infrared").addClass("disable");
+			}else{
+				$("#infrared-b").slider("enable");
+				$("#infrared-r").slider("enable");
+				$(".infrared-slider .slider-minus,.infrared-slider .slider-plus").removeClass("disable");
+				$(".infrared-slider .slider.slider-vertical .slider-track").removeClass("greyColor");
+				$(".parameter-infrared").removeClass("disable");
+			}
+
 			//设置警告提醒
 			if("warning" in e){
 				if(e.warning.camStop=="lowSpace") {
