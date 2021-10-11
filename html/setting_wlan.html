@@ -185,6 +185,9 @@
 				<input type="text" id="dns2" class="wlan-manual-ip" placeholder="输入域名服务器地址" lan="dnsInput"  />
 			</div>
 		</div>
+		<div class="wlan-add flex flex-middle bottom-line">
+			<a href="javascript:;" id="addWlan" lan="addNet">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
 		<div class="wlan-delete flex flex-middle bottom-line">
 			<a href="javascript:;" id="deleteWlan" lan="delNet">&nbsp;&nbsp;&nbsp;&nbsp;</a>
 		</div>
@@ -359,6 +362,55 @@ $(function(){
             	connectType="wifi";
             }
         }
+	});
+	//点击加入网络
+	$("#addWlan").on("click",function(){
+		var ssid = $(".wlan-detail-name").attr("ssid"),
+		    mode = $(".wlan-detail-name").attr("mode"),
+		    auth = $(".wlan-detail-name").attr("auth"),
+		    id = $(".wlan-detail-name").attr("wifi_id");
+		    status = $(".wlan-detail-name").attr("status");
+		var wifiCtrl = {};
+		if(mode == "static"){
+			wifiCtrl.staticIP = $("#staticIP").val();
+			wifiCtrl.staticNetmask = $("#staticNetmask").val();
+			wifiCtrl.staticRoute = $("#staticRoute").val();
+			wifiCtrl.mode = "setstatic";
+			wifiCtrl.dns = $("#dns").val();
+			wifiCtrl.dns2 = $("#dns2").val();
+		}
+		wifiCtrl.ssid = ssid;
+		wifiCtrl.auth = auth;
+		if((auth!="none" && !id) || (status == "errKey")){//弹出密码窗口
+			var title = $("#dialog-poppup .dialog-poppup-tit");
+			if(ssid!=""){title.text(ssid);
+			}else{title.text(language=="en"?"No Name":"未命名WiFi")}
+			
+			title.attr("ssid",ssid);
+			title.attr("auth",auth);
+			if(mode == "static"){
+				title.attr("mode","static");
+				title.attr("ip",$("#staticIP").val());
+				title.attr("netmask",$("#staticNetmask").val());
+				title.attr("router",$("#staticRoute").val());
+				title.attr("dns",$("#dns").val());
+				title.attr("dns2",$("#dns2").val());
+			}
+			$("#dialog-cover,#dialog-poppup").show();
+			$(".wlan-detail,.setting-list.wlan-list,.setting-head,#other").toggle();
+		}else if(auth=="none"){//无密码直接连接
+			postJSON("/wifi_config", wifiCtrl);
+			wifiSet=ssid;
+			wifiSetTimer=setTimeout(netError, 15000);
+			pwd=null;
+			changeConnect(ssid);
+			$(".wlan-detail,.setting-list.wlan-list,.setting-head,#other").toggle();
+		}else if(id){//之前已经加入过，直接连接
+			postwificonfig = true;
+			postJSON("/wifi_config", { connect: ssid});
+			changeConnect(ssid);
+			$(".wlan-detail,.setting-list.wlan-list,.setting-head,#other").toggle();
+		}
 	})
 	//点击删除网络，弹出确认框
 	$("#deleteWlan").on("click",function(){
@@ -620,6 +672,7 @@ $(function(){
 			// 	}
 			// 	$("#dialog-cover,#dialog-poppup").show();
 			// }
+			$(wid).attr("status","errKey");//用于下次点击连接wifi时可以知道密码错误，重新弹出密码输入框
 			showErrorKey(wifi.ssid,wifi.status);
 		}else if(("status" in wifi) && wifi.status=="conn failed"){ //连接失败的wifi
 			// if(connectingSSID==wifi.ssid){
@@ -641,6 +694,7 @@ $(function(){
 			console.log(thisdiv.html());
 			var ssid = thisdiv.attr("ssid"),
 				auth = thisdiv.attr("auth"),
+				status = thisdiv.attr("status");
 				active = thisdiv.attr("active"),
 				mode = thisdiv.attr("mode"),
 				id = thisdiv.attr("wifi_id"),
@@ -659,6 +713,8 @@ $(function(){
 			}
 			$(".wlan-detail-name").attr("ssid",ssid);
 			$(".wlan-detail-name").attr("auth",auth);
+			if(status)$(".wlan-detail-name").attr("status",status);
+			else $(".wlan-detail-name").removeAttr("status");
 			if(mode && mode=="static"){
 				// $("#wlanIpmode").val(1);
 				$(".selector ul li").eq(1).addClass("on").siblings().removeClass("on");
@@ -671,6 +727,7 @@ $(function(){
 				$(".wlan-manual").addClass("show");
 				$("#dns").val(dnsOne);
 				$("#dns2").val(dnsTwo);
+				$(".wlan-detail-name").attr("mode",mode);
 			}else{
 				// $("#wlanIpmode").val(0);
 				$(".wlan-ip-select").text("DHCP");
@@ -679,6 +736,7 @@ $(function(){
 				$("#staticNetmask").val("255.255.255.0");
 				$("#staticRoute").val("");
 				$(".wlan-manual").removeClass("show");
+				$(".wlan-detail-name").removeAttr("mode",mode);
 			}
 			if(active && active == "true"){
 				if(language && language=="en"){
@@ -687,6 +745,7 @@ $(function(){
 					$(".wlan-detail-status").html("<p>IP地址: "+ip+"</p><p>子网掩码："+netmask+"</p><p>默认网关: "+router+"</p>");
 				}
 				$(".wlan-detail-name").attr("active","true");
+				$(".wlan-add").hide();
 			}else{
 				if(language && language=="en"){
 					$(".wlan-detail-status").html("<p>Unconnected</p>");
@@ -694,11 +753,14 @@ $(function(){
 					$(".wlan-detail-status").html("<p>未连接</p>");
 				}
 				$(".wlan-detail-name").removeAttr("active");
+				$(".wlan-add").show();
 			}
 			if(id){
 				$(".wlan-delete").show();
+				$(".wlan-detail-name").attr("wifi_id",id);
 			}else{
 				$(".wlan-delete").hide();
+				$(".wlan-detail-name").removeAttr("wifi_id");
 			}
 			$(".wlan-detail,.setting-list.wlan-list,.setting-head,#other").toggle();
 		})

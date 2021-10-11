@@ -5800,7 +5800,9 @@ $(function(){
 		if(Math.abs(localTime-serverTime)>=60000 && status.recordinfo.status==="idle"){
 			setTimeCount++;
 			postJSON("/status",{force_time:d2.toJSON(),timezone:-(d2.getTimezoneOffset()/60)},function () {
-				getJSON("/status",doInit)
+				setTimeout(function(){
+					getJSON("/status",doInit);
+				},1000);
 			})
 			return;
 		}

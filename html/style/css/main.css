@@ -2989,11 +2989,12 @@ body.setting-index{
     -o-transition: all .8s cubic-bezier(0.4, 0.4, 0.25, 1.35);
     transition: all .8s cubic-bezier(0.4, 0.4, 0.25, 1.35);
 }
-.wlan-delete{
+.wlan-delete, .wlan-add{
     padding: 0 4%;
-    height: 3em;
+    /*height: 3em;*/
+    margin: 10px;
 }
-.wlan-delete a{
+.wlan-delete a, .wlan-add a{
     background: #fff;
     font-size: 0.7em;
     border: 1px solid #dfdfdf;
@@ -3004,6 +3005,9 @@ body.setting-index{
     color: #f00;
     margin: 0 auto;
     width: 92%;
+}
+.wlan-add a {
+    color: #0090FF;
 }
 .wlan-btns{
     padding-top: 15px;
