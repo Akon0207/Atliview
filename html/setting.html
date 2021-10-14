@@ -584,7 +584,7 @@ $(function(){
 	})
 	/*输出*/
 	$("#outPut").on("click",function(){
-		if(shootStatus=="cronRunning" || shootStatus=="recording"){
+		if(shootStatus=="cronRunning" || shootStatus=="recording" || shootStatus == "pausing"){
 			$(".shoot-prompt").show();
 			setTimeout(function(){
 				$(".shoot-prompt").hide();
@@ -726,7 +726,7 @@ $(function(){
 	/*摄像头非空闲状态禁止操作红外设置*/
 	/*logo水印*/
 	$("#logoMark").on("click",function(){
-		if(shootStatus=="cronRunning" || shootStatus=="recording"){
+		if(shootStatus=="cronRunning" || shootStatus=="recording" || shootStatus == "pausing"){
 			$(".shoot-prompt").show();
 			setTimeout(function(){
 				$(".shoot-prompt").hide();
@@ -739,7 +739,7 @@ $(function(){
 	})
 	/*时间水印*/
 	$("#mark").on("click", function(){
-		if(shootStatus=="cronRunning" || shootStatus=="recording"){
+		if(shootStatus=="cronRunning" || shootStatus=="recording" || shootStatus == "pausing"){
 			$(".shoot-prompt").show();
 			setTimeout(function(){
 				$(".shoot-prompt").hide();
