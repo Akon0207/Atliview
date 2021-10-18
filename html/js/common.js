@@ -384,6 +384,11 @@ function getJSON(url, successCallback, errorCallback, dataType, completeCallback
   }, complete: completeCallback, crossDomain:true ,timeout:3000}); 
 }
 
+function getJSON2(url, successCallback, errorCallback, dataType, completeCallback) {
+	$.ajax({ type: "GET", url: url, dataType: dataType?dataType:'json', success: successCallback, error: function(xhr, status, ex) {	
+		
+	}, complete: completeCallback, crossDomain:true ,timeout:3000});
+}
 function genNonce(len)
 {
   var cs = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '-', '.'];
@@ -470,18 +475,23 @@ function doAuthNew(accessKey, successCallback, errorCallback){
 		var sn=location.hostname.slice(0,location.hostname.indexOf('.'));
 		var path=location.hostname.slice(location.hostname.indexOf('.')+1);
 		autoAuth_token=localControl.getValue("autoAuth_token", "1234");
-		getJSON('https://'+path+'/api/getkey?sn='+sn+'&token='+autoAuth_token, function(resp){
-			accessKey=resp.key;
+		getJSON2('https://'+path+'/api/getkey?sn='+sn+'&token='+autoAuth_token, function(resp){
+			accessKey=resp.data.pin;
 			console.log("getkey:"+accessKey);
 			doAuth(accessKey, successCallback, errorCallback);
 		}, function (jqXHR, exception) {
                         console.log((jqXHR.status+exception));
-			$("#forAuth .dialog-poppup-content").text("get key failed!"+"(GET Error:"+jqXHR.status+")");
+			//$("#forAutoAuth .dialog-poppup-content").text("get key failed!"+"(GET Error:"+jqXHR.status+")");
+			$("autoAuthErrorConfirm").attr("href",'https://'+path+'/user/device.html?sn='+sn+'&token='+autoAuth_token);
+			$("#forAutoAuth").show();
                 });
 	}else {
 		doAuth(accessKey, successCallback, errorCallback);
 	}
 }
+
+
+
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -948,6 +958,22 @@ if(language && language=="en"){
 			</div>\
 		</div>")
 }
+	
+//自动认证出错的提示框
+        document.write("<div class=\"dialog-poppup\" id=\"forAutoAuth\" style=\"display: none;\"> \
+			<div class=\"dialog-poppup-tit\">认证失败！</div>\
+                        <div class=\"dialog-poppup-content\ id=\"AutoAuthMsg\"">认证码可能登记错误。<br>请前往修正认证码。</div>\
+                        <div class=\"dialog-btns flex\">\
+				<a href=\"javascript:;\" id=\"autoAuthErrorCancel\">取消</a>\
+                                <a href=\"\" id=\"autoAuthErrorConfirm\">前往</a>\
+                        </div>\
+                </div>")
+
+//$("#autoAuthErrorConfirm").attr("href",'http://www.baidu.com');
+$("#autoAuthErrorCancel").on("click",function(){
+	$("#forAutoAuth").hide();
+});
+
 $("#checkCourse").on("click",function(){
 	localControl.startPage("usage_learnmoreforconnfailed");
 })
