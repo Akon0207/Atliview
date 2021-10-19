@@ -106,6 +106,23 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.keepAlive=function(msg) {return null}
 	localControl.reDiscover=function() {return null}
 }
+
+function getCookie(name)
+{
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+		return unescape(arr[2]);
+	else
+		return null;
+}
+function setCookie(name,value)
+{
+	var Days = 1;
+	var exp = new Date();
+	exp.setTime(exp.getTime() + Days*24*60*60*1000);
+	document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+
 var browserLang = navigator.language||navigator.userLanguage;//常规浏览器语言和IE浏览器
 browserLang = browserLang.substr(0, 2);
 if(!language) {
@@ -385,9 +402,7 @@ function getJSON(url, successCallback, errorCallback, dataType, completeCallback
 }
 
 function getJSON2(url, successCallback, errorCallback, dataType, completeCallback) {
-	$.ajax({ type: "GET", url: url, dataType: dataType?dataType:'json', success: successCallback, error: function(xhr, status, ex) {	
-		
-	}, complete: completeCallback, crossDomain:true ,timeout:3000});
+	$.ajax({ type: "GET", url: url, dataType: dataType?dataType:'json', success: successCallback, error: errorCallback, complete: completeCallback, crossDomain:true ,timeout:3000});
 }
 function genNonce(len)
 {
@@ -426,6 +441,7 @@ function doAuth(accessKey, successCallback, errorCallback) {
 		$("#forAuth").show();
 	}
 	if(!autoAuth) browser_key();
+	else $("#forAutoAuth").show();
         if(errorCallback)errorCallback();
       }
     }, function(xhr, status, ex) {
@@ -451,6 +467,7 @@ function doAuth(accessKey, successCallback, errorCallback) {
 		}
 	}
 	if(!autoAuth) browser_key();
+	else $("#forAutoAuth").show();
       if(errorCallback)errorCallback();
     });
 
@@ -464,17 +481,22 @@ function doAuth(accessKey, successCallback, errorCallback) {
 		$("#forAuth").show();
 	}
 	if(!autoAuth) browser_key();
+	else $("#forAutoAuth").show();
     if(errorCallback)errorCallback();
   });
 }
 
 function doAuthNew(accessKey, successCallback, errorCallback){
-	autoAuth=localControl.getValue("autoAuth", 0);
-	if(autoAuth=="0") autoAuth=false;
+	//autoAuth=localControl.getValue("autoAuth", 0);
+	autoAuth=getCookie("autoAuth");
+	if(autoAuth!="1") autoAuth=false;
 	if(autoAuth){
 		var sn=location.hostname.slice(0,location.hostname.indexOf('.'));
 		var path=location.hostname.slice(location.hostname.indexOf('.')+1);
-		autoAuth_token=localControl.getValue("autoAuth_token", "1234");
+		//autoAuth_token=localControl.getValue("autoAuth_token", "1234");
+		autoAuth_token=getCookie("token");
+		console.log("cookie autoAuth:"+autoAuth+" token:"+getCookie("token"));
+		$("#autoAuthErrorConfirm").attr("href",'https://'+path+'/user/device.html?sn='+sn+'&token='+autoAuth_token);
 		getJSON2('https://'+path+'/api/getkey?sn='+sn+'&token='+autoAuth_token, function(resp){
 			accessKey=resp.data.pin;
 			console.log("getkey:"+accessKey);
@@ -482,7 +504,6 @@ function doAuthNew(accessKey, successCallback, errorCallback){
 		}, function (jqXHR, exception) {
                         console.log((jqXHR.status+exception));
 			//$("#forAutoAuth .dialog-poppup-content").text("get key failed!"+"(GET Error:"+jqXHR.status+")");
-			$("autoAuthErrorConfirm").attr("href",'https://'+path+'/user/device.html?sn='+sn+'&token='+autoAuth_token);
 			$("#forAutoAuth").show();
                 });
 	}else {
@@ -962,7 +983,7 @@ if(language && language=="en"){
 //自动认证出错的提示框
         document.write("<div class=\"dialog-poppup\" id=\"forAutoAuth\" style=\"display: none;\"> \
 			<div class=\"dialog-poppup-tit\">认证失败！</div>\
-                        <div class=\"dialog-poppup-content\ id=\"AutoAuthMsg\"">认证码可能登记错误。<br>请前往修正认证码。</div>\
+                        <div class=\"dialog-poppup-content\ id=\"AutoAuthMsg\">认证码可能登记错误。<br>请前往修正认证码。</div>\
                         <div class=\"dialog-btns flex\">\
 				<a href=\"javascript:;\" id=\"autoAuthErrorCancel\">取消</a>\
                                 <a href=\"\" id=\"autoAuthErrorConfirm\">前往</a>\

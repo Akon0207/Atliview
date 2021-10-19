@@ -1113,15 +1113,9 @@ $(function(){
 	var skip_bat_chk = null;
 
 	if(getParameterByName("tag")=="autoAuth"){ //是远程管理页面
-		autoAuth_token=getParameterByName("token");
-		autoAuth=1;
-		localControl.putValue("autoAuth", 1);
-		localControl.putValue("autoAuth_token", autoAuth_token);
-		console.log("autoAuth:"+getParameterByName("tag")+" token"+autoAuth_token);
+		setCookie("autoAuth", "1");
 	}else {
 		console.log("no remote tag");
-		localControl.putValue("autoAuth", 0);
-		localControl.putValue("autoAuth_token", null);
 	}
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
 	if(language && language=="en"){
