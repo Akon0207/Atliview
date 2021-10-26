@@ -1407,7 +1407,7 @@ $(function(){
 		if(sessionId===0) sessionId=getSessionId();
 		sessionType=e.sessionType;
 		if("recordinfo" in e) {
-			if(e.recordinfo.status == "recording"){
+			if(e.recordinfo.status == "recording" || e.recordinfo.status == "pausing"){
 				$(".post").addClass("shooting-now");
 				if(language && language=="en"){
 					$(".cronPrompt1").css("text-align","left");
