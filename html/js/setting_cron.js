@@ -186,6 +186,7 @@ $(function(){
 			var wait;
 			var firstWait=0; //第一次拍摄后的除不尽的多余时间
 			var seqs=[];
+			var seqsStart=[];//每段开始的时刻
 			var seqsWait=[]; //每段拍摄后的等待时间
 			var remainWait=[]; //上次拍摄后除不尽的多余时间
 			var last;
@@ -210,6 +211,7 @@ $(function(){
 				}
 				remainWait[i]=parseInt((end.getTime()-start.getTime())/1000)-interval*(r-1);
 				seqsWait[i-1]=wait;
+				seqsStart[i-1]=genHMS(configs["bydayTask"][i-1]["startAt"]);
 				if(interval=="0.5" || interval==1.5){
 					seqs[i-1]="s(D"+interval*1000+"r"+r+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+")r1";
 				}else{
@@ -262,8 +264,8 @@ $(function(){
 				//s="d"+0+"s("+seqs[startindex].split('(')[1];
 			}
 			for(var i=startindex+1;i<=seqs.length;i++){
-				if(i==startindex+1 && firstWait!=0) s+=",d"+parseInt((seqsWait[i-1]+firstWait))+seqs[i-1];   //第二段时间
-				else s+=",d"+parseInt((seqsWait[i-1]+remainWait[i-1]))+seqs[i-1];
+				if(i==startindex+1 && firstWait!=0) s+=",d"+parseInt((seqsWait[i-1]+firstWait))+"S"+seqsStart[i-1]+seqs[i-1];   //第二段时间
+				else s+=",d"+parseInt((seqsWait[i-1]+remainWait[i-1]))+"S"+seqsStart[i-1]+seqs[i-1];
 				//if(i==startindex+1 && firstWait!=0) s+=",d"+(seqsWait[i]+firstWait)+seqs[i];   //第二段时间
 				//else s+=",d"+(seqsWait[i]+remainWait[i])+seqs[i];
 			}
@@ -273,10 +275,10 @@ $(function(){
 					//s+=","+seqs[i-1];
 				//}
 				if(s.indexOf(",")!=-1 || firstWait<=remainWait[0]) s+=",d0s(";
-				else s+=",d"+parseInt((firstWait-remainWait[0]))+"s(";
+				else s+=",d"+parseInt((firstWait-remainWait[0]))+"S"+seqsStart[0]+"s(";
 				for(var i=0;i<seqs.length;i++){
 					if(i>0) s+=",";
-					s+="d"+parseInt((seqsWait[i]+remainWait[i]))+seqs[i];
+					s+="d"+parseInt((seqsWait[i]+remainWait[i]))+"S"+seqsStart[i]+seqs[i];
 				}
 				s+=")";
 				//按天模式-天数
