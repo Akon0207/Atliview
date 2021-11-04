@@ -299,5 +299,6 @@
 	"r_bias":"r_bias",
 	"custom2":"Manual",
 	"wbPrompt":"White Balance is not availabe in Infrared Scene",
-	"addNet":"Join this Network"
+	"addNet":"Join this Network",
+	"timeZone":"TimeZone"
 }

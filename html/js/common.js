@@ -20,7 +20,9 @@ var reDiscoverTimeout = null;
 var inAP=0;
 var autoAuth_token=null; //proxy远程使用
 var autoAuth=false; //在首页判断是不是proxy远程
-
+var mode_select = null;
+var timezone = null;
+var timezone_mode = null;
 function isAP(){
         getJSON("/sysinfo?wlan1_ip=1", function(e, status){
                 if("wlan1_ip" in e ){

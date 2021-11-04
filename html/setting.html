@@ -64,6 +64,12 @@
 			</a>
 		</div>
 		<div class="setting-item">
+			<a href="setting_advance.html" class="flex flex-middle">
+				<div class="setting-item-name fx1 advance" lan="advance">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+				<div class="setting-item-info"></div>
+			</a>
+		</div>
+		<div class="setting-item">
 			<a href="setting_about.html" class="flex flex-middle ab on">
 				<div class="setting-item-name fx1 about" lan="about">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- <div class="redpoint"></div> --></div>
 				<div class="setting-item-info version" id="version"></div>
@@ -767,7 +773,7 @@ $(function(){
 			$("#frame_rate").html(date+" fps");
 			postJSON("/setting",{video_fps:date});
 		}
-	   })
+   	})
 })
 </script>
 </body>

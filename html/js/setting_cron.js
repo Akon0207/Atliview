@@ -10,6 +10,11 @@ var loopEn = '<div class="setting-cron-name fx1" lan="loopDays">Days</div><div c
 var cronInterval = null;
 var outPutMode = null;
 var lenProTimeout = null;
+var timezone_mode = null;
+var cameraTimezone = null;
+var now = new Date();  //获取当前时间
+    now = new Date(now.getTime()+60000-now.getTime()%60000);
+		
 $(function(){
 	if(language && language=="en"){
 		$("#modeSelect").html(Modeen);
@@ -28,6 +33,19 @@ $(function(){
 		imgArchive = e.imgArchive;
 	})
 	getJSON("/setting", function(e, status){
+		if("timezone_mode" in e)timezone_mode = e.timezone_mode;
+		if("timezone" in e)cameraTimezone = e.timezone;
+		if(timezone_mode=="manual"){
+			$(".camTime").show();
+			now = new Date(now.getTime()-(-(new Date().getTimezoneOffset()/60)*3600*1000)+(parseInt(cameraTimezone)*3600*1000));
+			console.log("now : === "+now)
+			setInterval(function(){
+				var currentTime = new Date((new Date().getTime()+(new Date().getTimezoneOffset()/60*3600000)+parseInt(cameraTimezone)*3600000));
+				var transCurrentTime = transFullTime(currentTime,language=="en"?"en":"zh");
+				// console.log(transCurrentTime);
+				$(".camTimeContent").text((language=="en"?"Present Time: ":"当前时间： ")+transCurrentTime);
+			},1000);
+		}
 		if("ap" in e){
 			$("#dotestUpdate").nextAll("input:eq(0)").val(e.ap.apSSID);
 			$("#dotestUpdate").nextAll("input:eq(1)").val(e.ap.apPassword);
@@ -36,6 +54,7 @@ $(function(){
 	})	
 	//开始定时计划
 	function startRecording(s) {
+		postJSON("/status",{force_time: new Date().toJSON(),timezone:-(new Date().getTimezoneOffset()/60)});
 		//var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, starttime:transTimeyMDHIS() };
 		// var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
 		if(s[1]=="Infinite"){
@@ -83,6 +102,7 @@ $(function(){
 	}
 	function calculateTime(end){
 			var timezone=-(new Date().getTimezoneOffset()/60);
+			if(timezone_mode == "manual")timezone = parseInt(cameraTimezone);
 			var day = end.getDate();
 			var hours = end.getHours();
 			var minutes = end.getMinutes();
@@ -115,6 +135,11 @@ $(function(){
 			var interval=configs["normalTask"]["shootInterval"];
 			start=new Date(Date.parse(configs["normalTask"]["startAt"].replace(/-/g,"/")));
 			end=new Date(Date.parse(configs["normalTask"]["endAt"].replace(/-/g,"/")));
+			if(timezone_mode=="manual"){
+				start = new Date(start.getTime() - parseInt(cameraTimezone)*3600000);
+				end = new Date(end.getTime() - parseInt(cameraTimezone)*3600000);
+				now = new Date(now.getTime() + new Date().getTimezoneOffset()/60*3600000 );
+			}
 			console.log("interval:"+interval+"\nnow:"+now+"\nstart:"+start+"\nend:"+end);
 			var endTime = calculateTime(new Date(Date.parse(configs["normalTask"]["endAt"].replace(/-/g,"/"))));
 			if(now.getTime()>=end.getTime() || start.getTime()>=end.getTime()) {
@@ -349,10 +374,7 @@ $(function(){
 
 
 	//时间选择控件
-	var now = new Date();  //获取当前时间
-//		now = now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+' '+now.getHours()+':'+(now.getMinutes()+1)+':'+'0';
-//		now = new Date(now);
-		now = new Date(now.getTime()+60000-now.getTime()%60000);
+
 		maxDate = new Date(now.getFullYear() + 50, now.getMonth(), now.getDate()),  //最大时间设置为两年后
 		startTimeX = now,
 		endTimeX = now,

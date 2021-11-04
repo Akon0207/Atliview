@@ -22,15 +22,16 @@
     <script type="text/javascript" src="js/enc-base64.min.js"></script>
     <script type="text/javascript" src="js/hmac-sha256.min.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/rolldate.min.js"></script>
 </head>
 <body class="setting-index">
 <section class="setting-head">
     <a href="setting.html" class="iconfont goback">&#xe6ea;</a>
-    <p>高级</p>
+    <p lan="advance">高级</p>
 </section>
 <section class="setting-list">
 
-    <div class="setting-item">
+    <!-- <div class="setting-item">
         <a href="#" class="flex flex-middle">
             <div class="setting-item-name fx1 mark">时间水印</div>
             <input type="checkbox"  class="switch-box" id="mark"></input>
@@ -43,22 +44,97 @@
             <input type="checkbox" class="switch-box" id="infrared"></input>
         </a>
         <p>需要红外补光灯的辅助</p>
+    </div> -->
+    <div class="setting-cron-item bottom-line flex flex-middle">
+        <div class="setting-cron-name fx1" lan="remoteCtl">远程协助</div>
+        <input type="checkbox" id="remoteCtl" class="switch-box" style="margin-right: 4%">
     </div>
-
+    <div class="setting-cron-item bottom-line flex flex-middle">
+        <div class="setting-cron-name fx1" lan="timeZone">时区</div>
+        <div class="setting-item-info" id="time_zone"></div>
+        <!-- <input type="text" id="time_zone" readonly value="自动"> -->
+    </div>
 </section>
+<div class="dialog-poppup" id="remoteTip" >
+    <div class="dialog-poppup-tit" lan="remoteCtl"></div>
+    <div class="dialog-poppup-content" lan="remoteContent" style="text-align: left;"></div>
+    <div class="dialog-btns flex">
+        <a href="javascript:;" id="remoteCancel" lan="cancel"></a>
+        <a href="javascript:;" id="remoteEnable" lan="enable"></a>
+    </div>
+    <!-- <a href="javascript:;" class="wifi-tip-delete" id="wifiTipDelete">不再提醒</a> -->
+</div>
+<div class="dialog-cover"></div>
+<script type="text/javascript" src="js/language.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("#mark").on("click", function(){
-		var v=0;
-		if($(this).prop("checked")) v=1;
-		postJSON("/setting", {"timeMarkEnable":v});
-	})
-	$("#infrared").on("click", function(){
-		var v=0;
-		if($(this).prop("checked")) v=1;
-		postJSON("/control", {"infrared":v});
-	})
+    getJSON("/setting",function(d){
+        if("rdmAssis" in d && d.rdmAssis == 1){
+            $("#remoteCtl").prop("checked",true);
+        }else{
+            $("#remoteCtl").prop("checked",false);
+        }
+        if("timezone_mode" in d){
+            timezone_mode = d.timezone_mode;
+            if(d.timezone_mode == "auto"){
+                $("#time_zone").html(language=="en"?"Auto":"自动");
+            }else{
+                $("#time_zone").html(d.timezone);
+                timezone = d.timezone;
+            }
+        }
+    })
+    //远程协助
+    $("#remoteCtl").on("click",function(){
+        if($(this).prop("checked")){
+            $("#remoteTip,.dialog-cover").show();
+            return false;
+        }else{
+            postJSON("/setting",{rdmAssis:0})
+        }
+    })
+    $("#remoteCancel").on("click",function(){
+        $("#remoteTip,.dialog-cover").hide();
+    })
+    $("#remoteEnable").on("click",function(){
+        postJSON("/setting",{rdmAssis:1});
+        $("#remoteTip,.dialog-cover").hide();
+        $("#remoteCtl").prop("checked",true);
+    })
 
+	// $("#mark").on("click", function(){
+	// 	var v=0;
+	// 	if($(this).prop("checked")) v=1;
+	// 	postJSON("/setting", {"timeMarkEnable":v});
+	// })
+	// $("#infrared").on("click", function(){
+	// 	var v=0;
+	// 	if($(this).prop("checked")) v=1;
+	// 	postJSON("/control", {"infrared":v});
+	// })
+    var timeRolldate = new Rolldate({
+        el: '#time_zone',
+        format: "zone",
+        beginYear: new Date().getFullYear(),
+        endYear: new Date().getFullYear()+50,
+        lang:language=='en'?{title:"Timezone",zone:'',cancel:'Cancel',confirm:'Confirm',year:'&nbsp;',month:'&nbsp;',day:'&nbsp;',hour:'&nbsp;',min:'&nbsp;',sec:'&nbsp;'}:{title:"时区",zone:'',year:'年',month:'月',day:'日',hour:'时',min:'分',sec:'秒'},
+        confirm: function(date) {
+            var data = {}
+            console.log("date:=="+date);
+            console.log("mode_select:=="+mode_select);
+            if(mode_select == 1){
+                $("#time_zone").html(date);
+                data.timezone_mode = "manual";
+                data.timezone = date;
+            }else{
+                $("#time_zone").html(language=="en"?"Auto":"自动");
+                data.timezone_mode = "auto";
+            }
+            // $("#time_zone").html(date);
+            postJSON("/setting",data);
+            mode_select = null;
+        }
+    })
 })
 </script>
 

@@ -5203,7 +5203,7 @@ $(function(){
 	let toastTimeOut = null;
 	function startRecording() {
 
-		
+		postJSON("/status",{force_time: new Date().toJSON(),timezone:-(new Date().getTimezoneOffset()/60)});
 		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
 		//if(parseInt(interval)>=1) interval=parseInt(interval);
 		var recCtrl = { sessionId: sessionId, frameRate: frameRate, timezone: -(new Date().getTimezoneOffset()/60) };
@@ -5767,9 +5767,7 @@ $(function(){
 		$("#time-syn,.dialog-cover").holdHide();
 		var timeNow = new Date();
 		// timeNow.setMinutes(timeNow.getMinutes()-timeNow.getTimezoneOffset());
-		postJSON("/status",{force_time: timeNow.toJSON(),timezone:-(d2.getTimezoneOffset()/60)},function () {
-			// getJSON("/status",doInit)
-		})
+		postJSON("/status",{force_time: timeNow.toJSON(),timezone:-(timeNow.getTimezoneOffset()/60)})
 	})
 	var setTimeCount = 0;
 	function doInit(status, s, xhr) {
