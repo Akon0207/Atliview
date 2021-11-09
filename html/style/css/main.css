@@ -1543,7 +1543,7 @@ body{
 
 .head-info{
     position: absolute;
-/*    top: 85px;*/
+    top: 50px;
     color: #fff;
     text-shadow: 0 1px 2px rgba(0,0,0,.4);
     font-size: 12px;
@@ -1554,6 +1554,7 @@ body{
     padding-left: 8%;
     padding-bottom: 20px;
 }
+
 .head-info #videoShow {
     display: block;
     padding: 10px 0;
@@ -4417,8 +4418,14 @@ body.video-index .setting-head{
     .infrared-container {
         height: 40%;
     }
-    .head-info {
+    /*.head-info {
         top: 85px;
+    }*/
+    .head-info.redline {
+        top: 85px;
+    }
+    .effect-now.redline {
+        top: 105px;
     }
     .parameter-infrared {
         top: 45px;
@@ -5633,4 +5640,7 @@ fieldset{
     font-size: .8em;
     color: #666;
     white-space: nowrap;
+}
+#unsavedName {
+    color: #ff9800;
 }

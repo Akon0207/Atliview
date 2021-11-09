@@ -300,5 +300,8 @@
 	"custom2":"自定义",
 	"wbPrompt":"红外模式下，白平衡功能无法使用",
 	"addNet":"加入网络",
-	"timeZone":"时区"
+	"timeZone":"时区",
+	"unsavedPrompt":" 拍摄参数已变更。 是否保存新的拍摄参数？",
+	"unsavedCancel":" 撤销",
+	"unsavedConfirm":"保存"
 }

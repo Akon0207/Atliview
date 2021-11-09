@@ -381,6 +381,15 @@
 				<a href="javascript:;" id="delModeConfirm" lan="delete">确认</a>
 			</div>
 		</div>
+		<div class="dialog-poppup" id="unsavedPrompt">
+			<div class="dialog-poppup-content">
+				<span id="unsavedName"></span>(<i class="iconfont" id="unsavedIcon"></i>)<span lan="unsavedPrompt"></span>
+			</div>
+			<div class="dialog-btns flex">
+				<a href="javascript:;" id="unsavedCancel" lan="discard">撤销</a>
+				<a href="javascript:;" id="unsavedConfirm" lan="save">保存</a>
+			</div>
+		</div>
 		<div class="dialog-poppup" id="forCoverMode">
 			<div class="dialog-poppup-content" lan="saveSuccess">
 				保存成功！
@@ -1111,7 +1120,7 @@ $(function(){
 	var autoExposure = null;
 	var autoGain = null;
 	var skip_bat_chk = null;
-
+	var unsaved = null;
 	if(getParameterByName("tag")=="autoAuth"){ //是远程管理页面
 		setCookie("autoAuth", "1");
 	}else {
@@ -1282,6 +1291,8 @@ $(function(){
 	//timelaspe输出方式提示
 	getJSON("/setting",function(data){
 		outPutMode = data.timelapse_output;
+		timezone_mode = data.timezone_mode;
+		timezone = data.timezone;
 		if(data.timelapse_output==1){
 			$(".promptControl").show();
 		}
@@ -3112,6 +3123,14 @@ $(function(){
 			var that = $(this);
 			var m = that.text();
 			var modeName = that.find('i').attr("mode-name");
+			if(unsaved){
+				$("#unsavedPrompt").show();
+				$("#unsavedPrompt").attr("clickIndex",e.toString());
+				$("#unsavedPrompt").attr("iscustom","0");
+				$("#unsavedName").text($(".customModeList li.on p").text());
+				$("#unsavedIcon").html($(".customModeList li.on i").html());
+				return;
+			}
 			setMode(modeName);
 			that.addClass("on").siblings().removeClass("on");
 			$(".customModeList li").removeClass("on");
@@ -3739,7 +3758,7 @@ $(function(){
 	}
 
 	poll();
-	function updateCustomModeList(data){
+	function updateCustomModeList(data){//更新自定义预设场景列表
 		if(data.custom.length!=0){
 			$(".customMode").show();
 			var myData = data.custom;
@@ -3803,21 +3822,31 @@ $(function(){
 					console.log(duration);
 					if(duration<750){
 						clearTimeout(longTouch);
-						$(this).addClass("on").siblings().removeClass("on");
-						$(".infrared-slider").holdHide();
-						$(".parameter-infrared").holdHide();
-						$("#modeList li").removeClass("on");
-						$(".customModeBtn").holdHide();
-						$(".ctrl-icon").holdSlideDown(800);
-						$(".setting-content").holdSlideUp("1000");
-						$(".all-modelist").holdHide();
-						$(".moreFun").hide();
-						$("body").removeClass("mode-opened");
-						var modeName = $(this).find("i").attr("mode-name"),
-							icon = $(this).find("i").html();
-							$("#mode").attr("data-mode",icon);
-						firstLoadPage2=true;
-						setMode(modeName);
+						if(unsaved && (index != $(".customModeList li.on").index())){
+							$("#unsavedPrompt").show();
+							$("#unsavedPrompt").attr("clickIndex",index.toString());
+							$("#unsavedPrompt").attr("iscustom","1");
+							$("#unsavedName").text($(".customModeList li.on p").text());
+							$("#unsavedIcon").html($(".customModeList li.on i").html());
+						}else if(unsaved && (index == $(".customModeList li.on").index())){
+							return;
+						}else{
+							$(this).addClass("on").siblings().removeClass("on");
+							$(".infrared-slider").holdHide();
+							$(".parameter-infrared").holdHide();
+							$("#modeList li").removeClass("on");
+							$(".customModeBtn").holdHide();
+							$(".ctrl-icon").holdSlideDown(800);
+							$(".setting-content").holdSlideUp("1000");
+							$(".all-modelist").holdHide();
+							$(".moreFun").hide();
+							$("body").removeClass("mode-opened");
+							var modeName = $(this).find("i").attr("mode-name"),
+								icon = $(this).find("i").html();
+								$("#mode").attr("data-mode",icon);
+							firstLoadPage2=true;
+							setMode(modeName);
+						}
 					}
 				})
 			});
@@ -3826,7 +3855,83 @@ $(function(){
 		}
 	}
 	
-	$("#coverMode").on("click",function(e){
+	$("#unsavedConfirm,#unsavedCancel").on("click",function(){//预设场景改变数据之后如果确认或者取消保存
+		if($(this).attr("id")=="unsavedConfirm"){
+			saveCustomMode();
+			// console.log(this);
+		}
+		var index = parseInt($("#unsavedPrompt").attr("clickIndex"));
+		var iscustom = $("#unsavedPrompt").attr("iscustom");
+		if(iscustom == "0"){
+			firstLoadPage2=true;
+			$(".setting-content").holdHide();
+			var that = $("#modeList li").eq(index);
+			var m = that.text();
+			var modeName = that.find('i').attr("mode-name");
+			setMode(modeName);
+			that.addClass("on").siblings().removeClass("on");
+			$(".customModeList li").removeClass("on");
+			$("#mode").attr("data-mode",m);
+			$(".all-modelist").holdHide();
+			$(".moreFun").hide();
+			$("body").removeClass("mode-opened");
+			$(".setting-bar>div").hide();
+			$(".parameter-infrared").holdHide();
+			$(".infrared-slider").holdHide();
+			if(index==0){
+				$(".ctrl-icon").holdHide();
+				$(".customModeBtn").holdHide();
+				controlPostJSON("/control",{infrared:0},updateControls);
+			}else if(index==6){
+				$(".ctrl-icon").holdSlideDown(800);
+				$(".customModeBtn").holdHide();
+				currentSwiper.update();
+				$(".parameter-infrared").holdShow();
+				$(".parameter-infrared .swiper-select").eq(1).click();
+				controlPostJSON("/control",{infrared:2},updateControls);
+			}else if(index==7){
+				controlPostJSON("/control",{infrared:0},updateControls);
+				$(".setting-content").holdShow();
+				$(".ctrl-icon").holdHide();
+				setTimeout(function(){
+					$(".customModeBtn").css("bottom",($(".setting-content").height()+60)+"px").holdShow();
+				},200);
+				currentSwiper.update();
+				$(".setting-current .swiper-slide").eq(0).click();
+				$(".setting-bar>div").hide();
+				$(".setting-bar>div").eq(0).show(); 
+				exprosureSwiper.update();
+				var m = $(".parameter-exprosure .swiper-slide.on").index();
+				exprosureSwiper.slideTo(m);
+
+			}else{
+				controlPostJSON("/control",{infrared:0},updateControls);
+				$(".ctrl-icon").holdSlideDown(800);
+				$(".customModeBtn").holdHide();
+			}
+		}else{
+			$(".customModeList li").eq(index).addClass("on").siblings().removeClass("on");
+			$(".infrared-slider").holdHide();
+			$(".parameter-infrared").holdHide();
+			$("#modeList li").removeClass("on");
+			$(".customModeBtn").holdHide();
+			$(".ctrl-icon").holdSlideDown(800);
+			$(".setting-content").holdSlideUp("1000");
+			$(".all-modelist").holdHide();
+			$(".moreFun").hide();
+			$("body").removeClass("mode-opened");
+			var modeName = $(".customModeList li").eq(index).find("i").attr("mode-name"),
+				icon = $(".customModeList li").eq(index).find("i").html();
+				$("#mode").attr("data-mode",icon);
+			firstLoadPage2=true;
+			setMode(modeName);
+		}
+		$("#unsavedPrompt").hide();
+	});
+	
+
+	$("#coverMode").on("click",saveCustomMode);
+	function saveCustomMode(){
 		var ctrlData = {},
 			thisli = $(".customModeList li.on");
 		ctrlData.seq = parseInt(thisli.attr("seq"));
@@ -3867,7 +3972,7 @@ $(function(){
 			getJSON("/control",updateControls);
 			$("#forCoverMode,.dialog-cover").show();
 		});
-	})
+	}
 	$("#saveSucConfirm").on("click",function(){
 		$("#forCoverMode,.dialog-cover").hide();
 	})
@@ -4150,6 +4255,8 @@ $(function(){
 					$(".parameter-infrared").holdShow();
 					$(".setting-current .swiper-slide").eq(3).addClass("greyColor");
 					$("#whiteBalance").hide();
+					$(".head-info").addClass("redline");
+					$(".effect-now").addClass("redline");
 					// if(firstLoadPage4){
 						// $(".setting-current .swiper-slide").eq(5).addClass("on").siblings().removeClass("on");
 						// $(".setting-bar>div").hide().siblings(".parameter-infrared").show();
@@ -4159,6 +4266,8 @@ $(function(){
 				}else{
 					$(".setting-current .swiper-slide").eq(3).removeClass("greyColor");
 					$("#whiteBalance").show();
+					$(".head-info").removeClass("redline");
+					$(".effect-now").removeClass("redline");
 				}
 				setEffectNow();
 			}
@@ -4377,6 +4486,13 @@ $(function(){
 				$("#interval-second").attr("value",timeArray[2]);
 			}else {
 				$(".shooting-tips").holdHide();
+			}
+
+
+			if("unsaved" in e){
+				unsaved = e.unsaved;
+			}else{
+				unsaved = null;
 			}
 			/*设置亮度brightness*/
 			
@@ -4620,6 +4736,9 @@ $(function(){
 			else cron=0;
 			if((e.sessionType == "timelapse") && ("recordinfo" in e) && e.recordinfo.status=="waiting"){
 				var d = new Date(e.recordinfo.cronStartAt);
+				if(timezone_mode=="manual"){
+					d = new Date(d.getTime() + new Date().getTimezoneOffset()/60*3600000 + parseInt(timezone)*3600000);
+				}
 				// d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
 				// date = d.toLocaleString();
 				if(language && language=="en"){
@@ -4706,6 +4825,9 @@ $(function(){
 					$(".pauseSelect li").eq(1).hide().siblings(".pause").show();
 					var dhms;
 					var date = new Date(e.recordinfo.currentVideo.startAt);
+					if(timezone_mode=="manual"){
+						date = new Date(date.getTime() + new Date().getTimezoneOffset()/60*3600000 + parseInt(timezone)*3600000);
+					}
 					// date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
 					// date = date.toLocaleString();
 					sizeFormt=renderSize(e.recordinfo.currentVideo.size*1024)
@@ -4714,6 +4836,9 @@ $(function(){
 					dhms=language=="en"?secondtoHIS(e.recordinfo.currentVideo.duration, "en"):secondtoHIS(e.recordinfo.currentVideo.duration);
 					if("endAt" in e.recordinfo.currentVideo){
 						var endTime = new Date(e.recordinfo.currentVideo.endAt);
+						if(timezone_mode=="manual"){
+							endTime = new Date(endTime.getTime() + new Date().getTimezoneOffset()/60*3600000 + parseInt(timezone)*3600000);
+						}
 						var recordinfo=(language=="en"?"<p>Start Time: ":"<p>拍摄始于 ")+transFullTime(date,language=="en"?"en":"zh")+(language=="en"?"</p><p>End Time: ":"</p><p>拍摄结束 ")+transFullTime(endTime,language=="en"?"en":"zh")+"</p>"+(language=="en"?"<p>Video Length: ":"<p>生成视频 ")+dhms+"</p>";
 					}else{
 						var recordinfo=(language=="en"?"<p>Start Time: ":"<p>拍摄始于 ")+transFullTime(date,language=="en"?"en":"zh")+"</p>"+(language=="en"?"<p>Video Length: ":"<p>生成视频 ")+dhms+"</p>";
