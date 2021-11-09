@@ -129,6 +129,7 @@ $(function(){
             }else{
                 $("#time_zone").html(language=="en"?"Auto":"自动");
                 data.timezone_mode = "auto";
+                data.timezone = (-(new Date().getTimezoneOffset()/60)).toString();
             }
             // $("#time_zone").html(date);
             postJSON("/setting",data);

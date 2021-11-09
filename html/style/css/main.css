@@ -5641,6 +5641,6 @@ fieldset{
     color: #666;
     white-space: nowrap;
 }
-#unsavedName {
-    color: #ff9800;
+#unsavedName,#unsavedIcon {
+    color: #00d2ff;
 }
