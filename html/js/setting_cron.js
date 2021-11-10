@@ -303,10 +303,13 @@ $(function(){
 				s+=",d0S"+seqsEnd[seqs.length-1]+"s(";
 
 				for(var i=0;i<seqs.length;i++){
-					if(i>0) s+=",";
+					alert("i="+i+" seqsWait[i]="+seqsWait[i]+" remainWait[i]="+remainWait[i]+" "+seqs[i]);
+					if(i>0) {
+						s+=",d"+parseInt((seqsWait[i]+remainWait[i]))+"S"+seqsStart[i]+seqs[i];;
+					}else s+="d"+parseInt((seqsWait[i]))+"S"+seqsStart[i]+seqs[i];
 					//s+="d"+parseInt((seqsWait[i]+remainWait[i]))+"S"+seqsStart[i]+seqs[i];
-					s+="d"+parseInt((seqsWait[i]+remainWait[i]))+"S"+seqsStart[i]+seqs[i];
 				}
+				if(remainWait[0]>0) s+=",d"+remainWait[0]+"r1"; //在每天的最后补足第一时段休息的秒数
 				s+=")";
 				//按天模式-天数
 				if(configs["bydayLoop"]!=0) s+="r"+(configs["bydayLoop"]-1);

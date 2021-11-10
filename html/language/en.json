@@ -302,7 +302,7 @@
 	"addNet":"Join this Network",
 	"timeZone":"TimeZone",
 	"unsavedPrompt":" settings has been changed. Would you like to save it?",
-	"unsavedCancel":"Discard",
-	"unsavedConfirm":"Save"
+	"discard":"Discard",
+	"save":"Save"
 
 }

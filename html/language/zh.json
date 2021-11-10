@@ -302,6 +302,6 @@
 	"addNet":"加入网络",
 	"timeZone":"时区",
 	"unsavedPrompt":" 拍摄参数已变更。 是否保存新的拍摄参数？",
-	"unsavedCancel":" 撤销",
-	"unsavedConfirm":"保存"
+	"discard":" 撤销",
+	"save":"保存"
 }
