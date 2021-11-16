@@ -45,15 +45,37 @@
         </a>
         <p>需要红外补光灯的辅助</p>
     </div> -->
-    <div class="setting-cron-item bottom-line flex flex-middle">
+    <!-- <div class="setting-cron-item bottom-line flex flex-middle">
         <div class="setting-cron-name fx1" lan="remoteCtl">远程协助</div>
         <input type="checkbox" id="remoteCtl" class="switch-box" style="margin-right: 4%">
+    </div> -->
+    <div class="setting-item advance">
+        <a href="#" class="flex flex-middle">
+            <div class="setting-item-name fx1" lan="remoteCtl">远程协助</div>
+            <input type="checkbox" class="switch-box" id="remoteCtl"></input>
+        </a>
+        <p lan="remoteCtlNotes"></p>
     </div>
-    <div class="setting-cron-item bottom-line flex flex-middle">
+    <div class="setting-item advance">
+        <a href="#" class="flex flex-middle">
+            <div class="setting-item-name fx1" lan="timeZone">时区</div>
+            <!-- <input type="checkbox" class="switch-box" id="remoteCtl"></input> -->
+            <div class="setting-item-info" id="time_zone"></div>
+        </a>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    </div>
+    <div class="setting-item advance">
+        <a href="#" class="flex flex-middle">
+            <div class="setting-item-name fx1" lan="builtInFTP">内置FTP服务器</div>
+            <input type="checkbox" class="switch-box" id="builtInFTP"></input>
+        </a>
+        <p lan="innerFtpNotes"></p>
+        <p id="ftp_detail"></p>
+    </div>
+    <!-- <div class="setting-cron-item bottom-line flex flex-middle">
         <div class="setting-cron-name fx1" lan="timeZone">时区</div>
         <div class="setting-item-info" id="time_zone"></div>
-        <!-- <input type="text" id="time_zone" readonly value="自动"> -->
-    </div>
+    </div> -->
 </section>
 <div class="dialog-poppup" id="remoteTip" >
     <div class="dialog-poppup-tit" lan="remoteCtl"></div>
@@ -83,6 +105,27 @@ $(function(){
                 timezone = d.timezone;
             }
         }
+        if("enable_ftpd" in d && d.enable_ftpd == 1){
+            $("#builtInFTP").prop("checked",true);
+            var ftpip = null; ftpname = null; ftppasswd = null;
+            if("accessKey" in d){
+                ftppasswd = (language=="en"?"Password: ":"密码： ") + d.accessKey;
+            }else{
+                ftppasswd = (language=="en"?"Password: ":"密码： ") + "1234";
+            }
+            ftpname = (language=="en"?"Username: ":"登录名： ") + d.sysinfo.sn + ", ";
+            if(d.wlan.wlanSSID == "0"){
+                ftpip = language=="en"?"Address: No Wi-Fi Connection, ":"地址： 尚未连接Wi-Fi, ";
+            }else{
+                ftpip = (language=="en"?"Address: ":"地址： ") + "ftp://" + d.wlan.wlanIP + ", ";
+            }
+            $("#ftp_detail").text(ftpip+ftpname+ftppasswd);
+        }else{
+            $("#builtInFTP").prop("checked",false);
+            $("#ftp_detail").hide();
+        }
+        
+            
     })
     //远程协助
     $("#remoteCtl").on("click",function(){
@@ -101,7 +144,16 @@ $(function(){
         $("#remoteTip,.dialog-cover").hide();
         $("#remoteCtl").prop("checked",true);
     })
-
+    //内置ftp开关
+    $("#builtInFTP").on("click",function(){
+        if($(this).prop("checked")){
+            postJSON("/setting",{enable_ftpd:1})
+            $("#ftp_detail").show();
+        }else{
+            postJSON("/setting",{enable_ftpd:0})
+            $("#ftp_detail").hide();
+        }
+    })
 	// $("#mark").on("click", function(){
 	// 	var v=0;
 	// 	if($(this).prop("checked")) v=1;

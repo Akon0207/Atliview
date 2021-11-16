@@ -303,5 +303,7 @@
 	"timeZone":"时区",
 	"unsavedPrompt":" 拍摄参数已变更。 是否保存新的拍摄参数？",
 	"discard":" 撤销",
-	"save":"保存"
+	"save":"保存",
+	"remoteCtlNotes":"方便售后服务团队远程访问和检查相机",
+	"innerFtpNotes":"可使用FTP客户端连接相机，并管理媒体资源"
 }

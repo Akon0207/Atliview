@@ -12,6 +12,7 @@ var outPutMode = null;
 var lenProTimeout = null;
 var timezone_mode = null;
 var cameraTimezone = null;
+var cronByDayList = new Array();
 var now = new Date();  //获取当前时间
     now = new Date(now.getTime()+60000-now.getTime()%60000);
 		
@@ -303,7 +304,7 @@ $(function(){
 				s+=",d0S"+seqsEnd[seqs.length-1]+"s(";
 
 				for(var i=0;i<seqs.length;i++){
-					alert("i="+i+" seqsWait[i]="+seqsWait[i]+" remainWait[i]="+remainWait[i]+" "+seqs[i]);
+					// alert("i="+i+" seqsWait[i]="+seqsWait[i]+" remainWait[i]="+remainWait[i]+" "+seqs[i]);
 					if(i>0) {
 						s+=",d"+parseInt((seqsWait[i]+remainWait[i]))+"S"+seqsStart[i]+seqs[i];;
 					}else s+="d"+parseInt((seqsWait[i]))+"S"+seqsStart[i]+seqs[i];
@@ -509,6 +510,9 @@ $(function(){
 				if(d.getTime() < now.getTime()) d = now;   //旧时间比当前时间小，用当前时间代替
 				document.getElementById(objStr).bindDate = d;
 			}
+		},
+		confirm: function(){
+			$("#"+objStr).removeClass("red");
 		}
 	   })
 	}
@@ -558,7 +562,8 @@ $(function(){
 */
 
 	$("#resetConfirm").on("click",function(){
-		$(".dialog-cover,.dialog-poppup").hide();
+		// $(".dialog-cover,.dialog-poppup").hide();
+		$(".dialog-poppup").hide();
 		$("#"+flag).mobiscroll("show"); //出错误提示后让用户重新设置
 	})
 
@@ -732,12 +737,15 @@ $(function(){
 		var intervalStr="#setLoopInterval";
 		if(mode=="common") {
 			var triggerStr="#intervalTrigger";
+			$(".dialog-cover,#setLoopInterval").hide();
 		}else {
-			var triggerStr="#bydayIntervalTrigger";	
+			var triggerStr="#bydayIntervalTrigger";
+			$("#setLoopInterval").hide();
 		}
 		var h = $(intervalStr).find(".hour").val(),
 			m = $(intervalStr).find(".minute").val(),
 			s = $(intervalStr).find(".second").val();
+		s = s=="0"?"00":s;
 		if(language && language=="en"){
 			$(triggerStr).text(h+":"+m+":"+s);
 		}else{
@@ -751,7 +759,7 @@ $(function(){
 		}
 		
 		$(triggerStr).attr("second", parseInt(h)*3600+parseInt(m)*60+parseFloat(s));
-		$(".dialog-cover,#setLoopInterval,#setLoopInterval").hide();
+		
 	})
 	//点击弹出拍摄间隔
 	$("#intervalTrigger,#bydayIntervalTrigger").on("click",function(){
@@ -986,8 +994,8 @@ $(function(){
 			return;
 		}
 		$(".cron-btns-del").hide();
-		$("#commonSetting").hide();
-		$("#bydaySetting").show();
+		// $("#commonSetting").hide();
+		$("#bydaySetting,.dialog-cover").show();
 		if(language && language=="en"){
 			$(".iconfont.confirm").siblings("p").text("Add a time slot");
 		}else{
@@ -1016,17 +1024,18 @@ $(function(){
 	})
 	//关闭时间段
 	$(".iconfont.cancel").on("click",function(){
-		$("#commonSetting").show();
-		$("#bydaySetting").hide();
+		// $("#commonSetting").show();
+		$("#bydaySetting,.dialog-cover").hide();
 		mode="common";
 	})
 	//删除时间段
 	$(".cron-btns-del").on("click",function(){
-		$("#commonSetting").show();
-		$("#bydaySetting").hide();
+		// $("#commonSetting").show();
+		$("#bydaySetting,.dialog-cover").hide();
 		mode="common";
 		index=$("#bydaySetting p").attr("seq");
 		$("#seqList tr").eq(index-1).remove();
+		cronByDayList.splice(index-1,1);
 		//列表重新排序
 		var length=$("#seqList tr").length;
 		for(var i=1;i<=length;i++){
@@ -1053,65 +1062,130 @@ $(function(){
 	$(".cron-btns-confirm.peroid,.iconfont.confirm").on("click",function(){
 		console.log($("#bydayStartTime").val()+" "+$("#bydayEndTime").val());
 		if(HMScmp($("#bydayStartTime").val(), $("#bydayEndTime").val())>=0) {
-			if(language && language=="en"){
-				$("#setTimeWarning .warning").text("Start time must be earlier than the End time.");
-			}else{
-				$("#setTimeWarning .warning").text("结束时间不能早于开始时间");
-			}
-			
+			// if(language && language=="en"){
+			// 	$("#setTimeWarning .warning").text("Start time must be earlier than the End time.");
+			// }else{
+			// 	$("#setTimeWarning .warning").text("结束时间不能早于开始时间");
+			// }
+			$("#bydayStartTime,#bydayEndTime").addClass("red");
 			$("#setTimeWarning").show();
 			// alert("结束时间不能早于开始时间");
 			return;
 		}
 		if($(".iconfont.confirm").siblings("p").text()=="添加时段" || $(".iconfont.confirm").siblings("p").text()=="Add a time slot"){ //添加一个时段
-			var index=$("#seqList").children().size()+1;
-			var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
-			if(HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<=0){
-				if(language && language=="en"){
-					$("#setTimeWarning .warning").text("The beginning time must be later than the end time of the last Time Slot "+lastPeriodEndTime);
-				}else{
-					$("#setTimeWarning .warning").text("开始时间必须晚于上个时段的结束时间"+lastPeriodEndTime);
-				}
+			// var index=$("#seqList").children().size()+1;
+			// var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
+			// if(HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<=0){
+			// 	if(language && language=="en"){
+			// 		$("#setTimeWarning .warning").text("The beginning time must be later than the end time of the last Time Slot "+lastPeriodEndTime);
+			// 	}else{
+			// 		$("#setTimeWarning .warning").text("开始时间必须晚于上个时段的结束时间"+lastPeriodEndTime);
+			// 	}
 				
+			// 	$("#setTimeWarning").show();
+			// 	// alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+			// 	return;
+			// }
+			if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val())=="startTime"){
+				// $("#setTimeWarning .warning").text(language=="en"?"Invalid Time.":"无效时间");
+				$("#bydayStartTime").addClass("red");
+				$("#bydayEndTime").removeClass("red");
 				$("#setTimeWarning").show();
-				// alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+				return;	
+			}else if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val())=="endTime"){
+				// $("#setTimeWarning .warning").text("结束时间不能被包含于已存在的时间段内");
+				$("#bydayStartTime").removeClass("red");
+				$("#bydayEndTime").addClass("red");
+				$("#setTimeWarning").show();
+				return;	
+			}else if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val())=="includes"){
+				// $("#setTimeWarning .warning").text("当前时间段包含已存在的时间段");
+				$("#bydayStartTime,#bydayEndTime").addClass("red");
+				$("#setTimeWarning").show();
 				return;
 			}
-			$("#seqList").append("<tr id='seq"+index+"'/>");
-			updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val(), $("#bydayPrefabTrigger").text(), $("#bydayIntervalTrigger").attr("second"), $("#bydayExposureTrigger").text());
+			$("#bydayStartTime,#bydayEndTime").removeClass("red");
+			cronByDayList.push({
+				startAt:$("#bydayStartTime").val(),
+				endAt:$("#bydayEndTime").val(),
+				interval:$("#bydayIntervalTrigger").attr("second")
+			})
+			cronByDayList.sort(function(a,b){
+				var newDate = new Date()
+				var aa = new Date(newDate.getFullYear()+"/"+(newDate.getMonth()+1)+"/"+newDate.getDate()+" "+a.startAt).getTime();
+				var bb = new Date(newDate.getFullYear()+"/"+(newDate.getMonth()+1)+"/"+newDate.getDate()+" "+b.startAt).getTime();
+				return aa-bb;
+			})
+			$("#seqList").empty();
+			cronByDayList.forEach(function(item,i){
+				$("#seqList").append("<tr id='seq"+(i+1)+"'/>");
+				updateSeq(i+1,item.startAt,item.endAt,null,item.interval,null);
+			})
+			
+			// updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val(), $("#bydayPrefabTrigger").text(), $("#bydayIntervalTrigger").attr("second"), $("#bydayExposureTrigger").text());
 		} else { //修改时段
 			var index=parseInt($(".iconfont.confirm").siblings("p").attr("seq"));
 			var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
 			var nextPeriodStartTime=$("#seq"+(index+1)+" td:eq(1)").text();
 			if(lastPeriodEndTime && HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<=0){
-				if(language && language=="en"){
-					$("#setTimeWarning .warning").text("The Start time must be later than The End Time of the last Time Slot "+lastPeriodEndTime);
-				}else{
-					$("#setTimeWarning .warning").text("开始时间必须晚于上个时段的结束时间"+lastPeriodEndTime);
-				}
+				// if(language && language=="en"){
+				// 	$("#setTimeWarning .warning").text("The Start time must be later than The End Time of the last Time Slot "+lastPeriodEndTime);
+				// }else{
+				// 	$("#setTimeWarning .warning").text("开始时间必须晚于上个时段的结束时间"+lastPeriodEndTime);
+				// }
+				$("#bydayStartTime").addClass("red");
+				$("#bydayEndTime").removeClass("red");
 				$("#setTimeWarning").show();
 				// alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
 				return;
 			}
 			if(nextPeriodStartTime && HMScmp($("#bydayEndTime").val(), nextPeriodStartTime)>=0){
-				if(language && language=="en"){
-					$("#setTimeWarning .warning").text("The End Time must be earlier than The Start Time of the next Time Slot "+nextPeriodStartTime);
-				}else{
-					$("#setTimeWarning .warning").text("结束时间必须早于下个时段的开始时间"+nextPeriodStartTime);
-				}
-				
+				// if(language && language=="en"){
+				// 	$("#setTimeWarning .warning").text("The End Time must be earlier than The Start Time of the next Time Slot "+nextPeriodStartTime);
+				// }else{
+				// 	$("#setTimeWarning .warning").text("结束时间必须早于下个时段的开始时间"+nextPeriodStartTime);
+				// }
+				$("#bydayStartTime").removeClass("red");
+				$("#bydayEndTime").addClass("red");
 				$("#setTimeWarning").show();
 				// alert("结束时间不能晚于下个时段的开始时间"+nextPeriodStartTime);
 				return;
 			}
+			$("#bydayStartTime,#bydayEndTime").removeClass("red");
 			updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val(), $("#bydayPrefabTrigger").text(), $("#bydayIntervalTrigger").attr("second"), $("#bydayExposureTrigger").text());
 			
 		}
-		$("#commonSetting").show();
-		$("#bydaySetting").hide();
+		// $("#commonSetting").show();
+		$("#bydaySetting,.dialog-cover").hide();
 		mode="common";
 	})
+	function checkTime(startTime,endTime){
+		for(var i=0;i<cronByDayList.length;i++){
+			if(startTime>=cronByDayList[i].startAt && startTime<=cronByDayList[i].endAt){
+				return "startTime";
+			}
+			if(endTime>=cronByDayList[i].startAt && endTime<=cronByDayList[i].endAt){
+				return "endTime";
+			}
+			if(startTime<cronByDayList[i].startAt && endTime>cronByDayList[i].endAt){
+				return "includes";
+			}
+		}
+		// cronByDayList.forEach((item,i)=>{
+		// 	if(startTime>=item.startAt && startTime<=item.endAt){
+		// 		return "startTime";
+		// 	}
+		// 	if(endTime>=item.startAt && endTime<=item.endAt){
+		// 		return "endTime";
+		// 	}
+		// 	if(startTime<item.startAt && endTime>item.endAt){
+		// 		return "includes";
+		// 	}
+		// });
+		
+		return true
 
+	}
 	//关闭保存结果提示
 	$("#relsut-confirm").on("click", function(){
 		if(language && language=="en"){
@@ -1274,8 +1348,8 @@ $(function(){
 		$(".cron-time-enter").on("click", function(){ //修改时间段窗口
 			$(".cron-btns-del").show();
 			var index=$(this).attr("seq");
-			$("#commonSetting").hide();
-			$("#bydaySetting").show();
+			// $("#commonSetting").hide();
+			$("#bydaySetting,.dialog-cover").show();
 			if(language && language=="en"){
 				$(".iconfont.confirm").siblings("p").text("Modify Time Slot"+index).attr("seq", index);
 			}else{
@@ -1441,6 +1515,11 @@ $(function(){
 				if(task.exposureBias>0) task.exposureBias="+"+task.exposureBias;
 				index=i+1;
 				$("#seqList").append("<tr id='seq"+index+"'/>");
+				cronByDayList[i] = {
+					startAt:task.startAt,
+					endAt:task.endAt,
+					interval:task.shootInterval
+				}
 				updateSeq(index, task.startAt, task.endAt, recordMode, task.shootInterval, task.exposureBias);
 			});
 		}

@@ -2492,13 +2492,20 @@ body.setting-index{
     padding: 6px 3%;
     line-height: 1.4em;
 }
+.setting-item.advance>* {
+    height: auto;
+}
 .setting-item>a:active{
 }
 .setting-item>p {
     font-size: 14px;
     color: #8f8f8f;
     position: relative;
-    padding: 6px 4%;
+    /*padding: 6px 4%;*/
+    padding: 0 3% 6px;
+}
+.setting-item.advance:not(:last-child) {
+    border-bottom: 1px solid #e0e0e0;
 }
 .setting-item:before{
     content: '';
@@ -2802,6 +2809,9 @@ body.setting-index{
     -ms-transform-origin: 0 100%;
     -o-transform-origin: 0 100%;
     transform-origin: 0 100%;
+}
+#bydaySetting .bottom-line:after {
+    display: none;
 }
 .top-line{
     position: relative;
@@ -3543,7 +3553,7 @@ body.setting-index{
     /*height: 2.85em;*/
     /*padding-right: 2em;*/
     /*width: 5em;*/
-    margin-right: 4%;
+    /*margin-right: 4%;*/
     text-align: right;
     color: #999;
 }
@@ -5642,4 +5652,17 @@ fieldset{
 }
 #unsavedName,#unsavedIcon {
     color: #00d2ff;
+}
+#bydaySetting {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    z-index: 8;
+}
+#bydaySetting .cron-btns{
+    padding: 0;
+}
+#bydayStartTime.red,#bydayEndTime.red {
+    color: #f00;
 }
