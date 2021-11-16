@@ -218,14 +218,15 @@ $(function(){
 				end=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][i-1]["endAt"]));
 				var interval=configs["bydayTask"][i-1]["shootInterval"];
 				var r=parseInt((getTime(end)-getTime(start))/1000/interval)+1;
+				if(r==1) interval=parseInt(getTime(end)-getTime(start))/1000; //只拍一次的情况下，拍摄间隔为剩余的所有时间
 				if(i!=1) {
 					wait=parseInt((getTime(start)-getTime(last))/1000);
 				}
 				if(i==length){
-					remainWait[0]=parseInt((getTime(end)-getTime(start))/1000)-interval*(r-1); //第一次时段前的休息时间需要加上最后一次时段除不尽的秒数
+					remainWait[0]=parseInt((getTime(end)-getTime(start))/1000)-interval*((r==1)?1:(r-1)); //第一次时段前的休息时间需要加上最后一次时段除不尽的秒数
 				}
 				console.log(getTime(end)+" "+getTime(start)+" "+interval+" "+r);
-				remainWait[i]=parseInt((getTime(end)-getTime(start))/1000)-interval*(r-1);
+				remainWait[i]=parseInt((getTime(end)-getTime(start))/1000)-interval*((r==1)?1:(r-1));
 				seqsWait[i-1]=wait;
 				
 				seqsStart[i-1]=genHMS(configs["bydayTask"][i-1]["startAt"]);
@@ -272,13 +273,15 @@ $(function(){
 				end=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][startindex-1]["endAt"]));
 				interval=configs["bydayTask"][startindex-1]["shootInterval"];
 				var r=parseInt((getTime(end)-now.getTime())/1000/interval)+1;
+				if(r==1) interval=parseInt((getTime(end)-now.getTime())/1000); //只拍一次的情况下，拍摄间隔为剩余的所有时间
 				if(interval == "0.5" || interval==1.5){
 					s="D"+interval*1000+"r"+r+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
 				}else{
 					s="d"+interval+"r"+r+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
 				}
 				
-				firstWait=parseInt((getTime(end)-now.getTime())/1000)-interval*(r-1);
+				if(r!=1) firstWait=parseInt((getTime(end)-now.getTime())/1000)-interval*(r-1);
+				else firstWait=0;
 				//alert(parseInt((end-now)/1000)+" "+interval*(r-1)+" "+firstWait);
 			} else {
 				recordWait=wait; //等待时间
@@ -286,7 +289,8 @@ $(function(){
 				//s="d"+0+"s("+seqs[startindex].split('(')[1];
 			}
 			for(var i=startindex+1;i<=seqs.length;i++){
-				if(i==startindex+1 && firstWait!=0) s+=",d"+parseInt((seqsWait[i-1]+firstWait))+"S"+seqsStart[i-1]+seqs[i-1];   //第二段时间
+				
+				if(i==startindex+1 && wait==0) s+=",d"+parseInt((seqsWait[i-1]+firstWait))+"S"+seqsStart[i-1]+seqs[i-1];   //第二段时间
 				else s+=",d"+parseInt((seqsWait[i-1]+remainWait[i-1]))+"S"+seqsStart[i-1]+seqs[i-1];
 				//if(i==startindex+1 && firstWait!=0) s+=",d"+(seqsWait[i]+firstWait)+seqs[i];   //第二段时间
 				//else s+=",d"+(seqsWait[i]+remainWait[i])+seqs[i];
@@ -1152,6 +1156,8 @@ $(function(){
 				return;
 			}
 			$("#bydayStartTime,#bydayEndTime").removeClass("red");
+			cronByDayList[index-1].startAt = $("#bydayStartTime").val();
+			cronByDayList[index-1].endAt = $("#bydayEndTime").val();
 			updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val(), $("#bydayPrefabTrigger").text(), $("#bydayIntervalTrigger").attr("second"), $("#bydayExposureTrigger").text());
 			
 		}
