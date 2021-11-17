@@ -739,7 +739,7 @@ $(function(){
 			$(".dialog-cover,#setLoopInterval").hide();
 		}else {
 			var triggerStr="#bydayIntervalTrigger";
-			$("#setLoopInterval").hide();
+			$(".dialog-cover,#setLoopInterval").hide();
 		}
 		var h = $(intervalStr).find(".hour").val(),
 			m = $(intervalStr).find(".minute").val(),
@@ -984,6 +984,7 @@ $(function(){
 	
 	//显示时间段,添加
 	$("#addPeriod").on("click",function(){
+		$(".iconfont.delete").hide();
 		if($("#seqList tr").length==6){
 			$("#lengthPrompt").show();
 			clearTimeout(lengthPrompt);
@@ -994,7 +995,7 @@ $(function(){
 		}
 		$(".cron-btns-del").hide();
 		// $("#commonSetting").hide();
-		$("#bydaySetting,.dialog-cover").show();
+		$("#bydaySetting,.dialog-cover2").show();
 		if(language && language=="en"){
 			$(".iconfont.confirm").siblings("p").text("Add a time slot");
 		}else{
@@ -1022,15 +1023,14 @@ $(function(){
 		}
 	})
 	//关闭时间段
-	$(".iconfont.cancel").on("click",function(){
-		// $("#commonSetting").show();
-		$("#bydaySetting,.dialog-cover").hide();
-		mode="common";
-	})
+	// $(".iconfont.cancel").on("click",function(){
+	// 	$("#bydaySetting,.dialog-cover.touch").hide();
+	// 	mode="common";
+	// })
 	//删除时间段
-	$(".cron-btns-del").on("click",function(){
+	$(".iconfont.delete").on("click",function(){
 		// $("#commonSetting").show();
-		$("#bydaySetting,.dialog-cover").hide();
+		$("#bydaySetting,.dialog-cover2").hide();
 		mode="common";
 		index=$("#bydaySetting p").attr("seq");
 		$("#seqList tr").eq(index-1).remove();
@@ -1157,7 +1157,7 @@ $(function(){
 			
 		}
 		// $("#commonSetting").show();
-		$("#bydaySetting,.dialog-cover").hide();
+		$("#bydaySetting,.dialog-cover2").hide();
 		mode="common";
 	})
 	function checkTime(startTime,endTime){
@@ -1347,10 +1347,11 @@ $(function(){
 		}
 		
 		$(".cron-time-enter").on("click", function(){ //修改时间段窗口
-			$(".cron-btns-del").show();
+			// $(".cron-btns-del").show();
+			$(".iconfont.delete").show();
 			var index=$(this).attr("seq");
 			// $("#commonSetting").hide();
-			$("#bydaySetting,.dialog-cover").show();
+			$("#bydaySetting,.dialog-cover2").show();
 			if(language && language=="en"){
 				$(".iconfont.confirm").siblings("p").text("Modify Time Slot"+index).attr("seq", index);
 			}else{
@@ -1592,6 +1593,9 @@ $(function(){
 			$(".file-split-type,.dialog-cover").hide();
 		})
 	})
-	
+	$(".dialog-cover2").on("click",function(){
+		$("#bydaySetting,.dialog-cover2").hide();
+		mode="common";
+	})
 })
 

@@ -308,54 +308,55 @@
 		</select>
 	</div>
 	<div class="dialog-cover"></div>
+	<div class="dialog-cover2"></div>
 
 	<div id="bydaySetting" style="display: none;">
-	<section class="setting-head">
-		<a href="javascript:;" class="iconfont cancel">&#xe63b;</a>
-		<p lan="addPer">添加时段</p>
-		<a href="javascript:;" class="iconfont confirm">&#xe60b;</a>
-	</section>
+		<section class="setting-head">
+			<a href="javascript:;" class="iconfont delete">&#xe682;</a>
+			<p lan="addPer">添加时段</p>
+			<a href="javascript:;" class="iconfont confirm">&#xe60b;</a>
+		</section>
 
-	<section class="setting-cron top-line">
-		<div class="setting-cron-item bottom-line flex flex-middle">
-			<div class="setting-cron-name fx1" lan="startT">开始时间</div>
-			<div class="setting-cron-select">
-				<input id="bydayStartTime" type="text" readonly class="setting-cron-time" />
+		<section class="setting-cron top-line">
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1" lan="startT">开始时间</div>
+				<div class="setting-cron-select">
+					<input id="bydayStartTime" type="text" readonly class="setting-cron-time" />
+				</div>
 			</div>
-		</div>
-		<div class="setting-cron-item bottom-line flex flex-middle">
-			<div class="setting-cron-name fx1" lan="endT">结束时间</div>
-			<div class="setting-cron-select">
-				<input id="bydayEndTime" type="text" readonly class="setting-cron-time"/>
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1" lan="endT">结束时间</div>
+				<div class="setting-cron-select">
+					<input id="bydayEndTime" type="text" readonly class="setting-cron-time"/>
+				</div>
 			</div>
-		</div>
-<!--
-		<div class="setting-cron-item bottom-line flex flex-middle">
-			<div class="setting-cron-name fx1">预设场景</div>
-			<div class="setting-cron-select">
-				<a href="javascript:;" class="trigger" id="bydayPrefabTrigger">自动</a>
+	<!--
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1">预设场景</div>
+				<div class="setting-cron-select">
+					<a href="javascript:;" class="trigger" id="bydayPrefabTrigger">自动</a>
+				</div>
 			</div>
-		</div>
--->
-		<div class="setting-cron-item bottom-line flex flex-middle">
-			<div class="setting-cron-name fx1" lan="shtInt">拍摄间隔</div>
-			<div class="setting-cron-select">
-				<a href="javascript:;" class="trigger" id="bydayIntervalTrigger" second="10">10<span lan="second"></span></a>
+	-->
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1" lan="shtInt">拍摄间隔</div>
+				<div class="setting-cron-select">
+					<a href="javascript:;" class="trigger" id="bydayIntervalTrigger" second="10">10<span lan="second"></span></a>
+				</div>
 			</div>
-		</div>
-<!--
-		<div class="setting-cron-item bottom-line flex flex-middle">
-			<div class="setting-cron-name fx1">曝光补偿</div>
-			<div class="setting-cron-select">
-				<a href="javascript:;" class="trigger" id="bydayExposureTrigger">0</a>
+	<!--
+			<div class="setting-cron-item bottom-line flex flex-middle">
+				<div class="setting-cron-name fx1">曝光补偿</div>
+				<div class="setting-cron-select">
+					<a href="javascript:;" class="trigger" id="bydayExposureTrigger">0</a>
+				</div>
 			</div>
-		</div>
--->
-	</section>
-	<div class="cron-btns">
-		<a href="javascript:;" class="cron-btns-del" lan="del">删除</a>
+	-->
+		</section>
+	<!-- <div class="cron-btns"> -->
+		<!-- <a href="javascript:;" class="cron-btns-del" lan="del">删除</a> -->
 		<!-- <a href="javascript:;" class="cron-btns-confirm peroid" lan="confirm">确认</a> -->
-	</div>
+	<!-- </div> -->
 	</div>
 
 	<div class="dialog-poppup" id="deleteWarning">
