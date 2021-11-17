@@ -232,13 +232,12 @@ $(function(){
 				seqsStart[i-1]=genHMS(configs["bydayTask"][i-1]["startAt"]);
 				seqsEnd[i-1]=genHMS(configs["bydayTask"][i-1]["endAt"]);
 				if(interval=="0.5" || interval==1.5){
-					seqs[i-1]="s(D"+interval*1000+"r"+r+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+")r1";
+					seqs[i-1]="D"+interval*1000+"r"+r+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+"";
 				}else{
-					seqs[i-1]="s(d"+interval+"r"+r+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+")r1";
+					seqs[i-1]="d"+interval+"r"+r+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+"";
 				}
 				
 				last=end;
-				//nalert(now+start+end);
 				if(now.getTime()<getTime(end)) { //找到当前结束的时段
 					if(endindex==0)endindex=i;
 				}
@@ -285,15 +284,12 @@ $(function(){
 				//alert(parseInt((end-now)/1000)+" "+interval*(r-1)+" "+firstWait);
 			} else {
 				recordWait=wait; //等待时间
-				s="d"+0+"s("+seqs[startindex-1].split('(')[1];
-				//s="d"+0+"s("+seqs[startindex].split('(')[1];
+				//s="d"+0+"s("+seqs[startindex-1].split('(')[1];
+				s=seqs[startindex-1];
 			}
 			for(var i=startindex+1;i<=seqs.length;i++){
-				
-				if(i==startindex+1 && wait==0) s+=",d"+parseInt((seqsWait[i-1]+firstWait))+"S"+seqsStart[i-1]+seqs[i-1];   //第二段时间
-				else s+=",d"+parseInt((seqsWait[i-1]+remainWait[i-1]))+"S"+seqsStart[i-1]+seqs[i-1];
-				//if(i==startindex+1 && firstWait!=0) s+=",d"+(seqsWait[i]+firstWait)+seqs[i];   //第二段时间
-				//else s+=",d"+(seqsWait[i]+remainWait[i])+seqs[i];
+				if(i==startindex+1 && wait==0) s+=",d"+parseInt((seqsWait[i-1]+firstWait))+"r1,"+seqs[i-1];   //第二段时间
+				else s+=",d"+parseInt((seqsWait[i-1]+remainWait[i-1]))+"r1,"+seqs[i-1];
 			}
 			console.log("firstWait="+firstWait+" remainWait[0]="+remainWait[0]);
 			//第一天的拍摄结束
@@ -301,18 +297,17 @@ $(function(){
 				//for(var i=startindex+1;i<=seqs.length;i++){
 					//s+=","+seqs[i-1];
 				//}
-				//if(/*s.indexOf(",")!=-1 || */firstWait<=remainWait[0]) s+=",d0S"+seqsEnd[seqs.length-1]+"s(";
-				//else s+=",d"+parseInt((firstWait-remainWait[0]))+"r1,d0S"+seqsEnd[seqs.length-1]+"s(";
-				if(s.indexOf(",")==-1 && firstWait>0) s+=",d"+parseInt(firstWait)+"r1";
+				if(s.indexOf(",")==-1 && wait==0) {
+					if(firstWait>0 ) s+=",d"+parseInt(firstWait)+"r1";
+				}
 				else if(remainWait[0]>0) s+=",d"+parseInt(remainWait[0])+"r1";
 				s+=",d0S"+seqsEnd[seqs.length-1]+"s(";
 
 				for(var i=0;i<seqs.length;i++){
-					// alert("i="+i+" seqsWait[i]="+seqsWait[i]+" remainWait[i]="+remainWait[i]+" "+seqs[i]);
 					if(i>0) {
-						s+=",d"+parseInt((seqsWait[i]+remainWait[i]))+"S"+seqsStart[i]+seqs[i];;
-					}else s+="d"+parseInt((seqsWait[i]))+"S"+seqsStart[i]+seqs[i];
-					//s+="d"+parseInt((seqsWait[i]+remainWait[i]))+"S"+seqsStart[i]+seqs[i];
+						s+=",d"+parseInt((seqsWait[i]+remainWait[i]))+"r1,"+seqs[i];;
+					}else s+="d"+parseInt((seqsWait[i]))+"r1,"+seqs[i];
+
 				}
 				if(remainWait[0]>0) s+=",d"+remainWait[0]+"r1"; //在每天的最后补足第一时段休息的秒数
 				s+=")";
