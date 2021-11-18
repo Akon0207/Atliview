@@ -305,6 +305,7 @@
 	"discard":"Discard",
 	"save":"Save",
 	"remoteCtlNotes":"Securely allow users to grant tech support access to their camera for remote inspection",
-	"innerFtpNotes":"Use FTP Client to manage your files."
+	"innerFtpNotes":"Use FTP Client to manage your files.",
+	"builtInFTP":"Built-in FTP Server"
 
 }

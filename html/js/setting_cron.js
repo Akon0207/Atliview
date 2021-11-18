@@ -1153,6 +1153,7 @@ $(function(){
 			$("#bydayStartTime,#bydayEndTime").removeClass("red");
 			cronByDayList[index-1].startAt = $("#bydayStartTime").val();
 			cronByDayList[index-1].endAt = $("#bydayEndTime").val();
+			cronByDayList[index-1].interval = $("#bydayIntervalTrigger").attr("second");
 			updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val(), $("#bydayPrefabTrigger").text(), $("#bydayIntervalTrigger").attr("second"), $("#bydayExposureTrigger").text());
 			
 		}

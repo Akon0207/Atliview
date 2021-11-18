@@ -66,10 +66,11 @@
     </div>
     <div class="setting-item advance">
         <a href="#" class="flex flex-middle">
-            <div class="setting-item-name fx1" lan="builtInFTP">内置FTP服务器</div>
+            <div class="setting-item-name fx1" lan="builtInFTP"></div>
             <input type="checkbox" class="switch-box" id="builtInFTP"></input>
         </a>
         <p lan="innerFtpNotes"></p>
+        <p id="ftp_ip"></p>
         <p id="ftp_detail"></p>
     </div>
     <!-- <div class="setting-cron-item bottom-line flex flex-middle">
@@ -115,14 +116,15 @@ $(function(){
             }
             ftpname = (language=="en"?"Username: ":"登录名： ") + d.sysinfo.sn + ", ";
             if(d.wlan.wlanSSID == "0"){
-                ftpip = language=="en"?"Address: No Wi-Fi Connection, ":"地址： 尚未连接Wi-Fi, ";
+                ftpip = language=="en"?"Address: No Wi-Fi Connection<br> ":"地址： 尚未连接Wi-Fi<br> ";
             }else{
-                ftpip = (language=="en"?"Address: ":"地址： ") + "ftp://" + d.wlan.wlanIP + ", ";
+                ftpip = (language=="en"?"Address: ":"地址： ") + "ftp://" + d.wlan.wlanIP;
             }
-            $("#ftp_detail").text(ftpip+ftpname+ftppasswd);
+            $("#ftp_ip").html(ftpip);
+            $("#ftp_detail").html(ftpname+ftppasswd);
         }else{
             $("#builtInFTP").prop("checked",false);
-            $("#ftp_detail").hide();
+            $("#ftp_detail,#ftp_ip").hide();
         }
         
             
@@ -148,10 +150,10 @@ $(function(){
     $("#builtInFTP").on("click",function(){
         if($(this).prop("checked")){
             postJSON("/setting",{enable_ftpd:1})
-            $("#ftp_detail").show();
+            $("#ftp_detail,#ftp_ip").show();
         }else{
             postJSON("/setting",{enable_ftpd:0})
-            $("#ftp_detail").hide();
+            $("#ftp_detail,#ftp_ip").hide();
         }
     })
 	// $("#mark").on("click", function(){
