@@ -223,18 +223,20 @@ $(function(){
 					wait=parseInt((getTime(start)-getTime(last))/1000);
 				}
 				if(i==length){
-					remainWait[0]=parseInt((getTime(end)-getTime(start))/1000)-interval*((r-1)); //第一次时段前的休息时间需要加上最后一次时段除不尽的秒数
+					if(r==1) remainWait[0]=0;
+					else remainWait[0]=parseInt((getTime(end)-getTime(start))/1000)-interval*((r-1)); //第一次时段前的休息时间需要加上最后一次时段除不尽的秒数
 				}
 				console.log(getTime(end)+" "+getTime(start)+" "+interval+" "+r);
-				remainWait[i]=parseInt((getTime(end)-getTime(start))/1000)-interval*((r-1));
+				if(r==1) remainWait[i]=0;
+				else remainWait[i]=parseInt((getTime(end)-getTime(start))/1000)-interval*((r-1));
 				seqsWait[i-1]=wait;
 				
 				seqsStart[i-1]=genHMS(configs["bydayTask"][i-1]["startAt"]);
 				seqsEnd[i-1]=genHMS(configs["bydayTask"][i-1]["endAt"]);
 				if(interval=="0.5" || interval==1.5){
-					seqs[i-1]="D"+interval*1000+"r"+r+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+"";
+					seqs[i-1]="D"+interval*1000+"r"+((r==1)?2:r)+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+"";
 				}else{
-					seqs[i-1]="d"+interval+"r"+r+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+"";
+					seqs[i-1]="d"+interval+"r"+((r==1)?2:r)+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+"";
 				}
 				
 				last=end;
@@ -274,9 +276,9 @@ $(function(){
 				var r=parseInt((getTime(end)-now.getTime())/1000/interval)+1;
 				if(r==1) interval=parseInt((getTime(end)-now.getTime())/1000); //只拍一次的情况下，拍摄间隔为剩余的所有时间
 				if(interval == "0.5" || interval==1.5){
-					s="D"+interval*1000+"r"+r+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
+					s="D"+interval*1000+"r"+((r==1)?2:r)+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
 				}else{
-					s="d"+interval+"r"+r+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
+					s="d"+interval+"r"+((r==1)?2:r)+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
 				}
 				
 				if(r!=1) firstWait=parseInt((getTime(end)-now.getTime())/1000)-interval*(r-1);
@@ -1598,6 +1600,7 @@ $(function(){
 	})
 	$(".dialog-cover2").on("click",function(){
 		$("#bydaySetting,.dialog-cover2").hide();
+		$("#bydayStartTime,#bydayEndTime").removeClass("red");
 		mode="common";
 	})
 })
