@@ -511,7 +511,8 @@ $(function(){
 			}
 		},
 		confirm: function(){
-			$("#"+objStr).removeClass("red");
+			// $("#"+objStr).removeClass("red");
+			$("#bydayStartTime,#bydayEndTime").removeClass("red");
 		}
 	   })
 	}
@@ -1030,6 +1031,7 @@ $(function(){
 	//删除时间段
 	$(".iconfont.delete").on("click",function(){
 		// $("#commonSetting").show();
+		$("#bydayStartTime,#bydayEndTime").removeClass("red");
 		$("#bydaySetting,.dialog-cover2").hide();
 		mode="common";
 		index=$("#bydaySetting p").attr("seq");
@@ -1085,106 +1087,106 @@ $(function(){
 			// 	// alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
 			// 	return;
 			// }
-			if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val())=="startTime"){
+			if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val(),"all") != true){
 				// $("#setTimeWarning .warning").text(language=="en"?"Invalid Time.":"无效时间");
-				$("#bydayStartTime").addClass("red");
-				$("#bydayEndTime").removeClass("red");
 				$("#setTimeWarning").show();
 				return;	
-			}else if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val())=="endTime"){
-				// $("#setTimeWarning .warning").text("结束时间不能被包含于已存在的时间段内");
-				$("#bydayStartTime").removeClass("red");
-				$("#bydayEndTime").addClass("red");
-				$("#setTimeWarning").show();
-				return;	
-			}else if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val())=="includes"){
-				// $("#setTimeWarning .warning").text("当前时间段包含已存在的时间段");
-				$("#bydayStartTime,#bydayEndTime").addClass("red");
-				$("#setTimeWarning").show();
-				return;
 			}
+			// else if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val())=="endTime","all"){
+			// 	// $("#setTimeWarning .warning").text("结束时间不能被包含于已存在的时间段内");
+			// 	$("#bydayStartTime").removeClass("red");
+			// 	$("#bydayEndTime").addClass("red");
+			// 	$("#setTimeWarning").show();
+			// 	return;	
+			// }else if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val())=="includes","all"){
+			// 	// $("#setTimeWarning .warning").text("当前时间段包含已存在的时间段");
+			// 	$("#bydayStartTime,#bydayEndTime").addClass("red");
+			// 	$("#setTimeWarning").show();
+			// 	return;
+			// }
 			$("#bydayStartTime,#bydayEndTime").removeClass("red");
 			cronByDayList.push({
 				startAt:$("#bydayStartTime").val(),
 				endAt:$("#bydayEndTime").val(),
 				interval:$("#bydayIntervalTrigger").attr("second")
 			})
-			cronByDayList.sort(function(a,b){
-				var newDate = new Date()
-				var aa = new Date(newDate.getFullYear()+"/"+(newDate.getMonth()+1)+"/"+newDate.getDate()+" "+a.startAt).getTime();
-				var bb = new Date(newDate.getFullYear()+"/"+(newDate.getMonth()+1)+"/"+newDate.getDate()+" "+b.startAt).getTime();
-				return aa-bb;
-			})
-			$("#seqList").empty();
-			cronByDayList.forEach(function(item,i){
-				$("#seqList").append("<tr id='seq"+(i+1)+"'/>");
-				updateSeq(i+1,item.startAt,item.endAt,null,item.interval,null);
-			})
+			
 			
 			// updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val(), $("#bydayPrefabTrigger").text(), $("#bydayIntervalTrigger").attr("second"), $("#bydayExposureTrigger").text());
 		} else { //修改时段
 			var index=parseInt($(".iconfont.confirm").siblings("p").attr("seq"));
-			var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
-			var nextPeriodStartTime=$("#seq"+(index+1)+" td:eq(1)").text();
-			if(lastPeriodEndTime && HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<=0){
-				// if(language && language=="en"){
-				// 	$("#setTimeWarning .warning").text("The Start time must be later than The End Time of the last Time Slot "+lastPeriodEndTime);
-				// }else{
-				// 	$("#setTimeWarning .warning").text("开始时间必须晚于上个时段的结束时间"+lastPeriodEndTime);
-				// }
-				$("#bydayStartTime").addClass("red");
-				$("#bydayEndTime").removeClass("red");
+			// var lastPeriodEndTime=$("#seq"+(index-1)+" td:eq(2)").text();
+			// var nextPeriodStartTime=$("#seq"+(index+1)+" td:eq(1)").text();
+			// if(lastPeriodEndTime && HMScmp($("#bydayStartTime").val(), lastPeriodEndTime)<=0){
+			// 	// if(language && language=="en"){
+			// 	// 	$("#setTimeWarning .warning").text("The Start time must be later than The End Time of the last Time Slot "+lastPeriodEndTime);
+			// 	// }else{
+			// 	// 	$("#setTimeWarning .warning").text("开始时间必须晚于上个时段的结束时间"+lastPeriodEndTime);
+			// 	// }
+			// 	$("#bydayStartTime").addClass("red");
+			// 	$("#bydayEndTime").removeClass("red");
+			// 	$("#setTimeWarning").show();
+			// 	// alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
+			// 	return;
+			// }
+			// if(nextPeriodStartTime && HMScmp($("#bydayEndTime").val(), nextPeriodStartTime)>=0){
+			// 	// if(language && language=="en"){
+			// 	// 	$("#setTimeWarning .warning").text("The End Time must be earlier than The Start Time of the next Time Slot "+nextPeriodStartTime);
+			// 	// }else{
+			// 	// 	$("#setTimeWarning .warning").text("结束时间必须早于下个时段的开始时间"+nextPeriodStartTime);
+			// 	// }
+			// 	$("#bydayStartTime").removeClass("red");
+			// 	$("#bydayEndTime").addClass("red");
+			// 	$("#setTimeWarning").show();
+			// 	// alert("结束时间不能晚于下个时段的开始时间"+nextPeriodStartTime);
+			// 	return;
+			// }
+			if(checkTime($("#bydayStartTime").val(),$("#bydayEndTime").val(),index-1) != true){
 				$("#setTimeWarning").show();
-				// alert("开始时间不能早于上个时段的结束时间"+lastPeriodEndTime);
-				return;
-			}
-			if(nextPeriodStartTime && HMScmp($("#bydayEndTime").val(), nextPeriodStartTime)>=0){
-				// if(language && language=="en"){
-				// 	$("#setTimeWarning .warning").text("The End Time must be earlier than The Start Time of the next Time Slot "+nextPeriodStartTime);
-				// }else{
-				// 	$("#setTimeWarning .warning").text("结束时间必须早于下个时段的开始时间"+nextPeriodStartTime);
-				// }
-				$("#bydayStartTime").removeClass("red");
-				$("#bydayEndTime").addClass("red");
-				$("#setTimeWarning").show();
-				// alert("结束时间不能晚于下个时段的开始时间"+nextPeriodStartTime);
-				return;
+				return;	
 			}
 			$("#bydayStartTime,#bydayEndTime").removeClass("red");
 			cronByDayList[index-1].startAt = $("#bydayStartTime").val();
 			cronByDayList[index-1].endAt = $("#bydayEndTime").val();
 			cronByDayList[index-1].interval = $("#bydayIntervalTrigger").attr("second");
-			updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val(), $("#bydayPrefabTrigger").text(), $("#bydayIntervalTrigger").attr("second"), $("#bydayExposureTrigger").text());
-			
+			// updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val(), $("#bydayPrefabTrigger").text(), $("#bydayIntervalTrigger").attr("second"), $("#bydayExposureTrigger").text());
+		
 		}
+		cronByDayList.sort(function(a,b){
+			var newDate = new Date()
+			var aa = new Date(newDate.getFullYear()+"/"+(newDate.getMonth()+1)+"/"+newDate.getDate()+" "+a.startAt).getTime();
+			var bb = new Date(newDate.getFullYear()+"/"+(newDate.getMonth()+1)+"/"+newDate.getDate()+" "+b.startAt).getTime();
+			return aa-bb;
+		})
+		$("#seqList").empty();
+		cronByDayList.forEach(function(item,i){
+			$("#seqList").append("<tr id='seq"+(i+1)+"'/>");
+			updateSeq(i+1,item.startAt,item.endAt,null,item.interval,null);
+		})
 		// $("#commonSetting").show();
 		$("#bydaySetting,.dialog-cover2").hide();
 		mode="common";
 	})
-	function checkTime(startTime,endTime){
+	function checkTime(startTime,endTime,index){
 		for(var i=0;i<cronByDayList.length;i++){
+			if(index!="all" && i==index){
+				continue
+			}
 			if(startTime>=cronByDayList[i].startAt && startTime<=cronByDayList[i].endAt){
+				$("#bydayStartTime").addClass("red");
+				$("#bydayEndTime").removeClass("red");
 				return "startTime";
 			}
 			if(endTime>=cronByDayList[i].startAt && endTime<=cronByDayList[i].endAt){
+				$("#bydayStartTime").removeClass("red");
+				$("#bydayEndTime").addClass("red");
 				return "endTime";
 			}
 			if(startTime<cronByDayList[i].startAt && endTime>cronByDayList[i].endAt){
+				$("#bydayStartTime,#bydayEndTime").addClass("red");
 				return "includes";
 			}
 		}
-		// cronByDayList.forEach((item,i)=>{
-		// 	if(startTime>=item.startAt && startTime<=item.endAt){
-		// 		return "startTime";
-		// 	}
-		// 	if(endTime>=item.startAt && endTime<=item.endAt){
-		// 		return "endTime";
-		// 	}
-		// 	if(startTime<item.startAt && endTime>item.endAt){
-		// 		return "includes";
-		// 	}
-		// });
-		
 		return true
 
 	}

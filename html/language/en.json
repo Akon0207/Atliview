@@ -304,7 +304,7 @@
 	"unsavedPrompt":" settings has been changed. Would you like to save it?",
 	"discard":"Discard",
 	"save":"Save",
-	"remoteCtlNotes":"Securely allow users to grant tech support access to their camera for remote inspection",
+	"remoteCtlNotes":"Securely allow tech support to access your camera for remote inspection.",
 	"innerFtpNotes":"Use FTP Client to manage your files.",
 	"builtInFTP":"Built-in FTP Server"
 
