@@ -151,6 +151,28 @@ $(function(){
         if($(this).prop("checked")){
             postJSON("/setting",{enable_ftpd:1})
             $("#ftp_detail,#ftp_ip").show();
+            getJSON("/setting",function(d){
+                if("enable_ftpd" in d && d.enable_ftpd == 1){
+                    $("#builtInFTP").prop("checked",true);
+                    var ftpip = null; ftpname = null; ftppasswd = null;
+                    if("accessKey" in d){
+                        ftppasswd = (language=="en"?"Password: ":"密码： ") + d.accessKey;
+                    }else{
+                        ftppasswd = (language=="en"?"Password: ":"密码： ") + "1234";
+                    }
+                    ftpname = (language=="en"?"Username: ":"登录名： ") + d.sysinfo.sn + ", ";
+                    if(d.wlan.wlanSSID == "0"){
+                        ftpip = language=="en"?"Address: No Wi-Fi Connection<br> ":"地址： 尚未连接Wi-Fi<br> ";
+                    }else{
+                        ftpip = (language=="en"?"Address: ":"地址： ") + "ftp://" + d.wlan.wlanIP;
+                    }
+                    $("#ftp_ip").html(ftpip);
+                    $("#ftp_detail").html(ftpname+ftppasswd);
+                }else{
+                    $("#builtInFTP").prop("checked",false);
+                    $("#ftp_detail,#ftp_ip").hide();
+                }
+            })
         }else{
             postJSON("/setting",{enable_ftpd:0})
             $("#ftp_detail,#ftp_ip").hide();

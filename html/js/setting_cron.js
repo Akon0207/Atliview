@@ -234,10 +234,12 @@ $(function(){
 				seqsStart[i-1]=genHMS(configs["bydayTask"][i-1]["startAt"]);
 				seqsEnd[i-1]=genHMS(configs["bydayTask"][i-1]["endAt"]);
 				if(interval=="0.5" || interval==1.5){
-					seqs[i-1]="D"+interval*1000+"r"+((r==1)?2:r)+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+"";
+					seqs[i-1]="D"+interval*1000;
 				}else{
-					seqs[i-1]="d"+interval+"r"+((r==1)?2:r)+"S"+genHMS(configs["bydayTask"][i-1]["startAt"])+"E"+genHMS(configs["bydayTask"][i-1]["endAt"])+"";
+					seqs[i-1]="d"+interval;
 				}
+				seqs[i-1]+="r"+((r==1)?2:r);
+				if(seqsStart[i-1]<=seqsEnd[i-1]) seqs[i-1]+="S"+seqsStart[i-1]+"E"+seqsEnd[i-1]+"";
 				
 				last=end;
 				if(now.getTime()<getTime(end)) { //找到当前结束的时段
@@ -276,10 +278,12 @@ $(function(){
 				var r=parseInt((getTime(end)-now.getTime())/1000/interval)+1;
 				if(r==1) interval=parseInt((getTime(end)-now.getTime())/1000); //只拍一次的情况下，拍摄间隔为剩余的所有时间
 				if(interval == "0.5" || interval==1.5){
-					s="D"+interval*1000+"r"+((r==1)?2:r)+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
+					s="D"+interval*1000+"r"+((r==1)?2:r);
 				}else{
-					s="d"+interval+"r"+((r==1)?2:r)+"S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
+					s="d"+interval+"r"+((r==1)?2:r);
 				}
+				if(genHMS(configs["bydayTask"][startindex-1]["startAt"])<=genHMS(configs["bydayTask"][startindex-1]["endAt"]))
+					s+="S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
 				
 				if(r!=1) firstWait=parseInt((getTime(end)-now.getTime())/1000)-interval*(r-1);
 				else firstWait=0;
