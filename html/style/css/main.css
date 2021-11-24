@@ -5657,3 +5657,7 @@ fieldset{
 #bydayStartTime.red,#bydayEndTime.red {
     color: #f00;
 }
+#ftpSwitch p span {
+    display: inline-block;
+    width: 130px;
+}

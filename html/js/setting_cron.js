@@ -1539,6 +1539,8 @@ $(function(){
 	getJSON("/cron", function(e, status){
 		viewCron(e, status);
 	}, function (jqXHR, exception) {
+		$(".file-split-type ul li").eq(0).addClass("on").siblings().removeClass("on");
+		$("#file-split-name").val($(".file-split-type ul li").eq(0).find("i").text());
         	console.log((jqXHR.status+":"+exception));
 	});
 	

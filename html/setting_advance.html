@@ -64,13 +64,14 @@
         </a>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
     </div>
-    <div class="setting-item advance">
+    <div class="setting-item advance" id="ftpSwitch">
         <a href="#" class="flex flex-middle">
             <div class="setting-item-name fx1" lan="builtInFTP"></div>
             <input type="checkbox" class="switch-box" id="builtInFTP"></input>
         </a>
         <p lan="innerFtpNotes"></p>
-        <p id="ftp_ip"></p>
+        <p id="ftp_hotspot_ip" lan="ftpHotspotIp"></p>
+        <p id="ftp_wlan_ip"></p>
         <p id="ftp_detail"></p>
     </div>
     <!-- <div class="setting-cron-item bottom-line flex flex-middle">
@@ -116,15 +117,15 @@ $(function(){
             }
             ftpname = (language=="en"?"Username: ":"登录名： ") + d.sysinfo.sn + ", ";
             if(d.wlan.wlanSSID == "0"){
-                ftpip = language=="en"?"Address: No Wi-Fi Connection<br> ":"地址： 尚未连接Wi-Fi<br> ";
+                ftpip = language=="en"?"<span>Adress via WLAN</span>: No Wi-Fi Connection ":"<span>地址（WLAN）</span>： 尚未连接Wi-Fi ";
             }else{
-                ftpip = (language=="en"?"Address: ":"地址： ") + "ftp://" + d.wlan.wlanIP;
+                ftpip = (language=="en"?"<span>Adress via WLAN</span>: ":"<span>地址（WLAN）</span>： ") + "ftp://" + d.wlan.wlanIP;
             }
-            $("#ftp_ip").html(ftpip);
+            $("#ftp_wlan_ip").html(ftpip);
             $("#ftp_detail").html(ftpname+ftppasswd);
         }else{
             $("#builtInFTP").prop("checked",false);
-            $("#ftp_detail,#ftp_ip").hide();
+            $("#ftp_detail,#ftp_wlan_ip,#ftp_hotspot_ip").hide();
         }
         
             
@@ -150,7 +151,7 @@ $(function(){
     $("#builtInFTP").on("click",function(){
         if($(this).prop("checked")){
             postJSON("/setting",{enable_ftpd:1})
-            $("#ftp_detail,#ftp_ip").show();
+            $("#ftp_detail,#ftp_wlan_ip,#ftp_hotspot_ip").show();
             getJSON("/setting",function(d){
                 if("enable_ftpd" in d && d.enable_ftpd == 1){
                     $("#builtInFTP").prop("checked",true);
@@ -162,20 +163,20 @@ $(function(){
                     }
                     ftpname = (language=="en"?"Username: ":"登录名： ") + d.sysinfo.sn + ", ";
                     if(d.wlan.wlanSSID == "0"){
-                        ftpip = language=="en"?"Address: No Wi-Fi Connection<br> ":"地址： 尚未连接Wi-Fi<br> ";
+                        ftpip = language=="en"?"<span>Adress via WLAN</span>: No Wi-Fi Connection ":"<span>地址（WLAN）</span>： 尚未连接Wi-Fi ";
                     }else{
-                        ftpip = (language=="en"?"Address: ":"地址： ") + "ftp://" + d.wlan.wlanIP;
+                        ftpip = (language=="en"?"<span>Adress via WLAN</span>: ":"<span>地址（WLAN）</span>： ") + "ftp://" + d.wlan.wlanIP;
                     }
-                    $("#ftp_ip").html(ftpip);
+                    $("#ftp_wlan_ip").html(ftpip);
                     $("#ftp_detail").html(ftpname+ftppasswd);
                 }else{
                     $("#builtInFTP").prop("checked",false);
-                    $("#ftp_detail,#ftp_ip").hide();
+                    $("#ftp_detail,#ftp_wlan_ip,#ftp_hotspot_ip").hide();
                 }
             })
         }else{
             postJSON("/setting",{enable_ftpd:0})
-            $("#ftp_detail,#ftp_ip").hide();
+            $("#ftp_detail,#ftp_wlan_ip,#ftp_hotspot_ip").hide();
         }
     })
 	// $("#mark").on("click", function(){
