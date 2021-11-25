@@ -1121,6 +1121,8 @@ $(function(){
 	var autoGain = null;
 	var skip_bat_chk = null;
 	var unsaved = null;
+	var latest_fw_name = null;
+	var latest_fw_url = null;
 	if(getParameterByName("tag")=="autoAuth"){ //是远程管理页面
 		setCookie("autoAuth", "1");
 	}else {
@@ -5944,6 +5946,12 @@ $(function(){
 				currentFirmware=v;
 				localControl.putValue("CurrentFirmware", v);
 			}
+			if("latest_fw_name" in data){
+				latest_fw_name = data.latest_fw_name;
+			}
+			if("latest_fw_url" in data){
+				latest_fw_url = data.latest_fw_url;
+			}
 			if("reg" in data){
 				localControl.putValue("reg",data.reg);
 			}
@@ -5969,17 +5977,14 @@ $(function(){
 				// var currentFirmware = localControl.getValue("CurrentFirmware", null);
 				var SDUpgradeDialog = localControl.getValue("SDUpgradeDialog",0);//app升级通道是否关闭，若关闭，不提示升级
 				console.log("lastest:"+lastestfirmware+"\ncurrent:"+currentFirmware+"\nSDupgrade:"+SDUpgradeDialog);
-				if(isNewVersion(currentFirmware, lastestfirmware)){
+				if(isNewVersion(currentFirmware, lastestfirmware) && app_type){
 					$(".update-icon").holdShow();
 					console.log("firmware");
 					if(!updateCancelTime) updateCancelTime=localControl.getValue("notupdate", 0);
 					console.log(updateCancelTime+" "+(!updateCancelTime)+" "+ (new Date().getTime())+" " );
 					if($("#shoot-circle").attr("state")==null || $("#shoot-circle").attr("state")=="idle"){ //空闲状态才会有红点提示
-						// $(".update-icon").holdShow();
 						if((updateCancelTime==0 ||(((new Date().getTime()) - updateCancelTime) > 24*3600*1000)) && SDUpgradeDialog == 0 && (SDavailable > 100*1024) && (skip_bat_chk==1 || (batteryStatus!="no_battery" && !(batteryNow<20 && batteryStatus == "discharging")))){//1天
 							$("#updateConfirm").attr("href", "update.html?uploadFlag=1");
-							// $("#update").holdShow();
-							// $(".dialog-cover").holdShow();
 							if(language=="en"){
 								$("#update .dialog-poppup-content").text("New firmware "+lastestfirmware+" available, upgrade now?")
 							}else{
@@ -5989,7 +5994,23 @@ $(function(){
 							$("#update,.dialog-cover").holdShow();
 						}
 					}
-					// }else $(".update-icon").holdHide();
+				}else if(isNewVersion(currentFirmware,latest_fw_name) && !app_type){
+					$(".update-icon").holdShow();
+					console.log("firmware");
+					if(!updateCancelTime) updateCancelTime=localControl.getValue("notupdate", 0);
+					console.log(updateCancelTime+" "+(!updateCancelTime)+" "+ (new Date().getTime())+" " );
+					if($("#shoot-circle").attr("state")==null || $("#shoot-circle").attr("state")=="idle"){ //空闲状态才会有红点提示
+						if((updateCancelTime==0 ||(((new Date().getTime()) - updateCancelTime) > 24*3600*1000)) && SDUpgradeDialog == 0 && (SDavailable > 100*1024) && (skip_bat_chk==1 || (batteryStatus!="no_battery" && !(batteryNow<20 && batteryStatus == "discharging")))){//1天
+							$("#updateConfirm").attr("href", "setting_about.html?downloadFlag=1&latest_fw_url="+latest_fw_url);
+							if(language=="en"){
+								$("#update .dialog-poppup-content").text("New firmware "+lastestfirmware+" available, upgrade now?")
+							}else{
+								$("#update .dialog-poppup-content").text("发现新固件版本 "+lastestfirmware+" ，是否现在升级？")
+							}
+							
+							$("#update,.dialog-cover").holdShow();
+						}
+					}
 				}
 			}, 1500);
 		});

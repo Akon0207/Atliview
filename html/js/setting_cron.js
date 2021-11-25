@@ -282,8 +282,8 @@ $(function(){
 				}else{
 					s="d"+interval+"r"+((r==1)?2:r);
 				}
-				if(genHMS(configs["bydayTask"][startindex-1]["startAt"])<=genHMS(configs["bydayTask"][startindex-1]["endAt"]))
-					s+="S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
+				//if(genHMS(configs["bydayTask"][startindex-1]["startAt"])<=genHMS(configs["bydayTask"][startindex-1]["endAt"]))
+					//s+="S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]); //立即拍摄情况去掉S和E
 				
 				if(r!=1) firstWait=parseInt((getTime(end)-now.getTime())/1000)-interval*(r-1);
 				else firstWait=0;
