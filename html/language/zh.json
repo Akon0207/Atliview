@@ -67,7 +67,7 @@
 	"st":"设置",
 	"lmtTxt":"剩余空间不足100M，拍摄任务将在存储空间耗尽时中断",
 	"shtTxt":"正在拍摄中，部分功能被禁止操作",
-	"supTip":"<a href=\"update.html?uploadFlag=1&language=zh\" >发现固件版本<span class=\"newversion\"></span>,点击升级</a>",
+	"supTip":"<span>发现固件版本<span class=\"newversion\"></span>,点击升级</span>",
 	"shtSch":"定时任务",
 	"powerSav":"自动休眠",
 	"timeWat":"时间标记",

@@ -5946,11 +5946,11 @@ $(function(){
 				currentFirmware=v;
 				localControl.putValue("CurrentFirmware", v);
 			}
-			if("latest_fw_name" in data){
-				latest_fw_name = data.latest_fw_name;
+			if("latest_fw_name" in data.sysinfo){
+				latest_fw_name = data.sysinfo.latest_fw_name;
 			}
-			if("latest_fw_url" in data){
-				latest_fw_url = data.latest_fw_url;
+			if("latest_fw_url" in data.sysinfo){
+				latest_fw_url = data.sysinfo.latest_fw_url;
 			}
 			if("reg" in data){
 				localControl.putValue("reg",data.reg);
@@ -6003,9 +6003,9 @@ $(function(){
 						if((updateCancelTime==0 ||(((new Date().getTime()) - updateCancelTime) > 24*3600*1000)) && SDUpgradeDialog == 0 && (SDavailable > 100*1024) && (skip_bat_chk==1 || (batteryStatus!="no_battery" && !(batteryNow<20 && batteryStatus == "discharging")))){//1天
 							$("#updateConfirm").attr("href", "setting_about.html?downloadFlag=1&latest_fw_url="+latest_fw_url);
 							if(language=="en"){
-								$("#update .dialog-poppup-content").text("New firmware "+lastestfirmware+" available, upgrade now?")
+								$("#update .dialog-poppup-content").text("New firmware "+latest_fw_name+" available, upgrade now?")
 							}else{
-								$("#update .dialog-poppup-content").text("发现新固件版本 "+lastestfirmware+" ，是否现在升级？")
+								$("#update .dialog-poppup-content").text("发现新固件版本 "+latest_fw_name+" ，是否现在升级？")
 							}
 							
 							$("#update,.dialog-cover").holdShow();

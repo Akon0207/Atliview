@@ -77,7 +77,7 @@
 			</a>
 		</div>
 	</section>
-	<div class="upgrade-txt" lan="supTip"><a href="javascript:;" >发现固件版本<span class="newversion"></span>,点击升级</a></div>
+	<div class="upgrade-txt" lan="supTip"><span>发现固件版本<span class="newversion"></span>,点击升级</span></div>
 	<section class="setting-list" id="timelapseMode">
 		<div class="lowmemory-txt" style="display: none;" lan="lmtTxt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 		<!-- <div class="shooting-txt" style="display: none;" lan="shtTxt">正在拍摄中，部分功能被禁止操作</div> -->
@@ -496,6 +496,9 @@ $(function(){
 			}else{$("#logoMark").prop("checked",false);}
 		}
 		/*版本号*/
+		var latest_fw_name = null,latest_fw_url = null;
+		if("latest_fw_url" in e.sysinfo)latest_fw_url = e.sysinfo.latest_fw_url;
+		if("latest_fw_name" in e.sysinfo)latest_fw_name = e.sysinfo.latest_fw_name;
 		if(e.sysinfo && e.sysinfo.firmware) {
 			var v = e.sysinfo.firmware;
 			$(".version").text(v);
@@ -507,41 +510,22 @@ $(function(){
 				var lastestfirmware = localControl.getValue("LatestFirmware", v);
 				console.log(v +'||'+ lastestfirmware);
 				// if(isNewVersion(v,lastestfirmware) && shootState == "idle"){
-				if(isNewVersion(v,lastestfirmware)){
-					$(".newversion").text(lastestfirmware);
+				if((isNewVersion(v,lastestfirmware) && app_type) || (isNewVersion(v,latest_fw_name) && !app_type)){
+					console.log("update url "+$(".upgrade-txt a").attr("href"));
+					$(".newversion").text(app_type?lastestfirmware:latest_fw_name);
 					$(".upgrade-txt").show();
 					$(".upgrade-txt").on("click",function(){
-						if(language && language=="en"){
-							if(data.sdcard == "UNPLUG"){updateErr("Unable to upgrade due to Micro SD card not detected!");return false;}
-							else if(data.available < 1024*50){updateErr("Unable to upgrade due to not enough storage space (50MB free space minimum)");return false;}
-							else if(data.battery.status == "no_battery"){updateErr("Unable to upgrade due to battery not installed!");return false;}
-							else if(data.recordinfo.status!="idle"){ updateErr("Unable to upgrade due to shooting in progress and/or an active shooting schedule!");return false;}
-							else if(data.battery.status=="discharging" && e.battery.capacity<20){updateErr("Unable to upgrade due to low battery!");return false;}
-							else{
-								window.location.href = "update.html?uploadFlag=1";
-							}
-
-							
-
-
-						}else{
-							if(data.sdcard == "UNPLUG"){updateErr("未检测到存储卡,无法升级");return false;}
-							else if(data.available < 1024*50){updateErr("存储空间不足，无法升级");return false;}
-							else if(data.battery.status == "no_battery"){updateErr("未安装电池，无法升级");return false;}
-							else if(data.recordinfo.status!="idle"){updateErr("有拍摄任务或定时任务，无法升级");return false;}
-							else if(data.battery.status=="discharging" && e.battery.capacity<20){updateErr("电量过低，无法升级");return false;}
-							else{
-								window.location.href = "update.html?uploadFlag=1";
-							}
-
-
+						if(data.sdcard == "UNPLUG"){updateErr(language=="en"?"Unable to upgrade due to Micro SD card not detected!":"未检测到存储卡,无法升级");return false;}
+						else if(data.available < 1024*50){updateErr(language=="en"?"Unable to upgrade due to not enough storage space (50MB free space minimum)":"存储空间不足，无法升级");return false;}
+						else if(data.battery.status == "no_battery"){updateErr(language=="en"?"Unable to upgrade due to battery not installed!":"未安装电池，无法升级");return false;}
+						else if(data.recordinfo.status!="idle"){ updateErr(language=="en"?"Unable to upgrade due to shooting in progress and/or an active shooting schedule!":"有拍摄任务或定时任务，无法升级");return false;}
+						else if(data.battery.status=="discharging" && e.battery.capacity<20){updateErr(language=="en"?"Unable to upgrade due to low battery!":"电量过低，无法升级");return false;}
+						else{
+							window.location.href = app_type?"update.html?uploadFlag=1":"setting_about.html?downloadFlag=1&latest_fw_url="+latest_fw_url;
 						}
-
-						
 					})
-
 				}
-
+				
 			});
 		}
 

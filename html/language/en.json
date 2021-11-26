@@ -67,7 +67,7 @@
 	"st":"Settings",
 	"lmtTxt":"Storage space is less than 100MB! Shooting schedule terminates when storage space is exhausted.",
 	"shtTxt":"Shooting in progress!  Some functions are prohibited!",
-	"supTip":"<a href=\"update.html?uploadFlag=1&language=en\" >Found new firmware version <span class=\"newversion\"></span>. Click to upgrade...</a>",
+	"supTip":"<span>Found new firmware version <span class=\"newversion\"></span>. Click to upgrade...</span>",
 	"shtSch":"Schedule",
 	"stoCard":"Memory Card",
 	"powerSav":"Power Saving",

@@ -295,7 +295,7 @@ $(function(){
 			}
 			for(var i=startindex+1;i<=seqs.length;i++){
 				if(i==startindex+1 && wait==0) s+=",w"+parseInt((seqsWait[i-1]+firstWait))+"T"+genHMS(configs["bydayTask"][i-1]["startAt"])+","+seqs[i-1];   //第二段时间
-				else s+=",w"+parseInt((seqsWait[i-1]+remainWait[i-1]))+"T"+genHMS(configs["bydayTask"][i-1]["startAt"])+","+seqs[i-1];
+				else s+=",w"+parseInt(seqsWait[i-1])+"T"+genHMS(configs["bydayTask"][i-1]["startAt"])+","+seqs[i-1];
 			}
 			console.log("firstWait="+firstWait+" remainWait[0]="+remainWait[0]);
 			//第一天的拍摄结束
@@ -306,16 +306,16 @@ $(function(){
 				if(s.indexOf(",")==-1 && wait==0) {
 					if(firstWait>0 ) s+=",w"+parseInt(firstWait)+"T"+seqsEnd[seqs.length-1];
 				}
-				else if(remainWait[0]>0) s+=",w"+parseInt(remainWait[0])+"T"+seqsEnd[seqs.length-1];
+				//else if(remainWait[0]>0) s+=",w"+parseInt(remainWait[0])+"T"+seqsEnd[seqs.length-1];
 				s+=",d0S"+seqsEnd[seqs.length-1]+"s(";
 
 				for(var i=0;i<seqs.length;i++){
 					if(i>0) {
-						s+=",w"+parseInt((seqsWait[i]+remainWait[i]))+"T"+seqsStart[i]+","+seqs[i];
+						s+=",w"+parseInt(seqsWait[i])+"T"+seqsStart[i]+","+seqs[i];
 					}else s+="w"+parseInt((seqsWait[i]))+"T"+seqsStart[i]+","+seqs[i];
 
 				}
-				if(remainWait[0]>0) s+=",w"+remainWait[0]+"T"+seqsEnd[seqs.length-1]; //在每天的最后补足第一时段休息的秒数
+				//if(remainWait[0]>0) s+=",w"+remainWait[0]+"T"+seqsEnd[seqs.length-1]; //在每天的最后补足第一时段休息的秒数
 				s+=")";
 				//按天模式-天数
 				if(configs["bydayLoop"]!=0) s+="r"+(configs["bydayLoop"]-1);
