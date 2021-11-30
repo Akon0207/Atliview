@@ -1295,6 +1295,11 @@ $(function(){
 		outPutMode = data.timelapse_output;
 		timezone_mode = data.timezone_mode;
 		timezone = data.timezone;
+		if(timezone_mode=="auto"){
+			localControl.settingsSync("cam_timezone",String(-(new Date().getTimezoneOffset()/60)))
+		}else if(timezone_mode == "manual"){
+			localControl.settingsSync("cam_timezone",String(timezone))
+		}
 		if(data.timelapse_output==1){
 			$(".promptControl").show();
 		}

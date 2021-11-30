@@ -53,7 +53,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.keepAlive=function(msg) {if(window.webkit.messageHandlers.keepAlive) return window.webkit.messageHandlers.keepAlive.postMessage("alive");}
 	localControl.reDiscover=function(msg) {return window.webkit.messageHandlers.reDiscover.postMessage(msg)}
 	localControl.zoomActivated=function(num) {if(window.webkit.messageHandlers.zoomActivated) return window.webkit.messageHandlers.zoomActivated.postMessage(num)}
-
+	localControl.settingsSync=function(k,v) {if(window.webkit.messageHandlers.settingsSync) return window.webkit.messageHandlers.settingsSync.postMessage({String(k):String(v)})}
 }else if(window.atliviewControl){ //安卓中
 	app_type="android";
 	localControl.getValue=function(k, v){return window.atliviewControl.getValue(String(k), v)};
@@ -73,6 +73,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.keepAlive=function(msg) {return null}
 	localControl.reDiscover=function(msg) {return window.atliviewControl.reDiscover(msg)}
 	localControl.zoomActivated=function(num) {if(window.atliviewControl.zoomActivated) return window.atliviewControl.zoomActivated(num)}
+	localControl.settingsSync=function(k,v) {if(window.atliviewControl.settingsSync) return window.atliviewControl.settingsSync(String(k),String(v))}
 }else if(window.localStorage){ //普通浏览器中
 	localControl.getValue=function(k, v){var getVal=window.localStorage.getItem(k);if(getVal){return getVal;}else{return v;}};
 	localControl.putValue=function(k, v){return window.localStorage.setItem(k, v)};
@@ -91,6 +92,7 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.keepAlive=function(msg) {return null}
 	localControl.reDiscover=function() {return null}
 	localControl.zoomActivated=function(num) {return null}
+	localControl.settingsSync = function(k,v) {return null}
 }else {
 	alert("当前浏览器不支持本地储存！请更换或更新浏览器！");
 	localControl.getValue=function(k, v){return null};
@@ -107,6 +109,8 @@ if(window.webkit && window.webkit.messageHandlers){ //ios中
 	localControl.updateStartTime=function(datetime) {return null};
 	localControl.keepAlive=function(msg) {return null}
 	localControl.reDiscover=function() {return null}
+	localControl.zoomActivated=function(num) {return null}
+	localControl.settingsSync = function(k,v) {return null}
 }
 
 function getCookie(name)

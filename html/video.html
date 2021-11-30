@@ -108,6 +108,14 @@ $(function(){
 			$(this).hide();
 		}
 	})
+
+	//获取时区
+	var timezone = null;
+	getJSON("/setting",function(d){
+		if(d.timezone_mode == "manual"){
+			timezone = d.timezone
+		}
+	})
 	$("#videoStyle li").each(function (index){
 		if(arrangeMode==index){
 			$(this).addClass("on").siblings().removeClass("on");
@@ -292,6 +300,9 @@ function setItem(mediaInfo)
 {
 	if(mediaInfo) {
 		var date = new Date(mediaInfo.date);
+		if(timezone){
+			date = new Date(date.getTime()+parseInt(timezone)*3600000-(-new Date().getTimezoneOffset()/60*3600000));
+		}
 		mediaInfo.date = date.toLocaleString();
 		console.log(".time"+mediaInfo.id);
 		timeArray = formatTime(mediaInfo.duration);

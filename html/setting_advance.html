@@ -202,12 +202,13 @@ $(function(){
             if(mode_select == 1){
                 $("#time_zone").html(date);
                 data.timezone_mode = "manual";
-                data.timezone = date;
+                data.timezone = parseInt(date).toString();
             }else{
                 $("#time_zone").html(language=="en"?"Auto":"自动");
                 data.timezone_mode = "auto";
                 data.timezone = (-(new Date().getTimezoneOffset()/60)).toString();
             }
+            localControl.settingsSync("cam_timezone",data.timezone);
             // $("#time_zone").html(date);
             postJSON("/setting",data);
             mode_select = null;
