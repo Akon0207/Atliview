@@ -111,11 +111,7 @@ $(function(){
 
 	//获取时区
 	var timezone = null;
-	getJSON("/setting",function(d){
-		if(d.timezone_mode == "manual"){
-			timezone = d.timezone
-		}
-	})
+	
 	$("#videoStyle li").each(function (index){
 		if(arrangeMode==index){
 			$(this).addClass("on").siblings().removeClass("on");
@@ -336,23 +332,23 @@ function setItem(mediaInfo)
 function getNext()
 {
 	if(index < mediaData.length){
-		if(mediaData[index].type=="folder") {
+		// if(mediaData[index].type=="folder") {
 			setItem(mediaData[index]);
 			index++;
 			getNext();
-		} else {
-		$.getJSON('/media/' + mediaData[index].id + (getAccessToken()?'?access_token='+getAccessToken():''), function(mediaInfo){
-			console.log(mediaInfo);
-			setItem(mediaInfo);
-		}, function(err, status) {
-			console.log("get media info for " + mediaData[index].id + " "+err.status+" "+status);
-		}).always(
-			function(){
-				index++;
-				getNext();
-			} 
-		)
-		}
+		// } else {
+		// $.getJSON('/media/' + mediaData[index].id + (getAccessToken()?'?access_token='+getAccessToken():''), function(mediaInfo){
+		// 	// console.log(mediaInfo);
+		// 	setItem(mediaInfo);
+		// }, function(err, status) {
+		// 	console.log("get media info for " + mediaData[index].id + " "+err.status+" "+status);
+		// }).always(
+		// 	function(){
+		// 		index++;
+		// 		getNext();
+		// 	} 
+		// )
+		// }
 	}
 }
 function createList(obj,typeStr,type,data,itemStr){//按月或日排序
@@ -361,7 +357,7 @@ function createList(obj,typeStr,type,data,itemStr){//按月或日排序
 		$('#'+typeStr).append(itemStr);
 	}else{
 		obj[typeStr] = [data];
-		$("#"+type).append('<div class="video-list-tit">'+ typeStr +'</div><ul id="' + typeStr + '">'+itemStr);
+		$("#"+type).append('<div class="video-list-tit">'+ typeStr +'</div><ul id="' + typeStr + '">'+itemStr+'</ul>');
 	}
 }
 function populateFlatList()
@@ -393,15 +389,21 @@ function populateFlatList()
   }
 */
 }
+getJSON("/setting",function(d){
+	if(d.timezone_mode == "manual"){
+		timezone = d.timezone
+	}
+	console.log("timezone=========="+timezone);
+	getJSON('/media2/', function(data) {
+		// console.log(data);
+		mediaData=data;
+		populateFlatList(data);
+		getNext();
+	}, function(err, status) {
+		console.log(err.status+status);
+	});
+})
 
-getJSON('/media2/', function(data) {
-	console.log(data);
-	mediaData=data;
-	populateFlatList(data);
-	getNext();
-}, function(err, status) {
-	console.log(err.status+status);
-});
 
 </script>
 </body>

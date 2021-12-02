@@ -208,7 +208,9 @@ $(function(){
                 data.timezone_mode = "auto";
                 data.timezone = (-(new Date().getTimezoneOffset()/60)).toString();
             }
-            localControl.settingsSync("cam_timezone",data.timezone);
+            var camTimezone = {cam_timezone:data.timezone}
+            camTimezone = JSON.stringify(camTimezone);
+            localControl.settingsSync(camTimezone);
             // $("#time_zone").html(date);
             postJSON("/setting",data);
             mode_select = null;

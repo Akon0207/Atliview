@@ -1123,6 +1123,7 @@ $(function(){
 	var unsaved = null;
 	var latest_fw_name = null;
 	var latest_fw_url = null;
+	var camTimezone = {};
 	if(getParameterByName("tag")=="autoAuth"){ //是远程管理页面
 		setCookie("autoAuth", "1");
 	}else {
@@ -1295,11 +1296,13 @@ $(function(){
 		outPutMode = data.timelapse_output;
 		timezone_mode = data.timezone_mode;
 		timezone = data.timezone;
-		if(timezone_mode=="auto"){
-			localControl.settingsSync("cam_timezone",String(-(new Date().getTimezoneOffset()/60)))
+		if(!timezone_mode || timezone_mode=="auto"){
+			camTimezone["cam_timezone"] = String(-(new Date().getTimezoneOffset()/60));
 		}else if(timezone_mode == "manual"){
-			localControl.settingsSync("cam_timezone",String(timezone))
+			camTimezone["cam_timezone"] = String(timezone);
 		}
+		var timezoneStr = JSON.stringify(camTimezone);
+		localControl.settingsSync(timezoneStr);
 		if(data.timelapse_output==1){
 			$(".promptControl").show();
 		}
@@ -2919,7 +2922,7 @@ $(function(){
 	}
 	var fixPromptTimeout = null;
 	function exposurePrompt(num,type){
-		clearTimeout(fixPromptTimeout);
+		
 		if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseFloat($('#interval-second').val(),10)<num){
 			$('#interval-second').val(num);
 			if(language=="en"){
@@ -2936,6 +2939,7 @@ $(function(){
 				}
 			}
 			if(type==1){
+				clearTimeout(fixPromptTimeout);
 				$(".fix-prompt").show();
 				fixPromptTimeout = setTimeout(function(){
 					$(".fix-prompt").hide();
@@ -5902,6 +5906,18 @@ $(function(){
 		postJSON("/status",{force_time: timeNow.toJSON(),timezone:-(timeNow.getTimezoneOffset()/60)})
 	})
 	var setTimeCount = 0;
+	function forceTime(){
+		getJSON("/status",function(data,s,xhr){
+			var serverTime = new Date(xhr.getResponseHeader('Date'));
+			var localTime = new Date().getTime();
+			if(Math.abs(localTime-serverTime)>=60000 && data.recordinfo.status==="idle"){
+				setTimeCount++
+				postJSON("/status",{force_time:d2.toJSON(),timezone:-(d2.getTimezoneOffset()/60)},function () {
+					setTimeout(forceTime,5000);
+				})
+			}
+		})
+	}
 	function doInit(status, s, xhr) {
 		setOrientation(status.imgArchive,true);
 		localControl.notify(status.imgArchive);
@@ -5922,13 +5938,14 @@ $(function(){
 		// d2.setMinutes(d2.getMinutes()-d2.getTimezoneOffset());
 		localTime = d2.getTime();
 		if(Math.abs(localTime-serverTime)>=60000 && status.recordinfo.status==="idle"){
-			setTimeCount++;
-			postJSON("/status",{force_time:d2.toJSON(),timezone:-(d2.getTimezoneOffset()/60)},function () {
-				setTimeout(function(){
-					getJSON("/status",doInit);
-				},1000);
-			})
-			return;
+			// setTimeCount++;
+			// postJSON("/status",{force_time:d2.toJSON(),timezone:-(d2.getTimezoneOffset()/60)},function () {
+			// 	setTimeout(function(){
+			// 		getJSON("/status",doInit);
+			// 	},1000);
+			// })
+			// return;
+			setTimeout(forceTime,1000)
 		}
 		// if(Math.abs(localTime-serverTime) >= 10*60000 && status.recordinfo.status==="idle"){
 		// 	setTimeCount++;

@@ -568,8 +568,7 @@ $(function(){
 */
 
 	$("#resetConfirm").on("click",function(){
-		// $(".dialog-cover,.dialog-poppup").hide();
-		$(".dialog-poppup").hide();
+		$(".dialog-cover,.dialog-poppup").hide();
 		$("#"+flag).mobiscroll("show"); //出错误提示后让用户重新设置
 	})
 
