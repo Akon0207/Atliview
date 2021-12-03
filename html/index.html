@@ -1124,6 +1124,7 @@ $(function(){
 	var latest_fw_name = null;
 	var latest_fw_url = null;
 	var camTimezone = {};
+	var sn_num = null;
 	if(getParameterByName("tag")=="autoAuth"){ //是远程管理页面
 		setCookie("autoAuth", "1");
 	}else {
@@ -1293,6 +1294,7 @@ $(function(){
 	}, false);
 	//timelaspe输出方式提示
 	getJSON("/setting",function(data){
+		sn_num = data.sysinfo.sn;
 		outPutMode = data.timelapse_output;
 		timezone_mode = data.timezone_mode;
 		timezone = data.timezone;
@@ -3164,11 +3166,13 @@ $(function(){
 				// $(".setting-bar>div").hide();
 				// $(".setting-bar>div").eq(5).show(); 
 				// infraredSwiper.update();
-				$(".parameter-infrared").holdShow();
-				$(".parameter-infrared .swiper-select").eq(1).click();
+				if(!(/^T[A-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
+						$(".parameter-infrared").holdShow();
+					}
+				// $(".parameter-infrared .swiper-select").eq(0).click();
 				// var m = $(".parameter-infrared .swiper-slide.on").index();
 				// infraredSwiper.slideTo(1);
-				controlPostJSON("/control",{infrared:2},updateControls);
+				controlPostJSON("/control",{infrared:1},updateControls);
 			}else if(e==7){
 				controlPostJSON("/control",{infrared:0},updateControls);
 				$(".setting-content").holdShow();
@@ -3897,9 +3901,11 @@ $(function(){
 				$(".ctrl-icon").holdSlideDown(800);
 				$(".customModeBtn").holdHide();
 				currentSwiper.update();
-				$(".parameter-infrared").holdShow();
-				$(".parameter-infrared .swiper-select").eq(1).click();
-				controlPostJSON("/control",{infrared:2},updateControls);
+				if(!(/^T[A-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
+					$(".parameter-infrared").holdShow();
+				}
+				$(".parameter-infrared .swiper-select").eq(0).click();
+				controlPostJSON("/control",{infrared:1},updateControls);
 			}else if(index==7){
 				controlPostJSON("/control",{infrared:0},updateControls);
 				$(".setting-content").holdShow();
@@ -4263,7 +4269,11 @@ $(function(){
 				$("#mode").attr("data-mode",thisi.html());
 				currentMode=e.recordMode;
 				if(currentMode=="ir-fantasy"){
-					$(".parameter-infrared").holdShow();
+					
+					if(!(/^T[A-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
+						$(".parameter-infrared").holdShow();
+					}
+					
 					$(".setting-current .swiper-slide").eq(3).addClass("greyColor");
 					$("#whiteBalance").hide();
 					$(".head-info").addClass("redline");
