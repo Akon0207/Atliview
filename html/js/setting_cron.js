@@ -12,6 +12,8 @@ var outPutMode = null;
 var lenProTimeout = null;
 var timezone_mode = null;
 var cameraTimezone = null;
+var timezone=-(new Date().getTimezoneOffset()/60);
+var camStatus = null;//获取/cron的时候用
 var cronByDayList = new Array();
 var now = new Date();  //获取当前时间
     now = new Date(now.getTime()+60000-now.getTime()%60000);
@@ -30,12 +32,10 @@ $(function(){
 	var recordWait=0;
 	var idle=1;
 	var orientation = 0;
-	getJSON("/status",function(e){
-		imgArchive = e.imgArchive;
-	})
+	
 	getJSON("/setting", function(e, status){
 		if("timezone_mode" in e)timezone_mode = e.timezone_mode;
-		if("timezone" in e)cameraTimezone = e.timezone;
+		if("timezone" in e)cameraTimezone = parseInt(e.timezone);
 		if(timezone_mode=="manual"){
 			$(".camTime").show();
 			now = new Date(now.getTime()-(-(new Date().getTimezoneOffset()/60)*3600*1000)+(parseInt(cameraTimezone)*3600*1000));
@@ -91,7 +91,7 @@ $(function(){
 		
 	}
 	// hh:mm:ss -> hhmmss, delete timezone
-	var timezone=-(new Date().getTimezoneOffset()/60);
+	
 	function genHMS(src){
 		var zone=timezone;
 		if(timezone_mode == "manual")zone = parseInt(cameraTimezone);
@@ -121,7 +121,8 @@ $(function(){
 			var year = end.getFullYear();
 			var month = end.getMonth()+1;
 			day = end.getDate();
-			return [year.toString()+transformTime(month).toString()+transformTime(day).toString()+transformTime(hours).toString()+transformTime(minutes).toString()+transformTime(seconds).toString(),year.toString()+"-"+transformTime(month).toString()+"-"+transformTime(day).toString()+"T"+transformTime(hours).toString()+":"+transformTime(minutes).toString()+":"+transformTime(seconds).toString()+"Z"];
+			return [year.toString()+transformTime(month).toString()+transformTime(day).toString()+transformTime(hours).toString()+transformTime(minutes).toString()+transformTime(seconds).toString(),
+					year.toString()+"-"+transformTime(month).toString()+"-"+transformTime(day).toString()+"T"+transformTime(hours).toString()+":"+transformTime(minutes).toString()+":"+transformTime(seconds).toString()+"Z"];
 	}
 	function getTime(fromdate){
 		if(timezone_mode=="manual"){
@@ -1241,7 +1242,12 @@ $(function(){
 			if($(this).hasClass("on")){
 				configs["cutmode"] = index;
 			}
-		})
+		});
+		var timeNow = new Date();
+		if(timezone_mode=="manual"){
+			timeNow = new Date(timeNow.getTime()+cameraTimezone*3600000-timezone*3600000);
+		}
+		configs["bydayTaskCommitTime"] = calculateTime(timeNow)[1];
 		//console.log(configs);
 		return configs;
 	}
@@ -1403,7 +1409,6 @@ $(function(){
 			$(".file-split-type ul li").eq(0).addClass("on").siblings().removeClass("on");
 			$("#file-split-name").val($(".file-split-type ul li").eq(0).find("i").text());
 		}
-		
 		if(e.cronMode=="byday"){
 			if(language && language=="en"){
 				$("#cronMode_dummy,#cronMode_val").val("Daily");
@@ -1417,7 +1422,21 @@ $(function(){
 			}else{
 				cronMode.setVal("按天循环", true, false);
 			}
-			
+			if("bydayTaskCommitTime" in e){
+				var commitTime = new Date(e.bydayTaskCommitTime);
+				if(timezone_mode=="manual"){
+					commitTime = new Date(commitTime.getTime()+cameraTimezone*3600000-timezone*3600000);
+				}
+				
+				console.log("bydayTaskCommitTime::::::"+e.bydayTaskCommitTime,commitTime);
+				var text1 = language=="en"?"The task started at ":"定时任务启动于 ";
+				var text2 = transFullTime(commitTime,language);
+				$(".cronStartAt").text(text1+text2);
+				if(camStatus=="waiting" || camStatus=="cronRunning"){
+					$(".cronStartAt").show();
+				}
+			}
+				
 			$("#loopDays").show();
 			$("#loopNormal").hide();
 		}
@@ -1534,43 +1553,40 @@ $(function(){
 			});
 		}
 	}
-	//读取服务端数据
-	getJSON("/cron", function(e, status){
-		viewCron(e, status);
-	}, function (jqXHR, exception) {
-		$(".file-split-type ul li").eq(0).addClass("on").siblings().removeClass("on");
-		$("#file-split-name").val($(".file-split-type ul li").eq(0).find("i").text());
-        	console.log((jqXHR.status+":"+exception));
-	});
+	
+
+	
 	
 	function getSessionId() {
 		var d = new Date();
 		return (d.getTime() & 0x7fffffff);
 	}
+
 	getJSON("/status", function(e, status){
+		imgArchive = e.imgArchive;
 		if("sessionId" in e) sessionId=e.sessionId;
 		if(sessionId===0) sessionId=getSessionId();
 		sessionType=e.sessionType;
 		if("recordinfo" in e) {
+			camStatus = e.recordinfo.status;
 			if(e.recordinfo.status == "recording" || e.recordinfo.status == "pausing"){
 				$(".post").addClass("shooting-now");
-				if(language && language=="en"){
-					$(".cronPrompt1").css("text-align","left");
+				if(language=="en" && app_type){
+					$(".cronPrompt").css("text-align","left");
 				}
 				$(".cronPrompt").show();
 				idle=0;
 			}else if(e.recordinfo.status == "waiting" || e.recordinfo.status == "cronRunning"){
 				$(".post").addClass("shooting-now");
-				if(language && language=="en"){
-					$(".cronPrompt").css("text-align","left").text("Unable to set scheduled task when there is an active task in progress.").show();
-				}else{
-					$(".cronPrompt").text("已存在定时任务，无法变更此设置").show();
+				$(".cronPrompt").text(language=="en"?"Unable to set scheduled task when there is an active task in progress.":"已存在定时任务，无法变更此设置")
+				if(language=="en" && app_type){
+					$(".cronPrompt").css("text-align","left");
 				}
-				
+				$(".cronPrompt").show()
 				idle=0;
 			}else if(e.recordinfo.status == "idle"){
 				if(sessionType!="timelapse" && sessionType != null){
-					if(language && language=="en"){
+					if(language && language=="en" && app_type){
 						$(".cronPrompt2").css("text-align","left");
 					}
 					$(".cronPrompt2").show();
@@ -1585,6 +1601,14 @@ $(function(){
 					$(".cronPrompt2").show();
 				}
 			}*/
+			//读取服务端数据
+			getJSON("/cron", function(e, status){
+				viewCron(e, status);
+			}, function (jqXHR, exception) {
+				$(".file-split-type ul li").eq(0).addClass("on").siblings().removeClass("on");
+				$("#file-split-name").val($(".file-split-type ul li").eq(0).find("i").text());
+		        	console.log((jqXHR.status+":"+exception));
+			});
 		}
 	});
 

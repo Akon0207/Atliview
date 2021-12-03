@@ -307,5 +307,6 @@
 	"remoteCtlNotes":"方便售后服务团队远程访问和检查相机",
 	"innerFtpNotes":"可使用FTP客户端连接相机，并管理媒体资源",
 	"builtInFTP":"内置FTP服务器",
-	"ftpHotspotIp":"<span>地址（热点）</span>： ftp://192.168.100.1"
+	"ftpHotspotIp":"<span>地址（热点）</span>： ftp://192.168.100.1",
+	"remoteCon":"远程连接服务"
 }

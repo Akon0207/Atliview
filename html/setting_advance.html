@@ -27,7 +27,7 @@
 <body class="setting-index">
 <section class="setting-head">
     <a href="setting.html" class="iconfont goback">&#xe6ea;</a>
-    <p lan="advance">高级</p>
+    <p lan="advance" id="title">高级</p>
 </section>
 <section class="setting-list">
 
@@ -55,6 +55,13 @@
             <input type="checkbox" class="switch-box" id="remoteCtl"></input>
         </a>
         <p lan="remoteCtlNotes"></p>
+    </div>
+    <div class="setting-item advance" id="remoteConDiv" style="display:none;">
+        <a href="#" class="flex flex-middle">
+            <div class="setting-item-name fx1" lan="remoteCon">远程连接服务</div>
+            <input type="checkbox" class="switch-box" id="remoteCon"></input>
+        </a>
+        <p lan="remoteConNotes">方便您远程连接和管理相机</p>
     </div>
     <div class="setting-item advance">
         <a href="#" class="flex flex-middle">
@@ -98,6 +105,11 @@ $(function(){
         }else{
             $("#remoteCtl").prop("checked",false);
         }
+        if("rdmService" in d && d.rdmService == 1){
+            $("#remoteCon").prop("checked",true);
+        }else{
+            $("#remoteCon").prop("checked",false);
+        }
         if("timezone_mode" in d){
             timezone_mode = d.timezone_mode;
             if(d.timezone_mode == "auto"){
@@ -137,6 +149,14 @@ $(function(){
             return false;
         }else{
             postJSON("/setting",{rdmAssis:0})
+        }
+    })
+    //远程连接
+    $("#remoteCon").on("click",function(){
+        if($(this).prop("checked")){
+            postJSON("/setting",{rdmService:1})
+        }else{
+            postJSON("/setting",{rdmService:0})
         }
     })
     $("#remoteCancel").on("click",function(){
@@ -216,6 +236,28 @@ $(function(){
             mode_select = null;
         }
     })
+    //5次点击事件
+    function nclickEvent(n,dom,fn) {
+        dom.removeEventListener('dblclick',null);
+        var n = parseInt(n) < 1 ? 1:parseInt(n),
+            count = 0,
+            lastTime = 0;//用于记录上次结束的时间
+        var handler = function (event) {
+            var currentTime = new Date().getTime();//获取本次点击的时间
+            count = (currentTime-lastTime) < 400 ? count +1 : 0;//如果本次点击的时间和上次结束时间相比大于400毫秒就把count置0
+            lastTime = new Date().getTime();
+            if(count>=n-1){
+                fn(event,n);
+                count = 0;
+            }
+        };
+        dom.addEventListener('click',handler);
+    }
+    var title = document.getElementById("title");
+    nclickEvent(5,title,function(){
+        $("#remoteConDiv").show();
+        // console.log("click 3 times!")
+    });
 })
 </script>
 

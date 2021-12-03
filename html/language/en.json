@@ -307,6 +307,7 @@
 	"remoteCtlNotes":"Securely allow tech support to access your camera for remote inspection.",
 	"innerFtpNotes":"Use FTP Client to manage your files.",
 	"builtInFTP":"Built-in FTP Server",
-	"ftpHotspotIp":"<span>Adress via Hotspot</span>: ftp://192.168.100.1"
+	"ftpHotspotIp":"<span>Adress via Hotspot</span>: ftp://192.168.100.1",
+	"remoteCon":"Remote Control Service"
 
 }

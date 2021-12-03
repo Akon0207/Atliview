@@ -5912,7 +5912,7 @@ $(function(){
 			var localTime = new Date().getTime();
 			if(Math.abs(localTime-serverTime)>=60000 && data.recordinfo.status==="idle"){
 				setTimeCount++
-				postJSON("/status",{force_time:d2.toJSON(),timezone:-(d2.getTimezoneOffset()/60)},function () {
+				postJSON("/status",{force_time:new Date().toJSON(),timezone:-(new Date().getTimezoneOffset()/60)},function () {
 					setTimeout(forceTime,5000);
 				})
 			}

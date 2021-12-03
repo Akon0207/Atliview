@@ -623,7 +623,7 @@ function transTimeHIS(a, en){
 var monthsObj = {1:"Jan",2:"Feb",3:"Mar",4:"Apr",5:"May",6:"June",7:"July",8:"Aug",9:"Sep",10:"Oct",11:"Nov",12:"Dec"};
 function transFullTime(timeobj,lan){
 	var timeStr;
-	if(lan=="zh"){
+	if(lan=="zh" || !lan){
 		timeStr=timeobj.toLocaleString();
 	}else if(lan=="en"){
 		var year = timeobj.getFullYear(),

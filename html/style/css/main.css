@@ -4813,7 +4813,7 @@ fieldset{
   display: none;
   z-index:999;
 }
-.cronPrompt {
+.cronPrompt,.cronStartAt {
     display: none;
     font-size: 16px;
     text-align: center;
