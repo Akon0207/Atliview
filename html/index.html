@@ -3166,13 +3166,15 @@ $(function(){
 				// $(".setting-bar>div").hide();
 				// $(".setting-bar>div").eq(5).show(); 
 				// infraredSwiper.update();
+				var defaultInfrared = 1
 				if(!(/^T[A-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
 						$(".parameter-infrared").holdShow();
+						defaultInfrared = 2;
 					}
 				// $(".parameter-infrared .swiper-select").eq(0).click();
 				// var m = $(".parameter-infrared .swiper-slide.on").index();
 				// infraredSwiper.slideTo(1);
-				controlPostJSON("/control",{infrared:1},updateControls);
+				controlPostJSON("/control",{infrared:defaultInfrared},updateControls);
 			}else if(e==7){
 				controlPostJSON("/control",{infrared:0},updateControls);
 				$(".setting-content").holdShow();
@@ -3901,11 +3903,13 @@ $(function(){
 				$(".ctrl-icon").holdSlideDown(800);
 				$(".customModeBtn").holdHide();
 				currentSwiper.update();
+				var defaultInfrared = 0;
 				if(!(/^T[A-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
 					$(".parameter-infrared").holdShow();
+					defaultInfrared = 1
 				}
-				$(".parameter-infrared .swiper-select").eq(0).click();
-				controlPostJSON("/control",{infrared:1},updateControls);
+				$(".parameter-infrared .swiper-select").eq(defaultInfrared).click();
+				controlPostJSON("/control",{infrared:defaultInfrared+1},updateControls);
 			}else if(index==7){
 				controlPostJSON("/control",{infrared:0},updateControls);
 				$(".setting-content").holdShow();
