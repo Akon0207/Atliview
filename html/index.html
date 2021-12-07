@@ -3167,7 +3167,7 @@ $(function(){
 				// $(".setting-bar>div").eq(5).show(); 
 				// infraredSwiper.update();
 				var defaultInfrared = 1
-				if(!(/^T[A-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
+				if(!(/^T[O-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
 						$(".parameter-infrared").holdShow();
 						defaultInfrared = 2;
 					}
@@ -3904,7 +3904,7 @@ $(function(){
 				$(".customModeBtn").holdHide();
 				currentSwiper.update();
 				var defaultInfrared = 0;
-				if(!(/^T[A-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
+				if(!(/^T[O-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
 					$(".parameter-infrared").holdShow();
 					defaultInfrared = 1
 				}
@@ -4274,7 +4274,7 @@ $(function(){
 				currentMode=e.recordMode;
 				if(currentMode=="ir-fantasy"){
 					
-					if(!(/^T[A-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
+					if(!(/^T[O-Z][0-9]/.test(sn_num) || /^(T0)[1-3]/.test(sn_num))){
 						$(".parameter-infrared").holdShow();
 					}
 					
