@@ -499,6 +499,7 @@ $(function(){
 		var latest_fw_name = null,latest_fw_url = null;
 		if("latest_fw_url" in e.sysinfo)latest_fw_url = e.sysinfo.latest_fw_url;
 		if("latest_fw_name" in e.sysinfo)latest_fw_name = e.sysinfo.latest_fw_name;
+		var sn_num = e.sysinfo.sn;
 		if(e.sysinfo && e.sysinfo.firmware) {
 			var v = e.sysinfo.firmware;
 			$(".version").text(v);
@@ -512,6 +513,9 @@ $(function(){
 				// if(isNewVersion(v,lastestfirmware) && shootState == "idle"){
 				if((isNewVersion(v,lastestfirmware) && app_type) || (isNewVersion(v,latest_fw_name) && !app_type)){
 					console.log("update url "+$(".upgrade-txt a").attr("href"));
+					if(/^P/.test(sn_num) && !/(\.f1)$/.test(lastestfirmware) && app_type){
+						return
+					}
 					$(".newversion").text(app_type?lastestfirmware:latest_fw_name);
 					$(".upgrade-txt").show();
 					$(".upgrade-txt").on("click",function(){

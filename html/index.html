@@ -6014,6 +6014,9 @@ $(function(){
 				var SDUpgradeDialog = localControl.getValue("SDUpgradeDialog",0);//app升级通道是否关闭，若关闭，不提示升级
 				console.log("lastest:"+lastestfirmware+"\ncurrent:"+currentFirmware+"\nSDupgrade:"+SDUpgradeDialog);
 				if(isNewVersion(currentFirmware, lastestfirmware) && app_type){
+					if(/^P/.test(sn_num) && !/(\.f1)$/.test(lastestfirmware)){
+						return
+					}
 					$(".update-icon").holdShow();
 					console.log("firmware");
 					if(!updateCancelTime) updateCancelTime=localControl.getValue("notupdate", 0);
