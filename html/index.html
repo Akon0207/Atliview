@@ -5194,26 +5194,37 @@ $(function(){
 			$("#shoot-circle").children("span").addClass("shoot-percent-inside");
 			var maxInterval=(next>=recordInterval*1000)?(next+1):(recordInterval*1000);
  			$("#shoot-circle").circleChart({
+				// color: "red",
+				// backgroundColor: "#fff",
+				// size: 45,
+				// widthRatio: 0.1,
+				// startAngle: 75,
+				// lineCap: 'butt',
+				// value: 100*(maxInterval-next)/maxInterval, //百分比
+				// animation: 'linearTween',
+				// redraw: true,
+				// speed: 0,
 				color: "red",
 				backgroundColor: "#fff",
 				size: 45,
 				widthRatio: 0.1,
 				startAngle: 75,
+				cAngle: 100*(maxInterval-next)/maxInterval,
 				lineCap: 'butt',
-				value: 100*(maxInterval-next)/maxInterval, //百分比
+				value: 100, //百分比
 				animation: 'linearTween',
 				redraw: true,
-				speed: 0,
+				speed: maxInterval*(1-(maxInterval-next)/maxInterval)
 			});
 			
-			setTimeout(function() {
- 				$("#shoot-circle").circleChart({
-					startAngle: 75+(maxInterval-next)/maxInterval*10,
-					value: 100, //百分比
-					redraw: false,
-					speed: next,
-				});
-			}, 1);
+			// setTimeout(function() {
+ 		// 		$("#shoot-circle").circleChart({
+			// 		startAngle: 75+(maxInterval-next)/maxInterval*10,
+			// 		value: 100, //百分比
+			// 		redraw: false,
+			// 		speed: next,
+			// 	});
+			// }, 1);
 
 			if(circleInit==1) circleTimer=setTimeout(function(){drawShootCircle(next, 1)}, next);   
 			console.log("1.draw "+100*(maxInterval-next)/maxInterval+";2.draw "+next+"MS from "+75+(maxInterval-next)/maxInterval*10);
@@ -5240,7 +5251,7 @@ $(function(){
 			if(e.recordinfo.currentVideo && e.recordinfo.currentVideo.next) {
 				var d = new Date(e.recordinfo.currentVideo.next);
 				// d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
-				nextRecordMS=new Date().getTime();
+				nextRecordMS=new Date(e.devTime).getTime();
 				next=d.getTime()-nextRecordMS;
 				console.log("next:"+next+"ms");
 			}
