@@ -59,6 +59,10 @@
 			<div class="setting-cron-name fx1" lan="upTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 			<div class="setting-aobut-right" id="uptime"></div>
 		</div>
+        <div class="setting-cron-item bottom-line flex flex-middle">
+            <div class="setting-cron-name fx1" lan="camTime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="setting-aobut-right" id="camTime"></div>
+        </div>
         <!-- <div class="setting-cron-item bottom-line flex flex-middle">
             <div class="setting-cron-name fx1" lan="enableLog"></div>
             <input type="checkbox" id="enableLog" class="switch-box" style="margin-right: 4%">
@@ -731,7 +735,15 @@ $(function(){
             }else{
                 $("#remoteCtl").prop("checked",false);
             }
-			
+			if(e.timezone_mode == "auto"){
+                var newDateMs = new Date().getTime();
+                setcamTime(newDateMs);
+            }else{
+                var pcTimezone = -new Date().getTimezoneOffset()/60;
+                var newDateMs = new Date().getTime();
+                var camDateMs = new Date(newDateMs+parseInt(e.timezone)*3600000-pcTimezone*3600000);
+                setcamTime(camDateMs);
+            }
 
 		}
 	}, function (jqXHR, exception) {
@@ -754,6 +766,16 @@ $(function(){
     //     $("#logTip,.dialog-cover").hide();
     //     $("#enableLog").prop("checked",true);
     // })
+    //设置相机时间
+    function setcamTime(msTime){
+        var camTime = new Date(msTime);
+        var setTime = transFullTime(camTime,language);
+        $("#camTime").html(setTime);
+        setTimeout(function(){
+            setcamTime(msTime+1000);
+        },1000)
+    }
+
     //远程协助
     $("#remoteCtl").on("click",function(){
         if($(this).prop("checked")){

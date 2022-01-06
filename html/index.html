@@ -1820,7 +1820,7 @@ $(function(){
 					$("#shoot-circle").css("pointer-events","auto");
 				});
 				$("#modeNow").addClass("shooting-now");
-				$(".circleChart_canvas").remove(".circleChart_canvas");
+				$(".circleChart_canvas").remove();
 				$("#shoot-circle").attr("state","pausing");
 				$("#shoot-circle").removeClass("shoot-percent circleChart");
 				$("#shoot-circle").addClass("shoot pause");
@@ -5188,7 +5188,7 @@ $(function(){
 			}
 			$(".continueWait").hide();
 			if(circleTimer) clearTimeout(circleTimer);
-			$(".circleChart_canvas").remove(".circleChart_canvas");//先取消之前的绘制
+			$(".circleChart_canvas").remove();//先取消之前的绘制
 			$("#shoot-circle").addClass("shoot-percent circleChart");
 			$("#shoot-circle").removeClass("shoot pause");
 			$("#shoot-circle").children("span").addClass("shoot-percent-inside");
@@ -5289,7 +5289,7 @@ $(function(){
 */
 		}
 		else if(state == "waiting"){
-			$(".circleChart_canvas").remove(".circleChart_canvas");
+			$(".circleChart_canvas").remove();
 			$("#shoot-circle").attr("state", state);
 			$("#shoot-circle").attr("data-waiting", true);
 			$("#shoot-circle").removeClass("shoot-percent circleChart pause");
@@ -5301,7 +5301,7 @@ $(function(){
 			//$(".head-info").hide();
 		}
 		else if(state == "idle"){
-			$(".circleChart_canvas").remove(".circleChart_canvas");
+			$(".circleChart_canvas").remove();
 			$("#shoot-circle").attr("state", state);
 			$("#shoot-circle").removeAttr("data-waiting");
 			$("#shoot-circle").removeClass("shoot-percent circleChart");
@@ -5313,7 +5313,7 @@ $(function(){
 			//$(".head-info").hide();
 		}else if(state == "pausing"){
 			$("#modeNow").addClass("shooting-now");
-			$(".circleChart_canvas").remove(".circleChart_canvas");
+			$(".circleChart_canvas").remove();
 			$("#shoot-circle").attr("state", state);
 			$("#shoot-circle").removeAttr("data-waiting");
 			$("#shoot-circle").removeClass("shoot-percent circleChart");
@@ -5407,7 +5407,7 @@ $(function(){
 		postJSON("/" + sessionType, recCtrl, function (data) {
 			setRecording(true, interval);
 			
-			$(".circleChart_canvas").remove(".circleChart_canvas");//先取消之前的绘制
+			$(".circleChart_canvas").remove();//先取消之前的绘制
 			$("#shoot-circle").addClass("shoot-percent circleChart");
 			$("#shoot-circle").removeClass("shoot");
 			$("#shoot-circle").children("span").addClass("shoot-percent-inside");
