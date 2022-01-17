@@ -744,7 +744,9 @@ $(function(){
                 var camDateMs = new Date(newDateMs+parseInt(e.timezone)*3600000-pcTimezone*3600000);
                 setcamTime(camDateMs);
             }
+            
 
+            
 		}
 	}, function (jqXHR, exception) {
 		console.log((jqXHR.status+exception));

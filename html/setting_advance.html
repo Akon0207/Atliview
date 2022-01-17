@@ -81,11 +81,39 @@
         <p id="ftp_wlan_ip"></p>
         <p id="ftp_detail"></p>
     </div>
+    <div class="setting-item advance" id="autoUploadFtp">
+        <a href="#" class="flex flex-middle">
+            <div class="setting-item-name fx1" lan="autoUploadFtp"></div>
+            <input type="checkbox" class="switch-box" id="uploadFtpSwitch"></input>
+        </a>
+        <p lan="uploadFtpNotes"></p>
+        <div id="uploadftp_detail">
+            <div class="uploadftp_detail">
+                <div class="detail_left">
+                    <ul >
+                        <li class="flex flex-middle"><div lan="ftpHost" class="ftp_detail_tit"></div><input id="ftpHost" type="text" class="wlan-login-ipt fx1"></li>
+                        <li class="flex flex-middle"><div lan="ftpUser" class="ftp_detail_tit"></div><input id="ftpUser" type="text" class="wlan-login-ipt fx1"></li>
+                        <li class="flex flex-middle"><div lan="ftpPasswd" class="ftp_detail_tit"></div><input id="ftpPasswd" type="password" class="wlan-login-ipt fx1"><div class="iconfont wlan-show-password">&#xe635;</div></li>
+                        <li class="flex flex-middle"><div lan="ftpDstDir" class="ftp_detail_tit"></div><input id="ftpDstDir" type="text" class="wlan-login-ipt fx1"></li>
+                    </ul>
+                </div>
+                <div class="detail_right">
+                    <ul>
+                        <li  class="flex flex-middle"><div lan="ftpPort" class="ftp_detail_tit">端口</div><input id="ftpPort" type="text" class="wlan-login-ipt fx1"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="submitBtn">
+                <span lan="ftpDelFile" class="delFileText">Delete the files after sync</span><input type="checkbox" id="ftpDelFile"><!-- <label for="ftpDelFile"></label> --><div id="detailBtn" lan="submit"></div>
+            </div>
+        </div>
+    </div>
     <!-- <div class="setting-cron-item bottom-line flex flex-middle">
         <div class="setting-cron-name fx1" lan="timeZone">时区</div>
         <div class="setting-item-info" id="time_zone"></div>
     </div> -->
 </section>
+<div class="statusPrompt"></div>
 <div class="dialog-poppup" id="remoteTip" >
     <div class="dialog-poppup-tit" lan="remoteCtl"></div>
     <div class="dialog-poppup-content" lan="remoteContent" style="text-align: left;"></div>
@@ -139,8 +167,47 @@ $(function(){
             $("#builtInFTP").prop("checked",false);
             $("#ftp_detail,#ftp_wlan_ip,#ftp_hotspot_ip").hide();
         }
-        
-            
+        if("ftp_auto_upload" in d){
+            if(d.ftp_auto_upload.ftp_upload == 0){
+                $("#uploadFtpSwitch").prop("checked",false);
+            }else{
+                $("#uploadFtpSwitch").prop("checked",true);
+            }
+        }
+        var ftpdata = d.ftp_auto_upload;
+        if("ftp_upload" in ftpdata){
+            var ftpUpload = false;
+            if(ftpdata.ftp_upload == 1){
+                $("#uploadftp_detail").show();
+                ftpUpload = true;
+            }else{$("#uploadftp_detail").hide();}
+            $("#uploadFtpSwitch").prop(ftpUpload);
+        }
+        if("ftp_host" in ftpdata){
+            $("#ftpHost").val(ftpdata.ftp_host);
+        }
+        if("ftp_port" in ftpdata){
+            $("#ftpPort").val(ftpdata.ftp_port);
+            if(ftpdata.ftp_port == ""){
+                $("#ftpPort").val("21");
+            }
+        }else{
+            $("#ftpPort").val("21");
+        }
+        if("ftp_user" in ftpdata){
+            $("#ftpUser").val(ftpdata.ftp_user);
+        }
+        if("ftp_passwd" in ftpdata){
+            $("#ftpPasswd").val(ftpdata.ftp_passwd);
+        }
+        if("ftp_dst_dir" in ftpdata){
+            $("#ftpDstDir").val(ftpdata.ftp_dst_dir);
+        }
+        if("ftp_del_file" in ftpdata){
+            var ftp_del_file = false;
+            if(ftpdata.ftp_del_file == 1)ftp_del_file=true;
+            $("#ftpDelFile").prop("checked",ftp_del_file);
+        }
     })
     //远程协助
     $("#remoteCtl").on("click",function(){
@@ -149,6 +216,19 @@ $(function(){
             return false;
         }else{
             postJSON("/setting",{rdmAssis:0})
+        }
+    })
+    //点击显示密码
+    $("body").on("click",".wlan-show-password",function(e){
+        e.preventDefault();
+        var ipt = $(this).siblings("input");
+        var state = ipt.attr("type");
+        if(state=="text"){
+            ipt.attr("type","password");
+            $(this).html("&#xe635;")
+        }else{
+            ipt.attr("type","text");
+            $(this).html("&#xe65f;");
         }
     })
     //远程连接
@@ -258,6 +338,83 @@ $(function(){
         $("#remoteConDiv").show();
         // console.log("click 3 times!")
     });
+    //ftp自动同步
+    $("#uploadFtpSwitch").on("click",function(){
+        var v = 0
+        if($(this).prop("checked")){
+            $("#uploadftp_detail").show();
+            v = 1
+        }else{$("#uploadftp_detail").hide()};
+        postJSON("/setting",{ftp_upload:v})
+    })
+    var ftpProTimeout = null;
+    $("#detailBtn").on("click",function(){
+        var hostReg1 = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
+            hostReg2 = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/;
+        if(!hostReg1.test($("#ftpHost").val()) && !hostReg2.test($("#ftpHost").val())){
+            $("#ftpHost").addClass("red");
+            $(".statusPrompt").text(language=="en"?"Address error":"服务器地址有误").show();
+            clearTimeout(ftpProTimeout);
+            ftpProTimeout = setTimeout(function(){
+                $(".statusPrompt").hide();
+            },2000)
+            return
+        }
+        if(!parseInt($("#ftpPort").val()) || parseInt($("#ftpPort").val())<1 || parseInt($("#ftpPort").val())>65535){
+            $("#ftpPort").addClass("red");
+            $(".statusPrompt").text(language=="en"?"Port error":"端口错误").show();
+            clearTimeout(ftpProTimeout);
+            ftpProTimeout = setTimeout(function(){
+                $(".statusPrompt").hide();
+            },2000)
+            return
+        }
+        var userReg = /^[a-zA-Z0-9-_]+$/;
+        if(!userReg.test($("#ftpUser").val())){
+            $("#ftpUser").addClass("red");
+            $(".statusPrompt").text(language=="en"?"Username Error":"用户名错误").show();
+            clearTimeout(ftpProTimeout);
+            ftpProTimeout = setTimeout(function(){
+                $(".statusPrompt").hide();
+            },2000)
+            return
+        }
+        if(!userReg.test($("#ftpDstDir").val())){
+            $("#ftpDstDir").addClass("red");
+            $(".statusPrompt").text(language=="en"?"Sub-folder Error":"子文件夹错误").show();
+            clearTimeout(ftpProTimeout);
+            ftpProTimeout = setTimeout(function(){
+                $(".statusPrompt").hide();
+            },2000)
+            return
+        }
+        var sendData = {};
+        sendData["ftp_host"] = $("#ftpHost").val();
+        sendData["ftp_port"] = $("#ftpPort").val();
+        sendData["ftp_user"] = $("#ftpUser").val();
+        sendData["ftp_dst_dir"] = $("#ftpDstDir").val();
+        sendData["ftp_passwd"] = $("#ftpPasswd").val();
+        var ftp_del_file = 0;
+        if($("#ftpDelFile").prop("checked")) ftp_del_file = 1;
+        sendData["ftp_del_file"] = ftp_del_file;
+        postJSON("/setting",sendData,function(){
+            $(".statusPrompt").text(language=="en"?"Submitted successfully":"提交成功").show();
+            clearTimeout(ftpProTimeout);
+            ftpProTimeout = setTimeout(function(){
+                $(".statusPrompt").hide();
+            },2000)
+        },function(){
+            $(".statusPrompt").text(language=="en"?"Submission failed":"提交失败").show();
+            clearTimeout(ftpProTimeout);
+            ftpProTimeout = setTimeout(function(){
+                $(".statusPrompt").hide();
+            },2000)
+        },"text");
+    })
+    $("#ftpHost,#ftpPort,#ftpUser,#ftpDstDir,#ftpPasswd,#ftpDelFile").on("propertychange input",function(){
+        $(this).removeClass("red");
+        $("#detailBtn").show();
+    })
 })
 </script>
 

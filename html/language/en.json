@@ -309,6 +309,14 @@
 	"builtInFTP":"Built-in FTP Server",
 	"ftpHotspotIp":"<span>Adress via Hotspot</span>: ftp://192.168.100.1",
 	"remoteCon":"Remote Control Service",
-	"camTime":"Current Time"
-
+	"camTime":"Current Time",
+	"autoUploadFtp":"Auto Sync(FTP)",
+	"uploadFtpNotes":"Sync videos and photos to FTP server automatically.",
+	"ftpHost":"Adress",
+	"ftpUser":"Username",
+	"ftpPasswd":"Password",
+	"ftpDstDir":"Sub-folder",
+	"ftpDelFile":"Delete the files after sync",
+	"ftpPort":"Port",
+	"submit":"Submit"
 }

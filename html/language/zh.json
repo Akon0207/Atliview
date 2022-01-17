@@ -309,5 +309,14 @@
 	"builtInFTP":"内置FTP服务器",
 	"ftpHotspotIp":"<span>地址（热点）</span>： ftp://192.168.100.1",
 	"remoteCon":"远程连接服务",
-	"camTime":"相机时间"
+	"camTime":"相机时间",
+	"autoUploadFtp":"自动同步(FTP)",
+	"uploadFtpNotes":"自动同步视频和照片到指定FTP服务器",
+	"ftpHost":"服务器地址",
+	"ftpUser":"用户名",
+	"ftpPasswd":"密码",
+	"ftpDstDir":"子文件夹",
+	"ftpDelFile":"同步成功后删除本地文件",
+	"ftpPort":"端口",
+	"submit":"提交"
 }

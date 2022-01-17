@@ -5661,3 +5661,96 @@ fieldset{
     display: inline-block;
     width: 130px;
 }
+#uploadftp_detail {
+    display: none;
+}
+.uploadftp_detail {
+    display: flex;
+    font-size: 0.6em;
+    flex-direction: row;
+}
+.uploadftp_detail li {
+    /*border-left: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
+    border-top: 1px solid #dcdcdc;*/
+    padding: 0 0 0 5px;
+}
+.uploadftp_detail li:last-child {
+    /*border-bottom: 1px solid #dcdcdc;*/
+}
+.ftp_detail_tit {
+    line-height: 36px;
+    width: 80px;
+    white-space: nowrap;
+    color: #858585;
+}
+.uploadftp_detail .detail_left {
+    flex: 3;
+}
+.uploadftp_detail .detail_right {
+    flex: 2;
+}
+/*.uploadftp_detail .detail_right li {
+    border-left: none;
+}*/
+.uploadftp_detail input {
+    color: #9e9e9e;
+    border-bottom: 1px solid #ccc;
+}
+.uploadftp_detail .wlan-login-ipt.red {
+    color: #f00;
+}
+.uploadftp_detail .wlan-show-password {
+    border-left: none;
+}
+.submitBtn {
+    position: relative;
+}
+#ftpDelFile {
+    appearance: checkbox;
+    -webkit-appearance: checkbox;  
+    -moz-appearance: checkbox;
+    -ms-appearance: checkbox;
+    -o-appearance: checkbox;
+
+}
+/*#ftpDelFile + label {
+    position: relative;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #d3d3d3;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    /*line-height: 10px;*/
+}
+#ftpDelFile:checked + label {
+    background: #eee;
+}*/
+#ftpDelFile:checked + label:after {
+    /*content: "\25CF";
+    font-size: 20px;*/
+    content: "\2705";
+    font-size: 20px;
+    position: absolute;
+    top: -9px;
+    left: 1px;
+}
+.submitBtn .delFileText {
+    font-size: .6em;
+    color: #858585;
+}
+.submitBtn #detailBtn {
+    display: none;
+    position: absolute;
+    right: 3%;
+    top: 0;
+    border: 1px solid #cdcdcd;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #03a9f4;
+    width: 60px;
+    text-align: center;
+}
