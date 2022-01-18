@@ -369,7 +369,7 @@ $(function(){
             },2000)
             return
         }
-        var userReg = /^[a-zA-Z0-9-_]+$/;
+        var userReg = /^[a-zA-Z0-9-_.]+$/;
         if(!userReg.test($("#ftpUser").val())){
             $("#ftpUser").addClass("red");
             $(".statusPrompt").text(language=="en"?"Username Error":"用户名错误").show();
