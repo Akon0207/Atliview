@@ -1317,6 +1317,22 @@ $(function(){
 			$(".head-info").html("<p>定时录像任务已开启</p>");
 			$(".head-info").holdShow();
 		}
+		if(!(/^P/.test(data.sysinfo.sn))){
+			var promptCancelTime = null;
+			focusNotPrompt=localControl.getValue("notPrompt",0);
+			if(focusNotPrompt==0){//没有选择不再提醒
+				promptCancelTime=localControl.getValue("promptCancelTime","notSet");
+				if(promptCancelTime!="notSet"){
+					console.log("-----------promptCancelTime is"+promptCancelTime+"---------------");
+					if((new Date().getTime()-promptCancelTime)>24*3600*1000){//超过一天没提醒
+						setTimeout(function(){$(".manualFocusPrompt").holdShow();},1000)
+					}
+				}else{
+					setTimeout(function(){$(".manualFocusPrompt").holdShow();},1000)
+				}
+			}
+		}
+			
 	});
 
 	//1秒获取一次快门时长
@@ -2652,19 +2668,7 @@ $(function(){
 		shootStart(sessionType);
 	});
 	/*手动对焦提醒*/
-	var promptCancelTime = null;
-	focusNotPrompt=localControl.getValue("notPrompt",0);
-	if(focusNotPrompt==0){//没有选择不再提醒
-		promptCancelTime=localControl.getValue("promptCancelTime","notSet");
-		if(promptCancelTime!="notSet"){
-			console.log("-----------promptCancelTime is"+promptCancelTime+"---------------");
-			if((new Date().getTime()-promptCancelTime)>24*3600*1000){//超过一天没提醒
-				setTimeout(function(){$(".manualFocusPrompt").holdShow();},1000)
-			}
-		}else{
-			setTimeout(function(){$(".manualFocusPrompt").holdShow();},1000)
-		}
-	}
+	
 	$(".notPrompt").on("click",function(){
 		$(".notPrompt").toggleClass("on");
 	})

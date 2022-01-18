@@ -379,7 +379,7 @@ $(function(){
             },2000)
             return
         }
-        if(!userReg.test($("#ftpDstDir").val())){
+        if(!userReg.test($("#ftpDstDir").val()) && $("#ftpDstDir").val()!=""){
             $("#ftpDstDir").addClass("red");
             $(".statusPrompt").text(language=="en"?"Sub-folder Error":"子文件夹错误").show();
             clearTimeout(ftpProTimeout);
