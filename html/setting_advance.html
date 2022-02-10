@@ -25,11 +25,18 @@
     <script type="text/javascript" src="js/rolldate.min.js"></script>
 </head>
 <body class="setting-index">
-<section class="setting-head">
+<section class="setting-head forAdvance">
     <a href="setting.html" class="iconfont goback">&#xe6ea;</a>
     <p lan="advance" id="title">高级</p>
 </section>
-<section class="setting-list">
+<section class="setting-head forLog" id="syncLog" style="display:none;">
+    <a href="javascript:;" class="iconfont goback" id="logBack">&#xe6ea;</a>
+    <p lan="syncLog"></p>
+</section>
+<section class="setting-list forLog" style="display:none;">
+    <div class="logContent"></div>
+</section>
+<section class="setting-list forAdvance">
 
     <!-- <div class="setting-item">
         <a href="#" class="flex flex-middle">
@@ -94,24 +101,34 @@
                         <li class="flex flex-middle"><div lan="ftpHost" class="ftp_detail_tit"></div><input id="ftpHost" type="text" class="wlan-login-ipt fx1"></li>
                         <li class="flex flex-middle"><div lan="ftpUser" class="ftp_detail_tit"></div><input id="ftpUser" type="text" class="wlan-login-ipt fx1"></li>
                         <li class="flex flex-middle"><div lan="ftpPasswd" class="ftp_detail_tit"></div><input id="ftpPasswd" type="password" class="wlan-login-ipt fx1"><div class="iconfont wlan-show-password">&#xe635;</div></li>
-                        <li class="flex flex-middle"><div lan="ftpDstDir" class="ftp_detail_tit"></div><input id="ftpDstDir" type="text" class="wlan-login-ipt fx1"></li>
+                        <li class="flex flex-middle"><div lan="ftpDstDir" class="ftp_detail_tit add"></div><input id="ftpDstDir" type="text" class="wlan-login-ipt fx1" placeholder=""></li>
                     </ul>
                 </div>
                 <div class="detail_right">
                     <ul>
-                        <li  class="flex flex-middle"><div lan="ftpPort" class="ftp_detail_tit">端口</div><input id="ftpPort" type="text" class="wlan-login-ipt fx1"></li>
+                        <li  class="flex flex-middle"><div lan="ftpPort" class="ftp_detail_tit"></div><input id="ftpPort" type="text" class="wlan-login-ipt fx1"></li>
                     </ul>
                 </div>
             </div>
-            <div class="submitBtn">
-                <span lan="ftpDelFile" class="delFileText">Delete the files after sync</span><input type="checkbox" id="ftpDelFile"><!-- <label for="ftpDelFile"></label> --><div id="detailBtn" lan="submit"></div>
+            <div class="ftpDelFile">
+                <span lan="ftpDelFile" class="delFileText"></span><input type="checkbox" id="ftpDelFile">
             </div>
+            <div class="submitBtn">
+                <!-- <div id="detailBtn" lan="submit"></div> -->
+                <a href="javascript:;" class="innerBtn" id="logBtn" lan="logBtn">View Log</a><a href="javascript:;" class="innerBtn" id="testBtn" lan="testBtn" style="display:none;">test</a><a href="javascript:;" class="innerBtn grey" id="submitBtn" lan="submit">Submit</a>
+            </div>
+            <div class="formatError" id="hostError"><span lan="ftpHost" class="bold">服务器地址</span>: <span lan="hostError">地址格式错误</span></div>
+            <div class="formatError" id="portError"><span lan="ftpPort" class="bold">端口</span>: <span lan="portError">端口错误</span></div>
+            <div class="formatError" id="userError"><span lan="ftpUser" class="bold">用户名</span>: <span lan="userError">用户名错误</span></div>
+            <div class="formatError" id="pathError"><span lan="ftpDstDir" class="bold">目标文件</span>: <span lan="pathError">格式错误</span></div>
+            <!-- <div class="formatError" id="connectFailed"></div>
+            <div class="formatError" id="authFailed"></div>
+            <div class="formatError" id="uploadFailed"></div>
+            <div class="formatError" id="createFailed"></div> -->
+
         </div>
     </div>
-    <!-- <div class="setting-cron-item bottom-line flex flex-middle">
-        <div class="setting-cron-name fx1" lan="timeZone">时区</div>
-        <div class="setting-item-info" id="time_zone"></div>
-    </div> -->
+    
 </section>
 <div class="statusPrompt"></div>
 <div class="dialog-poppup" id="remoteTip" >
@@ -123,10 +140,41 @@
     </div>
     <!-- <a href="javascript:;" class="wifi-tip-delete" id="wifiTipDelete">不再提醒</a> -->
 </div>
-<div class="dialog-cover"></div>
+<div class="dialog-cover" id="forCover"></div>
+<div class="dialog-poppup" id="testErr">
+    <div class="dialog-poppup-main">
+        <p class="warning2" id="connectFailed"></p>
+        <p class="warning2" id="authFailed"></p>
+        <p class="warning2" id="uploadFailed"></p>
+        <p class="warning2" id="createFailed"></p>
+    </div>
+    <div class="dialog-btns flex">
+        <a href="javascript:;" id="testConfirmBtn" lan="OK">确定</a>
+    </div>
+</div>
+<div class="dialog-cover" id="forTestCover">
+    <div class="searching-now">
+        <div id="loading3">
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+            <div class="demo3"></div>
+        </div>
+        <div class="loadingText"></div>
+    </div>
+</div>
 <script type="text/javascript" src="js/language.js"></script>
 <script type="text/javascript">
 $(function(){
+    $("#ftpDstDir").attr("placeholder",language=="en"?"Save to a specified folder":"保存到指定文件夹");
     getJSON("/setting",function(d){
         if("rdmAssis" in d && d.rdmAssis == 1){
             $("#remoteCtl").prop("checked",true);
@@ -183,8 +231,10 @@ $(function(){
             }else{$("#uploadftp_detail").hide();}
             $("#uploadFtpSwitch").prop(ftpUpload);
         }
-        if("ftp_host" in ftpdata){
+
+        if("ftp_host" in ftpdata && ftpdata.ftp_host != ""){
             $("#ftpHost").val(ftpdata.ftp_host);
+            $("#testBtn").show();
         }
         if("ftp_port" in ftpdata){
             $("#ftpPort").val(ftpdata.ftp_port);
@@ -203,6 +253,9 @@ $(function(){
         if("ftp_dst_dir" in ftpdata){
             $("#ftpDstDir").val(ftpdata.ftp_dst_dir);
         }
+
+            
+
         if("ftp_del_file" in ftpdata){
             var ftp_del_file = false;
             if(ftpdata.ftp_del_file == 1)ftp_del_file=true;
@@ -212,7 +265,7 @@ $(function(){
     //远程协助
     $("#remoteCtl").on("click",function(){
         if($(this).prop("checked")){
-            $("#remoteTip,.dialog-cover").show();
+            $("#remoteTip,#forCover").show();
             return false;
         }else{
             postJSON("/setting",{rdmAssis:0})
@@ -240,11 +293,11 @@ $(function(){
         }
     })
     $("#remoteCancel").on("click",function(){
-        $("#remoteTip,.dialog-cover").hide();
+        $("#remoteTip,#forCover").hide();
     })
     $("#remoteEnable").on("click",function(){
         postJSON("/setting",{rdmAssis:1});
-        $("#remoteTip,.dialog-cover").hide();
+        $("#remoteTip,#forCover").hide();
         $("#remoteCtl").prop("checked",true);
     })
     //内置ftp开关
@@ -348,44 +401,44 @@ $(function(){
         postJSON("/setting",{ftp_upload:v})
     })
     var ftpProTimeout = null;
-    $("#detailBtn").on("click",function(){
+    var flag = true;
+    var statusTimer = null;
+    function promptShow(msg){
+        $(".statusPrompt").text(msg)
+        clearTimeout(statusTimer)
+        $(".statusPrompt").show();
+        statusTimer = setTimeout(function(){
+            $(".statusPrompt").hide();
+        },2000)
+    }
+    $("#submitBtn").on("click",function(){
+        $("#submitBtn").addClass("grey");
         var hostReg1 = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
-            hostReg2 = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/;
+            hostReg2 = /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/,
+            portReg = /^\d+$/;
         if(!hostReg1.test($("#ftpHost").val()) && !hostReg2.test($("#ftpHost").val())){
             $("#ftpHost").addClass("red");
-            $(".statusPrompt").text(language=="en"?"Address error":"服务器地址有误").show();
-            clearTimeout(ftpProTimeout);
-            ftpProTimeout = setTimeout(function(){
-                $(".statusPrompt").hide();
-            },2000)
-            return
+            $("#hostError").show();
+            flag = false;
         }
-        if(!parseInt($("#ftpPort").val()) || parseInt($("#ftpPort").val())<1 || parseInt($("#ftpPort").val())>65535){
+        if(!portReg.test($("#ftpPort").val()) || parseInt($("#ftpPort").val())<1 || parseInt($("#ftpPort").val())>65535){
             $("#ftpPort").addClass("red");
-            $(".statusPrompt").text(language=="en"?"Port error":"端口错误").show();
-            clearTimeout(ftpProTimeout);
-            ftpProTimeout = setTimeout(function(){
-                $(".statusPrompt").hide();
-            },2000)
-            return
+            $("#portError").show();
+            flag = false;
         }
         var userReg = /^[a-zA-Z0-9-_.]+$/;
         if(!userReg.test($("#ftpUser").val())){
             $("#ftpUser").addClass("red");
-            $(".statusPrompt").text(language=="en"?"Username Error":"用户名错误").show();
-            clearTimeout(ftpProTimeout);
-            ftpProTimeout = setTimeout(function(){
-                $(".statusPrompt").hide();
-            },2000)
-            return
+            $("#userError").show();
+            flag = false;
         }
-        if(!userReg.test($("#ftpDstDir").val()) && $("#ftpDstDir").val()!=""){
+        if(!userReg.test($("#ftpDstDir").val())){
             $("#ftpDstDir").addClass("red");
-            $(".statusPrompt").text(language=="en"?"Sub-folder Error":"子文件夹错误").show();
-            clearTimeout(ftpProTimeout);
-            ftpProTimeout = setTimeout(function(){
-                $(".statusPrompt").hide();
-            },2000)
+            $("#pathError").show();
+            flag = false;
+        }
+        if(!flag){
+            flag = true;
             return
         }
         var sendData = {};
@@ -393,27 +446,124 @@ $(function(){
         sendData["ftp_port"] = $("#ftpPort").val();
         sendData["ftp_user"] = $("#ftpUser").val();
         sendData["ftp_dst_dir"] = $("#ftpDstDir").val();
-        sendData["ftp_passwd"] = $("#ftpPasswd").val();
+        sendData["ftp_passwd"] = $("#ftpPasswd").val().replaceAll("\\","\\\\");
         var ftp_del_file = 0;
         if($("#ftpDelFile").prop("checked")) ftp_del_file = 1;
         sendData["ftp_del_file"] = ftp_del_file;
         postJSON("/setting",sendData,function(){
-            $(".statusPrompt").text(language=="en"?"Submitted successfully":"提交成功").show();
-            clearTimeout(ftpProTimeout);
-            ftpProTimeout = setTimeout(function(){
-                $(".statusPrompt").hide();
-            },2000)
+            // promptShow(language=="en"?"Submitted successfully":"提交成功")
+            $(".searching-now .loadingText").text(language=="en"?"Submitted. Testing...":"提交成功，正在测试...");
+            $("#testBtn").show();
+            $("#forTestCover").show();
+            putJSON("/webctl",{ftpServerTest:"1"},function(){
+                setTimeout(function(){
+                    getTestResult();
+                },1000)
+            },function(){
+                $("#forTestCover").hide();
+                promptShow(language=="en"?"Fail to connect Camera":"连接相机失败")
+            },"text")
         },function(){
-            $(".statusPrompt").text(language=="en"?"Submission failed":"提交失败").show();
-            clearTimeout(ftpProTimeout);
-            ftpProTimeout = setTimeout(function(){
-                $(".statusPrompt").hide();
-            },2000)
+            promptShow(language=="en"?"Submission failed":"提交失败")
         },"text");
     })
-    $("#ftpHost,#ftpPort,#ftpUser,#ftpDstDir,#ftpPasswd,#ftpDelFile").on("propertychange input",function(){
+    $("#ftpHost").on("propertychange input",function(){
         $(this).removeClass("red");
-        $("#detailBtn").show();
+        $("#hostError").hide();
+    })
+    $("#ftpUser").on("propertychange input",function(){
+        $(this).removeClass("red");
+        $("#userError").hide();
+    })
+    $("#ftpDstDir").on("propertychange input",function(){
+        $(this).removeClass("red");
+        $("#pathError").hide();
+    })
+    $("#ftpPort").on("propertychange input",function(){
+        $(this).removeClass("red");
+        $("#portError").hide();
+    })
+    $("#ftpHost,#ftpUser,#ftpDstDir,#ftpPort,#ftpPasswd,#ftpDelFile").on("propertychange input",function(){
+        $("#submitBtn").removeClass("grey");
+    })
+    var failConnectCamera = 0;
+    var testFlag = true;
+    function getTestResult(){
+        getJSON("/media/ftpServerAbilities"+(getAccessToken()?'?access_token='+getAccessToken():''),function(data){
+            if(data.progress == "done"){
+                $("#forTestCover").hide();
+                var status = data.status;
+                if(status.connect.result == "failed"){
+                    $("#connectFailed").html(language=="en"?"Failed to connect server:<br>&nbsp;&nbsp;&nbsp;&nbsp;"+status.connect.message:"连接服务器失败：<br>&nbsp;&nbsp;&nbsp;&nbsp;"+status.connect.message)
+                    testFlag = false;
+                }
+                if(status.auth.result == "failed"){
+                    $("#authFailed").html(language=="en"?"Authentication failed:<br>&nbsp;&nbsp;&nbsp;&nbsp;"+status.auth.message:"认证失败：<br>&nbsp;&nbsp;&nbsp;&nbsp;"+status.auth.message)
+                    testFlag = false;
+                }
+                if(status.upload.result == "failed"){
+                    $("#uploadFailed").html(language=="en"?"Unable to upload file:<br>&nbsp;&nbsp;&nbsp;&nbsp;"+status.upload.message:"无法上传文件：<br>&nbsp;&nbsp;&nbsp;&nbsp;"+status.upload.message)
+                    testFlag = false;
+                }
+                if(status.createfolder.result == "failed"){
+                    $("#createFailed").html(language=="en"?"Unable to create folder:<br>&nbsp;&nbsp;&nbsp;&nbsp;"+status.createfolder.message:"无法创建文件夹：<br>&nbsp;&nbsp;&nbsp;&nbsp;"+status.createfolder.message)
+                    testFlag = false;
+                }
+                if(!testFlag){
+                    $("#testErr,#forCover").show();
+                    testFlag = true;
+                    return
+                }
+                promptShow(language=="en"?"Test passes. It is ok to sync data.":"测试通过，可正常同步文件")
+            }else if(data.progress == "doing"){
+                setTimeout(getTestResult,1000);
+            }
+        },function(){
+            failConnectCamera++;
+            if(failConnectCamera<5){
+                setTimeout(getTestResult,2000);
+            }else{
+                $("#forTestCover").hide();
+                promptShow(language=="en"?"Fail to connect Camera":"连接相机失败")
+            }
+        })
+    }
+    $("#testBtn").on("click",function(){
+        $(".searching-now .loadingText").text(language=="en"?"Testing...":"正在测试...");
+        $("#forTestCover").show();
+        putJSON("/webctl",{ftpServerTest:"1"},function(){
+            setTimeout(function(){
+                getTestResult();
+            },1000)
+        },function(){
+            $("#forTestCover").hide();
+            promptShow(language=="en"?"Fail to connect Camera":"连接相机失败")
+        },"text")
+    })
+    $("#testConfirmBtn").on("click",function(){
+        $("#connectFailed,#authFailed,#uploadFailed,#createFailed").empty();
+        $("#testErr,#forCover").hide();
+    })
+    $("#logBtn").on("click",function(){
+        $(".logContent").empty();
+        getJSON("/media/upload.log"+(getAccessToken()?'?access_token='+getAccessToken():''),function(data){
+            var infoList = data.split("\n");
+            // console.log(infoList);
+            infoList.forEach((item,index)=>{
+                ritem = item.replaceAll(" ","&nbsp;")
+                $(".logContent").append("<p>"+ritem+"</p>");
+
+            })
+            // $(".logContent").html(data);
+            $(".forLog").show();
+            $(".forAdvance").hide();
+        },function(){
+            promptShow(language=="en"?"No log yet":"暂无日志信息");
+        },"text")
+    });
+    $("#logBack").on("click",function(){
+        $(".forLog").hide();
+        $(".forAdvance").show();
     })
 })
 </script>

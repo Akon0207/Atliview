@@ -1446,6 +1446,7 @@ $(function(){
             },2000);
         },"text")
     });
+    var errCount = 0
     function getLogStatus(){
         getJSON("/tgz",function(data){
             if(data.status=="doing"){
@@ -1456,6 +1457,18 @@ $(function(){
                 $("#logsShow .dialog-poppup-content").html(language=="en"?"Done":"压缩完毕");
                 downloadLogs();
             }
+        },function(xhr,errorText,errorType){
+            errCount++;
+            if(errCount<5){
+                setTimeout(getLogStatus,1000);
+            }else{
+                $("#logsShow .dialog-poppup-content").html(language=="en"?"Get status Error":"压缩失败");
+                $("#logsShow").show();
+                setTimeout(function(){
+                    $("#logsShow").hide();
+                },2000)
+            }
+            
         })
         
     }

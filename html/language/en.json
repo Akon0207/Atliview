@@ -312,11 +312,19 @@
 	"camTime":"Current Time",
 	"autoUploadFtp":"Auto Sync(FTP)",
 	"uploadFtpNotes":"Sync videos and photos to FTP server automatically.",
-	"ftpHost":"Adress",
+	"ftpHost":"Address",
 	"ftpUser":"Username",
 	"ftpPasswd":"Password",
-	"ftpDstDir":"Sub-folder",
-	"ftpDelFile":"Delete the files after sync",
+	"ftpDstDir":"Destination-Folder",
+	"ftpDelFile":"Automatically delete synced data when storage is low",
 	"ftpPort":"Port",
-	"submit":"Submit"
+	"submit":"Submit",
+	"hostError":"Enter correct IP address or domain, such as 192.168.2.100 or ftp.example.net",
+	"portError":"Enter an integer between 1 and 65535",
+	"userError":"Enter letters, numbers, dashes, underscores, and periods",
+	"pathError":"Enter letters, numbers, dashes, underscores, and periods",
+	"loadingText":"Submitted. Testing...",
+	"syncLog":"Synchronization Log",
+	"logBtn":"View Log",
+	"testBtn":"Test"
 }

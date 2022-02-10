@@ -315,8 +315,16 @@
 	"ftpHost":"服务器地址",
 	"ftpUser":"用户名",
 	"ftpPasswd":"密码",
-	"ftpDstDir":"子文件夹",
-	"ftpDelFile":"同步成功后删除本地文件",
+	"ftpDstDir":"目标文件夹",
+	"ftpDelFile":"当存储空间不足，自动删除已同步的文件",
 	"ftpPort":"端口",
-	"submit":"提交"
+	"submit":"提交",
+	"hostError":"请输入正确的IP地址或域名，例如:192.168.2.100 或 ftp.example.net",
+	"portError":"请输入 1-65535 之间的整数",
+	"userError":"请输入大小写字母、数字、下划线、杠和点等字符",
+	"pathError":"请输入大小写字母、数字、下划线、杠和点等字符",
+	"loadingText":"提交成功，正在测试...",
+	"syncLog":"同步日志",
+	"logBtn":"检查日志",
+	"testBtn":"测试"
 }
