@@ -229,21 +229,7 @@ $(function(){
             }else{$("#uploadftp_detail").hide();}
             $("#uploadFtpSwitch").prop(ftpUpload);
         }
-        if("ftp_ability_connect" in ftpdata && ftpdata.ftp_ability_connect == 0){
-            $("#ftpErr").text(language=="en"?"Auto Sync can not work since connecting server failure.":"当前无法连接到服务器，自动同步功能无法正常工作").show();
-        }
-        if("ftp_ability_auth" in ftpdata && ftpdata.ftp_ability_auth == 0){
-            $("#ftpErr").text(language=="en"?"Auto Sync can not work since authentication failure.":"登录服务器认证失败，自动同步功能无法正常工作").show();
-        }
-        if("ftp_ability_upload" in ftpdata && ftpdata.ftp_ability_upload == 0){
-            $("#ftpErr").text(language=="en"?"Auto Sync can not work since the server refuses to upload.":"服务器拒绝上传，自动同步功能无法正常工作").show();
-        }
-        if("ftp_ability_mkdir" in ftpdata && ftpdata.ftp_ability_mkdir == 0){
-            $("#ftpErr").text(language=="en"?"Auto Sync can not work since the server refuses to create new folder.":"服务器拒绝创建文件夹，自动同步功能无法正常工作").show();
-        }
-        if("ftp_ability_resume" in ftpdata && ftpdata.ftp_ability_resume == 0){
-            $("#ftpErr").text(language=="en"?"Auto Sync can not work perfectly since the server does not support to resume broken transfer.":"服务器不支持断点续传，自动同步功能无法完美工作").show();
-        }
+        
         if("ftp_host" in ftpdata && ftpdata.ftp_host != ""){
             $("#ftpHost").val(ftpdata.ftp_host);
             $("#testBtn").show();
@@ -273,6 +259,27 @@ $(function(){
             if(ftpdata.ftp_del_file == 1)ftp_del_file=true;
             $("#ftpDelFile").prop("checked",ftp_del_file);
         }
+        if("ftp_ability_connect" in ftpdata && ftpdata.ftp_ability_connect == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work since connecting server failure.":"当前无法连接到服务器，自动同步功能无法正常工作").show();
+            return
+        }
+        if("ftp_ability_auth" in ftpdata && ftpdata.ftp_ability_auth == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work since authentication failure.":"登录服务器认证失败，自动同步功能无法正常工作").show();
+            return
+        }
+        if("ftp_ability_upload" in ftpdata && ftpdata.ftp_ability_upload == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work since the server refuses to upload.":"服务器拒绝上传，自动同步功能无法正常工作").show();
+            return
+        }
+        if("ftp_ability_mkdir" in ftpdata && ftpdata.ftp_ability_mkdir == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work since the server refuses to create new folder.":"服务器拒绝创建文件夹，自动同步功能无法正常工作").show();
+            return
+        }
+        if("ftp_ability_resume" in ftpdata && ftpdata.ftp_ability_resume == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work perfectly since the server does not support to resume broken transfer.":"服务器不支持断点续传，自动同步功能无法完美工作").show();
+            return
+        }
+        $("#ftpErr").hide();
     })
     //远程协助
     $("#remoteCtl").on("click",function(){
@@ -525,6 +532,7 @@ $(function(){
                         $("#ftpErr").text(language=="en"?"Auto Sync can not work perfectly since the server does not support to resume broken transfer.":"服务器不支持断点续传，自动同步功能无法完美工作").show();
                         return
                     }
+                    $("#ftpErr").hide();
                 })
                 $("#forTestCover").hide();
                 var status = data.status;
