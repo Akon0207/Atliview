@@ -633,7 +633,9 @@
 							<div class="swiper-slide">1/250<span lan="second">秒</span></div>
 							<div class="swiper-slide">1/125<span lan="second">秒</span></div>
 							<div class="swiper-slide">1/60<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/50<span lan="second">秒</span></div>
 							<div class="swiper-slide">1/30<span lan="second">秒</span></div>
+							<div class="swiper-slide">1/25<span lan="second">秒</span></div>
 							<div class="swiper-slide">1/15<span lan="second">秒</span></div>
 							<div class="swiper-slide">1/8<span lan="second">秒</span></div>
 							<div class="swiper-slide">1/4<span lan="second">秒</span></div>
@@ -1136,7 +1138,7 @@ $(function(){
 	}else{
 		$(".iconfont.menu").attr("href","setting.html?language=zh")
 	}
-	var exposureArray=new Array(1,38,77,153,306,765,1531,3062,6123,12756,25513,51026,95673,191346,382692,765384,1048512);
+	var exposureArray=new Array(1,38,77,153,306,765,1531,3062,6123,12756,15308,25513,30615,51026,95673,191346,382692,765384,1048512);
 	var gainObj = {"16":"100","17":"100","18":"100","19":"100","20":"100",
 	"21":"200","22":"200","23":"200","24":"200","25":"200","26":"300","27":"300","28":"300","29":"300","30":"300",
 	"31":"300","32":"400","33":"400","34":"400","35":"400","36":"400","37":"400","38":"500","39":"500","40":"500",
@@ -2862,7 +2864,7 @@ $(function(){
 			$(".parameter-exprosure .swiper-slide").each(function(index){
 				if($(this).hasClass("on")){
 					if(!($(".mode-list li").eq(0).hasClass("on"))){
-						if(index==14){//拍摄间隔限制，跟快门时长对应，互相限制
+						if(index==16){//拍摄间隔限制，跟快门时长对应，互相限制
 							if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1){
 								$('#interval-second').val("01");
 								$(".interval-prompt").show();
@@ -2871,7 +2873,7 @@ $(function(){
 								},2000);
 							}
 
-						}else if(index>14){
+						}else if(index>16){
 							if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<=1){
 								$('#interval-second').val("02");
 								$(".interval-prompt").show();
@@ -3462,7 +3464,7 @@ $(function(){
 		$(this).click(function(){
 			var foreCast = exposureArray[e]/765384*4;
 			
-			if(e==14){//快门时长的限制，跟拍摄间隔相对应，互相限制
+			if(e==16){//快门时长的限制，跟拍摄间隔相对应，互相限制
 				if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<1){
 					if($(this).hasClass("greyColor")){
 						$(".exp-prompt").show();
@@ -3473,7 +3475,7 @@ $(function(){
 					}
 					$('#interval-second').val("01");
 				}
-			}else if(e>14){
+			}else if(e>16){
 				if($('#interval-hour').val()=="00" && $('#interval-minute').val()=="00" && parseInt($('#interval-second').val(),10)<2){
 					if($(this).hasClass("greyColor")){
 						$(".exp-prompt").show();

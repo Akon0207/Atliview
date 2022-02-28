@@ -121,10 +121,8 @@
             <div class="formatError" id="portError"><span lan="ftpPort" class="bold">端口</span>: <span lan="portError">端口错误</span></div>
             <div class="formatError" id="userError"><span lan="ftpUser" class="bold">用户名</span>: <span lan="userError">用户名错误</span></div>
             <div class="formatError" id="pathError"><span lan="ftpDstDir" class="bold">目标文件</span>: <span lan="pathError">格式错误</span></div>
-            <!-- <div class="formatError" id="connectFailed"></div>
-            <div class="formatError" id="authFailed"></div>
-            <div class="formatError" id="uploadFailed"></div>
-            <div class="formatError" id="createFailed"></div> -->
+            <div class="formatError" id="ftpErr"></div>
+            
 
         </div>
     </div>
@@ -231,7 +229,21 @@ $(function(){
             }else{$("#uploadftp_detail").hide();}
             $("#uploadFtpSwitch").prop(ftpUpload);
         }
-
+        if("ftp_ability_connect" in ftpdata && ftpdata.ftp_ability_connect == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work since connecting server failure.":"当前无法连接到服务器，自动同步功能无法正常工作").show();
+        }
+        if("ftp_ability_auth" in ftpdata && ftpdata.ftp_ability_auth == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work since authentication failure.":"登录服务器认证失败，自动同步功能无法正常工作").show();
+        }
+        if("ftp_ability_upload" in ftpdata && ftpdata.ftp_ability_upload == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work since the server refuses to upload.":"服务器拒绝上传，自动同步功能无法正常工作").show();
+        }
+        if("ftp_ability_mkdir" in ftpdata && ftpdata.ftp_ability_mkdir == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work since the server refuses to create new folder.":"服务器拒绝创建文件夹，自动同步功能无法正常工作").show();
+        }
+        if("ftp_ability_resume" in ftpdata && ftpdata.ftp_ability_resume == 0){
+            $("#ftpErr").text(language=="en"?"Auto Sync can not work perfectly since the server does not support to resume broken transfer.":"服务器不支持断点续传，自动同步功能无法完美工作").show();
+        }
         if("ftp_host" in ftpdata && ftpdata.ftp_host != ""){
             $("#ftpHost").val(ftpdata.ftp_host);
             $("#testBtn").show();
@@ -491,6 +503,29 @@ $(function(){
     function getTestResult(){
         getJSON("/media/ftpServerAbilities"+(getAccessToken()?'?access_token='+getAccessToken():''),function(data){
             if(data.progress == "done"){
+                getJSON("/setting",function(d){
+                    var ftpdata = d.ftp_auto_upload;
+                    if("ftp_ability_connect" in ftpdata && ftpdata.ftp_ability_connect == 0){
+                        $("#ftpErr").text(language=="en"?"Auto Sync can not work since connecting server failure.":"当前无法连接到服务器，自动同步功能无法正常工作").show();
+                        return
+                    }
+                    if("ftp_ability_auth" in ftpdata && ftpdata.ftp_ability_auth == 0){
+                        $("#ftpErr").text(language=="en"?"Auto Sync can not work since authentication failure.":"登录服务器认证失败，自动同步功能无法正常工作").show();
+                        return
+                    }
+                    if("ftp_ability_upload" in ftpdata && ftpdata.ftp_ability_upload == 0){
+                        $("#ftpErr").text(language=="en"?"Auto Sync can not work since the server refuses to upload.":"服务器拒绝上传，自动同步功能无法正常工作").show();
+                        return
+                    }
+                    if("ftp_ability_mkdir" in ftpdata && ftpdata.ftp_ability_mkdir == 0){
+                        $("#ftpErr").text(language=="en"?"Auto Sync can not work since the server refuses to create new folder.":"服务器拒绝创建文件夹，自动同步功能无法正常工作").show();
+                        return
+                    }
+                    if("ftp_ability_resume" in ftpdata && ftpdata.ftp_ability_resume == 0){
+                        $("#ftpErr").text(language=="en"?"Auto Sync can not work perfectly since the server does not support to resume broken transfer.":"服务器不支持断点续传，自动同步功能无法完美工作").show();
+                        return
+                    }
+                })
                 $("#forTestCover").hide();
                 var status = data.status;
                 if(status.connect.result == "failed"){
