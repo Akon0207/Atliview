@@ -583,8 +583,11 @@ function secondtoHIS(duration, en)
 	if(duration < 60){
 		dhms=dhms+PrefixInteger(duration%60,2)+((en)?" Sec ":"秒");
 	}else{
-		if(dhms || parseInt(duration/3600)) dhms=dhms+PrefixInteger(parseInt(duration/3600),2)+((en)?" Hr ":"时");
-		if(dhms || parseInt(duration%3600/60)) dhms=dhms+PrefixInteger(parseInt(duration%3600/60),2)+((en)?" Min ":"分");
+		// if(dhms || parseInt(duration/3600)) dhms=dhms+PrefixInteger(parseInt(duration/3600),2)+((en)?" Hr ":"时");
+		// if(dhms || parseInt(duration%3600/60)) dhms=dhms+PrefixInteger(parseInt(duration%3600/60),2)+((en)?" Min ":"分");
+		if(dhms || parseInt(duration/(24*3600))) dhms+=PrefixInteger(parseInt(duration/(3600*24))) + ((en)?" D ":"天");
+		if(dhms || parseInt(duration%(24*3600)/3600)) dhms=dhms+PrefixInteger(parseInt(duration%(24*3600)/3600),2)+((en)?" Hr ":"时");
+		if(dhms || parseInt(duration%(24*3600)%3600/60)) dhms=dhms+PrefixInteger(parseInt(duration%(24*3600)%3600/60),2)+((en)?" Min ":"分");
 		dhms=dhms+PrefixInteger(duration%60,2)+((en)?" Sec ":"秒");
 	}
 	
