@@ -1264,11 +1264,11 @@ $(function(){
 	});
 	//提交数据
 	$(".cron-btns-confirm.post").on("click",function(){
-		if(outPutMode == 0){
+		// if(outPutMode == 0){
 			saveCron();
-		}else{
-			$(".outPutCronPro,.dialog-cover").show();
-		}
+	// 	}else{
+	// 		$(".outPutCronPro,.dialog-cover").show();
+	// 	}
 	});
 	$(".outPutCronPro .cancel").on("click",function(){
 		$(".outPutCronPro,.dialog-cover").hide();

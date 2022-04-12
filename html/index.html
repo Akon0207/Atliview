@@ -4772,10 +4772,19 @@ $(function(){
 				}
 				// d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
 				// date = d.toLocaleString();
-				if(language && language=="en"){
-					$(".head-info").html("<p>The next schedule will run on "+transFullTime(d,"en")+"</p>");
+				// if(language && language=="en"){
+				// 	$(".head-info").html("<p>The next schedule will run on "+transFullTime(d,"en")+"</p>");
+				// }else{
+				// 	$(".head-info").html("<p>定时任务将于 "+transFullTime(d,"zh")+" 开始</p>");
+				// }
+				if("playback" in e.recordinfo){
+					var recordinfo = (language=="en"?"<p>The next schedule will continue on ":"<p>定时任务将于 ")+transFullTime(d,language)+(language=="en"?"":" 继续")+"</p>";
+					recordinfo+=("<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>"+(language=="en"?"Live Preview":"实时预览")+"</span></a></p>");
+					
+					$(".head-info").html(recordinfo);
+					$("#videoShow").attr("href",e.recordinfo.playback+"?"+(getAccessToken()?'access_token='+getAccessToken():''));
 				}else{
-					$(".head-info").html("<p>定时任务将于 "+transFullTime(d,"zh")+" 开始</p>");
+					$(".head-info").html((language=="en"?"<p>The next schedule will run on ":"<p>定时任务将于 ")+transFullTime(d,language)+(language=="en"?"":" 开始")+"</p>");
 				}
 				if(cronInterval){
 					console.log("1111111111111cronInterval:"+cronInterval);
@@ -4909,14 +4918,7 @@ $(function(){
 							})
 							intervalArray = new Array("00","00",recordInterval);
 						}
-						if(language && language=="en"){
-							recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>Live Preview</span></a></p>";
-							recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow2\" style=\"display:none;\"></a></p>";
-						}else{
-							recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>实时预览</span></a></p>";
-							recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow2\" style=\"display:none;\"></a></p>";
-						}
-						
+						recordinfo+=("<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>"+(language=="en"?"Live Preview":"实时预览")+"</span></a></p>");
 					}
 					$(".head-info").html(recordinfo);
 					// if(e.frameIndex > 25){
@@ -4932,7 +4934,7 @@ $(function(){
 					}else{playbackurl = "/playback.html?sessionId="+e.sessionId+"&frameIndex="+e.frameIndex+ (getAccessToken()?'&access_token='+getAccessToken():'');}
 					console.log("暂停之前url："+playbackurl);
 					localControl.putValue("playbackurl",playbackurl);
-					$("#videoShow2").attr("href",playbackurl);
+					$("#videoShow").attr("href",playbackurl);
 					
 					// $(".video").holdHide();
 					// $(".theSpace").holdHide();
@@ -4993,12 +4995,10 @@ $(function(){
 						recordinfo+="<div class=\"pauseNow\">Paused</div>";
 					}else{recordinfo+="<div class=\"pauseNow\">已暂停</div>";}
 					*/
-					if(language && language=="en"){
-						recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>Live Preview</span></a></p>"
-					}else{
-						recordinfo+="<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>实时预览</span></a></p>"
-					}
+					recordinfo+=("<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>"+(language=="en"?"Live Preview":"实时预览")+"</span></a></p>")
+					
 					$(".head-info").html(recordinfo);
+					$("#videoShow").attr("href",e.recordinfo.playback+"?"+(getAccessToken()?'access_token='+getAccessToken():''));
 					// playbackurl = localControl.getValue("playbackurl");
 					// console.log("暂停之后url :::"+playbackurl);
 					// console.log("/playback.html?sessionId="+e.sessionId+"&frameIndex="+e.frameIndex+ (getAccessToken()?'&access_token='+getAccessToken():''));
@@ -5054,15 +5054,16 @@ $(function(){
 				nowIndex = e.frameIndex;	
 			}
 			/*点击进入实时预览*/
-			$("#videoShow").on("click",function(){
+			$("#videoShow").on("click",function(e){
 				//如果是ios用系统播放器播放
-				if(recordStatus && recordStatus == "pausing"){
-					livePreviewUrl = localControl.getValue("livePreviewUrl",null);
-					if(livePreviewUrl){
-						location.href = livePreviewUrl+(getAccessToken()?'?access_token='+getAccessToken():'');
-					}
-					return false
-				}
+				// if(recordStatus && recordStatus == "pausing"){
+				// 	livePreviewUrl = localControl.getValue("livePreviewUrl",null);
+				// 	if(livePreviewUrl){
+				// 		location.href = livePreviewUrl+(getAccessToken()?'?access_token='+getAccessToken():'');
+				// 	}
+				// 	return false
+				// }
+				e.preventDefault();
 				console.log("goto playback:"+$("#videoShow2").attr("href"));
 				if(app_type=="ios" && window.webkit.messageHandlers.previewPlayback) console.log("has playback api");
 				else console.log("no playback api");
@@ -5076,13 +5077,13 @@ $(function(){
 					}
 					// stopFocusEventSource();
 					window.stop();
-					playbackurl=$("#videoShow2").prop("href");
+					playbackurl=$("#videoShow").prop("href");
 					playbackurl=playbackurl.replace('.html', '');
 					localControl.playback(playbackurl);
 					return false;
 				}
 				//安卓或者电脑端用网页播放器播放
-				window.location.href = $("#videoShow2").attr("href");
+				window.location.href = $("#videoShow").attr("href");
 			})
 			
 
