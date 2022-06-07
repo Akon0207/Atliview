@@ -796,14 +796,13 @@ body{
 }
 .foot-bar .run:before{
     background: #f00;
+    border-radius: 0;
+    width: 20px;
+    height: 20px;
+    top: 12px;
+    left: 12px;
 }
-.foot-bar .shootV-running:before {
-        border-radius: 0;
-        width: 20px;
-        height: 20px;
-        top: 12px;
-        left: 12px;
-}
+
 .foot-bar .mode.on {
     display: block;
 }
@@ -3351,6 +3350,9 @@ body.setting-index{
 }
 #update-error2 .dialog-btns a {
 
+}
+#cronSetting {
+    display: none;
 }
 .setting-cron{
     background: #fff;
