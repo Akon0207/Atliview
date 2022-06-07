@@ -1603,8 +1603,10 @@ $(function(){
 			}*/
 			//读取服务端数据
 			getJSON("/cron", function(e, status){
+				$("#cronSetting").show();
 				viewCron(e, status);
 			}, function (jqXHR, exception) {
+				$("#cronSetting").show();
 				$(".file-split-type ul li").eq(0).addClass("on").siblings().removeClass("on");
 				$("#file-split-name").val($(".file-split-type ul li").eq(0).find("i").text());
 		        	console.log((jqXHR.status+":"+exception));

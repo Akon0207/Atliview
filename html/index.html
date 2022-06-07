@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="style/css/bootstrap-slider.min.css" />
 <link rel="stylesheet" type="text/css" href="style/css/mobiscroll.custom-3.0.0-beta2.min.css" />
 <link rel="stylesheet" type="text/css" href="style/css/main.css?1" />
+<link rel="stylesheet" type="text/css" href="style/css/index.css?1" />
 <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
 <script type="text/javascript" src="js/mobiscroll.custom-3.0.0-beta2.min.js"></script>
@@ -908,77 +909,93 @@
 		<!-- <div class="verticalPrompt" lan="verPro">当前图像为竖向<br>请竖屏操作</div> -->
 		<!-- 定时任务 start -->
 		<div class="time-poppup" style="display: none;">
-			<div class="time-tab flex">
-				<div class="time-tab-interval on" lan="shtInt">拍摄间隔</div>
-				<div class="time-tab-cron">
-					<span lan="shtTim">拍摄时长</span>
-					<input class="switch-box" type="checkbox"></input>
-					</label>
-				</div>
-			</div>
-			<div class="shooting-tips" lan="ShtTip">
-				<p>当前的拍摄模式为<span class="iconfont currentMode"> </span>,推荐拍摄间隔为<span class="currentInterval"> </span>秒</p>
-			</div>
-			<!-- <div class="interval-prompt">
-				<div class="interval-text">拍摄间隔必须大于快门时长</div>
-			</div> -->
-			<div class="time-main">
-				<div class="time-main-interval">
-					<div class="flex">
-						<div class="time-select">
-							<div class="time-plus"></div>
-							<div class="time-insert">
-								<input type="number" value="00" class="hour" id="interval-hour"><span lan="hour">时</span>
-							</div>
-							<div class="time-minus"></div>
-						</div>
-						<div class="time-select">
-							<div class="time-plus"></div>
-							<div class="time-insert">
-								<input type="number" value="00" class="minute" id="interval-minute"><span lan="min">分</span>
-							</div>
-							<div class="time-minus"></div>
-						</div>
-						<div class="time-select">
-							<div class="time-plus"></div>
-							<div class="time-insert">
-								<input type="number" value="04" class="second" id="interval-second"><span lan="second">秒</span>
-							</div>
-							<div class="time-minus"></div>
-						</div>
+			<div class="timeModeSelect">
+				<div class="iconfont shootSwitch" id="shootSwitch">&#xeb09;</div>
+				<div class="time-tab flex" id="autoShoot">
+					<div class="time-tab-interval on" lan="shtInt">拍摄间隔</div>
+					<div class="time-tab-cron">
+						<span lan="shtTim">拍摄时长</span>
+						<input class="switch-box" type="checkbox"></input>
+						</label>
 					</div>
 				</div>
-				<div class="time-main-cron disabled" style="display: none;">
-					<div class="flex">
-						<div class="time-select">
-							<div class="time-plus"></div>
-							<div class="time-insert">
-								<input type="number" value="00" class="day" readonly="readonly" id="duration-day" /><span lan="day">天</span>
+				<div class="time-tab" id="manualShoot" lan="webhook">
+					Webhook控制拍摄
+				</div>
+			</div>
+			<div id="forAutoShoot">
+				<div class="shooting-tips" lan="ShtTip">
+					<p>当前的拍摄模式为<span class="iconfont currentMode"> </span>,推荐拍摄间隔为<span class="currentInterval"> </span>秒</p>
+				</div>
+				<!-- <div class="interval-prompt">
+					<div class="interval-text">拍摄间隔必须大于快门时长</div>
+				</div> -->
+				<div class="time-main">
+					<div class="time-main-interval">
+						<div class="flex">
+							<div class="time-select">
+								<div class="time-plus"></div>
+								<div class="time-insert">
+									<input type="number" value="00" class="hour" id="interval-hour"><span lan="hour">时</span>
+								</div>
+								<div class="time-minus"></div>
 							</div>
-							<div class="time-minus"></div>
-						</div>
-						<div class="time-select">
-							<div class="time-plus"></div>
-							<div class="time-insert">
-								<input type="number" value="00" class="hour" readonly="readonly" id="duration-hour" /> <span lan="hour">时</span>
+							<div class="time-select">
+								<div class="time-plus"></div>
+								<div class="time-insert">
+									<input type="number" value="00" class="minute" id="interval-minute"><span lan="min">分</span>
+								</div>
+								<div class="time-minus"></div>
 							</div>
-							<div class="time-minus"></div>
-						</div>
-						<div class="time-select">
-							<div class="time-plus"></div>
-							<div class="time-insert">
-								<input type="number" value="00" class="minute" readonly="readonly" id="duration-minute" /><span lan="min">分</span>
+							<div class="time-select">
+								<div class="time-plus"></div>
+								<div class="time-insert">
+									<input type="number" value="04" class="second" id="interval-second"><span lan="second">秒</span>
+								</div>
+								<div class="time-minus"></div>
 							</div>
-							<div class="time-minus"></div>
 						</div>
 					</div>
+					<div class="time-main-cron disabled" style="display: none;">
+						<div class="flex">
+							<div class="time-select">
+								<div class="time-plus"></div>
+								<div class="time-insert">
+									<input type="number" value="00" class="day" readonly="readonly" id="duration-day" /><span lan="day">天</span>
+								</div>
+								<div class="time-minus"></div>
+							</div>
+							<div class="time-select">
+								<div class="time-plus"></div>
+								<div class="time-insert">
+									<input type="number" value="00" class="hour" readonly="readonly" id="duration-hour" /> <span lan="hour">时</span>
+								</div>
+								<div class="time-minus"></div>
+							</div>
+							<div class="time-select">
+								<div class="time-plus"></div>
+								<div class="time-insert">
+									<input type="number" value="00" class="minute" readonly="readonly" id="duration-minute" /><span lan="min">分</span>
+								</div>
+								<div class="time-minus"></div>
+							</div>
+						</div>
+					</div>
+					
 				</div>
-				
+				<span class="time-total" style="display: none;" lan="timTot">预计生成视频 <span id="time-total-hour">00</span>小时<span id="time-total-minute">00</span>分钟<span id="time-total-second">00</span>秒</span>
+				<div class="promptControl"><div class="outPutPrompt" lan="outPutPrompt">注意：当前设置为输出“视频+图组”</div></div>
 			</div>
-			<span class="time-total" style="display: none;" lan="timTot">预计生成视频 <span id="time-total-hour">00</span>小时<span id="time-total-minute">00</span>分钟<span id="time-total-second">00</span>秒</span>
-			<div class="promptControl"><div class="outPutPrompt" lan="outPutPrompt">注意：当前设置为输出“视频+图组”</div></div>
+			<div id="forManualShoot" class="time-main">
+				<span lan="shootTip1">通过HTTP请求，触发延时拍摄。</span><br>
+				<span lan="shootTip2">点击“开始拍摄”后，GET/POST以下URL即可触发一帧延时拍摄:</span><br>
+				<span lan="shootTip3">http://&lt;ip&gt;/timelapseShoot?access_key=xxx</span>
+				<span lan="shootTip4">其中&lt;ip&gt;是指本相机的IP地址：</span><br>
+				<span>Hostspot IP: 192.168.100.1</span><br>
+				Wlan IP:     <span id="hostIP">192.168.2.133</span>
+			</div>
 			<div class="time-btns">
-				<a href="javascript:;" id="start-shooting" lan="startSht">开始拍摄</a>
+				<a href="javascript:;" id="start-shooting" lan="startSht" type="auto">开始拍摄</a>
 				<a href="javascript:;" id="continue-shooting" lan="continueSht" style="display: none;">继续拍摄</a>
 			</div>
 		</div>
@@ -1052,7 +1069,6 @@
 	// 		else $(this).hide();
 	// 	}
 	// });
-
 
 $(function(){	
 	var sessionId = '-';
@@ -1335,7 +1351,11 @@ $(function(){
 				}
 			}
 		}
-			
+		if(data.wlan.wlanSSID == "0"){
+            $("#hostIP").html(language=="en"?"No Wi-Fi Connection ":"尚未连接Wi-Fi ");
+        }else{
+        	$("#hostIP").html(data.wlan.wlanIP);
+        }	
 	});
 
 	//1秒获取一次快门时长
@@ -2647,22 +2667,27 @@ $(function(){
 		if($("#shoot-circle").attr("state")=="recording"){
 			// limit_time = localControl.getValue("limit_time",0);
 			if(limit_time!="1"){//非定时任务点击拍摄按钮弹出暂停和停止选择框
-				$(".dialog-cover").addClass("tp");
-				$(".pauseSelect,.dialog-cover").show();
-				$(".pauseSelect").animate({
-					top:"50%",
-					width:"200px",
-					height:"100px"
-				})
-			}else{
-				if(language && language=="en"){//拍摄中点击拍摄按钮弹出确认框
-					$("#turnoffCron .warning").html("Are you sure you want to end the shooting?");
-					$("#turnoffCronNo").text("No");
-					$("#turnoffCronYes").text("End The Shooting");
+				if($(this).attr("triger")=="true"){
+					//拍摄中点击拍摄按钮弹出确认框
+					$("#turnoffCron .warning").html(language=="en"?"Are you sure you want to end the shooting?":"确认要停止拍摄？");
+					$("#turnoffCronNo").text(language=="en"?"No":"否");
+					$("#turnoffCronYes").text(language=="en"?"End The Shooting":"是");
+					$(".dialog-cover,#turnoffCron").show();
 				}else{
-					$("#turnoffCron .warning").html("确认要停止拍摄？");
+					$(".dialog-cover").addClass("tp");
+					$(".pauseSelect,.dialog-cover").show();
+					$(".pauseSelect").animate({
+						top:"50%",
+						width:"200px",
+						height:"100px"
+					})
 				}
 				
+			}else{
+				//拍摄中点击拍摄按钮弹出确认框
+				$("#turnoffCron .warning").html(language=="en"?"Are you sure you want to end the shooting?":"确认要停止拍摄？");
+				$("#turnoffCronNo").text(language=="en"?"No":"否");
+				$("#turnoffCronYes").text(language=="en"?"End The Shooting":"是");
 				$(".dialog-cover,#turnoffCron").show();
 			}
 			
@@ -3743,6 +3768,15 @@ $(function(){
 		$(".customModeBtn span").hide(500);
 		$(".forLeft").removeClass("on").siblings(".forRight").addClass("on");
 	});
+	$("#modeName").on("input propertychange",function(){
+		console.log("场景模式输入")
+		var notRealLen = $(this).val().length;
+		var realLen = getRealLength($(this).val());
+		if(realLen>10){
+			saveText = $(this).val().substring(0,notRealLen-1);
+			$(this).val(saveText);
+		}
+	})
 	$("#addNewMode").on("click",function(){
 		var top = $(".customModeBtn").offset().top;
 		$(".customModePro").offset({top:top-39});
@@ -4923,39 +4957,45 @@ $(function(){
 						var recordinfo=(language=="en"?"<p>Start Time: ":"<p>拍摄始于 ")+transFullTime(date,language=="en"?"en":"zh")+"</p>"+(language=="en"?"<p>Video Length: ":"<p>生成视频 ")+dhms+"</p>";
 					}
 					if(e.recordinfo.status!="video") {
-						if("interval" in e.recordinfo.currentVideo) {
-							recordInterval=e.recordinfo.currentVideo.interval;
-							if(language && language=="en"){
-								recordinfo+="<p>Interval: "+e.recordinfo.currentVideo.interval+" Sec</p>";
-								recordinfo+=(outPutMode==0?"":"<p>Output: Video + Photo Sequence</p>");
-							}else{
-								recordinfo+="<p>当前拍摄间隔 "+e.recordinfo.currentVideo.interval+" 秒</p>";
-								recordinfo+=(outPutMode==0?"":"<p>输出 视频+图组</p>");
-							}
-							
-							if(e.recordinfo.currentVideo.interval==1){
+						if("triger" in e.recordinfo.currentVideo){
+							recordinfo+="<p class=\"yellow\">"+(language=="en"?"Triggering Timelapse Shooting via webhook":"正在使用Webhook触发延时摄影")+"</p><p><a href=\"webhook_logs.html?language="+language+"\" class=\"blue\">"+(language=="en"?"View Logs":"查看日志")+"</a></p>";
+							$("#shoot-circle").attr("triger","true");
+						}else{
+							$("#shoot-circle").removeAttr("triger");
+							if("interval" in e.recordinfo.currentVideo) {
+								recordInterval=e.recordinfo.currentVideo.interval;
+								if(language && language=="en"){
+									recordinfo+="<p>Interval: "+e.recordinfo.currentVideo.interval+" Sec</p>";
+									recordinfo+=(outPutMode==0?"":"<p>Output: Video + Photo Sequence</p>");
+								}else{
+									recordinfo+="<p>当前拍摄间隔 "+e.recordinfo.currentVideo.interval+" 秒</p>";
+									recordinfo+=(outPutMode==0?"":"<p>输出 视频+图组</p>");
+								}
+								
+								if(e.recordinfo.currentVideo.interval==1){
+									$(".parameter-exprosure .swiper-slide").each(function(index){
+										if(index>=15){
+											$(this).addClass("greyColor");
+										}
+									})
+								}
+								intervalArray = formatTime(e.recordinfo.currentVideo.interval);
+							}else {
+								if(language && language=="en"){
+									recordinfo+="<p>Interval: "+e.recordinfo.currentVideo.intervalms/1000+" Sec</p>";
+									recordinfo+=(outPutMode==0?"":"<p>Output: Video + Photo Sequence</p>");
+								}else{
+									recordinfo+="<p>当前拍摄间隔 "+e.recordinfo.currentVideo.intervalms/1000+"秒</p>";
+									recordinfo+=(outPutMode==0?"":"<p>输出 视频+图组</p>")
+								}
+								recordInterval=e.recordinfo.currentVideo.intervalms/1000;
 								$(".parameter-exprosure .swiper-slide").each(function(index){
-									if(index>=15){
+									if(index>=14){
 										$(this).addClass("greyColor");
 									}
 								})
+								intervalArray = new Array("00","00",recordInterval);
 							}
-							intervalArray = formatTime(e.recordinfo.currentVideo.interval);
-						}else {
-							if(language && language=="en"){
-								recordinfo+="<p>Interval: "+e.recordinfo.currentVideo.intervalms/1000+" Sec</p>";
-								recordinfo+=(outPutMode==0?"":"<p>Output: Video + Photo Sequence</p>");
-							}else{
-								recordinfo+="<p>当前拍摄间隔 "+e.recordinfo.currentVideo.intervalms/1000+"秒</p>";
-								recordinfo+=(outPutMode==0?"":"<p>输出 视频+图组</p>")
-							}
-							recordInterval=e.recordinfo.currentVideo.intervalms/1000;
-							$(".parameter-exprosure .swiper-slide").each(function(index){
-								if(index>=14){
-									$(this).addClass("greyColor");
-								}
-							})
-							intervalArray = new Array("00","00",recordInterval);
 						}
 						recordinfo+=("<p><a href=\"javascript:;\" id=\"videoShow\"><span class=\"iconfont videoView\">&#xe689;</span> <span>"+(language=="en"?"Live Preview":"实时预览")+"</span></a></p>");
 					}
@@ -5049,12 +5089,12 @@ $(function(){
 					// setTimeout(function(){$("#shoot-pause").show();},400);
 				}else {
 					$(".outPutPrompt").show();
-					if(firstLoadPage3){
-						pauseStatus = localControl.getValue("pauseStatus",0);
-						firstLoadPage3 = false;
-					}
-					console.log("pauseStatus:++++++++++++++++++++"+pauseStatus);
-					if(pauseStatus==0){
+					// if(firstLoadPage3){
+					// 	pauseStatus = localControl.getValue("pauseStatus",0);
+					// 	firstLoadPage3 = false;
+					// }
+					// console.log("pauseStatus:++++++++++++++++++++"+pauseStatus);
+					// if(pauseStatus==0){
 						$("shoot-circle").removeClass("pause");
 						$(".pauseSelect li").eq(1).hide().siblings(".pause").show();
 						$(".head-info").holdHide();
@@ -5066,10 +5106,10 @@ $(function(){
 						$(".parameter-exprosure .swiper-slide").each(function(index){
 							$(this).removeClass("shooting-now").removeClass("greyColor");
 						});
-					}else{
-						console.log("pauseStatus:===================== 1");
-						localControl.putValue("pauseStatus",0);
-					}
+					// }else{
+					// 	console.log("pauseStatus:===================== 1");
+					// 	localControl.putValue("pauseStatus",0);
+					// }
 					
 				}
 				if(intervalArray && intervalFlag == 0){
@@ -5278,6 +5318,11 @@ $(function(){
 	}
 
 	function setRecording(state, e) {
+		if($("#shoot-circle").attr("triger")=="true"){
+			$("#shoot-circle").attr("state", state);
+			$("#shoot-circle").addClass("run");
+			return;
+		}
 		if(state == "recording" || state == "cronRunning"){
 			var changed=0;
 			var next=0;
@@ -5350,7 +5395,7 @@ $(function(){
 			$(".circleChart_canvas").remove();
 			$("#shoot-circle").attr("state", state);
 			$("#shoot-circle").removeAttr("data-waiting");
-			$("#shoot-circle").removeClass("shoot-percent circleChart");
+			$("#shoot-circle").removeClass("shoot-percent circleChart run");
 			$("#shoot-circle").addClass("shoot").removeClass("pause");
 			$("#shoot-circle").children("span").removeClass("shoot-percent-inside");	
 			clearCircle();
@@ -5409,7 +5454,7 @@ $(function(){
 	}
 	let toastTimeOut = null;
 	function startRecording() {
-
+		var timelapseType = $("#start-shooting").attr("type");
 		postJSON("/status",{force_time: new Date().toJSON(),timezone:-(new Date().getTimezoneOffset()/60)});
 		var interval = parseInt($('#interval-hour').val(), 10)*3600 + parseInt($('#interval-minute').val(), 10)*60 + parseFloat($('#interval-second').val());
 		//if(parseInt(interval)>=1) interval=parseInt(interval);
@@ -5422,53 +5467,61 @@ $(function(){
 		}else if(imgArchive == "vertical"){
 			recCtrl["orientation"] = 90;
 		}
-		if($(".time-poppup .switch-box").attr('checked')){
-			// localControl.putValue("limit_time",1);
-			var currentTime = new Date();
-			var endTime = calculateTime(currentTime);
-			var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
-			if(duration==0){
-				clearTimeout(toastTimeOut);
-				$("#toast-duration").show();
-				toastTimeOut = setTimeout(function(){
-					$("#toast-duration").hide();
-				},2000)
-				return
+		if(timelapseType=="auto"){
+			if($(".time-poppup .switch-box").attr('checked')){
+				// localControl.putValue("limit_time",1);
+				var currentTime = new Date();
+				var endTime = calculateTime(currentTime);
+				var duration = parseInt($('#duration-day').val(), 10)*3600*24 + parseInt($('#duration-hour').val(), 10)*3600 + parseInt($('#duration-minute').val(), 10)*60;
+				if(duration==0){
+					clearTimeout(toastTimeOut);
+					$("#toast-duration").show();
+					toastTimeOut = setTimeout(function(){
+						$("#toast-duration").hide();
+					},2000)
+					return
+				}
+				var maxFrames = Math.floor(duration/interval);
+				//recCtrl['maxFrames'] = maxFrames;
+				// if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames;
+				// else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames;
+				if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames+'E'+endTime[0];
+				else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames+'E'+endTime[0];
+				recCtrl["endAt"] = endTime[1];
 			}
-			var maxFrames = Math.floor(duration/interval);
-			//recCtrl['maxFrames'] = maxFrames;
-			// if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames;
-			// else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames;
-			if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames+'E'+endTime[0];
-			else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames+'E'+endTime[0];
-			recCtrl["endAt"] = endTime[1];
-		}
-		else {
-			if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
-			else recCtrl['schedule'] = 'd'+interval;
+			else {
+				if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
+				else recCtrl['schedule'] = 'd'+interval;
+			}
+		}else{
+			recCtrl["triger"] = "webhook";
 		}
 		$("#shoot-circle").css("pointer-events","none");
 		recordInterval=interval;
                 console.log(recCtrl);
 		postJSON("/" + sessionType, recCtrl, function (data) {
-			setRecording(true, interval);
+			if(timelapseType == "auto"){
+				setRecording(true, interval);
+				$(".circleChart_canvas").remove();//先取消之前的绘制
+				$("#shoot-circle").addClass("shoot-percent circleChart");
+				$("#shoot-circle").removeClass("shoot");
+				$("#shoot-circle").children("span").addClass("shoot-percent-inside");
+	 			$("#shoot-circle").circleChart({
+					color: "red",
+					backgroundColor: "#fff",
+					size: 45,
+					widthRatio: 0.1,
+					startAngle: 75,
+					lineCap: 'butt',
+					value: 0.01, //百分比
+					animation: 'linearTween',
+					redraw: true,
+					speed: 0,
+				});
+			}else{
+				$("#shoot-circle").addClass("run");
+			}
 			
-			$(".circleChart_canvas").remove();//先取消之前的绘制
-			$("#shoot-circle").addClass("shoot-percent circleChart");
-			$("#shoot-circle").removeClass("shoot");
-			$("#shoot-circle").children("span").addClass("shoot-percent-inside");
- 			$("#shoot-circle").circleChart({
-				color: "red",
-				backgroundColor: "#fff",
-				size: 45,
-				widthRatio: 0.1,
-				startAngle: 75,
-				lineCap: 'butt',
-				value: 0.01, //百分比
-				animation: 'linearTween',
-				redraw: true,
-				speed: 0,
-			});
 			console.log("start recording OK");
 			// setTimeout(function(){
 			// 	$("#shoot-circle").css("pointer-events","auto");
@@ -5484,6 +5537,16 @@ $(function(){
 		}, "text");
 	}
 	$('#start-shooting').on('click', startRecording);
+	//切换普通拍摄模式和webhook模式
+	$("#shootSwitch").on("click",function(){
+		$("#autoShoot,#manualShoot").toggle();
+		$("#forAutoShoot,#forManualShoot").toggle();
+		if($("#autoShoot").css("display") == "flex"){
+			$("#start-shooting").attr("type","auto")
+		}else{
+			$("#start-shooting").attr("type","manual")
+		}
+	})
 
 	function continueRecording(){
 		pauseStatus = 0;

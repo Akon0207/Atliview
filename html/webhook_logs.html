@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>aTLi-T100</title>
+    <meta name="keywords" content="aTLi-T100" />
+    <meta name="description" content="aTLi-T100" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="style/css/main.css" />
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+</head>
+<body class="setting-index">
+<section class="setting-head forLog" id="syncLog">
+    <a href="index.html" class="iconfont goback" id="logBack">&#xe6ea;</a>
+    <p lan="webhooklogs"></p>
+</section>
+<section class="setting-list forLog">
+    <div class="logContent"></div>
+</section>
+<script type="text/javascript" src="js/language.js"></script>
+<script type="text/javascript">
+    $(function(){
+        getJSON("/media/webhook.log"+(getAccessToken()?'?access_token='+getAccessToken():''),function(data){
+            var infoList = data.split("\n");
+            // console.log(infoList);
+            infoList.forEach((item,index)=>{
+                ritem = item.replaceAll(" ","&nbsp;")
+                $(".logContent").append("<p>"+ritem+"</p>");
+
+            })
+        },function(){
+            $(".logContent").append("<p>"+(language=="en"?"No log yet":"暂无日志信息")+"</p>");
+        },"text")
+    })
+</script>
+</body>
+</html>

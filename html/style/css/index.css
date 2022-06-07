@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+.timeModeSelect {
+    display: flex;
+    flex-direction: row;
+}
+.timeModeSelect>div {
+    flex-grow: 1;
+}
+#manualShoot {
+    display: none;
+    width: 250px;
+    text-align: center;
+    line-height: 44px;
+    font-size: 18px;
+    color: #00d2ff;
+    background: #f8f8f8;
+}
+#manulShoot,#autoShoot {
+    width: 250px;
+}
+.shootSwitch {
+    line-height: 44px;
+    color: #afafaf;
+    text-align: center;
+    font-size: 23px;
+}
+#forManualShoot {
+	display: none;
+}
+.yellow {
+    color: yellow;
+}
+.blue {
+    color: #00d2ff;
+}

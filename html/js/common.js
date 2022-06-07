@@ -920,6 +920,17 @@ function isWebAlive(){
 	localControl.keepAlive("alive");
 }
 
+//获取字符串字节长度
+function getRealLength(str){
+    var realLength = 0,len = str.length,charCode = -1;
+    for(var i = 0;i<len;i++){
+        charCode = str.charCodeAt(i);
+        if(charCode>=0 && charCode<=128)realLength += 1;
+        else realLength += 2;
+    }
+    return realLength;
+}
+
 //断网时转动的图标
 document.write("<div class='disconnected'><img src='images/wait.gif'/></div>");
 //断网时提示信息
