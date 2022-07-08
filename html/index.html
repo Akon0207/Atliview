@@ -910,7 +910,7 @@
 		<!-- 定时任务 start -->
 		<div class="time-poppup" style="display: none;">
 			<div class="timeModeSelect">
-				<div class="iconfont shootSwitch" id="shootSwitch">&#xeb09;</div>
+				<div class="iconfont shootSwitch" id="shootSwitch" style="display:none;">&#xeb09;</div>
 				<div class="time-tab flex" id="autoShoot">
 					<div class="time-tab-interval on" lan="shtInt">拍摄间隔</div>
 					<div class="time-tab-cron">
@@ -1143,7 +1143,7 @@ $(function(){
 	var latest_fw_url = null;
 	var camTimezone = {};
 	var sn_num = null;
-	var base64 = null;
+	var base64 = null;//用于保存切换拍摄状态前的那一帧图片，把图片转换成base64格式保存
 	if(getParameterByName("tag")=="autoAuth"){ //是远程管理页面
 		setCookie("autoAuth", "1");
 	}else {
@@ -4900,7 +4900,7 @@ $(function(){
 					// }
 					var videoStartAt = Date.parse(e.recordinfo.currentVideo.startAt)/1000;
 					// var currentTime = Date.parse(new Date())/1000;
-					var currentTime = Date.parse(e.devTime)/1000;
+					var currentTime = Date.parse(e.rtcTime)/1000;
 					var timeArrayVideo = formatTime(currentTime-videoStartAt);
 					$(".durationForVideo").text(timeArrayVideo[0]+":"+timeArrayVideo[1]+":"+timeArrayVideo[2]);
 					$(".videoSign").holdShow();
@@ -5342,7 +5342,7 @@ $(function(){
 			if(e.recordinfo.currentVideo && e.recordinfo.currentVideo.next) {
 				var d = new Date(e.recordinfo.currentVideo.next);
 				// d.setMinutes(d.getMinutes() + d.getTimezoneOffset());
-				nextRecordMS=new Date(e.devTime).getTime();
+				nextRecordMS=new Date(e.rtcTime).getTime();
 				next=d.getTime()-nextRecordMS;
 				console.log("next:"+next+"ms");
 			}
@@ -5610,9 +5610,13 @@ $(function(){
 			$("#shoot-circle").css("pointer-events","auto");
 			console.log("stop recording ok");
 			setRecording("idle");
-		}, function () {
+		}, function (xhr,errText,errThrow) {
 			console.log("stop recording error");
 			$("#shoot-circle").css("pointer-events","auto");
+			if(xhr.status==500){
+				setTimeout(stopRecording,100);
+			}
+			
 		}, "text");
 		$(".dialog-cover,#turnoffCron").holdHide();
 		// getJSON("/status",doInit);
@@ -5635,9 +5639,13 @@ $(function(){
 		putJSON("/video", { sessionId: sessionId }, function(e, status){
 			console.log("stop video ok");
 			setRecording("idle");
-		}, function () {
+		}, function (xhr,errText,errThrow) {
 			console.log("stop video error");
 			$("#preview").prop("src",base64);
+			if(xhr.status==500){
+				setTimeout(stopVideo,100);
+			}
+			
 		}, "text");
 	}
 	$('#turnoffCronYes').on('click', stopRecording);

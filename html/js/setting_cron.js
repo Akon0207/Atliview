@@ -520,13 +520,15 @@ $(function(){
 		confirm: function(){
 			// $("#"+objStr).removeClass("red");
 			$("#bydayStartTime,#bydayEndTime").removeClass("red");
+			var original = $("#"+objStr).val();
+			$("#"+objStr).val(original+":00");
 		}
 	   })
 	}
-	genRolldate("startTime", "YYYY-MM-DD hh:mm:ss");
-	genRolldate("endTime", "YYYY-MM-DD hh:mm:ss");
-	genRolldate("bydayStartTime", "hh:mm:ss");
-	genRolldate("bydayEndTime", "hh:mm:ss");
+	genRolldate("startTime", "YYYY-MM-DD hh:mm");
+	genRolldate("endTime", "YYYY-MM-DD hh:mm");
+	genRolldate("bydayStartTime", "hh:mm");
+	genRolldate("bydayEndTime", "hh:mm");
 /*
 	var bydayStartTime = mobiscroll.time('#bydayStartTime', {  //开始时间
 	    theme: 'ios',
@@ -1047,12 +1049,7 @@ $(function(){
 		var length=$("#seqList tr").length;
 		for(var i=1;i<=length;i++){
 			$("#seqList tr").eq(i-1).attr("id","seq"+i);
-			if(language && language=="en"){
-				$("#seqList .cron-time-enter").eq(i-1).attr("seq",i).text("Time Slot"+i);
-			}else{
-				$("#seqList .cron-time-enter").eq(i-1).attr("seq",i).text("时段"+i);
-			}
-			
+			$("#seqList .cron-time-enter").eq(i-1).attr("seq",i).text((language=="en"?"Time Slot":"时段")+i);
 		}	
 	})
 
@@ -1198,12 +1195,7 @@ $(function(){
 	}
 	//关闭保存结果提示
 	$("#relsut-confirm").on("click", function(){
-		if(language && language=="en"){
-			location.href="index.html?language=en&cron=1";
-		}else{
-			location.href="index.html?language=zh&cron=1";
-		}
-		
+		location.href="index.html?language="+language+"&cron=1";
 		//$("#save-result").hide();
 		//$(".dialog-cover").hide();
 	})
@@ -1458,7 +1450,8 @@ $(function(){
 		}
 		//普通模式的开始时间
 		if(e.normalTask.startAt) {
-			var startDate= new Date(Date.parse(e.normalTask.startAt.replace(/-/g,"/"))); //e.normalTask.startAt);
+			var dateStart = dateFix(e.normalTask.startAt);
+			var startDate= new Date(Date.parse(dateStart.replace(/-/g,"/"))); //e.normalTask.startAt);
 			if(isNaN(startDate.getTime())){
 				console.log("start:"+e.normalTask.startAt+startDate);
 			}else {
@@ -1470,7 +1463,8 @@ $(function(){
 		//普通模式的结束时间
 		if(e.normalTask.endAt){
 			//var endDate= new Date(e.normalTask.endAt);
-			var endDate= new Date(Date.parse(e.normalTask.endAt.replace(/-/g,"/")));
+			var dateEnd = dateFix(e.normalTask.endAt);
+			var endDate= new Date(Date.parse(dateEnd.replace(/-/g,"/")));
 			if(isNaN(endDate.getTime())){
 				console.log("end:"+e.normalTask.endAt+startDate);
 			}else {
@@ -1544,6 +1538,10 @@ $(function(){
 				if(task.exposureBias>0) task.exposureBias="+"+task.exposureBias;
 				index=i+1;
 				$("#seqList").append("<tr id='seq"+index+"'/>");
+				
+				task.startAt = dateFix(task.startAt);
+				task.endAt = dateFix(task.endAt);
+
 				cronByDayList[i] = {
 					startAt:task.startAt,
 					endAt:task.endAt,
@@ -1553,8 +1551,18 @@ $(function(){
 			});
 		}
 	}
-	
-
+	//为了兼容以前版本，用此函数调整时间
+	function dateFix(time){
+		var dateSplit = time.split(":");
+		if(parseInt(dateSplit[2])>=30){
+			dateSplit[1]=parseInt(dateSplit[1])+1;
+			if(dateSplit[1]<10){
+				dateSplit[1] = "0"+dateSplit[1];
+			}
+		}
+		dateSplit[2] = "00";
+		return dateSplit.join(":");
+	}
 	
 	
 	function getSessionId() {
