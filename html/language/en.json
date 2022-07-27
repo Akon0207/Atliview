@@ -331,5 +331,11 @@
 	"shootTip1":"Trigger Timlapse Shooting via HTTP request.",
 	"shootTip2":"Click \" Start \", then GET or POST the following URL to trigger timelapse shooting for each frame.",
 	"shootTip3":"http://&lt;ip&gt;/timelapseShoot?access_key=xxx",
-	"shootTip4":"&lt;ip&gt; refers to camera's IP address:"
+	"shootTip4":"&lt;ip&gt; refers to camera's IP address:",
+	"phonePrompt":"Please download the photo sequences on PC.",
+	"preparing":"Preparing...",
+	"warning":"Warning",
+	"download":"Download",
+	"progressTit":"Process",
+	"downloading":"Downloading..."
 }

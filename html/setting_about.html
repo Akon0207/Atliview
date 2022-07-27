@@ -1455,7 +1455,10 @@ $(function(){
                 setTimeout(getLogStatus,1000);
             }else if(data.status=="done"){
                 $("#logsShow .dialog-poppup-content").html(language=="en"?"Done":"压缩完毕");
-                downloadLogs();
+                $("#logsShow .dialog-poppup-content").text("正在下载...");
+                var url = "/media/logs.tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
+                var fileName = "logs.tgz";
+                downloadLogs(url,fileName);
             }
         },function(xhr,errorText,errorType){
             errCount++;
@@ -1472,13 +1475,84 @@ $(function(){
         })
         
     }
-    function downloadLogs() {
-        $("#logsShow").hide();
-        var link = document.createElement('a');
-        link.setAttribute("download", "");
-        link.href = "/media/logs.tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
-        link.click();
-        setTimeout(function(){postJSON("/tgz", {rm:"logs.tgz"})}, 1000);
+    // function downloadLogs() {
+    //     // $("#logsShow").hide();
+    //     // var link = document.createElement('a');
+    //     // link.setAttribute("download", "");
+    //     // link.href = "/media/logs.tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
+    //     // link.click();
+    //     // setTimeout(function(){postJSON("/tgz", {rm:"logs.tgz"})}, 1000);
+    //     $("#logsShow .dialog-poppup-content").text("正在下载...");
+    //     var xhr = new XMLHttpRequest();
+        // var url = "http://192.168.3.45/media/logs.tgz"+(getAccessToken()?'?access_token='+getAccessToken():'');
+    //     xhr.open("GET",url,true);
+    //     xhr.responseType = "file";
+    //     console.log("before onload")
+    //     xhr.onload = function(){
+    //         console.log("xhr loaded");
+    //         if(this.status == 200){
+    //             var file = this.response;
+    //             if(window.navigator.msSaveOrOpenBlob){
+    //                 navigator.msSaveBlob(file, "logs.tgz");
+    //             }else{
+    //                 console.log("link start")
+    //                 var alink = document.createElement("a");
+    //                 alink.download = "logs.tgz";
+    //                 alink.href = window.URL.createObjectURL(file);
+    //                 $("body").append(alink);
+    //                 a.click();
+    //                 window.URL.revokeObjectURL(a.href);
+    //                 $(alink).remove();
+    //             }
+    //         }
+    //         console.log("download done");
+    //         $("#logsShow .dialog-poppup-content").text("下载完成！");
+    //         setTimeout(function(){postJSON("/tgz", {rm:"logs.tgz"})}, 1000);
+    //     }
+    // }
+    async function downloadLogs(fileUrl,fileName){
+        let blob = await getBlob(fileUrl);
+        saveFile(blob,fileName);
+    }
+    function getBlob(fileUrl){
+        return new Promise(resolve => {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET",fileUrl,true);
+            //监听进度事件
+            xhr.addEventListener("progress",function(evt){
+                console.log("total size:"+evt.total);
+                if(evt.lengthComputable){
+                    let percentComplete = evt.loaded / evt.total;
+                    let percentage = percentComplete*100;
+                    console.log(percentage);
+                }
+            },false)
+            xhr.responseType = "blob";
+            xhr.onload = ()=> {
+                if(xhr.status === 200){
+                    resolve(xhr.response);
+                }
+            }
+            xhr.send();
+        })
+    }
+    function saveFile(blob,fileName){
+        //ie的下载
+        if(window.navigator.msSaveOrOpenBlob){
+            navigator.msSaveBlob(blob,fileName);
+        }else{//非IE下载
+            const link = document.createElement("a");
+            const body = document.querySelector("body");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = fileName;
+            link.style.display = "none";
+            body.appendChild(link);
+            link.click();
+            body.removeChild(link);
+            window.URL.revokeObjectURL(link.href);
+        }
+        $("#logsShow .dialog-poppup-content").text("下载完成！");
+        setTimeout(function(){postJSON("/tgz", {rm:"logs.tgz"});$("#logsShow").hide();}, 1000);
     }
 
 

@@ -23,6 +23,7 @@ var autoAuth=false; //在首页判断是不是proxy远程
 var mode_select = null;
 var timezone = null;
 var timezone_mode = null;
+var download_running = false;
 function isAP(){
         getJSON("/sysinfo?wlan1_ip=1", function(e, status){
                 if("wlan1_ip" in e ){
@@ -551,6 +552,45 @@ function renderSize(value){
     size=size.toFixed(2);//保留的小数位数
     return size+unitArr[index];
 }
+function renderSize2(value,fix){
+		if(null==value||value==''){
+        return "0 Bytes";
+    }
+    var unitArr = new Array("KB","MB","GB","TB","PB","EB","ZB","YB");
+    var index=0;
+    var srcsize = parseFloat(value);
+    index=Math.floor(Math.log(srcsize)/Math.log(1024));
+    var size =srcsize/Math.pow(1024,index);
+    size=upFixed(size,fix);//保留的小数位数
+    return size+unitArr[index];
+}
+//向上取保留N位小数
+function upFixed (num, fix) {
+  // num为原数字，fix是保留的小数位数
+  let result = '0'
+  if (Number(num) && fix > 0) { // 简单的做个判断
+    fix = +fix || 2
+    num = num + ''
+    if (/e/.test(num)) { // 如果是包含e字符的数字直接返回
+      result = num
+    } else if (!/\./.test(num)) { // 如果没有小数点
+      result = num + `.${Array(fix + 1).join('0')}`
+    } else { // 如果有小数点
+      num = num + `${Array(fix + 1).join('0')}`
+      let reg = new RegExp(`-?\\d*\\.\\d{0,${fix}}`)
+      let floorStr = reg.exec(num)[0]
+      if (+floorStr >= +num) {
+        result = floorStr
+      } else {
+        let floorNumber = +floorStr + +`0.${Array(fix).join('0')}1`
+        let point = /\./.test(floorNumber + '') ? '' : '.'
+        let floorStr2 = floorNumber + point + `${Array(fix + 1).join('0')}`
+        result = reg.exec(floorStr2)[0]
+      }
+    }
+  }
+  return result
+}
 //时分秒转换
 function transformTime(num) {
  	if(num<10){
@@ -804,6 +844,7 @@ function netDisconnected()
 						}
 					}
 				}else{
+					if(download_running)return;
 					if(netprompt_count<26){
 						$("#netprompt-cover").show();
 						$("#netprompt-cover2,#netprompt-cover3").hide();

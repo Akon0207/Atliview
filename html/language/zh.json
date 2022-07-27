@@ -331,5 +331,11 @@
 	"shootTip1":"通过HTTP请求，触发延时拍摄。",
 	"shootTip2":"点击“开始拍摄”后，GET/POST以下URL即可触发一帧延时拍摄:",
 	"shootTip3":"http://&lt;ip&gt;/timelapseShoot?access_key=xxx",
-	"shootTip4":"其中&lt;ip&gt;是指本相机的IP地址："
+	"shootTip4":"其中&lt;ip&gt;是指本相机的IP地址：",
+	"phonePrompt":"请在电脑下载图组文件夹。",
+	"preparing":"正在准备下载...",
+	"warning":"提示",
+	"download":"下载",
+	"progressTit":"下载进度",
+	"downloading":"正在下载..."
 }

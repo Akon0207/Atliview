@@ -4813,15 +4813,17 @@ fieldset{
     pointer-events: auto;
 }
 .disconnected {
-  height:20px;
-  width:20px;
-  top:50%;
-  left:50%;
-  position:absolute;
-  margin-top:-15px;
-  margin-left:-15px;
-  display: none;
-  z-index:999;
+    height:20px;
+    width:20px;
+    top:50%;
+    left:50%;
+    position:absolute;
+    display: none;
+    z-index:999;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
 }
 .cronPrompt,.cronStartAt {
     display: none;
