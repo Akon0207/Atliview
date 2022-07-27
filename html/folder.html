@@ -900,7 +900,8 @@ function oMousePos(elmt, evt) {
                 setTimeout(getSizeStatus,1000);
             }else{
                 $(".downloadPrepare,.dialog-cover").hide();
-                var folderSize = renderSize2(d[id+".size"],1);
+                var gusuanSize = d[id+".size"]+d[id+".size"]/10;//保守一点，估算值加上10%
+                var folderSize = renderSize2(gusuanSize,1);
                 console.log(folderSize+"=======================")
                 $("#beforeDownload .content").html(language=="en"?("This files will take around "+folderSize+" spaces, please make sure there's sufficient disk space to complete operation."):("本次下载将占用大约"+folderSize+"，请确保足够的磁盘空间。"));
                 $("#beforeDownload,.dialog-cover").show();
