@@ -337,5 +337,6 @@
 	"warning":"提示",
 	"download":"下载",
 	"progressTit":"下载进度",
-	"downloading":"正在下载..."
+	"downloading":"正在下载...",
+	"downloadPrompt":"下载期间切勿离开或关闭本页面"
 }

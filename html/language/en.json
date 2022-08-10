@@ -336,6 +336,7 @@
 	"preparing":"Preparing...",
 	"warning":"Warning",
 	"download":"Download",
-	"progressTit":"Process",
-	"downloading":"Downloading..."
+	"progressTit":"Progress",
+	"downloading":"Downloading...",
+	"downloadPrompt":"Please stay on this page before the download is complete"
 }

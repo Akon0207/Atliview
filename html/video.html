@@ -307,7 +307,7 @@ function setItem(mediaInfo)
 		if(mediaInfo.type==='folder'){
 			//itemStr = '<li onClick="timeslice(' +"'"+ mediaInfo.id +"','"+mediaInfo.url+"',"+mediaInfo.amount+ ')"><div class="pic" style="background-image: url(/images/folder_album.png'+ (getAccessToken()?'?access_token='+getAccessToken():'')+'),url(' + (mediaInfo.type==='video'?mediaInfo.cover:mediaInfo.url) + (getAccessToken()?'?access_token='+getAccessToken():'')+');background-size: 70%;"></div><div class="txt"><div class="size">' + mediaInfo.amount + '(pic)</div></div>';
 			itemStr = '<li onClick="location.href=';
-			itemStr += '\'folder.html?id=' + mediaInfo.id + (getAccessToken()?'&access_token='+getAccessToken():'')+'\'">';
+			itemStr += '\'folder.html?id=' + mediaInfo.id + (getAccessToken()?'&access_token='+getAccessToken():'')+'&language='+language+'\'">';
 			itemStr += '<div class="pic" style="background-image: url(/images/folder_album.png'+ (getAccessToken()?'?access_token='+getAccessToken():'')+'),url(/media/'+mediaInfo.id+'/TLS_000000001.jpg' + (getAccessToken()?'?access_token='+getAccessToken():'')+');background-size: 70%;"></div>';
 			itemStr += '<div class="txt"><div class="size">' + mediaInfo.timelapse_end_index + '(pic)</div></div>';
 			//<div class="pic" style="background-image: url(/images/folder_album.png'+ (getAccessToken()?'?access_token='+getAccessToken():'')+'),url("/media/'+mediaInfo.id+'/TLS_000000001.jpg' + (getAccessToken()?'?access_token='+getAccessToken():'')+');background-size: 70%;'></div><div class="txt"><div class="size">' + mediaInfo.timelapse_end_index + '(pic)</div></div>';

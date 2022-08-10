@@ -1150,11 +1150,7 @@ $(function(){
 		console.log("no remote tag");
 	}
 	localControl.putValue("keepAlive","enable");//发送keepalive给app
-	if(language && language=="en"){
-		$(".iconfont.menu").attr("href","setting.html?language=en")
-	}else{
-		$(".iconfont.menu").attr("href","setting.html?language=zh")
-	}
+	$(".iconfont.menu").attr("href","setting.html?language="+language)
 	var exposureArray=new Array(1,38,77,153,306,765,1531,3062,6123,12756,15308,25513,30615,51026,95673,191346,382692,765384,1048512);
 	var gainObj = {"16":"100","17":"100","18":"100","19":"100","20":"100",
 	"21":"200","22":"200","23":"200","24":"200","25":"200","26":"300","27":"300","28":"300","29":"300","30":"300",
