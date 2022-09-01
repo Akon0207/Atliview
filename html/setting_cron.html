@@ -38,11 +38,13 @@
 		<div class="setting-cron-item bottom-line flex flex-middle" id="modeSelect">
 			<div class="setting-cron-name fx1">模式选择</div>
 			<div class="setting-cron-select">
-				<input type="text" id="cronMode_val"  readonly="readonly" value="普通"/>
-				<select id="cronMode">
+				<div id="cronMode_val">普通</div>
+				<!-- <input type="text" id="cronMode_val"  readonly="readonly" value="普通"/> -->
+				<!-- <select id="cronMode">
 					<option value="普通">普通</option>
 					<option value="按天循环">按天循环</option>
-				</select>
+					<option value="按周循环">按周循环</option>
+				</select> -->
 			</div>
 		</div>
 
@@ -59,14 +61,14 @@
 					<input id="endTime" type="text" readonly class="setting-cron-time" />
 				</div>
 			</div>
-<!--
+
 			<div class="setting-cron-item bottom-line flex flex-middle">
 				<div class="setting-cron-name fx1">预设场景</div>
 				<div class="setting-cron-select">
 					<a href="javascript:;" class="trigger" id="prefabTrigger">自动</a>
 				</div>
 			</div>
--->
+
 			<div class="setting-cron-item bottom-line flex flex-middle">
 				<div class="setting-cron-name fx1" id="intervalTitle" lan="shtInt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 				<div class="setting-cron-select">
@@ -120,6 +122,12 @@
 					</select>
 				</div>
 			</div>
+			<div class="setting-cron-item bottom-line flex flex-middle" id="loopWeekSel">
+				<div class="setting-cron-name fx1" lan="loopWeek">按周循环天数</div>
+				<div class="setting-cron-select blue">
+					<div id="weekDaysCount">1,2,3,4,5,6,7</div>
+				</div>
+			</div>
 			<div class="setting-cron-item bottom-line flex flex-middle">
 				<div class="setting-cron-name fx1" lan="fileSplit"></div>
 				<div class="setting-cron-select blue" ><input type="text" readonly="readonly" id="file-split-name"></div>
@@ -131,7 +139,7 @@
 							<th class="bottom-line"> </th>
 							<th class="bottom-line" lan="startT">开始时间</th>
 							<th class="bottom-line" lan="endT">结束时间</th>
-							<!--<th class="bottom-line">预设场景</th>-->
+							<th class="bottom-line">预设场景</th>
 							<th class="bottom-line" lan="shtInt">拍摄间隔</th>
 							<!--<th class="bottom-line">曝光补偿</th>-->
 						</tr>
@@ -155,8 +163,33 @@
 	<div class="camTime">
 		<div class="camTimeContent"></div>
 	</div>
-
-
+	<div class="dialog-poppup" id="weekDaysSelect">
+		<div class="dialog-poppup-content">
+			<input type="checkbox" name="weekdays" value="1">周一
+			<input type="checkbox" name="weekdays" value="2">周二
+			<input type="checkbox" name="weekdays" value="3">周三
+			<input type="checkbox" name="weekdays" value="4">周四<br>
+			<input type="checkbox" name="weekdays" value="5">周五
+			<input type="checkbox" name="weekdays" value="6">周六
+			<input type="checkbox" name="weekdays" value="7">周日
+		</div>
+		<div class="dialog-btns">
+			<a href="javascript:;" id="weekdaysConfirm" lan="confirm">确定</a>
+		</div>
+	</div>
+	<div class="selector" id="cronMode">
+		<ul>
+			<li class="on">
+				<i lan="once"></i>
+			</li>
+			<li>
+				<i lan="byDay"></i>
+			</li>
+			<li>
+				<i lan="byWeek"></i>
+			</li>
+		</ul>
+	</div>
 	<div class="file-split-type">
 		<ul>
 			<li class="on">
@@ -270,18 +303,18 @@
 						<i class="iconfont" mode-name="star">&#xe618;</i>
 						<p>星空</p>
 					</li>
-					<li>
+					<!-- <li>
 						<i class="iconfont" mode-name="infrared">&#xe646;</i>
 						<p>红外</p>
-					</li>
+					</li> -->
 					<li>
 						<i class="iconfont" mode-name="sun">&#xe641;</i>
 						<p>日出日落</p>
 					</li>
-					<li>
+					<!-- <li>
 						<i class="iconfont" mode-name="low-light">&#xe61b;</i>
 						<p>弱光</p>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		</div>
@@ -331,28 +364,28 @@
 					<input id="bydayEndTime" type="text" readonly class="setting-cron-time"/>
 				</div>
 			</div>
-	<!--
+	
 			<div class="setting-cron-item bottom-line flex flex-middle">
 				<div class="setting-cron-name fx1">预设场景</div>
 				<div class="setting-cron-select">
 					<a href="javascript:;" class="trigger" id="bydayPrefabTrigger">自动</a>
 				</div>
 			</div>
-	-->
+	
 			<div class="setting-cron-item bottom-line flex flex-middle">
 				<div class="setting-cron-name fx1" lan="shtInt">拍摄间隔</div>
 				<div class="setting-cron-select">
 					<a href="javascript:;" class="trigger" id="bydayIntervalTrigger" second="10">10<span lan="second"></span></a>
 				</div>
 			</div>
-	<!--
+	<!-- 
 			<div class="setting-cron-item bottom-line flex flex-middle">
 				<div class="setting-cron-name fx1">曝光补偿</div>
 				<div class="setting-cron-select">
 					<a href="javascript:;" class="trigger" id="bydayExposureTrigger">0</a>
 				</div>
 			</div>
-	-->
+	 -->
 		</section>
 	<!-- <div class="cron-btns"> -->
 		<!-- <a href="javascript:;" class="cron-btns-del" lan="del">删除</a> -->

@@ -5411,7 +5411,7 @@ $(function(){
 		else clearCircle();
 	}
 	function calculateTime(currentTime) {
-		var timezone=-(new Date().getTimezoneOffset()/60);
+		var timezonelocal=-(new Date().getTimezoneOffset()/60);
 		var years = currentTime.getFullYear();
 		var months = currentTime.getMonth()+1;
 		var days = currentTime.getDate();
@@ -5423,7 +5423,13 @@ $(function(){
 		var inputMinutes = parseInt($('#duration-minute').val(), 10);
 		minutes = minutes + inputMinutes;
 		// console.log("timezone:"+timezone+"\ninputhours:"+inputHours+"\nhours:"+hours+"\n===========================");
-		hours = hours + inputHours - timezone;
+		// hours = hours + inputHours - timezone;
+		if(timezone_mode = "manual"){
+			hours = hours + inputHours - timezonelocal + timezone;
+		}else{
+			hours = hours + inputHours;
+		}
+		
 		// console.log("hours:"+hours);
 		// days = days + inputDays;
 		if(minutes>60){
@@ -5446,7 +5452,8 @@ $(function(){
 		minutes = transformTime(minutes);
 		seconds = transformTime(currentTime.getSeconds());
 
-		return [years.toString()+months.toString()+days.toString()+hours.toString()+minutes.toString()+seconds.toString(),years.toString()+"-"+months.toString()+"-"+days.toString()+"T"+hours.toString()+":"+minutes.toString()+":"+seconds.toString()+"Z"];
+		// return [years.toString()+months.toString()+days.toString()+hours.toString()+minutes.toString()+seconds.toString(),years.toString()+"-"+months.toString()+"-"+days.toString()+"T"+hours.toString()+":"+minutes.toString()+":"+seconds.toString()+"Z"];
+		return years.toString()+months.toString()+days.toString()+hours.toString()+minutes.toString()+seconds.toString();
 	}
 	let toastTimeOut = null;
 	function startRecording() {
@@ -5481,13 +5488,15 @@ $(function(){
 				//recCtrl['maxFrames'] = maxFrames;
 				// if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames;
 				// else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames;
-				if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames+'E'+endTime[0];
-				else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames+'E'+endTime[0];
-				recCtrl["endAt"] = endTime[1];
+				// if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000)+'r'+maxFrames+'E'+endTime[0];
+				// else recCtrl['schedule'] = 'd'+interval+'r'+maxFrames+'E'+endTime[0];
+				// recCtrl["endAt"] = endTime[1];
+				recCtrl = recCtrl["schedule"] = "[-1,"+endTime+","+interval+",]";
 			}
 			else {
-				if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
-				else recCtrl['schedule'] = 'd'+interval;
+				// if(interval==0.5 || interval==1.5) recCtrl['schedule'] = 'D'+(interval*1000);
+				// else recCtrl['schedule'] = 'd'+interval;
+				recCtrl["schedule"] = "[-1,-1,"+interval+",]";
 			}
 		}else{
 			recCtrl["triger"] = "webhook";

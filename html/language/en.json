@@ -338,5 +338,8 @@
 	"download":"Download",
 	"progressTit":"Progress",
 	"downloading":"Downloading...",
-	"downloadPrompt":"Please stay on this page before the download is complete"
+	"downloadPrompt":"Please stay on this page before the download is complete",
+	"once":"Once",
+	"byWeek":"byWeek",
+	"byDay":"Daily"
 }

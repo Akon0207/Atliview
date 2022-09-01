@@ -338,5 +338,8 @@
 	"download":"下载",
 	"progressTit":"下载进度",
 	"downloading":"正在下载...",
-	"downloadPrompt":"下载期间切勿离开或关闭本页面"
+	"downloadPrompt":"下载期间切勿离开或关闭本页面",
+	"once":"普通",
+	"byWeek":"按周循环",
+	"byDay":"按天循环"
 }

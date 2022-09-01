@@ -3,8 +3,8 @@
                 alert("uploadDone:"+flag);
         }
 var language = getParameterByName("language");
-var Modezh = '<div class="setting-cron-name fx1">模式选择</div><div class="setting-cron-select"><input type="text" id="cronMode_val"  readonly="readonly" value="普通"/><select id="cronMode"><option value="普通">普通</option><option value="按天循环">按天循环</option></select></div>'
-var Modeen = '<div class="setting-cron-name fx1">Repetition</div><div class="setting-cron-select"><input type="text" id="cronMode_val"  readonly="readonly" value="Once"/><select id="cronMode"><option value="Once">Once</option><option value="Daily">Daily</option></select></div>'
+var Modezh = '<div class="setting-cron-name fx1">模式选择</div><div class="setting-cron-select"><input type="text" id="cronMode_val"  readonly="readonly" value="普通"/><select id="cronMode"><option value="普通">普通</option><option value="按天循环">按天循环</option><option value="按周循环">按周循环</option></select></div>'
+var Modeen = '<div class="setting-cron-name fx1">Repetition</div><div class="setting-cron-select"><input type="text" id="cronMode_val"  readonly="readonly" value="Once"/><select id="cronMode"><option value="Once">Once</option><option value="Daily">Daily</option><option value="Week">Week</option></select></div>'
 var loopZh = '<div class="setting-cron-name fx1" lan="loopDays">循环天数</div><div class="setting-cron-select blue"><input type="text" id="loopMode_val" lan="loopModeV" readonly="readonly" value="不限" /><select id="loopMode"><option value="不限" lan="notLim">不限</option><option value="自定义" lan="custom">自定义</option></select></div>'
 var loopEn = '<div class="setting-cron-name fx1" lan="loopDays">Days</div><div class="setting-cron-select blue"><input type="text" id="loopMode_val" lan="loopModeV" readonly="readonly" value="Infinite" /><select id="loopMode"><option value="Infinite" lan="notLim">Infinite</option><option value="Customized" lan="custom">Customized</option></select></div>'
 var cronInterval = null;
@@ -17,16 +17,20 @@ var camStatus = null;//获取/cron的时候用
 var cronByDayList = new Array();
 var now = new Date();  //获取当前时间
     now = new Date(now.getTime()+60000-now.getTime()%60000);
-		
+var selectMode = {
+	"once":language=="en"?"Once":"普通",
+	"byday":language=="en"?"Daily":"按天循环",
+	"byweek":language=="en"?"byWeek":"按周循环"
+}
 $(function(){
-	if(language && language=="en"){
-		$("#modeSelect").html(Modeen);
-		$("#loopDaySel").html(loopEn);
-	}else{
-		language="zh";
-		$("#modeSelect").html(Modezh);
-		$("#loopDaySel").html(loopZh);
-	}
+	// if(language && language=="en"){
+	// 	$("#modeSelect").html(Modeen);
+	// 	$("#loopDaySel").html(loopEn);
+	// }else{
+	// 	language="zh";
+	// 	$("#modeSelect").html(Modezh);
+	// 	$("#loopDaySel").html(loopZh);
+	// }
 	var mode="common";
 	var newVersion=1;
 	var recordWait=0;
@@ -57,12 +61,12 @@ $(function(){
 	function startRecording(s) {
 		postJSON("/status",{force_time: new Date().toJSON(),timezone:-(new Date().getTimezoneOffset()/60)});
 		//var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, starttime:transTimeyMDHIS() };
-		// var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
-		if(s[1]=="Infinite"){
-			var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
-		}else{
-			var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], endAt: s[1][1], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
-		}
+		var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
+		// if(s[1]=="Infinite"){
+		// 	var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
+		// }else{
+		// 	var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s[0], endAt: s[1][1], cron:1, timezone: -(new Date().getTimezoneOffset()/60) };
+		// }
 		
 		// var recCtrl = { sessionId: sessionId, frameRate: 25, schedule: s, cron:1, timezone: 0 };
 		if(imgArchive == "horizontal"){
@@ -79,8 +83,8 @@ $(function(){
 				}
 			})
 		}
-			
-		if(recordWait) recCtrl['wait'] = recordWait;
+		//不再需要wait这个参数
+		// if(recordWait) recCtrl['wait'] = recordWait;
 		// setTimeout(function(){
 			postJSON("/timelapse" , recCtrl, function (data) {
 				console.log("start recording OK");
@@ -96,12 +100,13 @@ $(function(){
 		var zone=timezone;
 		if(timezone_mode == "manual")zone = parseInt(cameraTimezone);
 		var strs=src.split(":");
-		var hh=parseInt(strs[0])-zone;
+		// var hh=parseInt(strs[0])-zone;
 		//var hh=parseInt(strs[0]);
-		if(hh>=24) hh-=24;
-		if(hh<0) hh+=24;
-		if(hh<10) hh="0"+hh;
-		return hh+strs[1]+strs[2];
+		// if(hh>=24) hh-=24;
+		// if(hh<0) hh+=24;
+		// if(hh<10) hh="0"+hh;
+		// return hh+strs[1]+strs[2];
+		return strs[0]+strs[1]+strs[2];
 	}
 	function calculateTime(end){
 			var zone=timezone;
@@ -110,17 +115,18 @@ $(function(){
 			var hours = end.getHours();
 			var minutes = end.getMinutes();
 			var seconds = end.getSeconds();
-			hours = hours - zone;
-			if(hours>24){
-				hours = hours-24;
-				end.setDate(day+1);
-			}else if(hours<0){
-				hours = hours + 24;
-				end.setDate(day-1);
-			}
+			// hours = hours - zone;
+			// if(hours>24){
+			// 	hours = hours-24;
+			// 	end.setDate(day+1);
+			// }else if(hours<0){
+			// 	hours = hours + 24;
+			// 	end.setDate(day-1);
+			// }
 			var year = end.getFullYear();
 			var month = end.getMonth()+1;
 			day = end.getDate();
+			// return year.toString()+transformTime(month).toString()+transformTime(day).toString()+transformTime(hours).toString()+transformTime(minutes).toString()+transformTime(seconds).toString();
 			return [year.toString()+transformTime(month).toString()+transformTime(day).toString()+transformTime(hours).toString()+transformTime(minutes).toString()+transformTime(seconds).toString(),
 					year.toString()+"-"+transformTime(month).toString()+"-"+transformTime(day).toString()+"T"+transformTime(hours).toString()+":"+transformTime(minutes).toString()+":"+transformTime(seconds).toString()+"Z"];
 	}
@@ -150,50 +156,55 @@ $(function(){
 			var interval=configs["normalTask"]["shootInterval"];
 			start=new Date(Date.parse(configs["normalTask"]["startAt"].replace(/-/g,"/")));
 			end=new Date(Date.parse(configs["normalTask"]["endAt"].replace(/-/g,"/")));
+			var scene = configs["normalTask"]["recordMode"];
 			if(timezone_mode=="manual"){
 				start = new Date(start.getTime() - parseInt(cameraTimezone)*3600000);
 				end = new Date(end.getTime() - parseInt(cameraTimezone)*3600000);
 				now = new Date(now.getTime() - parseInt(cameraTimezone)*3600000 );
 			}
 			console.log("interval:"+interval+"\nnow:"+now+"\nstart:"+start+"\nend:"+end);
-			var endTime = calculateTime(new Date(Date.parse(configs["normalTask"]["endAt"].replace(/-/g,"/"))));
+			var startTime = calculateTime(new Date(Date.parse(configs["normalTask"]["startAt"].replace(/-/g,"/"))))[0];
+			var endTime = calculateTime(new Date(Date.parse(configs["normalTask"]["endAt"].replace(/-/g,"/"))))[0];
 			if(now.getTime()>=end.getTime() || start.getTime()>=end.getTime()) {
 				console.log("now:"+now.getTime()+"\nstart:"+start.getTime()+"\nend:"+end.getTime())
 				return null; //已经结束
+			}else{
+				s = "["+startTime+","+endTime+","+interval+",\""+scene+"\"]";
 			}
-			else if(now.getTime()>=start.getTime() && now.getTime()<end.getTime()) { //立即开始
-				var r=parseInt((end.getTime()-now.getTime())/1000/interval)+1;
-				//var S=parseInt(Date.now()/1000);
-				//var E=S+interval*r;
-				if(interval=="0.5" || interval==1.5){
-					// var s="D"+interval*1000+"r"+r;
-					var s="D"+interval*1000+"r"+r+"E"+endTime[0];
-				}else{
-					// var s="d"+interval+"r"+r;
-					var s="d"+interval+"r"+r+"E"+endTime[0];
-				}
-				// return s;
-				// return [s,endTime];
-			}
-			else if(now.getTime()<start.getTime()) {//等待开始
-				var r=parseInt((end.getTime()-start.getTime())/1000/interval)+1;
-				recordWait=parseInt((start.getTime()-now.getTime())/1000);
-				//var S=parseInt(Date.now()/1000)+recordWait;
-				//var E=S+interval*r;
-				if(interval=="0.5" || interval==1.5){
-					// var s="d"+0+"s(D"+interval*1000+"r"+r+")r1";
-					var s="d"+0+"s(D"+interval*1000+"r"+r+"E"+endTime[0]+")r1";
-				}else{
-					// var s="d"+0+"s(d"+interval+"r"+r+")r1";
-					var s="d"+0+"s(d"+interval+"r"+r+"E"+endTime[0]+")r1";
-				}
-				// return s;
-				// return [s,endTime];
-			}
+			// else if(now.getTime()>=start.getTime() && now.getTime()<end.getTime()) { //立即开始
+			// 	var r=parseInt((end.getTime()-now.getTime())/1000/interval)+1;
+			// 	//var S=parseInt(Date.now()/1000);
+			// 	//var E=S+interval*r;
+			// 	if(interval=="0.5" || interval==1.5){
+			// 		// var s="D"+interval*1000+"r"+r;
+			// 		var s="D"+interval*1000+"r"+r+"E"+endTime[0];
+			// 	}else{
+			// 		// var s="d"+interval+"r"+r;
+			// 		var s="d"+interval+"r"+r+"E"+endTime[0];
+			// 	}
+			// 	// return s;
+			// 	// return [s,endTime];
+			// }
+			// else if(now.getTime()<start.getTime()) {//等待开始
+			// 	var r=parseInt((end.getTime()-start.getTime())/1000/interval)+1;
+			// 	recordWait=parseInt((start.getTime()-now.getTime())/1000);
+			// 	//var S=parseInt(Date.now()/1000)+recordWait;
+			// 	//var E=S+interval*r;
+			// 	if(interval=="0.5" || interval==1.5){
+			// 		// var s="d"+0+"s(D"+interval*1000+"r"+r+")r1";
+			// 		var s="d"+0+"s(D"+interval*1000+"r"+r+"E"+endTime[0]+")r1";
+			// 	}else{
+			// 		// var s="d"+0+"s(d"+interval+"r"+r+")r1";
+			// 		var s="d"+0+"s(d"+interval+"r"+r+"E"+endTime[0]+")r1";
+			// 	}
+			// 	// return s;
+			// 	// return [s,endTime];
+			// }
 			
-			return [s,endTime];
+			// return [s,endTime];
+			return s;
 		}
-		else { //按天模式
+		else{ //按天/周模式
 		//计算第一个周期
 			var index=0;
 			var length=configs["bydayTask"].length;
@@ -205,6 +216,8 @@ $(function(){
 			var seqsEnd=[];//每段结束的时刻
 			var seqsWait=[]; //每段拍摄后的等待时间
 			var remainWait=[]; //上次拍摄后除不尽的多余时间
+			var seqsList = new Array();
+			var allSlot = "";
 			var last;
 			var endTime = null;
 			if(length<=0) return null;
@@ -218,6 +231,7 @@ $(function(){
 				start=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][i-1]["startAt"]));
 				end=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][i-1]["endAt"]));
 				var interval=configs["bydayTask"][i-1]["shootInterval"];
+				var scene = configs["bydayTask"][i-1]["scene"];
 				var r=parseInt((getTime(end)-getTime(start))/1000/interval)+1;
 				if(r==1) interval=parseInt(getTime(end)-getTime(start))/1000; //只拍一次的情况下，拍摄间隔为剩余的所有时间
 				if(i!=1) {
@@ -240,7 +254,11 @@ $(function(){
 					seqs[i-1]="d"+interval;
 				}
 				seqs[i-1]+="r"+((r==1)?2:r);
-				if(seqsStart[i-1]<=seqsEnd[i-1]) seqs[i-1]+="S"+seqsStart[i-1]+"E"+seqsEnd[i-1]+"";
+				if(seqsStart[i-1]<=seqsEnd[i-1]){
+					seqs[i-1]+="S"+seqsStart[i-1]+"E"+seqsEnd[i-1]+"";//不跨天
+				}else{
+					seqs[i-1]+="E"+seqsEnd[i-1]+"";//跨天
+				}
 				
 				last=end;
 				if(now.getTime()<getTime(end)) { //找到当前结束的时段
@@ -249,7 +267,10 @@ $(function(){
 				if(now.getTime()>getTime(start)) { //找到当前开始的时段
 					startindex=i;
 				}
+				seqsList.push("["+seqsStart[i-1]+","+seqsEnd[i-1]+","+interval+",\""+scene+"\"]");
 			}
+			console.log(seqsList);
+			allSlot = "{"+seqsList.join(",")+"}";
 			for(var i=0;i<length;i++){
 				console.log("seqsWait="+seqsWait[i]+" remainWait="+remainWait[i]);
 			}
@@ -278,10 +299,11 @@ $(function(){
 				interval=configs["bydayTask"][startindex-1]["shootInterval"];
 				var r=parseInt((getTime(end)-now.getTime())/1000/interval)+1;
 				if(r==1) interval=parseInt((getTime(end)-now.getTime())/1000); //只拍一次的情况下，拍摄间隔为剩余的所有时间
+				var e = "E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]);
 				if(interval == "0.5" || interval==1.5){
-					s="D"+interval*1000+"r"+((r==1)?2:r);
+					s="D"+interval*1000+"r"+((r==1)?2:r)+e;
 				}else{
-					s="d"+interval+"r"+((r==1)?2:r);
+					s="d"+interval+"r"+((r==1)?2:r)+e;
 				}
 				//if(genHMS(configs["bydayTask"][startindex-1]["startAt"])<=genHMS(configs["bydayTask"][startindex-1]["endAt"]))
 					//s+="S"+genHMS(configs["bydayTask"][startindex-1]["startAt"])+"E"+genHMS(configs["bydayTask"][startindex-1]["endAt"]); //立即拍摄情况去掉S和E
@@ -321,20 +343,30 @@ $(function(){
 				//按天模式-天数
 				if(configs["bydayLoop"]!=0) s+="r"+(configs["bydayLoop"]-1);
 			}
-		}
-		if(configs["bydayLoop"]==0){
-			endTime = "Infinite";
-		}else{
+			if(configs["cronMode"]=="byday"){
+				if(configs["bydayLoop"]==0){
+					// endTime = "Infinite";
+					s = allSlot;
+				}else{
 
-			var endT=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][length-1]["endAt"]));
-			if(configs["bydayLoop"]>1){
-				endT.setDate(endT.getDate()+configs["bydayLoop"]-1);
+					var endT=new Date(Date.parse(now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+configs["bydayTask"][length-1]["endAt"]));
+					if(configs["bydayLoop"]>1){
+						endT.setDate(endT.getDate()+configs["bydayLoop"]-1);
+					}
+					endTime = calculateTime(endT)[0];
+					s = allSlot+"e"+endTime;
+					// endTime = endT.getFullYear().toString()+transformTime(endT.getMonth()+1).toString()+transformTime(endT.getDate()).toString()+transformTime(endT.getHours()).toString()+transformTime(endT.getMinutes()).toString()+transformTime(endT.getSeconds()).toString()
+				}
+				return s;
+			}else if(configs["cronMode"]=="byweek"){
+				var weekDaysStr = "("+$("#weekDaysCount").text()+")";
+				s = allSlot+"w"+weekDaysStr;
+				return s;
 			}
-			endTime = calculateTime(endT);
-			// endTime = endT.getFullYear().toString()+transformTime(endT.getMonth()+1).toString()+transformTime(endT.getDate()).toString()+transformTime(endT.getHours()).toString()+transformTime(endT.getMinutes()).toString()+transformTime(endT.getSeconds()).toString()
+			
 		}
-		// return s;
-		return [s,endTime];
+		
+		// return [s,endTime];
 	}
 	//测试用
 	$("#send").on("click", function(){
@@ -781,30 +813,75 @@ $(function(){
 
 	//模式选择按钮
 	$("#cronMode_val").on("click",function(){
-		$("#cronMode_dummy").click();
-		$(".mbsc-fr-w").addClass("no");
-	})
-	var cronMode = mobiscroll.select('#cronMode', {  
-	    theme: 'ios',
-	    lang: language=='en'?'en':'zh',
-	    display: 'bottom',
-	    onChange: function(event, inst){
-	    	var a = event.valueText;
-	    	if(a=='普通' || a=="Once"){
-				$(this).parent().removeClass("blue");
+		// $("#cronMode_dummy").click();
+		// $(".mbsc-fr-w").addClass("no");
+		$(".dialog-cover,#cronMode").show();
+		$(".dialog-cover").addClass("tp");
+	});
+	var cronModeArray = language=="en"?["Once","Daily","byWeek"]:["普通","按天循环","按周循环"];
+	$("#cronMode li").each(function(index){
+		$(this).on("click",function(){
+			$(this).addClass("on").siblings().removeClass("on");
+			$(".dialog-cover,#cronMode").hide();
+			$("#cronMode_val").html(cronModeArray[index]);
+			if(index==0){
+				$(".setting-cron-select").removeClass("blue");
 				$("#loopDays").hide();
 				$("#loopNormal").show();
-	    	}else{
-				$(this).parent().addClass("blue");
+			}else if(index==1){
+				$(".setting-cron-select").addClass("blue");
 				$("#loopDays").show();
+				$("#loopDaySel").show();
+				$("#loopWeekSel").hide();
 				$("#loopNormal").hide();
-	    	}
-	    	inst.setVal(a);
-	    	$("#cronMode_dummy,#cronMode_val").val(a);
-	    	inst.hide();
-	    	console.log(inst.getVal());
-	    }
+			}else{
+				$(".setting-cron-select").addClass("blue");
+				$("#loopDays").show();
+				$("#loopDaySel").hide();
+				$("#loopWeekSel").show();
+				$("#loopNormal").hide();
+			}
+		})
+	})
+	//按周循环选择天数
+	$("#weekDaysCount").on("click",function(){
+		$("#weekDaysSelect,.dialog-cover").show();
+		$(".dialog-cover").addClass("tp");
 	});
+	$("#weekdaysConfirm").on("click",function(){
+		$(".dialog-cover").removeClass("tp");
+		$("#weekDaysSelect,.dialog-cover").hide();
+		var weekDaysArr = [];
+		$("#weekDaysSelect input").each(function(){
+			if($(this).prop("checked")){
+				weekDaysArr.push($(this).attr("value"));
+			}
+		})
+		if(weekDaysArr.length!=0){
+			$("#weekDaysCount").text(weekDaysArr.join(","));
+		}
+	})
+	// var cronMode = mobiscroll.select('#cronMode', {  
+	//     theme: 'ios',
+	//     lang: language=='en'?'en':'zh',
+	//     display: 'bottom',
+	//     onChange: function(event, inst){
+	//     	var a = event.valueText;
+	//     	if(a=='普通' || a=="Once"){
+	// 			$(this).parent().removeClass("blue");
+	// 			$("#loopDays").hide();
+	// 			$("#loopNormal").show();
+	//     	}else{
+	// 			$(this).parent().addClass("blue");
+	// 			$("#loopDays").show();
+	// 			$("#loopNormal").hide();
+	//     	}
+	//     	inst.setVal(a);
+	//     	$("#cronMode_dummy,#cronMode_val").val(a);
+	//     	inst.hide();
+	//     	console.log(inst.getVal());
+	//     }
+	// });
 
 
 
@@ -891,7 +968,7 @@ $(function(){
 		if(mode=="common") var p=$("#prefabTrigger");
 		else p=$("#bydayPrefabTrigger");
 		var t = $("#prefabList li.on").find("p");
-		p.text(t.text()).attr("mode-name", t.prev().attr("mode-name"));
+		p.text(t.text()).attr("mode-name", $("#prefabList li.on").find("i").attr("mode-name"));
 		$(".dialog-cover,#prefabList").hide();
 	})
 
@@ -1111,6 +1188,7 @@ $(function(){
 			cronByDayList.push({
 				startAt:$("#bydayStartTime").val(),
 				endAt:$("#bydayEndTime").val(),
+				scene:$("#bydayPrefabTrigger").attr("mode-name"),
 				interval:$("#bydayIntervalTrigger").attr("second")
 			})
 			
@@ -1151,6 +1229,7 @@ $(function(){
 			$("#bydayStartTime,#bydayEndTime").removeClass("red");
 			cronByDayList[index-1].startAt = $("#bydayStartTime").val();
 			cronByDayList[index-1].endAt = $("#bydayEndTime").val();
+			cronByDayList[index-1].scene = $("#bydayPrefabTrigger").attr("mode-name");
 			cronByDayList[index-1].interval = $("#bydayIntervalTrigger").attr("second");
 			// updateSeq(index, $("#bydayStartTime").val(), $("#bydayEndTime").val(), $("#bydayPrefabTrigger").text(), $("#bydayIntervalTrigger").attr("second"), $("#bydayExposureTrigger").text());
 		
@@ -1163,8 +1242,8 @@ $(function(){
 		})
 		$("#seqList").empty();
 		cronByDayList.forEach(function(item,i){
-			$("#seqList").append("<tr id='seq"+(i+1)+"'/>");
-			updateSeq(i+1,item.startAt,item.endAt,null,item.interval,null);
+			$("#seqList").append("<tr id='seq"+(i+1)+"'></tr>");
+			updateSeq(i+1,item.startAt,item.endAt,item.scene,item.interval,null);
 		})
 		// $("#commonSetting").show();
 		$("#bydaySetting,.dialog-cover2").hide();
@@ -1199,21 +1278,29 @@ $(function(){
 		//$("#save-result").hide();
 		//$(".dialog-cover").hide();
 	})
+	var modeArr = ["normal","byday","byweek"];
 	//生成要保存的数据
 	function genConfigs(){
 		var configs={};
 		//configs["cronEnable"]=($("#cronTrigger").attr("checked")=="checked")?1:0;
-		configs["cronMode"]=($("#cronMode_dummy").val()=="普通" || $("#cronMode_dummy").val()=="Once")?"normal":"byday";
+		// configs["cronMode"]=($("#cronMode_dummy").val()=="普通" || $("#cronMode_dummy").val()=="Once")?"normal":"byday";
+		configs["cronMode"] = modeArr[$("#cronMode li.on").index()];
 		configs["normalTask"]={
 			//startAt:transTime(new Date(parseInt($("#startTime").attr("ms"))), "en"),
 			//endAt:transTime(new Date(parseInt($("#endTime").attr("ms"))), "en"),
 			startAt:$("#startTime").val(),
 			endAt:$("#endTime").val(),
-			//recordMode:$("#prefabTrigger").attr("mode-name"),
+			recordMode:$("#prefabTrigger").attr("mode-name"),
 			shootInterval:$("#intervalTrigger").attr("second"),
 			//exposureBias:parseInt($("#exposureTrigger").text())
 		};
 		configs["bydayLoop"]=($("#loopMode").mobiscroll("getVal")=="不限" || $("#loopMode").mobiscroll("getVal")=="Infinite")?0:parseInt($("#day").val());
+		if($("#weekDaysCount").text()==""){
+			configs["weekDaysCount"] = "1,2,3,4,5,6,7";
+		}else{
+			configs["weekDaysCount"] = $("#weekDaysCount").text();
+		}
+		
 		configs["bydayTask"]= new Array();
 		var length=$("#seqList tr").length;
 		for(var i=1;i<=length;i++){
@@ -1223,8 +1310,9 @@ $(function(){
 			configs["bydayTask"][i-1]["startAt"]=td.text();
 			td=td.next();
 			configs["bydayTask"][i-1]["endAt"]=td.text();
-			//td=td.next();
+			td=td.next();
 			//configs["bydayTask"][i-1]["recordMode"]=$(".mode-list p:contains('"+td.text()+"')").prev().attr("mode-name");
+			configs["bydayTask"][i-1]["scene"] = cronByDayList[i-1]["scene"];
 			td=td.next();
 			configs["bydayTask"][i-1]["shootInterval"]=td.attr("second");
 			//td=td.next();
@@ -1327,8 +1415,11 @@ $(function(){
 		// },1500)
 	}
 	//页面更新某个时段信息
+	var modeObj = language=="en"?{"auto":"Auto","cloud":"Cloud","cityNight":"Cityscape","flower":"Flower","star":"Star","sun":"Sunrise/Sunset"}:{"auto":"自动","cloud":"云彩","cityNight":"城市夜景","flower":"鲜花","star":"星空","sun":"日出日落"}
 	function updateSeq(index, startAt, endAt, recordMode, shootInterval, exposureBias){
 		var seqtr="#seq"+index;
+		console.log(recordMode);
+		console.log(modeObj,modeObj[recordMode]);
 /*
 		$(seqtr).html("<td class=\"bottom-line\"><a href=\"javascript:;\" class=\"cron-time-enter\" seq=\""+index+"\">时间段"+index+"</a></td>"
 		+"<td>"+startAt+"</td>"
@@ -1342,12 +1433,14 @@ $(function(){
 			$(seqtr).html("<td class=\"bottom-line\"><a href=\"javascript:;\" class=\"cron-time-enter\" seq=\""+index+"\">Time Slot"+index+"</a></td>"
 			+"<td>"+startAt+"</td>"
 			+"<td>"+endAt+"</td>"
+			+"<td>"+modeObj[recordMode]+"</td>"
 			+"<td tdname=\"interval\" second=\""+shootInterval+"\">"+secondtoHIS(shootInterval,language)+"</td>"
 			);
 		}else{
 			$(seqtr).html("<td class=\"bottom-line\"><a href=\"javascript:;\" class=\"cron-time-enter\" seq=\""+index+"\">时间段"+index+"</a></td>"
 			+"<td>"+startAt+"</td>"
 			+"<td>"+endAt+"</td>"
+			+"<td>"+modeObj[recordMode]+"</td>"
 			+"<td tdname=\"interval\" second=\""+shootInterval+"\">"+secondtoHIS(shootInterval)+"</td>"
 			);
 		}
@@ -1372,8 +1465,8 @@ $(function(){
 			td=td.next();
 			$("#bydayEndTime").val(td.text());
 			$("#bydayEndTime").mobiscroll("setVal", td.text());
-			//td=td.next();
-			//$("#bydayPrefabTrigger").text(td.text()).attr("mode-name", $(".mode-list p:contains('"+td.text()+"')").prev().attr("mode-name"));
+			td=td.next();
+			$("#bydayPrefabTrigger").text(td.text()).attr("mode-name", recordMode);
 			td=td.next();
 			$("#bydayIntervalTrigger").text(td.text()).attr("second", td.attr("second"));
 			//td=td.next();
@@ -1383,12 +1476,12 @@ $(function(){
 	//更新页面数据
 	function viewCron(e, status){
 		console.log(e);
-		if(e.cronEnable==1) {
-			$("#cronTrigger").attr("checked", true);
-		}
-		else {
-			$("#cronTrigger").attr("checked", false);
-		}
+		// if(e.cronEnable==1) {
+		// 	$("#cronTrigger").attr("checked", true);
+		// }
+		// else {
+		// 	$("#cronTrigger").attr("checked", false);
+		// }
 		if("cutmode" in e){
 			$(".file-split-type ul li").each(function(index){
 				if(e.cutmode == index){
@@ -1401,18 +1494,46 @@ $(function(){
 			$(".file-split-type ul li").eq(0).addClass("on").siblings().removeClass("on");
 			$("#file-split-name").val($(".file-split-type ul li").eq(0).find("i").text());
 		}
-		if(e.cronMode=="byday"){
-			if(language && language=="en"){
-				$("#cronMode_dummy,#cronMode_val").val("Daily");
-			}else{
-				$("#cronMode_dummy,#cronMode_val").val("按天循环");
-			}
-			
+		console.log(cronModeArray,"==================")
+		if(e.cronMode == "normal") {
+			// if(language && language=="en"){
+			// 	$("#cronMode_dummy,#cronMode_val").val("Once");
+			// }else{
+			// 	$("#cronMode_dummy,#cronMode_val").val("普通");
+			// }
+			// if(language && language=="en"){
+			// 	cronMode.setVal("Once", true, false);
+			// }else{
+			// 	cronMode.setVal("普通", true, false);
+			// }
+			$("#cronMode_val").text(cronModeArray[0]);
+			$("#cronMode_val").parent().removeClass("blue");
+			$("#loopDays").hide();
+			$("#loopNormal").show();
+		}else{
 			$("#cronMode_val").parent().addClass("blue");
-			if(language && language=="en"){
-				cronMode.setVal("Daily", true, false);
-			}else{
-				cronMode.setVal("按天循环", true, false);
+			if(e.cronMode=="byday"){
+				// if(language && language=="en"){
+				// 	$("#cronMode_dummy,#cronMode_val").val("Daily");
+				// }else{
+				// 	$("#cronMode_dummy,#cronMode_val").val("按天循环");
+				// }
+				$("#cronMode_val").text(cronModeArray[1]);
+				$("#cronMode li").eq(1).addClass("on").siblings().removeClass("on");
+				
+				$("#loopDaySel").show();
+				$("#loopWeekSel").hide();
+				// if(language && language=="en"){
+				// 	cronMode.setVal("Daily", true, false);
+				// }else{
+				// 	cronMode.setVal("按天循环", true, false);
+				// }
+			}else if(e.cronMode=="byweek"){
+				$("#cronMode_val").text(cronModeArray[2]);
+				$("#cronMode li").eq(2).addClass("on").siblings().removeClass("on");
+				$("#weekDaysCount").parent().addClass("blue");
+				$("#loopDaySel").hide();
+				$("#loopWeekSel").show();
 			}
 			if("bydayTaskCommitTime" in e){
 				var commitTime = new Date(e.bydayTaskCommitTime);
@@ -1428,25 +1549,8 @@ $(function(){
 					$(".cronStartAt").show();
 				}
 			}
-				
 			$("#loopDays").show();
 			$("#loopNormal").hide();
-		}
-		else {
-			if(language && language=="en"){
-				$("#cronMode_dummy,#cronMode_val").val("Once");
-			}else{
-				$("#cronMode_dummy,#cronMode_val").val("普通");
-			}
-			if(language && language=="en"){
-				cronMode.setVal("Once", true, false);
-			}else{
-				cronMode.setVal("普通", true, false);
-			}
-			
-			$("#cronMode_val").parent().removeClass("blue");
-			$("#loopDays").hide();
-			$("#loopNormal").show();
 		}
 		//普通模式的开始时间
 		if(e.normalTask.startAt) {
@@ -1486,6 +1590,15 @@ $(function(){
 			$("#setLoopInterval .minute").val(PrefixInteger(parseInt(s%3600/60), 2));
 			$("#setLoopInterval .second").val(PrefixInteger(parseInt(s%3600), 2));
 		}
+		//普通模式的场景
+		if(e.normalTask.recordMode){
+			// $("#prefabList .iconfont[mode-name="+e.normalTask.recordMode+"]").parent().addClass("on").siblings().removeClass("on");
+			$("#prefabTrigger").text(modeObj[e.normalTask.recordMode]);
+			$("#prefabTrigger").attr("mode-name", e.normalTask.recordMode);
+		}else{
+			$("#prefabTrigger").text(modeObj["auto"]);
+			$("#prefabTrigger").attr("mode-name", "auto");
+		}
 /*
 		//普通模式的曝光度
 		if(e.normalTask.exposureBias){
@@ -1494,13 +1607,9 @@ $(function(){
 			$("#exposureTrigger").text(e.normalTask.exposureBias);
 			$(".tooltip-inner1").text(e.normalTask.exposureBias);
 		}
-		//普通模式的场景
-		if(e.normalTask.recordMode){
-			$("#prefabList .iconfont[mode-name="+e.normalTask.recordMode+"]").parent().addClass("on").siblings().removeClass("on");
-			$("#prefabTrigger").text($("#prefabList .iconfont[mode-name="+e.normalTask.recordMode+"]").next().text());
-			$("#prefabTrigger").attr("mode-name", e.normalTask.recordMode);
-		}
+		
 */
+		
 		//按天循环的天数
 		if(e.bydayLoop) {
 			if(e.bydayLoop==0) { //不限天数
@@ -1547,7 +1656,12 @@ $(function(){
 					endAt:task.endAt,
 					interval:task.shootInterval
 				}
-				updateSeq(index, task.startAt, task.endAt, recordMode, task.shootInterval, task.exposureBias);
+				if(task.scene){
+					cronByDayList[i].scene = task.scene;
+				}else{
+					task.scene = "auto";
+				}
+				updateSeq(index, task.startAt, task.endAt, task.scene, task.shootInterval, task.exposureBias);
 			});
 		}
 	}
@@ -1627,7 +1741,7 @@ $(function(){
 		$(".dialog-cover").addClass("tp");
 	});
 	$("body").on("click",".dialog-cover.tp",function(){
-		$(".file-split-type,.dialog-cover").hide();
+		$(".file-split-type,#cronMode,.dialog-cover,#weekDaysSelect").hide();
 		$(".dialog-cover").removeClass("tp");
 	})
 	$(".file-split-type ul li").each(function(index){

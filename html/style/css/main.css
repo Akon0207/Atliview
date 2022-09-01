@@ -2892,6 +2892,10 @@ body.setting-index{
     right: 3px;
     padding: 3px;
 }
+.selector ul li:before {
+    width: 1em;
+    height: 1em;
+}
 .file-split-type ul li:before {
     font-size: 23px;
 }
@@ -3404,7 +3408,8 @@ body.setting-index{
     color: #999;
 }
 .setting-cron-select.blue select,
-.setting-cron-select.blue input{
+.setting-cron-select.blue input,
+.setting-cron-select.blue div{
     color: #0090ff;
 }
 .securityMode:after {
@@ -3527,7 +3532,8 @@ body.setting-index{
     display: none;
 }
 #loopMode_val,
-#cronMode_val{
+#cronMode_val,
+#weekDaysCount{
     border: none;
     outline: none;
     background: transparent;
@@ -3536,6 +3542,8 @@ body.setting-index{
     padding-right: 2em;
     /*width: 5em;*/
     text-align: right;
+    display: flex;
+    align-items: center;
 }
 .rolldate-select-mask {
     position: absolute;
@@ -5854,4 +5862,16 @@ fieldset{
     color: #4c4c4c;
     line-height: 16px;
     font-size: 14px;
+}
+#weekDaysSelect input[type=checkbox] {
+    appearance: checkbox;
+    -webkit-appearance: checkbox;  
+    -moz-appearance: checkbox;
+    -ms-appearance: checkbox;
+    -o-appearance: checkbox;
+    margin: 4px;
+    width: 15px;
+}
+#weekDaysSelect .dialog-poppup-content {
+    text-align: left;
 }
